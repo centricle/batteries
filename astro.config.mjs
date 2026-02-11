@@ -11,6 +11,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   server: {
+    port: 7006,
     allowedHosts: true,
   },
 });
