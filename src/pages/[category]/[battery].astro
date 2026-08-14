@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BatterySchema from '../../components/BatterySchema.astro';
+import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro';
 import BatterySchematic from '../../components/BatterySchematic.astro';
 import { loadBatteryData, getAllCategories, type BatterySpec, getDimension, hasDimension } from '../../utils/batteryData';
 import { filterTrustedSources } from '../../utils/trustedSources';
@@ -52,6 +53,7 @@ const description = `Complete technical specifications for ${battery.type} batte
 
 <BaseLayout title={title} description={description}>
   <BatterySchema battery={battery} category={categoryName} />
+  <BreadcrumbSchema items={[{ label: categoryName, href: `/${category}` }, { label: battery.type }]} />
   <div class="bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Breadcrumb -->

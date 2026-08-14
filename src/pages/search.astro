@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/BreadcrumbSchema.astro';
 import { getAllCategories, searchBatteries, getDimension, hasDimension } from '../utils/batteryData';
 
 // Get data for server-side calculations only
@@ -54,6 +55,7 @@ const description = 'Search the comprehensive battery database by type, chemistr
 ---
 
 <BaseLayout title={title} description={description}>
+  <BreadcrumbSchema items={[{ label: 'Search' }]} />
   <div class="bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Header Section -->
