@@ -19,8 +19,13 @@ const structuredData = {
   "@type": "Product",
   "name": `${battery.type} Battery`,
   "description": battery.notes,
-  "category": `${category} batteries`,
-  "brand": battery.manufacturers || [],
+  "category": category,
+  ...(battery.manufacturers?.length && {
+    "brand": battery.manufacturers.map(name => ({
+      "@type": "Brand",
+      "name": name
+    }))
+  }),
   "additionalProperty": [
     {
       "@type": "PropertyValue",
@@ -67,20 +72,14 @@ const structuredData = {
   "applicationCategory": battery.common_devices,
   "alternateName": battery.common_names,
   ...(battery.iec_code && {
-    "productID": battery.iec_code,
-    "gtin": battery.iec_code
+    "productID": battery.iec_code
   }),
   ...(battery.ansi_code && {
     "mpn": battery.ansi_code
   }),
   ...(battery.designation && {
     "model": battery.designation
-  }),
-  "offers": {
-    "@type": "AggregateOffer",
-    "availability": "https://schema.org/InStock",
-    "priceCurrency": "USD"
-  }
+  })
 };
 
 // Add chemistry variants as additional properties
