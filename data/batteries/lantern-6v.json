@@ -1,0 +1,236 @@
+{
+  "id": "lantern-6v",
+  "name": "6V Lantern (spring)",
+  "category": "specialty",
+  "form": "lantern",
+  "status": "current",
+  "aliases": [
+    "6 V lantern battery",
+    "Spring-top lantern battery",
+    "Square lantern battery",
+    "Lantern battery"
+  ],
+  "codes": [
+    {
+      "code": "4LR25X",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "4R25X",
+      "system": "IEC",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "4R25",
+      "system": "IEC",
+      "chemistry": "zinc-chloride",
+      "note": "As printed on the Eveready EV90 sheet."
+    },
+    {
+      "code": "908A",
+      "system": "ANSI",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "908C",
+      "system": "ANSI",
+      "chemistry": "zinc-chloride"
+    },
+    {
+      "code": "908D",
+      "system": "ANSI",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "908AC",
+      "system": "ANSI"
+    },
+    {
+      "code": "908CD",
+      "system": "ANSI"
+    },
+    {
+      "code": "EN529",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "529",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "EN1209",
+      "system": "Energizer"
+    },
+    {
+      "code": "EV90",
+      "system": "Eveready",
+      "chemistry": "zinc-chloride"
+    },
+    {
+      "code": "EV90HP",
+      "system": "Eveready"
+    },
+    {
+      "code": "MN908",
+      "system": "Duracell"
+    },
+    {
+      "code": "GP908",
+      "system": "GP"
+    },
+    {
+      "code": "PJ996",
+      "system": "Industry"
+    },
+    {
+      "code": "996",
+      "system": "Industry"
+    }
+  ],
+  "dimensions": {
+    "width": {
+      "nominal": 68.2,
+      "min": 65.0,
+      "max": 68.2
+    },
+    "depth": {
+      "nominal": 68.2,
+      "min": 65.0,
+      "max": 68.2
+    },
+    "height": {
+      "nominal": 115.0,
+      "min": 107.0,
+      "max": 115.0
+    },
+    "note": "Height is overall, including the springs; the body alone is 96.0 to 103.2 mm. The battery must pass freely through a 82.6 mm diameter by 101.6 mm long tube.",
+    "sources": [
+      "energizer-en529",
+      "energizer-ev90"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "spring"
+    },
+    "negative": {
+      "style": "spring"
+    },
+    "cells": 4,
+    "note": "Two coil springs on the top face. Contains four F cells, four D cells or eight C cells depending on the product."
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6.0,
+        "cutoff": 3.2
+      },
+      "weight_g": 650,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "Energizer EN529 contains four size 3-350 cells in series. The datasheet gives capacity only as a chart.",
+      "sources": [
+        "energizer-en529"
+      ]
+    },
+    {
+      "chemistry": "zinc-chloride",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6.0,
+        "cutoff": 3.2
+      },
+      "capacity_mah": {
+        "typical": 10000,
+        "conditions": "25 mA continuous to 0.8 V per cell"
+      },
+      "weight_g": 600,
+      "notes": "Eveready EV90 contains four F cells in series and is listed for industrial trade.",
+      "sources": [
+        "energizer-ev90"
+      ]
+    },
+    {
+      "chemistry": "zinc-carbon",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6.0
+      },
+      "notes": "Listed with IEC code 4R25X; no manufacturer datasheet was fetched for this chemistry.",
+      "sources": [
+        "wikipedia-lantern-battery"
+      ]
+    }
+  ],
+  "devices": [
+    "Lanterns",
+    "Emergency lighting",
+    "Barricade and roadside warning lights",
+    "Large flashlights",
+    "Electric fence energizers",
+    "Portable lighting"
+  ],
+  "interchange": [
+    {
+      "id": "lantern-6v-screw",
+      "relation": "fits-with-caveat",
+      "note": "The screw-terminal lantern battery has the same 6 V and a similar footprint, but spring holders do not contact its posts reliably."
+    }
+  ],
+  "safety": [
+    "Do not recharge alkaline or zinc-based lantern batteries.",
+    "Metal objects across the springs can short the battery and cause heat; remove from devices before storage."
+  ],
+  "notes": "The most common 6 V lantern battery in the United States. The IEC letter X versus Y for spring versus screw terminals is applied inconsistently across sources.",
+  "sources": [
+    {
+      "id": "energizer-en529",
+      "title": "Energizer EN529 6V product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/en529.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-ev90",
+      "title": "Eveready EV90 zinc chloride 6V engineering data",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/ev90.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-lantern-battery",
+      "title": "Lantern battery",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Lantern_battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "dimensions"
+      ]
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

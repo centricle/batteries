@@ -1,0 +1,219 @@
+{
+  "id": "14500",
+  "name": "14500",
+  "category": "li-ion",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "Li-ion AA",
+    "Rechargeable AA Li-ion",
+    "IFR14500"
+  ],
+  "legacy_paths": [
+    "/lithium-ion/14500"
+  ],
+  "codes": [
+    {
+      "code": "14500",
+      "system": "Industry"
+    },
+    {
+      "code": "ICR14500",
+      "system": "Industry",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "IFR14500",
+      "system": "Industry",
+      "chemistry": "lithium-iron-phosphate"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 14.3,
+      "max": 14.3
+    },
+    "height": {
+      "nominal": 50.3,
+      "max": 50.3
+    },
+    "note": "Maximum bare-cell dimensions from one lithium iron phosphate cell specification; lithium-ion 14500 cells are listed at 14 by 50 mm nominal. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "sources": [
+      "oew-ifr14500",
+      "wiki-sizes"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    },
+    "note": "Button-top versions exist. Cells with an integrated protection board are slightly longer."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-ion",
+      "label": "Generic",
+      "subtype": "NMC, NCA, LCO, LMO and blends",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "range": [
+          700,
+          1500
+        ],
+        "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
+      },
+      "notes": "Nominal voltage 3.7 V.",
+      "sources": [
+        "wiki-sizes"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "pkcell ICR14500 800mAh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7,
+        "cutoff": 3,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 800,
+        "conditions": "Typical 800 mAh, minimum 760 mAh, 0.2C discharge to 3.0 V after 0.5C CC/CV charge to 4.2 V"
+      },
+      "max_continuous_ma": 1200,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          60
+        ],
+        "storage": [
+          -20,
+          45
+        ]
+      },
+      "notes": "Storage range shown is for one month. The specification gives no weight or readable dimensions.",
+      "sources": [
+        "pkcell-icr14500"
+      ]
+    },
+    {
+      "chemistry": "lithium-iron-phosphate",
+      "label": "Oriental Willing IFR14500 600mAh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.2,
+        "cutoff": 2,
+        "charge_max": 3.65
+      },
+      "capacity_mah": {
+        "typical": 600,
+        "conditions": "Typical 600 mAh, minimum 580 mAh, 0.5C discharge to 2.0 V"
+      },
+      "weight_g": 17,
+      "max_continuous_ma": 600,
+      "max_pulse_ma": 1800,
+      "internal_resistance_mohm": 45,
+      "cycle_life": 2000,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          45
+        ],
+        "storage": [
+          -20,
+          45
+        ]
+      },
+      "notes": "Weight is 17 g plus or minus 2 g; max continuous is 1C and 10-second pulse is 3C; internal resistance is the maximum at 1 kHz; cycle life is \"over 2000\" cycles at 0.5C and 100% depth.",
+      "sources": [
+        "oew-ifr14500"
+      ]
+    }
+  ],
+  "devices": [
+    "LED flashlights",
+    "Solar garden lights",
+    "Electronic cigarettes",
+    "Small portable electronics"
+  ],
+  "interchange": [
+    {
+      "id": "aa",
+      "relation": "do-not-substitute",
+      "note": "A 14500 lithium-ion cell has the same diameter and length as an AA cell but delivers 3.7 V nominal and up to 4.2 V, which damages most devices built for 1.5 V cells."
+    },
+    {
+      "id": "er14505",
+      "relation": "do-not-substitute",
+      "note": "The ER14505 is a non-rechargeable lithium thionyl chloride cell in the same size; it must not be charged, and a 14500 lithium-ion cell has a different voltage window."
+    }
+  ],
+  "safety": [
+    "Charge only with a charger made for lithium-ion cells, using constant current then constant voltage (CC/CV) up to the charge voltage in the cell datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5 V for most cells listed here); deep discharge damages the cell and a damaged cell should be discarded.",
+    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the cell against a metal object or an adjacent cell.",
+    "Unprotected cells have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected cells carry a circuit board but should still be charged with a matching charger.",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion cells to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+  ],
+  "notes": "Size code: 14 mm diameter, 50 mm length, 0 for cylindrical. Same size as an AA cell; device compartments and chargers for AA cells do not make a 14500 safe to use.",
+  "sources": [
+    {
+      "id": "wiki-sizes",
+      "title": "List of battery sizes (rechargeable lithium-ion cylindrical table)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "nominal size",
+        "capacity range"
+      ]
+    },
+    {
+      "id": "pkcell-icr14500",
+      "title": "Li-ion battery technology specification, ICR14500 800mAh 3.7V (A1, 2019-12-25)",
+      "publisher": "pkcell Battery",
+      "url": "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/2582/ICR14500%20800mAh%203.7V%20-%20F%20(003).pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Distributor-hosted copy; the dimension drawing carries no readable values in the text layer."
+    },
+    {
+      "id": "oew-ifr14500",
+      "title": "Specification for battery cell IFR14500-600mAh 3.2V, version A (2019-04-02)",
+      "publisher": "Shenzhen Oriental Willing New Energy",
+      "url": "https://www.akkuman.de/shop/mediafiles/PDF/14500/IFR%2014500%20AA%20Solar%20Datenblatt.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer specification."
+    },
+    {
+      "id": "faa-packsafe",
+      "title": "PackSafe: Lithium batteries",
+      "publisher": "U.S. Federal Aviation Administration",
+      "url": "https://www.faa.gov/hazmat/packsafe/lithium-batteries",
+      "accessed": "2026-11-22",
+      "kind": "regulation",
+      "covers": [
+        "transport"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

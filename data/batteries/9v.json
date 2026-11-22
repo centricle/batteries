@@ -1,0 +1,472 @@
+{
+  "id": "9v",
+  "name": "9V",
+  "category": "household",
+  "form": "prismatic",
+  "status": "current",
+  "aliases": [
+    "PP3",
+    "006P",
+    "Krona",
+    "E-block",
+    "Radio battery",
+    "Smoke alarm battery",
+    "Square battery",
+    "Transistor battery"
+  ],
+  "legacy_paths": [
+    "/traditional/9v"
+  ],
+  "codes": [
+    {
+      "code": "6LR61",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "6LF22",
+      "system": "IEC",
+      "chemistry": "alkaline",
+      "note": "Listed with 6LR61 on the Energizer 522 sheet"
+    },
+    {
+      "code": "6LP3146",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "6F22",
+      "system": "IEC",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "6KR61",
+      "system": "IEC",
+      "chemistry": "nicd"
+    },
+    {
+      "code": "6HR61",
+      "system": "IEC",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "1604A",
+      "system": "ANSI",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "1604D",
+      "system": "ANSI",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "1604LC",
+      "system": "ANSI",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "7.2H5",
+      "system": "ANSI",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "11604",
+      "system": "ANSI",
+      "chemistry": "nicd"
+    },
+    {
+      "code": "1604M",
+      "system": "ANSI",
+      "note": "Mercury, obsolete"
+    },
+    {
+      "code": "PP3",
+      "system": "Ever Ready"
+    },
+    {
+      "code": "522",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "EN22",
+      "system": "Energizer",
+      "chemistry": "alkaline",
+      "note": "Industrial (not for retail trade)"
+    },
+    {
+      "code": "L522",
+      "system": "Energizer",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Ultimate Lithium"
+    },
+    {
+      "code": "NH22-175",
+      "system": "Energizer",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "1222",
+      "system": "Eveready",
+      "chemistry": "zinc-carbon",
+      "note": "Super Heavy Duty, LeClanche"
+    },
+    {
+      "code": "MN1604",
+      "system": "Duracell",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "MX1604",
+      "system": "Duracell",
+      "chemistry": "alkaline",
+      "note": "Ultra"
+    },
+    {
+      "code": "U9VL",
+      "system": "Ultralife",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "U9VL-J",
+      "system": "Rayovac",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "56722",
+      "system": "Varta",
+      "chemistry": "nimh",
+      "note": "Ready2Use, 200 mAh"
+    },
+    {
+      "code": "GP20R8H",
+      "system": "GP",
+      "chemistry": "nimh"
+    }
+  ],
+  "dimensions": {
+    "width": {
+      "nominal": 26.5,
+      "min": 24.5,
+      "max": 26.5
+    },
+    "depth": {
+      "nominal": 17.5,
+      "min": 15.5,
+      "max": 17.5
+    },
+    "height": {
+      "nominal": 48.5,
+      "max": 48.5
+    },
+    "note": "Height is the overall maximum including the snap terminals; the body measures about 46.4 to 46.5 mm to the shoulder. Terminal centers are 12.45 to 12.95 mm apart. Lithium-ion 9V packs can be thinner (about 12.7 mm deep).",
+    "sources": [
+      "energizer-522",
+      "duracell-mn1604"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "snap-male"
+    },
+    "negative": {
+      "style": "snap-female"
+    },
+    "cells": 6,
+    "note": "Six 1.5 V cells in series in alkaline, zinc-carbon and lithium types (seven 1.2 V cells in NiMH 8.4 V packs, eight in 9.6 V packs)."
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 9,
+        "cutoff": 4.8
+      },
+      "capacity_mah": {
+        "typical": 580,
+        "conditions": "620 ohm load to 4.8 V, 21 °C (Duracell MN1604 rated capacity)"
+      },
+      "weight_g": 45,
+      "shelf_life_years": 5,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "Weight, operating range and shelf life are from the Energizer 522 sheet; the 4.8 V end point corresponds to 0.8 V per cell.",
+      "sources": [
+        "energizer-522",
+        "duracell-summary",
+        "duracell-mn1604"
+      ]
+    },
+    {
+      "chemistry": "zinc-carbon",
+      "label": "Heavy duty (LeClanche)",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 9
+      },
+      "weight_g": 37,
+      "notes": "Energizer states that 9V carbon zinc batteries use the LeClanche system. Only weight and cell count (six) are given in text form.",
+      "sources": [
+        "energizer-1222",
+        "energizer-carbonzinc"
+      ]
+    },
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "label": "Lithium (smoke alarm type)",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 9,
+        "cutoff": 5.4
+      },
+      "capacity_mah": {
+        "typical": 1200,
+        "conditions": "9 mA continuous to 5.4 V, 23 °C (Ultralife U9VL nominal capacity)"
+      },
+      "weight_g": 33.9,
+      "shelf_life_years": 10,
+      "lithium_content_g": 1.35,
+      "temperature_c": {
+        "operating": [
+          -40,
+          60
+        ],
+        "storage": [
+          -40,
+          60
+        ]
+      },
+      "notes": "Weight, lithium content, shelf life and temperature range are from the Energizer L522 sheet. The Ultralife U9VL weighs 33.8 g, operates from -20 to 60 °C and is rated 120 mA continuous with pulses to 400 mA; Energizer states 1000 mA continuous with a PTC switch.",
+      "sources": [
+        "energizer-l522",
+        "ultralife-u9vl",
+        "rayovac-u9vl"
+      ]
+    },
+    {
+      "chemistry": "nimh",
+      "label": "8.4 V (seven cells)",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 8.4,
+        "cutoff": 7
+      },
+      "capacity_mah": {
+        "typical": 200,
+        "range": [
+          175,
+          210
+        ],
+        "conditions": "200 mAh rated at 0.2 C to 7.0 V, 20 °C (Varta 56722); 175 mAh at 35 mA to 1.0 V per cell (Energizer NH22-175); 210 mAh typical (GP20R8H)"
+      },
+      "weight_g": 36,
+      "self_discharge": "About 75% of initial capacity after one year at 20 °C (Varta 56722)",
+      "notes": "Weight is for the Varta 56722; the Energizer NH22-175 weighs 42.0 g.",
+      "sources": [
+        "varta-56722",
+        "energizer-nh22",
+        "gp-gp20r8h"
+      ]
+    },
+    {
+      "chemistry": "nimh",
+      "label": "9.6 V (eight cells)",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 9.6
+      },
+      "capacity_mah": {
+        "typical": 190,
+        "range": [
+          180,
+          190
+        ],
+        "conditions": "0.1 C charge for 16 h, 0.2 C discharge: minimum 180 mAh, typical 190 mAh"
+      },
+      "weight_g": 44,
+      "cycle_life": 500,
+      "temperature_c": {
+        "charge": [
+          -20,
+          40
+        ],
+        "discharge": [
+          -20,
+          50
+        ]
+      },
+      "notes": "Eight-cell 9.6 V packs run above the 9 V of a primary battery and are not interchangeable with 8.4 V packs in every device. The cycle life is a reference figure under IEC 61951-2.",
+      "sources": [
+        "emmerich-nimh-96v"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion-regulated",
+      "label": "USB-C rechargeable, 9.0 V regulated",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 9,
+        "cutoff": 5.4
+      },
+      "capacity_mah": {
+        "typical": 400,
+        "range": [
+          340,
+          400
+        ],
+        "conditions": "Nominal 400 mAh and minimum 340 mAh at 0.2 C to 5.4 V, 20 °C; 300 mAh at 0.5 C"
+      },
+      "weight_g": 22.5,
+      "max_continuous_ma": 300,
+      "cycle_life": 1200,
+      "self_discharge": "Up to 2% per month at 20 °C",
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          60
+        ],
+        "storage": [
+          -20,
+          25
+        ]
+      },
+      "notes": "A built-in 3.7 V, 1000 mAh lithium-ion cell feeds a regulator; charged only through the USB-C port at 450 mA. Other 9V lithium-ion packs without a regulator have a 7.4 V nominal voltage.",
+      "sources": [
+        "ansmann-9v-li"
+      ]
+    }
+  ],
+  "devices": [
+    "Smoke and carbon monoxide alarms",
+    "Guitar effects pedals and active pickups",
+    "Multimeters",
+    "Wireless microphones",
+    "Transistor radios",
+    "Test equipment",
+    "Medical devices",
+    "Stud finders"
+  ],
+  "interchange": [],
+  "safety": [
+    "Touching the two terminals to metal, or to each other in a pocket or drawer, can short-circuit the battery and cause heat or fire; tape the terminals of loose 9V batteries before disposal.",
+    "Do not mix chemistries, brands or charge states in one device.",
+    "Only NiMH, NiCd and USB-rechargeable lithium-ion 9V packs are designed to be recharged; charging alkaline, zinc-carbon or lithium (Li-MnO2) 9V batteries can cause leakage or rupture."
+  ],
+  "notes": "The 9V format is the only household size with snap terminals. IEC 6LR61 is for alkaline and 6F22 for zinc-carbon; the Energizer 522 sheet lists both 6LF22 and 6LR61. Wikipedia lists PP3 as the Ever Ready name from the PP (Power Pack) series.",
+  "sources": [
+    {
+      "id": "energizer-522",
+      "title": "Energizer 522 9V product datasheet (form 522GL1019)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/522.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-mn1604",
+      "title": "Duracell MN1604 9V product datasheet",
+      "publisher": "Duracell",
+      "url": "https://hallaweb.jlab.org/tech/Detectors/public_html/manuals/data_sheets-manuals/D-F/D/duracell/MN1604.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-summary",
+      "title": "Duracell alkaline primary cells and batteries, selected specification summary (rated capacity, dimensions, cross reference)",
+      "publisher": "Duracell",
+      "url": "https://assets.unilogcorp.com/267/ITEM/DOC/Duracell_MN908_Specification_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "energizer-1222",
+      "title": "Eveready 1222 9V Super Heavy Duty (LeClanche) engineering data",
+      "publisher": "Energizer",
+      "url": "https://static.datasheets.com/doc/23493513-eveready-6f22fwp1-ds.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-carbonzinc",
+      "title": "Energizer carbon zinc application manual",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/carbonzinc_appman.pdf",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "energizer-l522",
+      "title": "Energizer L522 9V Ultimate Lithium product datasheet",
+      "publisher": "Energizer",
+      "url": "https://www.farnell.com/datasheets/2923216.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "ultralife-u9vl",
+      "title": "Ultralife U9VL / U9VL-FP technical datasheet",
+      "publisher": "Ultralife",
+      "url": "https://static.datasheets.com/doc/18257674-ultralife-u9vl-ds.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "rayovac-u9vl",
+      "title": "Rayovac U9VL-J 9V Lithium marketing data sheet",
+      "publisher": "Rayovac",
+      "url": "https://www.farnell.com/datasheets/1448986.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "varta-56722",
+      "title": "VARTA Ready2Use 56722 9V Block NiMH data sheet",
+      "publisher": "Varta",
+      "url": "https://asset.conrad.com/media10/add/160267/c1/-/en/000251043DS01/tehnicni-podatki-251043-9-v-block-akumulator-nimh-varta-ready2use-6lr61-200-mah-84-v-1-kos.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-nh22",
+      "title": "Energizer NH22-175 (HR22) 9V product datasheet",
+      "publisher": "Energizer",
+      "url": "https://www.farnell.com/datasheets/3171147.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "gp-gp20r8h",
+      "title": "GP20R8H 9V NiMH cell specification",
+      "publisher": "GP Batteries",
+      "url": "https://www.farnell.com/datasheets/3276961.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "emmerich-nimh-96v",
+      "title": "Emmerich NiMH 9.6 V 200 mAh Hightop (255051) specification",
+      "publisher": "Emmerich",
+      "url": "https://www-users.cs.york.ac.uk/~mjf/zergling/Datasheet/AKKU.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "ansmann-9v-li",
+      "title": "ANSMANN Li-Ion 9V E-Block 400 mAh USB-C specification (1315-0005)",
+      "publisher": "ANSMANN",
+      "url": "https://www.farnell.com/datasheets/4018072.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

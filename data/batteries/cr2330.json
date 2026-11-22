@@ -1,0 +1,193 @@
+{
+  "id": "cr2330",
+  "name": "CR2330",
+  "codes": [
+    {
+      "code": "CR2330",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2330",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "BR2330",
+      "system": "Panasonic",
+      "chemistry": "lithium-carbon-monofluoride"
+    },
+    {
+      "code": "VL2330",
+      "system": "Panasonic",
+      "chemistry": "lithium-vanadium-rechargeable"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 23.0,
+      "max": 23.0
+    },
+    "height": {
+      "nominal": 3.0,
+      "max": 3.0
+    },
+    "note": "Panasonic publishes maximum dimensions only; nominal is set to the maximum.",
+    "sources": [
+      "panasonic-cr2330",
+      "panasonic-br2330",
+      "panasonic-vl2330"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 265,
+        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated"
+      },
+      "weight_g": 3.7,
+      "temperature_c": {
+        "operating": [
+          -30,
+          85
+        ]
+      },
+      "sources": [
+        "panasonic-cr2330"
+      ]
+    },
+    {
+      "chemistry": "lithium-carbon-monofluoride",
+      "label": "BR2330",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 255,
+        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+      },
+      "weight_g": 3.2,
+      "temperature_c": {
+        "operating": [
+          -40,
+          85
+        ]
+      },
+      "notes": "BR2330 is a lithium-carbon-monofluoride cell in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
+      "sources": [
+        "panasonic-br2330"
+      ]
+    },
+    {
+      "chemistry": "lithium-vanadium-rechargeable",
+      "label": "VL2330",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.0,
+        "cutoff": 2.5,
+        "charge_max": 3.55
+      },
+      "capacity_mah": {
+        "typical": 50.0,
+        "conditions": "Panasonic nominal capacity at 0.1 mA standard drain to 2.5 V, 20 °C"
+      },
+      "weight_g": 3.5,
+      "cycle_life": 1000,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ]
+      },
+      "notes": "VL2330 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it.",
+      "sources": [
+        "panasonic-vl2330"
+      ]
+    }
+  ],
+  "devices": [
+    "Memory backup",
+    "Real-time clock backup",
+    "Vehicle key fobs",
+    "Tire pressure sensors",
+    "Electronic tags"
+  ],
+  "interchange": [
+    {
+      "id": "cr2320",
+      "relation": "fits-with-caveat",
+      "note": "Same 23 mm diameter and 1.0 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
+    },
+    {
+      "id": "cr2325",
+      "relation": "fits-with-caveat",
+      "note": "Same 23 mm diameter and 0.5 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
+    }
+  ],
+  "notes": "BR2330 is rated -40 to +85 °C operating per Panasonic, a wider range than the CR type. VL2330 is a rechargeable cell for devices designed to charge it.",
+  "sources": [
+    {
+      "id": "panasonic-cr2330",
+      "title": "CR2330 CR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/CR2330_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-br2330",
+      "title": "BR2330 BR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/BR2330_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-vl2330",
+      "title": "VL2330 Coin-type Vanadium Rechargeable Lithium Batteries datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/coin-rechargeable/VL2330_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

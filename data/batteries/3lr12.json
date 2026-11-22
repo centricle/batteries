@@ -1,0 +1,168 @@
+{
+  "id": "3lr12",
+  "name": "3LR12",
+  "category": "specialty",
+  "form": "flatpack",
+  "status": "current",
+  "aliases": [
+    "4.5 V flat battery",
+    "Flachbatterie",
+    "Pocket lamp battery",
+    "Flat pack battery",
+    "4.5 V"
+  ],
+  "codes": [
+    {
+      "code": "3LR12",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "3R12",
+      "system": "IEC",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "MN1203",
+      "system": "Duracell",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "GP312A",
+      "system": "GP",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "V4012",
+      "system": "Varta",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "1289",
+      "system": "Industry",
+      "note": "UK designation per Wikipedia."
+    },
+    {
+      "code": "3336",
+      "system": "Industry",
+      "note": "Soviet and Russian type number."
+    }
+  ],
+  "dimensions": {
+    "width": {
+      "nominal": 62.0,
+      "max": 62.0
+    },
+    "depth": {
+      "nominal": 22.0,
+      "max": 22.0
+    },
+    "height": {
+      "nominal": 67.0,
+      "max": 67.0
+    },
+    "note": "Duracell publishes maximum limits only. Width and height are the body sides; depth is the thin dimension.",
+    "sources": [
+      "duracell-mn1203"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "strip",
+      "note": "Shorter strip, up to 7.0 mm wide."
+    },
+    "negative": {
+      "style": "strip",
+      "note": "Longer strip."
+    },
+    "cells": 3
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 4.5,
+        "open_circuit": 4.5,
+        "cutoff": 2.4
+      },
+      "capacity_mah": {
+        "typical": 4000,
+        "conditions": "20 ohm continuous to 2.4 V"
+      },
+      "weight_g": 165,
+      "temperature_c": {
+        "operating": [
+          -10,
+          60
+        ],
+        "storage": [
+          5,
+          30
+        ]
+      },
+      "notes": "Three alkaline cells in series. Duracell lists self-discharge under 10 percent after one year at 20 °C.",
+      "sources": [
+        "duracell-mn1203"
+      ]
+    },
+    {
+      "chemistry": "zinc-carbon",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 4.5
+      },
+      "notes": "Listed as 3R12; no manufacturer datasheet was fetched for this chemistry.",
+      "sources": [
+        "wikipedia-battery-sizes"
+      ]
+    }
+  ],
+  "devices": [
+    "Pocket flashlights",
+    "Bicycle lamps",
+    "Warning lamps",
+    "Older toys and signaling devices"
+  ],
+  "interchange": [],
+  "safety": [
+    "Do not recharge alkaline or zinc-carbon cells.",
+    "Exposed strips can be shorted by metal objects in a pocket; keep the battery in its packaging or a holder."
+  ],
+  "history": "Introduced in 1901 and common in continental Europe until the 1970s (Wikipedia list of battery sizes).",
+  "notes": "Usually contains three B-size cells in series. It remains more common in Europe than in North America.",
+  "sources": [
+    {
+      "id": "duracell-mn1203",
+      "title": "Duracell MN1203 (3LR12) alkaline manganese dioxide battery datasheet",
+      "publisher": "Duracell",
+      "url": "https://www.zajadacz.de/documents/assets_30fb29b2-7a93-4e37-93c1-f4883e3a08f9_4b4896cc-0884-4a26-a5ea-933ed9781580.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    },
+    {
+      "id": "wikipedia-lantern-battery",
+      "title": "Lantern battery",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Lantern_battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "dimensions"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

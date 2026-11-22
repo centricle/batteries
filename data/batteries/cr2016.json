@@ -1,0 +1,175 @@
+{
+  "id": "cr2016",
+  "name": "CR2016",
+  "legacy_paths": [
+    "/button-cells/cr2016"
+  ],
+  "codes": [
+    {
+      "code": "CR2016",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "5000LC",
+      "system": "ANSI",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2016",
+      "system": "JIS",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2016",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2016",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Varta type number 6016"
+    },
+    {
+      "code": "6016",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Type number"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 20.0,
+      "max": 20.0
+    },
+    "height": {
+      "nominal": 1.6,
+      "max": 1.6
+    },
+    "note": "Panasonic publishes maximum dimensions only; nominal is set to the maximum.",
+    "sources": [
+      "panasonic-cr2016",
+      "varta-primary-lithium",
+      "gp-cr2016"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 90,
+        "conditions": "Panasonic nominal capacity at 0.1 mA continuous standard drain; cutoff voltage not stated",
+        "range": [
+          80,
+          90
+        ]
+      },
+      "weight_g": 1.6,
+      "shelf_life_years": 10,
+      "temperature_c": {
+        "operating": [
+          -30,
+          85
+        ]
+      },
+      "notes": "Varta lists 90 mAh and 1.8 g; GP lists 80 mAh and 1.7 g.",
+      "sources": [
+        "panasonic-cr2016",
+        "varta-primary-lithium",
+        "gp-cr2016"
+      ]
+    }
+  ],
+  "devices": [
+    "Digital watches",
+    "Key fob remotes",
+    "Blood glucose meters",
+    "Small LED flashlights",
+    "Calculators",
+    "Memory backup"
+  ],
+  "interchange": [
+    {
+      "id": "cr2025",
+      "relation": "fits-with-caveat",
+      "note": "Same 20 mm diameter and 0.9 mm thicker; fits only where the holder has the clearance."
+    },
+    {
+      "id": "cr2032",
+      "relation": "fits-with-caveat",
+      "note": "Same 20 mm diameter and 1.6 mm thicker; fits only in holders sized for it. Some devices stack two CR2016 cells for 6 V."
+    }
+  ],
+  "sources": [
+    {
+      "id": "panasonic-cr2016",
+      "title": "CR2016 CR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/CR2016_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "varta-primary-lithium",
+      "title": "VARTA Primary Lithium Button and Cylindrical Cells product overview",
+      "publisher": "Varta Microbattery",
+      "url": "https://www.direktronik.se/globalassets/_product-images--pdf/2.-kommunikation-datacenter/2.6-test-analys/varta_primary_lithium_en_01.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "gp-cr2016",
+      "title": "GP Lithium Coin Batteries CR2016 data sheet",
+      "publisher": "GP Batteries",
+      "url": "https://uk.gpbatteries.com/cdn/shop/files/GP_Lithium_Coin_Batteries_CR2016_Data_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "wikipedia-button-cell",
+      "title": "Button cell",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Button_cell",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

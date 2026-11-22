@@ -1,0 +1,151 @@
+{
+  "id": "cr3032",
+  "name": "CR3032",
+  "codes": [
+    {
+      "code": "CR3032",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR3032",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "VL3032",
+      "system": "Panasonic",
+      "chemistry": "lithium-vanadium-rechargeable"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 30.0,
+      "max": 30.0
+    },
+    "height": {
+      "nominal": 3.2,
+      "max": 3.2
+    },
+    "note": "Panasonic publishes maximum dimensions only; nominal is set to the maximum.",
+    "sources": [
+      "panasonic-cr3032",
+      "panasonic-vl3032"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 500,
+        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated"
+      },
+      "weight_g": 6.9,
+      "temperature_c": {
+        "operating": [
+          -30,
+          85
+        ]
+      },
+      "sources": [
+        "panasonic-cr3032"
+      ]
+    },
+    {
+      "chemistry": "lithium-vanadium-rechargeable",
+      "label": "VL3032",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.0,
+        "cutoff": 2.5,
+        "charge_max": 3.55
+      },
+      "capacity_mah": {
+        "typical": 100.0,
+        "conditions": "Panasonic nominal capacity at 0.2 mA standard drain to 2.5 V, 20 °C"
+      },
+      "weight_g": 6.3,
+      "cycle_life": 1000,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ]
+      },
+      "notes": "VL3032 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it.",
+      "sources": [
+        "panasonic-vl3032"
+      ]
+    }
+  ],
+  "devices": [
+    "Memory backup",
+    "Real-time clock backup",
+    "Utility meters",
+    "Tracking tags",
+    "Industrial data loggers"
+  ],
+  "interchange": [
+    {
+      "id": "cr2032",
+      "relation": "same-size",
+      "note": "Same 3.2 mm height with a 30 mm instead of 20 mm diameter; does not fit a CR2032 holder."
+    }
+  ],
+  "notes": "VL3032 is a rechargeable cell for devices designed to charge it.",
+  "sources": [
+    {
+      "id": "panasonic-cr3032",
+      "title": "CR3032 CR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/CR3032_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-vl3032",
+      "title": "VL3032 Coin-type Vanadium Rechargeable Lithium Batteries datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/coin-rechargeable/VL3032_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

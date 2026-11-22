@@ -1,0 +1,85 @@
+{
+  "id": "cr927",
+  "name": "CR927",
+  "aliases": [
+    "9.5 mm coin cell"
+  ],
+  "legacy_paths": [
+    "/button-cells/cr927"
+  ],
+  "codes": [
+    {
+      "code": "CR927",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 9.5
+    },
+    "height": {
+      "nominal": 2.7
+    },
+    "note": "Nominal size from the IEC size code as listed by Wikipedia; no datasheet with tolerances was found.",
+    "sources": [
+      "wikipedia-battery-sizes"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "notes": "No manufacturer datasheet was located, so capacity and weight are not published here.",
+      "sources": [
+        "wikipedia-battery-sizes"
+      ]
+    }
+  ],
+  "devices": [
+    "Wristwatches",
+    "LED novelty items",
+    "Toys",
+    "Small electronic tags"
+  ],
+  "interchange": [],
+  "notes": "One of the smallest lithium coin cells in the IEC series.",
+  "sources": [
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

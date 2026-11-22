@@ -1,0 +1,150 @@
+{
+  "id": "cr2430",
+  "name": "CR2430",
+  "legacy_paths": [
+    "/button-cells/cr2430"
+  ],
+  "codes": [
+    {
+      "code": "CR2430",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "5011LC",
+      "system": "ANSI",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2430",
+      "system": "JIS",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2430",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Varta type number 6430"
+    },
+    {
+      "code": "6430",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Type number"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 24.5
+    },
+    "height": {
+      "nominal": 3.0
+    },
+    "note": "Nominal size from the GP and Varta sheets; neither publishes tolerances.",
+    "sources": [
+      "gp-cr2430",
+      "varta-primary-lithium"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0,
+        "cutoff": 2.0
+      },
+      "capacity_mah": {
+        "typical": 275,
+        "conditions": "GP nominal capacity, discharged at 20 ± 2 °C to 2.0 V; load not stated",
+        "range": [
+          275,
+          300
+        ]
+      },
+      "weight_g": 4.4,
+      "shelf_life_years": 10,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ]
+      },
+      "notes": "Varta lists 300 mAh and 4.0 g for type 6430 and 280 mAh for the CR 2430-P variant; GP lists 275 mAh and 4.4 g.",
+      "sources": [
+        "gp-cr2430",
+        "varta-primary-lithium"
+      ]
+    }
+  ],
+  "devices": [
+    "Vehicle key fobs",
+    "Memory backup",
+    "Real-time clock backup",
+    "Tire pressure sensors",
+    "Remote controls"
+  ],
+  "interchange": [
+    {
+      "id": "cr2450",
+      "relation": "fits-with-caveat",
+      "note": "Same 24.5 mm diameter and 2.0 mm thicker; usually does not fit a CR2430 holder."
+    },
+    {
+      "id": "cr2412",
+      "relation": "fits-with-caveat",
+      "note": "Same 24.5 mm diameter and 1.8 mm thinner; much lower capacity and loose in a CR2430 holder."
+    }
+  ],
+  "sources": [
+    {
+      "id": "gp-cr2430",
+      "title": "GP Lithium Coin Batteries CR2430 data sheet",
+      "publisher": "GP Batteries",
+      "url": "https://uk.gpbatteries.com/cdn/shop/files/GP_Lithium_Coin_Batteries_CR2430_Data_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "varta-primary-lithium",
+      "title": "VARTA Primary Lithium Button and Cylindrical Cells product overview",
+      "publisher": "Varta Microbattery",
+      "url": "https://www.direktronik.se/globalassets/_product-images--pdf/2.-kommunikation-datacenter/2.6-test-analys/varta_primary_lithium_en_01.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

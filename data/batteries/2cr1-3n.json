@@ -1,0 +1,125 @@
+{
+  "id": "2cr1-3n",
+  "name": "2CR1/3N",
+  "category": "photo",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "2CR11108",
+    "2CR13252",
+    "PX28L",
+    "2CR1/3N"
+  ],
+  "codes": [
+    {
+      "code": "2CR11108",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "As printed on the Duracell PX28L datasheet"
+    },
+    {
+      "code": "2CR13252",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Per Wikipedia; some datasheets use 2CR11108 instead"
+    },
+    {
+      "code": "1406LC",
+      "system": "ANSI",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "PX28L",
+      "system": "Duracell",
+      "chemistry": "lithium-manganese-dioxide"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 13,
+      "min": 12,
+      "max": 13
+    },
+    "height": {
+      "nominal": 25.2,
+      "min": 23.9,
+      "max": 25.2
+    },
+    "note": "Dimensions shown on the datasheet as IEC/ANSI standard values.",
+    "sources": [
+      "duracell-px28l"
+    ]
+  },
+  "geometry": {
+    "cells": 2,
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    },
+    "note": "Datasheet lists terminals as flat, cap and base. Two cells in series inside one cylindrical wrap."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6
+      },
+      "internal_resistance_mohm": 700,
+      "weight_g": 9.4,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ]
+      },
+      "notes": "Duracell lists a typical voltage of 6.0 to 6.6 V and 700 milliohm impedance at 1 kHz. The datasheet gives discharge curves but no single rated capacity.",
+      "sources": [
+        "duracell-px28l"
+      ]
+    }
+  ],
+  "devices": [
+    "Film cameras",
+    "Camera flashes",
+    "Medical monitors",
+    "Memory backup"
+  ],
+  "interchange": [
+    {
+      "id": "cr1-3n",
+      "relation": "same-size",
+      "note": "The pack is made of two CR1/3N cells in series and delivers 6 V instead of 3 V."
+    }
+  ],
+  "safety": [
+    "Lithium photo cells are primary cells and are not designed to be recharged; charging can cause venting, fire or rupture.",
+    "Do not short-circuit, crush, heat or disassemble. The cell contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the cell safe to abuse.",
+    "Replace all cells in a device at the same time and do not mix them with used cells or other types."
+  ],
+  "notes": "Duracell sells this pack as PX28L. The Duracell datasheet is an archived copy dated 6/08.",
+  "sources": [
+    {
+      "id": "duracell-px28l",
+      "title": "Duracell PX28L Lithium/Manganese Dioxide Battery datasheet (6/08, archived copy)",
+      "publisher": "Duracell",
+      "url": "https://web.archive.org/web/20170220094602/https://d2ei442zrkqy2u.cloudfront.net/wp-content/uploads/2016/04/LiPX28L_US_OS.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

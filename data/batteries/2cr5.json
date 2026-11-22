@@ -1,0 +1,137 @@
+{
+  "id": "2cr5",
+  "name": "2CR5",
+  "category": "photo",
+  "form": "twin",
+  "status": "current",
+  "aliases": [
+    "EL2CR5",
+    "DL245",
+    "RL2CR5",
+    "KL2CR5"
+  ],
+  "legacy_paths": [
+    "/camera/2cr5"
+  ],
+  "codes": [
+    {
+      "code": "2CR5",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "5032LC",
+      "system": "ANSI",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "EL2CR5",
+      "system": "Energizer",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Sold as Energizer 2CR5"
+    },
+    {
+      "code": "DL245",
+      "system": "Duracell",
+      "chemistry": "lithium-manganese-dioxide"
+    }
+  ],
+  "dimensions": {
+    "width": {
+      "nominal": 34,
+      "min": 33,
+      "max": 34
+    },
+    "depth": {
+      "nominal": 17,
+      "min": 16,
+      "max": 17
+    },
+    "height": {
+      "nominal": 45,
+      "min": 43.5,
+      "max": 45
+    },
+    "note": "Width is the long side of the two-lobed top view. The datasheet also shows a 16.4 mm maximum and 15.6 mm minimum dimension on the lobe outline.",
+    "sources": [
+      "energizer-2cr5"
+    ]
+  },
+  "geometry": {
+    "cells": 2,
+    "variant": "2cr5",
+    "note": "Two cylindrical cells side by side in one keyed wrap. Both terminals sit on one end face as two small square contacts, recessed in the wrap, marked - and +, per the datasheet drawing. Wikipedia gives a 16 mm center-to-center terminal spacing."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6
+      },
+      "capacity_mah": {
+        "typical": 1500,
+        "conditions": "200 ohm continuous, 21 °C; the datasheet prints the end point as 2.0 V, while its service table reads 58 hours to 4.0 V"
+      },
+      "weight_g": 40,
+      "max_continuous_ma": 1500,
+      "max_pulse_ma": 3500,
+      "lithium_content_g": 1.15,
+      "temperature_c": {
+        "operating": [
+          -40,
+          60
+        ],
+        "storage": [
+          -40,
+          60
+        ]
+      },
+      "sources": [
+        "energizer-2cr5"
+      ]
+    }
+  ],
+  "devices": [
+    "Film cameras",
+    "Camera flashes",
+    "Rangefinders",
+    "Smoke alarms",
+    "Water purifiers"
+  ],
+  "interchange": [
+    {
+      "id": "cr-p2",
+      "relation": "do-not-substitute",
+      "note": "The CR-P2 is a similar 6 V pack with a different footprint and contact layout, and the keyed shapes do not fit each other."
+    }
+  ],
+  "safety": [
+    "Lithium photo cells are primary cells and are not designed to be recharged; charging can cause venting, fire or rupture.",
+    "Do not short-circuit, crush, heat or disassemble. The cell contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the cell safe to abuse.",
+    "Replace all cells in a device at the same time and do not mix them with used cells or other types."
+  ],
+  "notes": "The wrap is keyed so it fits a compartment in one orientation only.",
+  "sources": [
+    {
+      "id": "energizer-2cr5",
+      "title": "Energizer 2CR5 (EL2CR5) product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/2cr5.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

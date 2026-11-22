@@ -8,7 +8,7 @@ export default defineConfig({
   // Astro 7 defaults this to 'jsx', which strips the whitespace between a text
   // node and an adjacent element and silently glues words together ("Built
   // byksmith"). `true` restores the v5 behavior byte for byte, at a few
-  // percent more HTML before gzip. See rig/runbooks/ASTRO_UPGRADE.md.
+  // percent more HTML before gzip.
   compressHTML: true,
   site: 'https://batteries.fyi',
   output: 'static',

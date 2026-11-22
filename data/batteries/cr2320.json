@@ -1,0 +1,114 @@
+{
+  "id": "cr2320",
+  "name": "CR2320",
+  "codes": [
+    {
+      "code": "CR2320",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2320",
+      "system": "Energizer",
+      "chemistry": "lithium-manganese-dioxide"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 23.0,
+      "min": 22.7,
+      "max": 23.0
+    },
+    "height": {
+      "nominal": 2.0,
+      "min": 1.75,
+      "max": 2.0
+    },
+    "note": "Limits from the Energizer CR2320 datasheet. Negative contact is at least 8.0 mm in diameter.",
+    "sources": [
+      "energizer-cr2320"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap",
+      "diameter": 8.0,
+      "note": "Minimum diameter of the flat negative contact area per Energizer."
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0,
+        "cutoff": 2.0
+      },
+      "capacity_mah": {
+        "typical": 135,
+        "conditions": "Energizer typical capacity at 10 kΩ to 2.0 V, 21 °C"
+      },
+      "weight_g": 3.0,
+      "lithium_content_g": 0.042,
+      "sources": [
+        "energizer-cr2320"
+      ]
+    }
+  ],
+  "devices": [
+    "Memory backup",
+    "Real-time clock backup",
+    "Vehicle key fobs",
+    "Electronic tags"
+  ],
+  "interchange": [
+    {
+      "id": "cr2325",
+      "relation": "fits-with-caveat",
+      "note": "Same 23 mm diameter and 0.5 mm thicker; fits only where the holder has the clearance."
+    },
+    {
+      "id": "cr2330",
+      "relation": "fits-with-caveat",
+      "note": "Same 23 mm diameter and 1.0 mm thicker; usually does not fit a CR2320 holder."
+    }
+  ],
+  "sources": [
+    {
+      "id": "energizer-cr2320",
+      "title": "Energizer CR2320 product datasheet",
+      "publisher": "Energizer",
+      "url": "https://static.datasheets.com/doc/23951543-energizer-cr2320-ds.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

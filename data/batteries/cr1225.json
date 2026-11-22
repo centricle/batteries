@@ -1,0 +1,134 @@
+{
+  "id": "cr1225",
+  "name": "CR1225",
+  "codes": [
+    {
+      "code": "CR1225",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "5020LC",
+      "system": "ANSI",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "BR1225",
+      "system": "Panasonic",
+      "chemistry": "lithium-carbon-monofluoride"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 12.5,
+      "max": 12.5
+    },
+    "height": {
+      "nominal": 2.5,
+      "max": 2.5
+    },
+    "note": "Panasonic BR1225 datasheet publishes maximum dimensions only; nominal is set to the maximum. The CR1225 size code gives the same values.",
+    "sources": [
+      "panasonic-br1225",
+      "wikipedia-battery-sizes"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "notes": "No CR1225 datasheet was located, so capacity and weight are not published here.",
+      "sources": [
+        "wikipedia-battery-sizes"
+      ]
+    },
+    {
+      "chemistry": "lithium-carbon-monofluoride",
+      "label": "BR1225",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 48,
+        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+      },
+      "weight_g": 0.8,
+      "temperature_c": {
+        "operating": [
+          -40,
+          85
+        ]
+      },
+      "notes": "BR1225 is a lithium-carbon-monofluoride cell in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
+      "sources": [
+        "panasonic-br1225"
+      ]
+    }
+  ],
+  "devices": [
+    "Key fob remotes",
+    "Memory backup",
+    "Small LED lights",
+    "Glucose meters",
+    "Electronic tags"
+  ],
+  "interchange": [
+    {
+      "id": "cr1220",
+      "relation": "fits-with-caveat",
+      "note": "Same diameter and 0.5 mm thinner; lower capacity and may make poor contact in a CR1225 holder."
+    },
+    {
+      "id": "cr1216",
+      "relation": "fits-with-caveat",
+      "note": "Same diameter and 0.9 mm thinner; lower capacity and may make poor contact in a CR1225 holder."
+    }
+  ],
+  "sources": [
+    {
+      "id": "panasonic-br1225",
+      "title": "BR1225 BR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/BR1225_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

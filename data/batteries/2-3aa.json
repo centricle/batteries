@@ -1,0 +1,109 @@
+{
+  "id": "2-3aa",
+  "name": "2/3AA",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "2/3 AA",
+    "Two-thirds AA",
+    "14/28"
+  ],
+  "codes": [
+    {
+      "code": "255020",
+      "system": "Emmerich",
+      "chemistry": "nimh"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 14.0,
+      "min": 13.5,
+      "max": 14.5
+    },
+    "height": {
+      "nominal": 28.5,
+      "min": 28.0,
+      "max": 29.0
+    },
+    "note": "Emmerich lists 14.0 +/-0.5 mm diameter and 28.5 +/-0.5 mm height for its flat-top cell.",
+    "sources": [
+      "emmerich-255020"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "typical": 630,
+        "conditions": "Charge 0.1 C, discharge 0.2 C (rated 600 mAh minimum)"
+      },
+      "weight_g": 14,
+      "internal_resistance_mohm": 45,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          50
+        ],
+        "storage": [
+          -10,
+          30
+        ]
+      },
+      "max_continuous_ma": 1800,
+      "max_pulse_ma": 6000,
+      "cycle_life": 500,
+      "notes": "Emmerich lists 1.8 A continuous and 6 A momentary maximum discharge. Storage range is for periods under one year.",
+      "sources": [
+        "emmerich-255020"
+      ]
+    }
+  ],
+  "devices": [
+    "Cordless phone packs",
+    "Electric shaver packs",
+    "Small tool packs",
+    "Hobby battery packs"
+  ],
+  "interchange": [
+    {
+      "id": "aa",
+      "relation": "same-size",
+      "note": "A 2/3AA cell has the AA diameter but is about 22 mm shorter, so it is not a drop-in for an AA cell."
+    }
+  ],
+  "safety": [
+    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
+    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix cells of different capacity, age or charge state in one pack."
+  ],
+  "notes": "A shortened AA, used to build battery packs.",
+  "sources": [
+    {
+      "id": "emmerich-255020",
+      "title": "Emmerich NiMH 2/3AA 600 mAh FT-1Z (255020) specification",
+      "publisher": "Emmerich",
+      "url": "https://asset.conrad.com/media10/add/160267/c1/-/en/000255020DS01/podatkovna-tablica-255020-emmerich-23-mignon-zlf-specijalni-akumulatori-23-aa-z-lemna-zastavica-nimh-12-v-600-mah.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

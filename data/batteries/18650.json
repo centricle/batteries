@@ -1,0 +1,426 @@
+{
+  "id": "18650",
+  "name": "18650",
+  "category": "li-ion",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "1865",
+    "168A",
+    "18650 Li-ion"
+  ],
+  "legacy_paths": [
+    "/lithium-ion/18650"
+  ],
+  "codes": [
+    {
+      "code": "18650",
+      "system": "Industry"
+    },
+    {
+      "code": "1865",
+      "system": "Industry",
+      "note": "Short form used by Tesla"
+    },
+    {
+      "code": "168A",
+      "system": "Industry"
+    },
+    {
+      "code": "INR18650-30Q",
+      "system": "Samsung",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "INR18650-25R",
+      "system": "Samsung",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "INR18650HG2",
+      "system": "LG",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "INR18650MH1",
+      "system": "LG",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "NCR18650B",
+      "system": "Panasonic",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "INR-18650-P28A",
+      "system": "Molicel",
+      "chemistry": "lithium-ion"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 18.3,
+      "min": 18,
+      "max": 18.5
+    },
+    "height": {
+      "nominal": 65,
+      "min": 64.8,
+      "max": 65.2
+    },
+    "note": "Limits from the LG INR18650HG2 specification (18.3 +0.2/-0.3 mm by 65.0 ± 0.2 mm). Other datasheets give 18.33 ± 0.07 by 64.85 ± 0.15 (Samsung), 18.29 ± 0.11 by 65.20 max (LG MH1), and 18.5 by 65.3 max (Panasonic NCR18650B, with tube). Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "sources": [
+      "lg-hg2",
+      "samsung-30q",
+      "lg-mh1",
+      "panasonic-ncr18650b"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    },
+    "note": "Bare cells are flat top. Button-top versions (the common form for protected cells) add a raised positive contact."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-ion",
+      "label": "Generic",
+      "subtype": "NMC, NCA, LCO, LMO and blends",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "range": [
+          500,
+          4050
+        ],
+        "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
+      },
+      "notes": "Nominal voltage 3.6 to 3.7 V by maker. Also built in lithium iron phosphate and, since the early 2020s, sodium-ion; those are not listed here.",
+      "sources": [
+        "wiki-sizes",
+        "wiki-18650"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "Samsung INR18650-30Q",
+      "rechargeable": true,
+      "sources": [
+        "samsung-30q"
+      ],
+      "voltage": {
+        "nominal": 3.6,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 3000,
+        "conditions": "Nominal capacity: 0.2C discharge to 2.5 V at 25 °C after 1.5 A CC/CV charge to 4.2 V, 150 mA cut-off"
+      },
+      "weight_g": 48,
+      "max_continuous_ma": 15000,
+      "temperature_c": {
+        "charge": [
+          0,
+          50
+        ],
+        "discharge": [
+          -20,
+          75
+        ],
+        "storage": [
+          -30,
+          60
+        ]
+      },
+      "notes": "Weight is the maximum. Maximum continuous discharge is 15 A at 25 °C, with 60% capacity remaining at 250 cycles. Temperatures are cell surface; storage is one month. Specification version 0.0."
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "Samsung INR18650-25R",
+      "rechargeable": true,
+      "sources": [
+        "samsung-25r"
+      ],
+      "voltage": {
+        "nominal": 3.6,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 2500,
+        "conditions": "Nominal capacity: 0.2C (500 mA) discharge to 2.5 V at 25 °C after 1.25 A CC/CV charge to 4.2 V, 125 mA cut-off"
+      },
+      "weight_g": 45,
+      "max_continuous_ma": 20000,
+      "temperature_c": {
+        "charge": [
+          0,
+          50
+        ],
+        "discharge": [
+          -20,
+          75
+        ],
+        "storage": [
+          -30,
+          60
+        ]
+      },
+      "notes": "Weight is the maximum. Maximum continuous discharge is 20 A at 25 °C, with 60% capacity remaining at 250 cycles. Temperatures are cell surface; storage is one month."
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "LG INR18650HG2",
+      "rechargeable": true,
+      "sources": [
+        "lg-hg2"
+      ],
+      "voltage": {
+        "nominal": 3.6,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 3000,
+        "conditions": "Nominal capacity: 0.2C (600 mA) discharge to 2.5 V after 1.5 A CC/CV charge to 4.2 V, 50 mA cut-off"
+      },
+      "weight_g": 47,
+      "max_continuous_ma": 20000,
+      "temperature_c": {
+        "charge": [
+          0,
+          50
+        ],
+        "discharge": [
+          -20,
+          75
+        ],
+        "storage": [
+          -20,
+          60
+        ]
+      },
+      "notes": "Weight is the maximum. Temperatures are cell surface; storage is one month."
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "LG INR18650MH1",
+      "rechargeable": true,
+      "sources": [
+        "lg-mh1"
+      ],
+      "voltage": {
+        "nominal": 3.7,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 3200,
+        "conditions": "Nominal capacity: 0.2C (620 mA) discharge to 2.5 V after 0.5C CC/CV charge to 4.2 V, 50 mA cut-off"
+      },
+      "weight_g": 47,
+      "max_continuous_ma": 10000,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          60
+        ],
+        "storage": [
+          -20,
+          60
+        ]
+      },
+      "notes": "Weight is the maximum; storage is one month."
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "Panasonic NCR18650B",
+      "rechargeable": true,
+      "sources": [
+        "panasonic-ncr18650b"
+      ],
+      "voltage": {
+        "nominal": 3.6,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 3350,
+        "conditions": "Rated minimum 3200 mAh at 20 °C; typical 3350 mAh at 25 °C; CC/CV charge 4.20 V, 2.5 V discharge cut-off"
+      },
+      "weight_g": 48.5,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          60
+        ],
+        "storage": [
+          -20,
+          50
+        ]
+      },
+      "notes": "Weight is the maximum. The data sheet publishes no maximum discharge current. Standard charge is 1625 mA CC/CV to 4.20 V in about 4 hours."
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "Molicel INR-18650-P28A",
+      "rechargeable": true,
+      "sources": [
+        "molicel-p28a"
+      ],
+      "voltage": {
+        "nominal": 3.6,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 2800,
+        "conditions": "Typical 2800 mAh, minimum 2700 mAh; CC/CV charge to 4.2 V, 50 mA cut-off; 2.5 V cut-off at 23 °C"
+      },
+      "weight_g": 46,
+      "max_continuous_ma": 35000,
+      "internal_resistance_mohm": 20,
+      "temperature_c": {
+        "charge": [
+          0,
+          60
+        ],
+        "discharge": [
+          -40,
+          60
+        ]
+      },
+      "notes": "Weight is typical; internal resistance is the AC (1 kHz) maximum; temperatures are ambient."
+    }
+  ],
+  "devices": [
+    "Laptop battery packs",
+    "Power banks",
+    "Cordless power tools",
+    "Electric bicycles and scooters",
+    "LED flashlights",
+    "Electronic cigarettes and vaporizers",
+    "Portable fans",
+    "Home energy storage packs"
+  ],
+  "interchange": [],
+  "safety": [
+    "Charge only with a charger made for lithium-ion cells, using constant current then constant voltage (CC/CV) up to the charge voltage in the cell datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5 V for most cells listed here); deep discharge damages the cell and a damaged cell should be discarded.",
+    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the cell against a metal object or an adjacent cell.",
+    "Unprotected cells have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected cells carry a circuit board but should still be charged with a matching charger.",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion cells to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe).",
+    "Do not mix cells of different brands, capacities or charge states in one pack."
+  ],
+  "history": "Sony developed the 18650 in 1991; Panasonic states it did so in 1994 (Wikipedia, 18650 battery).",
+  "notes": "Size code: 18 mm diameter, 65 mm length, 0 for cylindrical. The code describes only the physical size, not the chemistry or the rating.",
+  "sources": [
+    {
+      "id": "wiki-sizes",
+      "title": "List of battery sizes (rechargeable lithium-ion cylindrical table)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "nominal size",
+        "capacity range"
+      ]
+    },
+    {
+      "id": "wiki-18650",
+      "title": "18650 battery",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/18650_battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "history",
+        "size code"
+      ]
+    },
+    {
+      "id": "lg-hg2",
+      "title": "Product specification INR18650 HG2 3000mAh, BCY-PS-HG2-Rev0 (2014-10-13)",
+      "publisher": "LG Chem",
+      "url": "https://files.batteryjunction.com/frontend/files/lg-hg2-18650.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer specification; revision 0."
+    },
+    {
+      "id": "samsung-30q",
+      "title": "Specification of product INR18650-30Q, version 0.0",
+      "publisher": "Samsung SDI",
+      "url": "https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/196/samsung_5F00_30q_5F00_data_5F00_sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer specification; version 0.0."
+    },
+    {
+      "id": "samsung-25r",
+      "title": "Specification of product INR18650-25R, version 1.0",
+      "publisher": "Samsung SDI",
+      "url": "https://mivvyenergy.cz/img/cms/INR18650-25R-pdf.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer specification; version 1.0."
+    },
+    {
+      "id": "lg-mh1",
+      "title": "Product specification INR18650 MH1 3200mAh (2015-10-27)",
+      "publisher": "LG Chem",
+      "url": "https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/196/INR18650MH1_5F00_Rev1.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer specification; revision 1."
+    },
+    {
+      "id": "panasonic-ncr18650b",
+      "title": "NCR18650B data sheet",
+      "publisher": "Panasonic (SANYO Energy)",
+      "url": "https://www.batteryspace.com/prod-specs/NCR18650B.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy; version 13.11 R1. Lists no maximum discharge current."
+    },
+    {
+      "id": "molicel-p28a",
+      "title": "Product data sheet, model INR-18650-P28A (V2)",
+      "publisher": "Molicel (E-One Moli Energy)",
+      "url": "https://www.rosebatteries.com/hubfs/INR18650P28A-V2-80093.pdf?hsLang=en",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer data sheet."
+    },
+    {
+      "id": "faa-packsafe",
+      "title": "PackSafe: Lithium batteries",
+      "publisher": "U.S. Federal Aviation Administration",
+      "url": "https://www.faa.gov/hazmat/packsafe/lithium-batteries",
+      "accessed": "2026-11-22",
+      "kind": "regulation",
+      "covers": [
+        "transport"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

@@ -1,0 +1,302 @@
+{
+  "id": "d",
+  "name": "D",
+  "category": "household",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "Mono",
+    "Goliath",
+    "Flashlight battery",
+    "U2",
+    "HP2",
+    "SP2",
+    "Type 373",
+    "#1 (China)"
+  ],
+  "legacy_paths": [
+    "/traditional/d"
+  ],
+  "codes": [
+    {
+      "code": "LR20",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "R20",
+      "system": "IEC",
+      "chemistry": "zinc-carbon",
+      "note": "Also used for zinc chloride heavy duty cells"
+    },
+    {
+      "code": "HR20",
+      "system": "IEC",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "KR20",
+      "system": "IEC",
+      "chemistry": "nicd"
+    },
+    {
+      "code": "ZR20",
+      "system": "IEC",
+      "chemistry": "nickel-oxyhydroxide"
+    },
+    {
+      "code": "13A",
+      "system": "ANSI",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "13D",
+      "system": "ANSI",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "UM-1",
+      "system": "JIS"
+    },
+    {
+      "code": "EN95",
+      "system": "Energizer",
+      "chemistry": "alkaline",
+      "note": "Industrial (not for retail trade)"
+    },
+    {
+      "code": "NH50",
+      "system": "Energizer",
+      "chemistry": "nimh",
+      "note": "NH50-2500"
+    },
+    {
+      "code": "MN1300",
+      "system": "Duracell",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "MX1300",
+      "system": "Duracell",
+      "chemistry": "alkaline",
+      "note": "Ultra"
+    },
+    {
+      "code": "BA-30",
+      "system": "Military"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 34.2,
+      "min": 32.3,
+      "max": 34.2
+    },
+    "height": {
+      "nominal": 61.5,
+      "min": 59.5,
+      "max": 61.5
+    },
+    "note": "Height includes the positive terminal.",
+    "sources": [
+      "energizer-en95",
+      "duracell-mn1300",
+      "energizer-nh50"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button",
+      "diameter": 9.5,
+      "height": 1.5
+    },
+    "negative": {
+      "style": "flat",
+      "diameter": 18
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5,
+        "cutoff": 0.8
+      },
+      "capacity_mah": {
+        "typical": 15000,
+        "conditions": "10 ohm load to 0.8 V, 21 °C (Duracell MN1300 rated capacity)"
+      },
+      "weight_g": 148,
+      "shelf_life_years": 7,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "Weight, operating range and shelf life (80% of initial capacity at 21 °C) are from the Energizer EN95 sheet. Duracell lists 139 g.",
+      "sources": [
+        "energizer-en95",
+        "duracell-mn1300",
+        "duracell-summary"
+      ]
+    },
+    {
+      "chemistry": "zinc-chloride",
+      "label": "Heavy duty (Eveready Super Heavy Duty)",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5
+      },
+      "weight_g": 89,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "The European-region datasheet gives no capacity figure in text form.",
+      "sources": [
+        "energizer-r20-eu",
+        "energizer-carbonzinc"
+      ]
+    },
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2,
+        "cutoff": 1
+      },
+      "capacity_mah": {
+        "typical": 2500,
+        "conditions": "Rated capacity at 500 mA (0.2 C) to 1.0 V"
+      },
+      "weight_g": 73,
+      "internal_resistance_mohm": 11,
+      "temperature_c": {
+        "charge": [
+          0,
+          40
+        ]
+      },
+      "notes": "Internal resistance is for a charged cell; it rises to 21 milliohms at half discharge.",
+      "sources": [
+        "energizer-nh50"
+      ]
+    },
+    {
+      "chemistry": "nicd",
+      "label": "High temperature, flat top (D-D4000H)",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2,
+        "cutoff": 1
+      },
+      "capacity_mah": {
+        "typical": 4000,
+        "conditions": "Nominal capacity; standard charge 400 mA (0.1 C) for 15 h, discharge to 1.0 V"
+      },
+      "weight_g": 135,
+      "temperature_c": {
+        "charge": [
+          0,
+          60
+        ],
+        "discharge": [
+          -20,
+          70
+        ],
+        "storage": [
+          -20,
+          45
+        ]
+      },
+      "notes": "This cell measures 33.0 mm by 60.5 mm with tube, slightly under the standard D envelope.",
+      "sources": [
+        "nicd-d4000h"
+      ]
+    }
+  ],
+  "devices": [
+    "Large flashlights",
+    "Lanterns",
+    "Portable radios and boomboxes",
+    "Toys",
+    "Musical instruments",
+    "Emergency lighting",
+    "Water and gas meters"
+  ],
+  "interchange": [
+    {
+      "id": "c",
+      "relation": "same-size",
+      "note": "C cells share the 1.5 V alkaline chemistry but are smaller and have lower capacity."
+    }
+  ],
+  "safety": [
+    "Do not mix chemistries, brands or charge states in one device.",
+    "Only NiMH and NiCd D cells are designed to be recharged; charging alkaline or zinc-carbon cells can cause leakage or rupture."
+  ],
+  "notes": "Wikipedia lists BA-30 as the US military designation (World War II to the 1980s). No datasheet was found for nickel oxyhydroxide (ZR20).",
+  "sources": [
+    {
+      "id": "energizer-en95",
+      "title": "Energizer EN95 D product datasheet",
+      "publisher": "Energizer",
+      "url": "https://files.batteryjunction.com/frontend/files/EN95.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-mn1300",
+      "title": "Duracell MN1300 D product datasheet",
+      "publisher": "Duracell",
+      "url": "https://static.rapidonline.com/pdf/18-3270_v1.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-nh50",
+      "title": "Energizer NH50-2500 D product datasheet, Asia Pacific region",
+      "publisher": "Energizer",
+      "url": "https://archive.org/download/manualsonline-id-5dd50490-2195-498e-8bfb-86beff6c3ce3/5dd50490-2195-498e-8bfb-86beff6c3ce3.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-summary",
+      "title": "Duracell alkaline primary cells and batteries, selected specification summary (rated capacity, dimensions, cross reference)",
+      "publisher": "Duracell",
+      "url": "https://assets.unilogcorp.com/267/ITEM/DOC/Duracell_MN908_Specification_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "energizer-r20-eu",
+      "title": "Eveready Super Heavy Duty (R20) D product datasheet, European region",
+      "publisher": "Energizer",
+      "url": "https://www.farnell.com/datasheets/2934217.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-carbonzinc",
+      "title": "Energizer carbon zinc application manual",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/carbonzinc_appman.pdf",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "nicd-d4000h",
+      "title": "D-D4000H nickel cadmium rechargeable battery specifications",
+      "publisher": "Akkuman (distributor copy)",
+      "url": "https://www.akkuman.de/shop/mediafiles/PDF/Ni_Cd/500290.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

@@ -1,0 +1,201 @@
+{
+  "category": "hearing-aid",
+  "form": "disc",
+  "status": "current",
+  "updated": "2026-11-22",
+  "id": "13",
+  "name": "13",
+  "aliases": [
+    "PR48",
+    "Size 13",
+    "Orange tab",
+    "A13"
+  ],
+  "legacy_paths": [
+    "/hearing-aid/13"
+  ],
+  "codes": [
+    {
+      "code": "PR48",
+      "system": "IEC",
+      "chemistry": "zinc-air"
+    },
+    {
+      "code": "7000ZD",
+      "system": "ANSI",
+      "chemistry": "zinc-air"
+    },
+    {
+      "code": "AC13",
+      "system": "Energizer",
+      "chemistry": "zinc-air",
+      "note": "Also AC13E and AC13EZ"
+    },
+    {
+      "code": "L13ZA",
+      "system": "Rayovac",
+      "chemistry": "zinc-air",
+      "note": "Also 13A and 13AE"
+    },
+    {
+      "code": "DA13",
+      "system": "Duracell",
+      "chemistry": "zinc-air",
+      "note": "Also DA13H and DA13N"
+    },
+    {
+      "code": "13HP",
+      "system": "Duracell",
+      "chemistry": "zinc-air",
+      "note": "Activair"
+    },
+    {
+      "code": "p13",
+      "system": "Power One",
+      "chemistry": "zinc-air"
+    },
+    {
+      "code": "13SA",
+      "system": "Siemens",
+      "chemistry": "zinc-air"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 7.9,
+      "min": 7.7,
+      "max": 7.9
+    },
+    "height": {
+      "nominal": 5.4,
+      "min": 5.05,
+      "max": 5.4
+    },
+    "note": "Datasheet gives a 3.0 mm minimum for the flat negative contact.",
+    "sources": [
+      "energizer-13"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    },
+    "tab_color": "#FF7A00",
+    "tab_color_name": "Orange",
+    "note": "Tab color is stated on the Energizer datasheet and matches the Wikipedia size list. Retail and brand pages say the colors are the same across manufacturers, but no standards document that sets them was found."
+  },
+  "variants": [
+    {
+      "chemistry": "zinc-air",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.45
+      },
+      "capacity_mah": {
+        "typical": 315,
+        "range": [
+          300,
+          315
+        ],
+        "conditions": "Power One p13: IEC hearing aid standard test to 1.05 V (3 mA base load, 12 mA 100 ms pulse every 2 h), 20 °C, 55% RH; 300 mAh under the IEC wireless streaming test to 1.1 V"
+      },
+      "weight_g": 0.8,
+      "shelf_life_years": 4,
+      "temperature_c": {
+        "operating": [
+          -10,
+          50
+        ],
+        "storage": [
+          10,
+          30
+        ]
+      },
+      "notes": "Rayovac rates 149 h in a hearing aid test (2 mA background, 6 mA pulse) and 89 h in the IEC standard test to 1.05 V at 21 °C.",
+      "sources": [
+        "energizer-13",
+        "rayovac-13",
+        "varta-p13"
+      ]
+    }
+  ],
+  "devices": [
+    "Hearing aids"
+  ],
+  "interchange": [
+    {
+      "id": "312",
+      "relation": "do-not-substitute",
+      "note": "A 312 has the same 7.9 mm diameter but is 3.6 mm tall instead of 5.4 mm, so it can fit a size 13 compartment but gives less capacity, and a 13 does not fit a 312 compartment."
+    }
+  ],
+  "safety": [
+    "Swallowed or inserted button batteries can cause severe burns within hours. If a battery may have been swallowed or placed in the nose or ear, call the National Battery Ingestion Hotline at 1-800-498-8666 or a poison center at 1-800-222-1222 immediately, and do not wait for symptoms.",
+    "Keep hearing aid batteries out of reach of children and pets, and check the battery compartment is closed; a battery that looks like a pill can be swallowed by an adult."
+  ],
+  "notes": "Remove the plastic tab covering the air holes and let the cell stand about one minute before inserting, so the cell can activate (Rayovac data sheet). The cell starts consuming zinc once the tab is removed, and an unused cell is guaranteed four years only with the tab applied. Zinc-air cells draw oxygen through the air holes in the positive can, so output voltage and service life depend on how much air reaches the cell; Rayovac describes an air management system that meters air to high-drain devices.",
+  "sources": [
+    {
+      "id": "energizer-13",
+      "title": "Energizer 13 size mercury free zinc air product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/ENR_AC13E-1.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "rayovac-13",
+      "title": "Rayovac Premium 13 0 Hg product data sheet S66006",
+      "publisher": "Rayovac (Energizer Holdings)",
+      "url": "https://www.rayovac.com/wp-content/uploads/2021/08/S6600601D.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "varta-p13",
+      "title": "Power One p13 EVOLUTION data sheet (October 2020)",
+      "publisher": "VARTA Microbattery",
+      "url": "https://www.microbattery.com/pub/media/tech-specs/power-one/Data_Sheet_p13_EVOLUTION.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "rayovac-summary",
+      "title": "Rayovac Hearing Aid Batteries: Battery Facts and cross reference guide (2014)",
+      "publisher": "Rayovac, hosted by Microbattery",
+      "url": "https://www.microbattery.com/pub/media/tech-specs/rayovac/rayovac-hearing-aid-battery-009-2014.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog",
+      "covers": [
+        "codes",
+        "history",
+        "cochlear"
+      ]
+    },
+    {
+      "id": "poison-org",
+      "title": "Swallowed a button battery? Battery in the nose or ear?",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "safety"
+      ]
+    },
+    {
+      "id": "wikipedia-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ]
+}

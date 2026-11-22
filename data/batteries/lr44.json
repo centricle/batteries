@@ -1,0 +1,501 @@
+{
+  "id": "lr44",
+  "name": "LR44",
+  "category": "button",
+  "form": "disc",
+  "status": "current",
+  "aliases": [
+    "303",
+    "357",
+    "Watch battery"
+  ],
+  "legacy_paths": [
+    "/button-cells/lr44",
+    "/button-cells/sr44",
+    "/button-cells/lr1154"
+  ],
+  "codes": [
+    {
+      "code": "SR1154",
+      "system": "IEC",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44",
+      "system": "IEC",
+      "chemistry": "silver-oxide",
+      "note": "Legacy two-digit designation"
+    },
+    {
+      "code": "LR1154",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "LR44",
+      "system": "IEC",
+      "chemistry": "alkaline",
+      "note": "Legacy two-digit designation"
+    },
+    {
+      "code": "AG13",
+      "system": "Generic",
+      "chemistry": "alkaline",
+      "note": "Alkaline \"AG\" size number"
+    },
+    {
+      "code": "SG13",
+      "system": "Generic",
+      "chemistry": "silver-oxide",
+      "note": "Silver oxide \"SG\" size number"
+    },
+    {
+      "code": "SR44SW",
+      "system": "Maxell",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44SW",
+      "system": "Murata",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44SW",
+      "system": "Panasonic",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44SW",
+      "system": "Sony",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44SW",
+      "system": "Toshiba",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44W",
+      "system": "Maxell",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44W",
+      "system": "Murata",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44W",
+      "system": "Panasonic",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44W",
+      "system": "Sony",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SR44W",
+      "system": "Toshiba",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "303",
+      "system": "Energizer",
+      "chemistry": "silver-oxide",
+      "note": "Low drain (SW)"
+    },
+    {
+      "code": "303",
+      "system": "Renata",
+      "chemistry": "silver-oxide",
+      "note": "Low drain (SW)"
+    },
+    {
+      "code": "V303",
+      "system": "Varta",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "303",
+      "system": "Rayovac",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "D303",
+      "system": "Duracell",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "280-08",
+      "system": "Citizen",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SB-A9",
+      "system": "Seiko",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "A",
+      "system": "Timex",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "B-SR44L",
+      "system": "Berec",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "D303",
+      "system": "Mallory",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "357",
+      "system": "Energizer",
+      "chemistry": "silver-oxide",
+      "note": "High drain (W)"
+    },
+    {
+      "code": "357",
+      "system": "Renata",
+      "chemistry": "silver-oxide",
+      "note": "High drain (W)"
+    },
+    {
+      "code": "V357",
+      "system": "Varta",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "357",
+      "system": "Rayovac",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "D357",
+      "system": "Duracell",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "280-62",
+      "system": "Citizen",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "SB-B9",
+      "system": "Seiko",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "J",
+      "system": "Timex",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "228",
+      "system": "Bulova",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "080-D03",
+      "system": "Orient",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "1131SO",
+      "system": "ANSI",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "A76",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "1166A",
+      "system": "ANSI",
+      "chemistry": "alkaline",
+      "note": "ANSI/NEDA 1166A per Energizer A76 datasheet"
+    },
+    {
+      "code": "PX76A",
+      "system": "Duracell",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "RW82",
+      "system": "Rayovac",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "V13GA",
+      "system": "Varta",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "L1154",
+      "system": "Vinnic",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "GPA76",
+      "system": "GP",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "G13A",
+      "system": "Generic",
+      "chemistry": "alkaline"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 11.6,
+      "min": 11.4,
+      "max": 11.6
+    },
+    "height": {
+      "nominal": 5.4,
+      "min": 5.15,
+      "max": 5.4
+    },
+    "note": "Maxell SR44W drawing: diameter 11.6 mm, tolerance -0.2 mm; height 5.4 mm, tolerance -0.25 mm. Tolerances come from the high-drain or standard datasheet drawing; the case size is shared with the other types of this size.",
+    "sources": [
+      "murata-xref",
+      "maxell-xref",
+      "renata-303",
+      "renata-357",
+      "maxell-sr44w"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap",
+      "diameter": 6.0,
+      "note": "Minimum diameter of the flat negative top surface, from the Maxell drawing."
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5,
+        "cutoff": 0.9
+      },
+      "capacity_mah": {
+        "typical": 150.0,
+        "conditions": "6.8 kΩ continuous drain to 0.9 V at 21 °C (Energizer)",
+        "range": [
+          120,
+          150.0
+        ]
+      },
+      "weight_g": 1.97,
+      "notes": "Manganese dioxide cathode; voltage falls steadily through discharge rather than holding flat. The capacity range spans manufacturers who rate at different loads and cutoff voltages.",
+      "sources": [
+        "energizer-a76",
+        "maxell-sr-catalog"
+      ]
+    },
+    {
+      "chemistry": "silver-oxide",
+      "label": "Low drain (SW)",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.55,
+        "cutoff": 1.2
+      },
+      "capacity_mah": {
+        "typical": 175.0,
+        "conditions": "Discharge over 8.25 kΩ at 20 °C to 1.2 V (Renata OEM)",
+        "range": [
+          165,
+          175.0
+        ]
+      },
+      "weight_g": 2.29,
+      "temperature_c": {
+        "operating": [
+          -10,
+          60
+        ]
+      },
+      "self_discharge": "Less than 5% per year at 20 °C",
+      "notes": "The capacity range spans the manufacturers listed in the sources, which rate at different loads and cutoff voltages; compare only within one source. Sodium hydroxide electrolyte; intended for continuous low drain such as analog quartz watches.",
+      "sources": [
+        "renata-303",
+        "energizer-303",
+        "maxell-sr-catalog"
+      ]
+    },
+    {
+      "chemistry": "silver-oxide",
+      "label": "High drain (W)",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.55,
+        "cutoff": 1.2
+      },
+      "capacity_mah": {
+        "typical": 190.0,
+        "conditions": "Discharge over 5.62 kΩ at 20 °C to 1.2 V (Renata OEM)",
+        "range": [
+          160.0,
+          190.0
+        ]
+      },
+      "weight_g": 2.3,
+      "temperature_c": {
+        "operating": [
+          -10,
+          60
+        ]
+      },
+      "self_discharge": "Less than 10% per year at 20 °C",
+      "notes": "The capacity range spans the manufacturers listed in the sources, which rate at different loads and cutoff voltages; compare only within one source. Potassium hydroxide electrolyte; intended for higher drain such as backlights, alarms and medical devices.",
+      "sources": [
+        "renata-357",
+        "energizer-357",
+        "maxell-sr-catalog"
+      ]
+    }
+  ],
+  "devices": [
+    "Analog quartz watches",
+    "Digital watches",
+    "Calculators",
+    "Laser pointers",
+    "Digital calipers",
+    "Glucose meters",
+    "Toys"
+  ],
+  "interchange": [],
+  "safety": [
+    "Swallowing a button cell is a medical emergency: the manufacturer instruction is to seek medical assistance promptly after any ingestion and to keep batteries out of the reach of children.",
+    "Equipment intended for use by children should have tamper-proof battery compartments.",
+    "Remove exhausted cells from the device promptly, because leaking cells can damage it.",
+    "Do not recharge, short-circuit, dismantle, heat or burn the cell; do not mix types, brands or charge states."
+  ],
+  "notes": "11.6 mm by 5.4 mm. The same case is sold as alkaline (LR44/LR1154) and as silver oxide (SR44); both hold the same size, but silver oxide holds a nearly flat voltage near 1.55 V until late in discharge while alkaline voltage declines gradually, which matters for watches, calipers and light meters. Low drain (SW) and high drain (W) silver oxide cells share the case but differ in electrolyte; the manufacturer numbers differ.",
+  "sources": [
+    {
+      "id": "energizer-303",
+      "title": "Energizer 303 product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/303.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-357",
+      "title": "Energizer 357 product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/357.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-a76",
+      "title": "Energizer A76 product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/A76.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "maxell-sr-catalog",
+      "title": "Silver Oxide Batteries (SR) / Alkaline Button Batteries (LR) specifications",
+      "publisher": "Maxell",
+      "url": "https://biz.maxell.com/en/primary_batteries/sr_coin.html",
+      "accessed": "2026-11-22",
+      "kind": "catalog",
+      "covers": [
+        "capacity",
+        "weight",
+        "dimensions",
+        "operating voltage"
+      ]
+    },
+    {
+      "id": "maxell-sr44w",
+      "title": "Maxell SR44W silver oxide battery data sheet",
+      "publisher": "Maxell",
+      "url": "https://biz.maxell.com/en/primary_batteries/data_sheet/SR44W_Data_sheet_e.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "covers": [
+        "dimensions",
+        "terminal"
+      ]
+    },
+    {
+      "id": "maxell-xref",
+      "title": "Micro Battery Cross Reference and Replacement Guide (October 2017)",
+      "publisher": "Maxell",
+      "url": "https://biz.maxell.com/en/primary_batteries/CrossReference_17e.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog",
+      "covers": [
+        "codes",
+        "dimensions"
+      ]
+    },
+    {
+      "id": "murata-xref",
+      "title": "Watch Battery Selection Guide (cross reference)",
+      "publisher": "Murata Manufacturing",
+      "url": "https://solution.murata.com/en-eu/products/microbatteries_watch/asset/top/files/CrossReference_en.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog",
+      "covers": [
+        "codes",
+        "dimensions"
+      ]
+    },
+    {
+      "id": "renata-303",
+      "title": "Renata 303 product page and technical data sheet",
+      "publisher": "Renata SA",
+      "url": "https://www.renata.com/en/products/silver-oxide-batteries/303-oem/",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "renata-357",
+      "title": "Renata 357 product page and technical data sheet",
+      "publisher": "Renata SA",
+      "url": "https://www.renata.com/en/products/silver-oxide-batteries/357/",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "renata-safety",
+      "title": "Watch Batteries: General Recommendations, Safety Guidelines and Precautions concerning the Use of Watch Batteries",
+      "publisher": "Renata SA",
+      "url": "https://www.renata.com/en/downloads/?product=377-&fileid=15a509555f6996aa7178874eed",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "covers": [
+        "safety"
+      ]
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

@@ -1,0 +1,120 @@
+{
+  "id": "er34615",
+  "name": "ER34615",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "D lithium thionyl chloride",
+    "3.6 V D",
+    "LS33600",
+    "TL-5930"
+  ],
+  "codes": [
+    {
+      "code": "ER34615",
+      "system": "IEC",
+      "chemistry": "lithium-thionyl-chloride",
+      "note": "Not printed on the Saft sheet fetched; standard designation for this D-size Li-SOCl2 cell."
+    },
+    {
+      "code": "LS 33600",
+      "system": "Saft",
+      "chemistry": "lithium-thionyl-chloride"
+    },
+    {
+      "code": "LS 33600C",
+      "system": "Saft",
+      "chemistry": "lithium-thionyl-chloride",
+      "note": "Version recommended for cool temperature environments."
+    },
+    {
+      "code": "TL-5930",
+      "system": "Tadiran",
+      "chemistry": "lithium-thionyl-chloride",
+      "note": "Tadiran D-size model; no Tadiran sheet was fetched."
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 33.4,
+      "max": 33.4
+    },
+    "height": {
+      "nominal": 61.6,
+      "max": 61.6
+    },
+    "note": "Saft LS 33600C lists 33.4 mm maximum diameter and a maximum height of 60.2 or 61.6 mm depending on version.",
+    "sources": [
+      "saft-ls33600c"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-thionyl-chloride",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.6,
+        "open_circuit": 3.67,
+        "cutoff": 2.0
+      },
+      "capacity_mah": {
+        "typical": 18500,
+        "conditions": "1 mA, 20 °C, 2.0 V cut-off"
+      },
+      "weight_g": 90,
+      "max_pulse_ma": 250,
+      "lithium_content_g": 4.9,
+      "temperature_c": {
+        "operating": [
+          -60,
+          70
+        ]
+      },
+      "notes": "Data are for the Saft LS 33600C. Saft lists 80 mA as the continuous current that still delivers 50 percent of nominal capacity.",
+      "sources": [
+        "saft-ls33600c"
+      ]
+    }
+  ],
+  "devices": [
+    "Utility meters",
+    "Tracking devices",
+    "Alarm and security devices",
+    "Data loggers",
+    "Professional electronics"
+  ],
+  "interchange": [
+    {
+      "id": "d",
+      "relation": "do-not-substitute",
+      "note": "The cell is close to D size but delivers 3.6 V, which can damage devices built for 1.5 V D cells."
+    }
+  ],
+  "safety": [
+    "Primary lithium cells are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Do not solder directly to the cell; use tabbed or pinned versions.",
+    "Lithium thionyl chloride cells run at 3.6 V; most 1.5 V devices are not designed for that voltage.",
+    "Saft notes that currents above the recommended continuous level may require thermal protection."
+  ],
+  "notes": "Industrial D-size bobbin cell with a high capacity for long-life, low-drain devices.",
+  "sources": [
+    {
+      "id": "saft-ls33600c",
+      "title": "Saft LS 33600C primary lithium battery data sheet",
+      "publisher": "Saft",
+      "url": "https://www.100y.com.tw/pdf_file/02-SAFT-LS33600C.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

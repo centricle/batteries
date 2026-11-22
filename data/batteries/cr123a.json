@@ -1,0 +1,168 @@
+{
+  "id": "cr123a",
+  "name": "CR123A",
+  "category": "photo",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "123",
+    "123A",
+    "CR123",
+    "CR17345",
+    "2/3A",
+    "Photo lithium cell"
+  ],
+  "legacy_paths": [
+    "/button-cells/cr123a"
+  ],
+  "codes": [
+    {
+      "code": "CR17345",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "5018LC",
+      "system": "ANSI",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "EL123AP",
+      "system": "Energizer",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Sold as Energizer 123"
+    },
+    {
+      "code": "CR123A",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "DL123A",
+      "system": "Duracell",
+      "chemistry": "lithium-manganese-dioxide"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 17,
+      "min": 16,
+      "max": 17
+    },
+    "height": {
+      "nominal": 34.5,
+      "min": 33.5,
+      "max": 34.5
+    },
+    "note": "Height includes the positive terminal. Datasheet drawing gives the positive terminal diameter as 9.6 mm maximum and height as 1.0 mm minimum.",
+    "sources": [
+      "energizer-123",
+      "panasonic-cr123a"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button",
+      "diameter": 9.6,
+      "height": 1
+    },
+    "negative": {
+      "style": "recessed",
+      "diameter": 11,
+      "note": "Flat contact area 11.0 mm minimum diameter, recessed 0.5 to 0.9 mm in the can end."
+    },
+    "note": "Contact dimensions from the Energizer 123 datasheet drawing."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3,
+        "cutoff": 2
+      },
+      "capacity_mah": {
+        "typical": 1500,
+        "range": [
+          1500,
+          1550
+        ],
+        "conditions": "Energizer 123: 100 ohm continuous to 2.0 V, 21 °C. Panasonic CR123A lists 1,550 mAh nominal at a 20 mA continuous drain."
+      },
+      "weight_g": 16.5,
+      "max_continuous_ma": 1500,
+      "max_pulse_ma": 3500,
+      "lithium_content_g": 0.55,
+      "temperature_c": {
+        "operating": [
+          -40,
+          60
+        ],
+        "storage": [
+          -40,
+          60
+        ]
+      },
+      "notes": "Panasonic rates its CR123A for -40 to 70 °C operation, with a note to consult Panasonic outside -20 to 60 °C. Energizer weight 16.5 g, Panasonic about 16.0 g.",
+      "sources": [
+        "energizer-123",
+        "panasonic-cr123a"
+      ]
+    }
+  ],
+  "devices": [
+    "Digital and film cameras",
+    "Camera flashes",
+    "Flashlights and weapon lights",
+    "Smoke and security alarms",
+    "Electronic door locks",
+    "Wireless sensors",
+    "Medical devices such as automated external defibrillators",
+    "Laser rangefinders"
+  ],
+  "interchange": [
+    {
+      "id": "16340",
+      "relation": "fits-with-caveat",
+      "note": "A 16340 (RCR123A) lithium-ion cell has nearly the same size but charges to 4.2 V and runs at a nominal 3.6 to 3.7 V, so some devices designed for a 3.0 V primary cell can be damaged or give wrong readings."
+    }
+  ],
+  "safety": [
+    "Lithium photo cells are primary cells and are not designed to be recharged; charging can cause venting, fire or rupture.",
+    "Do not short-circuit, crush, heat or disassemble. The cell contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the cell safe to abuse.",
+    "Replace all cells in a device at the same time and do not mix them with used cells or other types.",
+    "A rechargeable 3.7 V lithium-ion cell sold in this size is a different product (see 16340) and must not be used where a 3.0 V primary cell is specified unless the device manufacturer allows it."
+  ],
+  "notes": "The IEC code CR17345 encodes a diameter of 17 mm and a height of 34.5 mm. The name 123A is a consumer name that has no relation to the A (17 mm by 50 mm) cell size.",
+  "sources": [
+    {
+      "id": "energizer-123",
+      "title": "Energizer 123 (EL123AP) product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/123.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-cr123a",
+      "title": "CR123A Cylindrical-type Lithium Battery (Standard type) datasheet, July 2024",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/CR123A_Datasheet_EN_240701.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "farnell-dl123a",
+      "title": "DL123A P2 Duracell battery listing",
+      "publisher": "Farnell",
+      "url": "https://uk.farnell.com/duracell/dl123a-p2/battery-lithium-manganese-dioxide/dp/4144094",
+      "accessed": "2026-11-22",
+      "kind": "retailer",
+      "covers": [
+        "codes"
+      ],
+      "note": "Confirms the Duracell DL123A designation; the datasheet itself was not opened."
+    }
+  ],
+  "updated": "2026-11-22"
+}

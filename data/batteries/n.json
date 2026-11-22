@@ -1,0 +1,203 @@
+{
+  "id": "n",
+  "name": "N",
+  "category": "household",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "Lady",
+    "Size N",
+    "UM-5"
+  ],
+  "legacy_paths": [
+    "/traditional/n"
+  ],
+  "codes": [
+    {
+      "code": "LR1",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "R1",
+      "system": "IEC",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "HR1",
+      "system": "IEC",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "KR1",
+      "system": "IEC",
+      "chemistry": "nicd"
+    },
+    {
+      "code": "910A",
+      "system": "ANSI",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "910D",
+      "system": "ANSI",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "UM-5",
+      "system": "JIS"
+    },
+    {
+      "code": "E90",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "MN9100",
+      "system": "Duracell",
+      "chemistry": "alkaline"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 12,
+      "min": 10.9,
+      "max": 12
+    },
+    "height": {
+      "nominal": 30.2,
+      "min": 28.45,
+      "max": 30.2
+    },
+    "note": "Height includes the positive terminal. Duracell shows a 29.1 mm lower limit.",
+    "sources": [
+      "energizer-e90",
+      "duracell-mn9100"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button",
+      "diameter": 4,
+      "height": 0.5
+    },
+    "negative": {
+      "style": "flat",
+      "diameter": 5
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5,
+        "cutoff": 0.8
+      },
+      "capacity_mah": {
+        "typical": 800,
+        "conditions": "100 ohm load to 0.8 V, 21 °C (Duracell MN9100 rated capacity)"
+      },
+      "weight_g": 9,
+      "shelf_life_years": 5,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "Energizer lists a 5-year shelf life.",
+      "sources": [
+        "energizer-e90",
+        "duracell-mn9100",
+        "duracell-summary"
+      ]
+    },
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "typical": 135,
+        "conditions": "Nominal capacity; standard charge 4.5 mA for more than 48 h"
+      },
+      "weight_g": 9,
+      "temperature_c": {
+        "charge": [
+          0,
+          70
+        ],
+        "discharge": [
+          -20,
+          70
+        ],
+        "storage": [
+          -30,
+          70
+        ]
+      },
+      "notes": "Specification of one product (cell type N-150NS), measuring 12.0 mm by 29.3 mm with tube; the manufacturer is not named on the sheet.",
+      "sources": [
+        "nimh-n-150ns"
+      ]
+    }
+  ],
+  "devices": [
+    "Car key fobs",
+    "Laser pointers",
+    "Garage door remotes",
+    "Medical alert pendants",
+    "Small flashlights",
+    "Pagers",
+    "Camera remote triggers"
+  ],
+  "interchange": [
+    {
+      "id": "aaaa",
+      "relation": "same-size",
+      "note": "AAAA cells are 1.5 V but longer and thinner than an N cell and do not fit N holders."
+    }
+  ],
+  "safety": [
+    "Do not mix chemistries, brands or charge states in one device.",
+    "Do not recharge alkaline or zinc-carbon cells."
+  ],
+  "notes": "A rare size now mostly found in older remotes, pagers and key fobs. Wikipedia also lists KR1 (NiCd), but no datasheet was found.",
+  "sources": [
+    {
+      "id": "energizer-e90",
+      "title": "Energizer E90 N product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/e90.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-mn9100",
+      "title": "Duracell MN9100 N product datasheet",
+      "publisher": "Duracell",
+      "url": "https://files.batteryjunction.com/frontend/files/DuracellN9100.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-summary",
+      "title": "Duracell alkaline primary cells and batteries, selected specification summary (rated capacity, dimensions, cross reference)",
+      "publisher": "Duracell",
+      "url": "https://assets.unilogcorp.com/267/ITEM/DOC/Duracell_MN908_Specification_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "nimh-n-150ns",
+      "title": "Cell type N-150NS NiMH specifications (archive.org copy, manufacturer not named on the sheet)",
+      "publisher": "Unattributed manufacturer datasheet",
+      "url": "https://archive.org/download/manualsonline-id-5b826764-a2e7-464f-9c6c-f59ea6b17dd1/5b826764-a2e7-464f-9c6c-f59ea6b17dd1.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

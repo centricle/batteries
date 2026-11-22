@@ -1,0 +1,409 @@
+{
+  "id": "aaa",
+  "name": "AAA",
+  "category": "household",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "Triple A",
+    "Micro",
+    "Microlight",
+    "U16",
+    "HP16",
+    "Type 286",
+    "Size 12",
+    "#7 (China)"
+  ],
+  "legacy_paths": [
+    "/traditional/aaa",
+    "/traditional/aaa-lithium"
+  ],
+  "codes": [
+    {
+      "code": "LR03",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "R03",
+      "system": "IEC",
+      "chemistry": "zinc-carbon",
+      "note": "Also used for zinc chloride heavy duty cells"
+    },
+    {
+      "code": "FR03",
+      "system": "IEC",
+      "chemistry": "lithium-iron-disulfide"
+    },
+    {
+      "code": "HR03",
+      "system": "IEC",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "KR03",
+      "system": "IEC",
+      "chemistry": "nicd"
+    },
+    {
+      "code": "ZR03",
+      "system": "IEC",
+      "chemistry": "nickel-oxyhydroxide"
+    },
+    {
+      "code": "24A",
+      "system": "ANSI",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "24D",
+      "system": "ANSI",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "24LF",
+      "system": "ANSI",
+      "chemistry": "lithium-iron-disulfide"
+    },
+    {
+      "code": "UM-4",
+      "system": "JIS",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "AM-4",
+      "system": "JIS",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "EN92",
+      "system": "Energizer",
+      "chemistry": "alkaline",
+      "note": "Industrial (not for retail trade)"
+    },
+    {
+      "code": "L92",
+      "system": "Energizer",
+      "chemistry": "lithium-iron-disulfide",
+      "note": "Ultimate Lithium"
+    },
+    {
+      "code": "1212",
+      "system": "Eveready",
+      "chemistry": "zinc-chloride",
+      "note": "Super Heavy Duty"
+    },
+    {
+      "code": "MN2400",
+      "system": "Duracell",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "MX2400",
+      "system": "Duracell",
+      "chemistry": "alkaline",
+      "note": "Ultra"
+    },
+    {
+      "code": "BK-4MCC",
+      "system": "Panasonic",
+      "chemistry": "nimh",
+      "note": "eneloop, fourth generation"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 10.5,
+      "min": 9.5,
+      "max": 10.5
+    },
+    "height": {
+      "nominal": 44.5,
+      "min": 43.3,
+      "max": 44.5
+    },
+    "note": "Height includes the positive terminal. An older Duracell sheet shows a 42.5 mm lower limit.",
+    "sources": [
+      "energizer-en92",
+      "energizer-l92",
+      "duracell-mn2400"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button",
+      "diameter": 3.8,
+      "height": 0.8
+    },
+    "negative": {
+      "style": "flat",
+      "diameter": 4.3
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5,
+        "cutoff": 0.8
+      },
+      "capacity_mah": {
+        "typical": 1150,
+        "conditions": "75 ohm load to 0.8 V, 21 °C (Duracell MN2400 rated capacity)"
+      },
+      "weight_g": 11.5,
+      "shelf_life_years": 7,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "Weight, operating range and shelf life (80% of initial capacity at 21 °C) are from the Energizer EN92 sheet. Duracell lists 11 g.",
+      "sources": [
+        "energizer-en92",
+        "duracell-mn2400",
+        "duracell-summary"
+      ]
+    },
+    {
+      "chemistry": "lithium-iron-disulfide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5,
+        "cutoff": 1
+      },
+      "capacity_mah": {
+        "typical": 1250,
+        "range": [
+          1250,
+          1300
+        ],
+        "conditions": "100 mA continuous to 1.0 V (1250 mAh); 10 mA continuous to 1.0 V (1300 mAh)"
+      },
+      "weight_g": 7.6,
+      "max_continuous_ma": 1500,
+      "max_pulse_ma": 2000,
+      "shelf_life_years": 15,
+      "temperature_c": {
+        "operating": [
+          -40,
+          60
+        ],
+        "storage": [
+          -40,
+          60
+        ]
+      },
+      "notes": "Lithium content is stated as less than 1 gram. Pulse rating is 2 s on, 8 s off.",
+      "sources": [
+        "energizer-l92",
+        "energizer-ul-specs"
+      ]
+    },
+    {
+      "chemistry": "nimh",
+      "label": "Low self-discharge (eneloop BK-4MCC)",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2,
+        "cutoff": 1
+      },
+      "capacity_mah": {
+        "typical": 800,
+        "range": [
+          750,
+          800
+        ],
+        "conditions": "Minimum 750 mAh: charge 75 mA for 16 h, discharge 150 mA to 1.0 V, 20 °C. Typical 800 mAh as tabulated by Wikipedia."
+      },
+      "weight_g": 13,
+      "cycle_life": 2100,
+      "self_discharge": "About 70% of capacity retained after 10 years in storage",
+      "temperature_c": {
+        "charge": [
+          0,
+          40
+        ],
+        "discharge": [
+          -5,
+          50
+        ]
+      },
+      "sources": [
+        "panasonic-bk4mcc",
+        "wikipedia-eneloop"
+      ]
+    },
+    {
+      "chemistry": "zinc-chloride",
+      "label": "Heavy duty (Eveready Super Heavy Duty)",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5
+      },
+      "capacity_mah": {
+        "typical": 540,
+        "conditions": "25 mA continuous to 0.8 V, 21 °C"
+      },
+      "weight_g": 7.3,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "sources": [
+        "energizer-1212",
+        "energizer-carbonzinc"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion-regulated",
+      "label": "USB-C rechargeable, 1.5 V regulated",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.5,
+        "cutoff": 0.9
+      },
+      "capacity_mah": {
+        "typical": 500,
+        "conditions": "Nominal 500 mAh (minimum 400 mAh) at 0.2 C to 0.9 V, 20 °C"
+      },
+      "weight_g": 7,
+      "max_continuous_ma": 500,
+      "cycle_life": 1200,
+      "self_discharge": "Up to 2% per month at 20 °C",
+      "temperature_c": {
+        "discharge": [
+          0,
+          45
+        ],
+        "storage": [
+          -20,
+          25
+        ]
+      },
+      "notes": "A built-in 3.7 V, 200 mAh lithium-ion cell feeds a regulator; output drops to 1.05 V below 10% charge. Charges through the built-in USB-C port at 100 mA.",
+      "sources": [
+        "ansmann-aaa-li"
+      ]
+    }
+  ],
+  "devices": [
+    "Remote controls",
+    "Wireless mice and keyboards",
+    "Flashlights",
+    "Digital thermometers",
+    "Game controllers",
+    "Wall clocks",
+    "Toys",
+    "Portable radios"
+  ],
+  "interchange": [
+    {
+      "id": "10440",
+      "relation": "do-not-substitute",
+      "note": "A 10440 lithium-ion cell has the same size as an AAA but runs at 3.7 V, which damages most devices built for 1.5 V cells."
+    },
+    {
+      "id": "aa",
+      "relation": "same-size",
+      "note": "AA cells share the 1.5 V alkaline chemistry but are larger and do not fit AAA holders."
+    }
+  ],
+  "safety": [
+    "Do not mix chemistries, brands or charge states in one device.",
+    "Only NiMH and USB-rechargeable lithium-ion AAA cells are designed to be recharged; charging alkaline, zinc-carbon or lithium iron disulfide AAA cells can cause leakage or rupture."
+  ],
+  "notes": "JIS UM-4 names the zinc-carbon cell and AM-4 the alkaline cell. Wikipedia also lists ZR03 for nickel oxyhydroxide; no datasheet was found for that cell.",
+  "sources": [
+    {
+      "id": "energizer-en92",
+      "title": "Energizer EN92 AAA product datasheet",
+      "publisher": "Energizer",
+      "url": "https://files.batteryjunction.com/frontend/files/EN92.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-l92",
+      "title": "Energizer L92 AAA Ultimate Lithium product datasheet",
+      "publisher": "Energizer",
+      "url": "https://files.batteryjunction.com/frontend/files/EnergizerAAAUltiamteDataSheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-mn2400",
+      "title": "Duracell MN2400 AAA specification sheet (older revision)",
+      "publisher": "Duracell",
+      "url": "https://www.officestationery.co.uk/documents/10422-619690.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-summary",
+      "title": "Duracell alkaline primary cells and batteries, selected specification summary (rated capacity, dimensions, cross reference)",
+      "publisher": "Duracell",
+      "url": "https://assets.unilogcorp.com/267/ITEM/DOC/Duracell_MN908_Specification_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "energizer-ul-specs",
+      "title": "Energizer Ultimate Lithium AA and AAA technical specifications and intrinsic safety certificate (L91, L92)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/lithiumintrinsicsafety.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-bk4mcc",
+      "title": "eneloop BK-4MCC cell specifications",
+      "publisher": "Panasonic",
+      "url": "https://farnell.com/datasheets/3684494.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-eneloop",
+      "title": "Eneloop",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Eneloop",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "typical capacity",
+        "cycle life",
+        "retention"
+      ]
+    },
+    {
+      "id": "energizer-1212",
+      "title": "Eveready 1212 AAA Super Heavy Duty product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/1212.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-carbonzinc",
+      "title": "Energizer carbon zinc application manual",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/carbonzinc_appman.pdf",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "ansmann-aaa-li",
+      "title": "ANSMANN Li-Ion AAA (10430) 1.5 V USB-C cell specification (1311-0028)",
+      "publisher": "ANSMANN",
+      "url": "https://www.farnell.com/datasheets/4018068.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

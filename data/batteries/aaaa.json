@@ -1,0 +1,162 @@
+{
+  "id": "aaaa",
+  "name": "AAAA",
+  "category": "household",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "Mini",
+    "Quad A",
+    "#9 (China)"
+  ],
+  "legacy_paths": [
+    "/traditional/aaaa"
+  ],
+  "codes": [
+    {
+      "code": "LR8D425",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "25A",
+      "system": "ANSI",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "UM-6",
+      "system": "JIS"
+    },
+    {
+      "code": "E96",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "MX2500",
+      "system": "Duracell",
+      "chemistry": "alkaline",
+      "note": "Ultra"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 8.3,
+      "min": 7.7,
+      "max": 8.3
+    },
+    "height": {
+      "nominal": 42.5,
+      "max": 42.5
+    },
+    "note": "Energizer prints 42.5 mm as a reference dimension for height; Duracell also gives 42.5 mm as the maximum.",
+    "sources": [
+      "energizer-e96",
+      "duracell-summary",
+      "wikipedia-sizes"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button",
+      "diameter": 3.8,
+      "height": 0.7
+    },
+    "negative": {
+      "style": "flat",
+      "diameter": 2.3
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5
+      },
+      "weight_g": 6.5,
+      "shelf_life_years": 5,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "Energizer publishes capacity only as a discharge chart. Duracell lists the MX2500 at 6.0 g. Wikipedia lists a typical alkaline capacity of about 625 mAh without test conditions.",
+      "sources": [
+        "energizer-e96",
+        "duracell-summary",
+        "wikipedia-sizes"
+      ]
+    },
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "range": [
+          400,
+          600
+        ]
+      },
+      "notes": "Range as listed by Wikipedia; no manufacturer datasheet for an AAAA NiMH cell was found. Few products exist in this size.",
+      "sources": [
+        "wikipedia-sizes"
+      ]
+    }
+  ],
+  "devices": [
+    "Stylus pens",
+    "Laser pointers",
+    "Small flashlights",
+    "Glucose meters",
+    "Penlights",
+    "Bluetooth headsets"
+  ],
+  "interchange": [
+    {
+      "id": "aaa",
+      "relation": "same-size",
+      "note": "AAA cells have the same 1.5 V nominal voltage but a larger diameter (10.5 mm against 8.3 mm) and do not fit AAAA holders."
+    }
+  ],
+  "safety": [
+    "Do not mix chemistries, brands or charge states in one device.",
+    "Do not charge alkaline cells."
+  ],
+  "notes": "Wikipedia lists \"Mini\" and MX2500 among the informal names. Capacity data is sparse in this size.",
+  "sources": [
+    {
+      "id": "energizer-e96",
+      "title": "Energizer E96 AAAA product datasheet",
+      "publisher": "Energizer",
+      "url": "https://files.batteryjunction.com/frontend/files/E96.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-summary",
+      "title": "Duracell alkaline primary cells and batteries, selected specification summary (rated capacity, dimensions, cross reference)",
+      "publisher": "Duracell",
+      "url": "https://assets.unilogcorp.com/267/ITEM/DOC/Duracell_MN908_Specification_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "wikipedia-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "aliases",
+        "informal names"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

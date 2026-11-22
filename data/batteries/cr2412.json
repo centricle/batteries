@@ -1,0 +1,108 @@
+{
+  "id": "cr2412",
+  "name": "CR2412",
+  "codes": [
+    {
+      "code": "CR2412",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2412",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-dioxide"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 24.5,
+      "max": 24.5
+    },
+    "height": {
+      "nominal": 1.2,
+      "max": 1.2
+    },
+    "note": "Panasonic publishes maximum dimensions only; nominal is set to the maximum.",
+    "sources": [
+      "panasonic-cr2412"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 100,
+        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated"
+      },
+      "weight_g": 2.0,
+      "temperature_c": {
+        "operating": [
+          -30,
+          85
+        ]
+      },
+      "sources": [
+        "panasonic-cr2412"
+      ]
+    }
+  ],
+  "devices": [
+    "Card-type electronic devices",
+    "Memory backup",
+    "Electronic tags"
+  ],
+  "interchange": [
+    {
+      "id": "cr2430",
+      "relation": "fits-with-caveat",
+      "note": "Same 24.5 mm diameter and 1.8 mm thicker; fits only where the holder has the clearance."
+    }
+  ],
+  "sources": [
+    {
+      "id": "panasonic-cr2412",
+      "title": "CR2412 CR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/CR2412_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

@@ -1,0 +1,553 @@
+{
+  "id": "aa",
+  "name": "AA",
+  "category": "household",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "Double A",
+    "Mignon",
+    "Penlight",
+    "Pencil-sized",
+    "U12",
+    "HP7",
+    "Type 316",
+    "Size 15",
+    "#5 (China)"
+  ],
+  "legacy_paths": [
+    "/traditional/aa",
+    "/traditional/aa-lithium"
+  ],
+  "codes": [
+    {
+      "code": "LR6",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "R6",
+      "system": "IEC",
+      "chemistry": "zinc-carbon",
+      "note": "Also used for zinc chloride heavy duty cells"
+    },
+    {
+      "code": "FR6",
+      "system": "IEC",
+      "chemistry": "lithium-iron-disulfide"
+    },
+    {
+      "code": "HR6",
+      "system": "IEC",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "KR6",
+      "system": "IEC",
+      "chemistry": "nicd"
+    },
+    {
+      "code": "ZR6",
+      "system": "IEC",
+      "chemistry": "nickel-oxyhydroxide"
+    },
+    {
+      "code": "15A",
+      "system": "ANSI",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "15D",
+      "system": "ANSI",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "15LF",
+      "system": "ANSI",
+      "chemistry": "lithium-iron-disulfide"
+    },
+    {
+      "code": "1.2H2",
+      "system": "ANSI",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "1.2K2",
+      "system": "ANSI",
+      "chemistry": "nicd"
+    },
+    {
+      "code": "UM-3",
+      "system": "JIS",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "AM-3",
+      "system": "JIS",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "E91",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "L91",
+      "system": "Energizer",
+      "chemistry": "lithium-iron-disulfide",
+      "note": "Ultimate Lithium"
+    },
+    {
+      "code": "1215",
+      "system": "Eveready",
+      "chemistry": "zinc-chloride",
+      "note": "Super Heavy Duty"
+    },
+    {
+      "code": "MN1500",
+      "system": "Duracell",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "MX1500",
+      "system": "Duracell",
+      "chemistry": "alkaline",
+      "note": "Ultra"
+    },
+    {
+      "code": "815",
+      "system": "Rayovac",
+      "chemistry": "alkaline",
+      "note": "High Energy"
+    },
+    {
+      "code": "BK-3MCC",
+      "system": "Panasonic",
+      "chemistry": "nimh",
+      "note": "eneloop, fourth generation"
+    },
+    {
+      "code": "ZR6XT",
+      "system": "Panasonic",
+      "chemistry": "nickel-oxyhydroxide",
+      "note": "Oxyride"
+    },
+    {
+      "code": "BA-3058/U",
+      "system": "Military",
+      "chemistry": "alkaline"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 14.5,
+      "min": 13.5,
+      "max": 14.5
+    },
+    "height": {
+      "nominal": 50.5,
+      "min": 49.5,
+      "max": 50.5
+    },
+    "note": "Height includes the positive terminal. The Oxyride ZR6XT datasheet allows a height down to 49.2 mm.",
+    "sources": [
+      "energizer-e91",
+      "energizer-l91",
+      "duracell-mn1500",
+      "panasonic-zr6xt"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button",
+      "diameter": 5.5,
+      "height": 1
+    },
+    "negative": {
+      "style": "flat",
+      "diameter": 7
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5,
+        "cutoff": 0.8
+      },
+      "capacity_mah": {
+        "typical": 2850,
+        "conditions": "43 ohm load to 0.8 V, 21 °C (Duracell MN1500 rated capacity)"
+      },
+      "weight_g": 23,
+      "shelf_life_years": 10,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "Weight, operating range and shelf life are from the Energizer E91 datasheet. Rated capacity is Duracell's; Energizer publishes capacity only as a chart.",
+      "sources": [
+        "energizer-e91",
+        "duracell-mn1500",
+        "duracell-summary"
+      ]
+    },
+    {
+      "chemistry": "lithium-iron-disulfide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5,
+        "cutoff": 1
+      },
+      "capacity_mah": {
+        "typical": 3500,
+        "range": [
+          3400,
+          3500
+        ],
+        "conditions": "100 mA continuous to 1.0 V (3500 mAh); 1000 mA continuous to 1.0 V (3400 mAh)"
+      },
+      "weight_g": 14.5,
+      "max_continuous_ma": 2000,
+      "max_pulse_ma": 3000,
+      "shelf_life_years": 15,
+      "lithium_content_g": 0.98,
+      "temperature_c": {
+        "operating": [
+          -40,
+          60
+        ],
+        "storage": [
+          -40,
+          60
+        ]
+      },
+      "notes": "The L91 datasheet rates 2.0 A continuous and 3.0 A pulse (2 s on, 8 s off); Energizer's separate technical specification lists a 3000 mA maximum continuous rate. Shelf life is 15 years at 21 °C to 90% of rated capacity.",
+      "sources": [
+        "energizer-l91",
+        "energizer-ul-specs"
+      ]
+    },
+    {
+      "chemistry": "nimh",
+      "label": "Low self-discharge (eneloop BK-3MCC)",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2,
+        "cutoff": 1
+      },
+      "capacity_mah": {
+        "typical": 2000,
+        "range": [
+          1900,
+          2000
+        ],
+        "conditions": "Minimum 1900 mAh: charge 190 mA for 16 h, discharge 380 mA to 1.0 V, 25 °C. Typical 2000 mAh as tabulated by Wikipedia."
+      },
+      "weight_g": 27,
+      "cycle_life": 2100,
+      "self_discharge": "About 70% of capacity retained after 10 years in storage",
+      "temperature_c": {
+        "charge": [
+          0,
+          40
+        ],
+        "discharge": [
+          -5,
+          50
+        ]
+      },
+      "notes": "Cycle life and retention are from the Wikipedia table of eneloop generations; the Panasonic specification sheet gives minimum capacity, impedance (about 25 milliohms at 1 kHz) and temperature limits. The cell measures 14.35 mm by 50.4 mm with label.",
+      "sources": [
+        "panasonic-bk3mcc",
+        "wikipedia-eneloop"
+      ]
+    },
+    {
+      "chemistry": "zinc-chloride",
+      "label": "Heavy duty (Eveready Super Heavy Duty)",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5
+      },
+      "capacity_mah": {
+        "typical": 1100,
+        "conditions": "25 mA continuous to 0.8 V, 21 °C"
+      },
+      "weight_g": 15,
+      "temperature_c": {
+        "operating": [
+          -18,
+          55
+        ]
+      },
+      "notes": "Energizer states that most cylindrical Eveready carbon zinc cells use the zinc chloride system.",
+      "sources": [
+        "energizer-1215",
+        "energizer-r6-eu",
+        "energizer-carbonzinc"
+      ]
+    },
+    {
+      "chemistry": "nicd",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2,
+        "cutoff": 1
+      },
+      "capacity_mah": {
+        "typical": 1000,
+        "conditions": "Nominal capacity; standard charge 100 mA for 15 h, discharge to 1.0 V"
+      },
+      "weight_g": 24,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          60
+        ]
+      },
+      "notes": "Specification of one 1000 mAh product; the cell is slightly smaller than the standard envelope (14.5 mm by 49.0 mm with tube).",
+      "sources": [
+        "emmerich-nicd-aa"
+      ]
+    },
+    {
+      "chemistry": "nickel-oxyhydroxide",
+      "label": "Oxyride (discontinued product)",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5,
+        "open_circuit": 1.7
+      },
+      "weight_g": 23,
+      "notes": "Panasonic warns that the 1.7 V initial voltage can confuse remaining-capacity indicators in some devices. No capacity is stated in the text of the datasheet.",
+      "sources": [
+        "panasonic-zr6xt"
+      ]
+    },
+    {
+      "chemistry": "nickel-zinc",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.6,
+        "cutoff": 1.3,
+        "charge_max": 1.9
+      },
+      "capacity_mah": {
+        "typical": 1500,
+        "conditions": "Nominal 1500 mAh at 300 mA to 1.3 V (minimum 1375 mAh)"
+      },
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          65
+        ]
+      },
+      "notes": "The 1.6 V nominal voltage is above the 1.5 V of primary cells, which some devices do not tolerate. A second manufacturer sheet (Voltcraft HR6) also lists 1.6 V and 1500 mAh.",
+      "sources": [
+        "pkcell-nizn-aa",
+        "voltcraft-nizn-aa"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion-regulated",
+      "label": "USB-C rechargeable, 1.5 V regulated",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.5
+      },
+      "capacity_mah": {
+        "typical": 2000,
+        "conditions": "Nominal 2000 mAh (minimum 1800 mAh) at 1.5 V; 3.26 Wh"
+      },
+      "max_continuous_ma": 2000,
+      "cycle_life": 1500,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ],
+        "storage": [
+          -20,
+          25
+        ]
+      },
+      "notes": "An internal circuit regulates the output of a 3.7 V lithium-ion cell to 1.5 V and drops it to 1.1 V near 5% remaining capacity. Charged only through the built-in USB-C port at 350 mA.",
+      "sources": [
+        "ansmann-aa-li"
+      ]
+    }
+  ],
+  "devices": [
+    "Remote controls",
+    "Flashlights",
+    "Wireless mice and keyboards",
+    "Game controllers",
+    "Wall clocks",
+    "Toys",
+    "Portable radios",
+    "Digital cameras"
+  ],
+  "interchange": [
+    {
+      "id": "14500",
+      "relation": "do-not-substitute",
+      "note": "A 14500 lithium-ion cell has the same diameter and length as an AA but runs at 3.7 V, which damages most devices built for 1.5 V cells."
+    },
+    {
+      "id": "er14505",
+      "relation": "do-not-substitute",
+      "note": "The ER14505 lithium thionyl chloride cell is AA-sized but delivers 3.6 V, which damages devices built for 1.5 V cells."
+    },
+    {
+      "id": "aaa",
+      "relation": "same-size",
+      "note": "AAA cells share the 1.5 V alkaline chemistry but are smaller, and are not interchangeable with AA cells."
+    }
+  ],
+  "safety": [
+    "Do not mix chemistries, brands or charge states in one device.",
+    "Only NiMH, NiCd, nickel-zinc and USB-rechargeable lithium-ion AA cells are designed to be recharged; charging alkaline, zinc-carbon or lithium iron disulfide AA cells can cause leakage or rupture.",
+    "Nickel-zinc cells (1.6 V) and Oxyride cells (1.7 V initial) start above 1.5 V and can mislead battery gauges."
+  ],
+  "notes": "The most widely used consumer battery size. The size letter predates IEC; IEC names the size 6 and prefixes a chemistry letter. JIS UM-3 names the zinc-carbon cell and AM-3 the alkaline cell.",
+  "sources": [
+    {
+      "id": "energizer-e91",
+      "title": "Energizer E91 AA product datasheet (form EBC-1102O)",
+      "publisher": "Energizer",
+      "url": "https://www.farnell.com/datasheets/1571853.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-l91",
+      "title": "Energizer L91 AA Ultimate Lithium product datasheet",
+      "publisher": "Energizer",
+      "url": "https://files.batteryjunction.com/frontend/files/L91.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-mn1500",
+      "title": "Duracell MN1500 AA specification sheet (older revision)",
+      "publisher": "Duracell",
+      "url": "https://www.officestationery.co.uk/documents/10427-416113.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-zr6xt",
+      "title": "Oxyride ZR6XT AA dry battery specifications",
+      "publisher": "Panasonic",
+      "url": "https://datasheet.sic-components.com/ZR6XT.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "duracell-summary",
+      "title": "Duracell alkaline primary cells and batteries, selected specification summary (rated capacity, dimensions, cross reference)",
+      "publisher": "Duracell",
+      "url": "https://assets.unilogcorp.com/267/ITEM/DOC/Duracell_MN908_Specification_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "energizer-ul-specs",
+      "title": "Energizer Ultimate Lithium AA and AAA technical specifications and intrinsic safety certificate (L91, L92)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/lithiumintrinsicsafety.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-bk3mcc",
+      "title": "eneloop BK-3MCC cell specifications",
+      "publisher": "Panasonic",
+      "url": "https://farnell.com/datasheets/3684493.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-eneloop",
+      "title": "Eneloop",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Eneloop",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "typical capacity",
+        "cycle life",
+        "retention"
+      ]
+    },
+    {
+      "id": "energizer-1215",
+      "title": "Eveready 1215 AA Super Heavy Duty product datasheet",
+      "publisher": "Energizer",
+      "url": "https://files.batteryjunction.com/frontend/files/energizer-1215sw-4.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-r6-eu",
+      "title": "Eveready Super Heavy Duty (R6) AA product datasheet, European region",
+      "publisher": "Energizer",
+      "url": "https://www.farnell.com/datasheets/2934215.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-carbonzinc",
+      "title": "Energizer carbon zinc application manual",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/carbonzinc_appman.pdf",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "emmerich-nicd-aa",
+      "title": "Emmerich AA 1000 mAh NiCd rechargeable battery specifications (Conrad datasheet)",
+      "publisher": "Emmerich",
+      "url": "https://asset.conrad.com/media10/add/160267/c1/-/en/000779210DS01/podatkovna-tablica-779210-emmerich-aa-zlf-specijalni-akumulatori-mignon-aa-z-lemna-zastavica-nicd-12-v-1000-mah.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "pkcell-nizn-aa",
+      "title": "Ni-Zn AA 2500mWh 1.6V technology specification",
+      "publisher": "PKCELL",
+      "url": "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/2586/Ni-ZN%20AA2500_DS.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "voltcraft-nizn-aa",
+      "title": "Voltcraft HR6 Ni-Zn 1500 mAh AA rechargeable battery datasheet",
+      "publisher": "Voltcraft (Conrad)",
+      "url": "https://asset.conrad.com/media10/add/160267/c1/-/en/003208871DS00/karta-katalogowa-3208871-akumulator-aar06-voltcraft-vc-16044355-vc-16044355-nizn-1500-mah-16-v-8-szt.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "ansmann-aa-li",
+      "title": "ANSMANN Li-Ion AA type 2000 (1312-0036) product datasheet",
+      "publisher": "ANSMANN",
+      "url": "https://shop.ansmann.de/media/datasheets/1312-0036_Li-Ion-batteries-AA-type-2000-(min.-1800-mAh)-4pcs.-paper-blister_DS_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

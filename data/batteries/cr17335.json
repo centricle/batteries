@@ -1,0 +1,125 @@
+{
+  "id": "cr17335",
+  "name": "CR17335",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "CR-2/3A",
+    "2/3A lithium",
+    "17335"
+  ],
+  "codes": [
+    {
+      "code": "CR17335",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR17335",
+      "system": "Maxell",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR-2/3AU",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-dioxide"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 17.0,
+      "max": 17.0
+    },
+    "height": {
+      "nominal": 33.5,
+      "max": 33.5
+    },
+    "note": "Maximum limits on the Panasonic CR-2/3AU sheet; Maxell lists 17 by 33.5 mm. Dimensions are without tabs.",
+    "sources": [
+      "panasonic-cr-2-3au",
+      "maxell-cr17335"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 1750,
+        "range": [
+          1600,
+          1750
+        ],
+        "conditions": "Maxell: 5 mA nominal discharge current; Panasonic CR-2/3AU rates 1,600 mAh at 2.5 mA continuous"
+      },
+      "weight_g": 16,
+      "max_pulse_ma": 2000,
+      "temperature_c": {
+        "operating": [
+          -40,
+          85
+        ]
+      },
+      "notes": "Panasonic lists a 2 A maximum pulse current.",
+      "sources": [
+        "maxell-cr17335",
+        "panasonic-cr-2-3au"
+      ]
+    }
+  ],
+  "devices": [
+    "Smoke alarms",
+    "Utility meters",
+    "Internet of things devices",
+    "Home security sensors",
+    "Memory backup"
+  ],
+  "interchange": [
+    {
+      "id": "2-3a",
+      "relation": "do-not-substitute",
+      "note": "The NiMH 2/3A is 5 mm shorter and runs at 1.2 V; the two only share the 17 mm diameter and the 2/3A name."
+    },
+    {
+      "id": "cr123a",
+      "relation": "fits-with-caveat",
+      "note": "A CR123A is also 3 V and 17 mm wide but 1 mm longer, so a CR17335 may not contact reliably in a CR123A holder."
+    }
+  ],
+  "safety": [
+    "Do not recharge, short circuit, crush, disassemble or incinerate.",
+    "Lithium metal cells fall under dangerous goods shipping rules above set lithium content limits."
+  ],
+  "notes": "Often sold as a 2/3A lithium cell, in tabbed and lead-wire versions for pack assembly.",
+  "sources": [
+    {
+      "id": "panasonic-cr-2-3au",
+      "title": "Panasonic CR-2/3AU cylindrical lithium battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/CR-2_3AU_Datasheet_EN_240701.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "maxell-cr17335",
+      "title": "Maxell CR17335 cylindrical lithium manganese dioxide battery data sheet",
+      "publisher": "Maxell",
+      "url": "https://maxell.com.tw/assets/download/CR%20Cylindrical%20Lithium%20Manganese%20Dioxide%20Batteries/CR17335_DataSheet_table.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

@@ -1,0 +1,298 @@
+{
+  "id": "21700",
+  "name": "21700",
+  "category": "li-ion",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "2170",
+    "21-70"
+  ],
+  "legacy_paths": [
+    "/lithium-ion/21700"
+  ],
+  "codes": [
+    {
+      "code": "21700",
+      "system": "Industry"
+    },
+    {
+      "code": "2170",
+      "system": "Industry",
+      "note": "Short form used by Tesla"
+    },
+    {
+      "code": "INR21700-50E",
+      "system": "Samsung",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "INR21700-40T",
+      "system": "Samsung",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "INR21700M50LT",
+      "system": "LG",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "INR-21700-P45B",
+      "system": "Molicel",
+      "chemistry": "lithium-ion"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 21.4,
+      "min": 21.25,
+      "max": 21.55
+    },
+    "height": {
+      "nominal": 70,
+      "min": 69.85,
+      "max": 70.15
+    },
+    "note": "Limits from the Molicel INR-21700-P45B specification (21.40 ± 0.15 mm by 70.00 ± 0.15 mm). Other datasheets give maximums of 21.25 mm by 70.80 mm (Samsung 50E), 21.22 by 70.30 (Samsung 40T) and 21.44 by 70.65 (LG M50LT). Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "sources": [
+      "molicel-p45b",
+      "samsung-50e",
+      "samsung-40t",
+      "lg-m50lt"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    },
+    "note": "Bare cells are flat top. Button-top versions add a raised positive contact."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-ion",
+      "label": "Generic",
+      "subtype": "NMC, NCA, LCO, LMO and blends",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "range": [
+          2000,
+          6500
+        ],
+        "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
+      },
+      "notes": "Nominal voltage 3.6 to 3.7 V by maker.",
+      "sources": [
+        "wiki-sizes"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "Samsung INR21700-50E",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.63,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 4900,
+        "conditions": "Standard discharge capacity, minimum 4900 mAh: 0.2C (980 mA) to 2.5 V at room temperature after 0.5C CC/CV charge to 4.2 V, 98 mA cut-off"
+      },
+      "weight_g": 69.5,
+      "max_continuous_ma": 9800,
+      "max_pulse_ma": 14700,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          60
+        ],
+        "storage": [
+          -20,
+          60
+        ]
+      },
+      "notes": "Weight is the maximum. 14.7 A is allowed only for non-continuous discharge. Storage is one month. Specification version V1.0.",
+      "sources": [
+        "samsung-50e"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "Samsung INR21700-40T",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.6,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 4000,
+        "conditions": "Standard discharge capacity, minimum 4000 mAh: 0.2C (800 mA) to 2.5 V at room temperature after 0.5C (2 A) CC/CV charge to 4.2 V, 200 mA cut-off"
+      },
+      "weight_g": 70,
+      "max_continuous_ma": 35000,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          60
+        ]
+      },
+      "notes": "Weight is the maximum. 35 A continuous is stated without a temperature cut-off. Temperatures are ambient. Specification version 0.0.",
+      "sources": [
+        "samsung-40t"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "LG INR21700M50LT",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.69,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "weight_g": 68.2,
+      "max_continuous_ma": 14400,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          55
+        ]
+      },
+      "notes": "The tentative specification publishes energy (18.2 Wh nominal, 17.6 Wh minimum) and no capacity in mAh. Maximum discharge current is temperature dependent: 3.0C (14.4 A) at 10 to 25 °C, 1.5C (7.2 A) at 25 to 55 °C and 0.5C below 10 °C. Weight includes tube and washer and is marked to be determined. Temperatures are ambient.",
+      "sources": [
+        "lg-m50lt"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "Molicel INR-21700-P45B",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.6,
+        "cutoff": 2.5,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "typical": 4500,
+        "conditions": "Typical 4.5 Ah: 0.9 A discharge to 2.5 V at 23 °C after 4.5 A CC/CV charge to 4.2 V, 90 mA taper"
+      },
+      "weight_g": 70,
+      "max_continuous_ma": 45000,
+      "temperature_c": {
+        "charge": [
+          0,
+          60
+        ],
+        "discharge": [
+          -40,
+          60
+        ]
+      },
+      "notes": "Weight is the maximum. Cycle life is reduced at high discharge rates. Temperatures are allowable ambient. Early specification version 0.2.",
+      "sources": [
+        "molicel-p45b"
+      ]
+    }
+  ],
+  "devices": [
+    "Electric vehicle battery packs",
+    "Cordless power tools",
+    "Electric bicycles and scooters",
+    "Power banks",
+    "High-capacity LED flashlights",
+    "Home energy storage packs"
+  ],
+  "interchange": [],
+  "safety": [
+    "Charge only with a charger made for lithium-ion cells, using constant current then constant voltage (CC/CV) up to the charge voltage in the cell datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5 V for most cells listed here); deep discharge damages the cell and a damaged cell should be discarded.",
+    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the cell against a metal object or an adjacent cell.",
+    "Unprotected cells have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected cells carry a circuit board but should still be charged with a matching charger.",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion cells to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe).",
+    "Do not mix cells of different brands, capacities or charge states in one pack."
+  ],
+  "notes": "Size code: 21 mm diameter, 70 mm length, 0 for cylindrical. Tesla uses the short form 2170.",
+  "sources": [
+    {
+      "id": "wiki-sizes",
+      "title": "List of battery sizes (rechargeable lithium-ion cylindrical table)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "nominal size",
+        "capacity range"
+      ]
+    },
+    {
+      "id": "molicel-p45b",
+      "title": "Cell specifications of INR-21700-P45B, document INR21700P45B-01, version 0.2",
+      "publisher": "Molicel (E-One Moli Energy)",
+      "url": "https://www.kronium.cz/uploads/p45b-datasheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of an early (version 0.2) specification; later revisions may differ."
+    },
+    {
+      "id": "samsung-50e",
+      "title": "Specification of product INR21700-50E, version V1.0",
+      "publisher": "Samsung SDI",
+      "url": "https://shop.aceongroup.com/cdn/shop/files/RLII-CSI-1618_Samsung_50E_DATASHEET.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer specification."
+    },
+    {
+      "id": "samsung-40t",
+      "title": "Specification of product INR21700-40T, version 0.0",
+      "publisher": "Samsung SDI",
+      "url": "https://piekarz.pl/pdf/50840",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer specification; version 0.0."
+    },
+    {
+      "id": "lg-m50lt",
+      "title": "Product specification INR21700M50LT, 2020-LSD-MBD-b00090 (2020-09-17, tentative)",
+      "publisher": "LG Energy Solution",
+      "url": "https://evwest.com/support/21700_M50LT_datasheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of a tentative revision 0; later revisions may differ."
+    },
+    {
+      "id": "faa-packsafe",
+      "title": "PackSafe: Lithium batteries",
+      "publisher": "U.S. Federal Aviation Administration",
+      "url": "https://www.faa.gov/hazmat/packsafe/lithium-batteries",
+      "accessed": "2026-11-22",
+      "kind": "regulation",
+      "covers": [
+        "transport"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

@@ -1,0 +1,167 @@
+{
+  "id": "f",
+  "name": "F",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "F cell",
+    "Size F",
+    "33/91"
+  ],
+  "legacy_paths": [
+    "/traditional/f"
+  ],
+  "codes": [
+    {
+      "code": "R25",
+      "system": "IEC",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "LR25",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "60",
+      "system": "ANSI",
+      "note": "Listed by Wikipedia; Eveready EV90 labels its F cells No. 60."
+    },
+    {
+      "code": "BK-1100FHU",
+      "system": "Panasonic",
+      "chemistry": "nimh"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 33.0,
+      "min": 32.0,
+      "max": 33.0
+    },
+    "height": {
+      "nominal": 91.0,
+      "min": 88.5,
+      "max": 91.0
+    },
+    "note": "Limits from the Panasonic BK1100FHU datasheet (33.0 +0/-1.0 mm, 91.0 +0/-2.5 mm).",
+    "sources": [
+      "panasonic-bk1100fhu",
+      "wikipedia-battery-sizes"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "typical": 12000,
+        "conditions": "Charge 0.1 It for 16 h, discharge 0.2 It"
+      },
+      "weight_g": 245,
+      "internal_resistance_mohm": 5,
+      "temperature_c": {
+        "charge": [
+          -20,
+          75
+        ],
+        "discharge": [
+          -20,
+          85
+        ],
+        "storage": [
+          -20,
+          35
+        ]
+      },
+      "notes": "BK1100FHU is a backup and long-life type rated 11,000 mAh minimum. Storage range is for periods under one year.",
+      "sources": [
+        "panasonic-bk1100fhu"
+      ]
+    },
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5
+      },
+      "notes": "Listed as LR25; rare as a retail primary cell and no manufacturer datasheet was fetched.",
+      "sources": [
+        "wikipedia-battery-sizes"
+      ]
+    },
+    {
+      "chemistry": "zinc-carbon",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5
+      },
+      "notes": "Listed as R25; four F cells make up many 6 V lantern batteries.",
+      "sources": [
+        "wikipedia-battery-sizes",
+        "energizer-ev90"
+      ]
+    }
+  ],
+  "devices": [
+    "Lantern battery assemblies",
+    "Emergency lighting packs",
+    "Backup power packs",
+    "Industrial equipment"
+  ],
+  "interchange": [
+    {
+      "id": "d",
+      "relation": "do-not-substitute",
+      "note": "An F cell is 33 mm by 91 mm and is much longer than a D cell, so the two do not swap."
+    }
+  ],
+  "safety": [
+    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
+    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix cells of different capacity, age or charge state in one pack."
+  ],
+  "notes": "Four F cells are often found inside 6 V rectangular lantern batteries.",
+  "sources": [
+    {
+      "id": "panasonic-bk1100fhu",
+      "title": "Panasonic BK1100FHU nickel-metal hydride datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/nickel-metal/BK1100FHU_Datasheet_EN_240701.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    },
+    {
+      "id": "energizer-ev90",
+      "title": "Eveready EV90 zinc chloride 6V engineering data",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/ev90.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

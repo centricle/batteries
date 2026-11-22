@@ -1,0 +1,112 @@
+{
+  "id": "4680",
+  "name": "4680",
+  "category": "li-ion",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "46800"
+  ],
+  "codes": [
+    {
+      "code": "4680",
+      "system": "Industry",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "46800",
+      "system": "Industry",
+      "chemistry": "lithium-ion",
+      "note": "Five-digit form of the same size code"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 46
+    },
+    "height": {
+      "nominal": 80
+    },
+    "note": "Nominal size from the size code; Tesla publishes no cell datasheet. The five-digit form is 46800.",
+    "sources": [
+      "wiki-sizes",
+      "batterydesign-4680"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    },
+    "note": "The commonly cited Tesla cell is tabless: current is collected over the end faces rather than through tabs."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-ion",
+      "label": "Teardown, Tesla 4680",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7
+      },
+      "weight_g": 355,
+      "notes": "Figures are from a teardown and test site, not a manufacturer datasheet: nominal voltage 3.7 V, mass 0.355 kg and nominal energy about 86.5 Wh. The reference table lists 23000 mAh. No cutoff, charge voltage or maximum current is published.",
+      "sources": [
+        "batterydesign-4680",
+        "wiki-sizes"
+      ]
+    }
+  ],
+  "devices": [
+    "Electric vehicle battery packs",
+    "Energy storage packs"
+  ],
+  "interchange": [],
+  "safety": [
+    "Charge only with a charger made for lithium-ion cells, using constant current then constant voltage (CC/CV) up to the charge voltage in the cell datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5 V for most cells listed here); deep discharge damages the cell and a damaged cell should be discarded.",
+    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the cell against a metal object or an adjacent cell.",
+    "Unprotected cells have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected cells carry a circuit board but should still be charged with a matching charger.",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion cells to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe).",
+    "Cells of this size are used in vehicle packs and are not consumer replacement cells."
+  ],
+  "history": "Tesla introduced the 4680 concept in 2020; production began in 2023 (Wikipedia, List of battery sizes).",
+  "notes": "Size code: 46 mm diameter, 80 mm length, 0 for cylindrical; the five-digit form is 46800.",
+  "sources": [
+    {
+      "id": "wiki-sizes",
+      "title": "List of battery sizes (rechargeable lithium-ion cylindrical table)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "nominal size",
+        "capacity range"
+      ]
+    },
+    {
+      "id": "batterydesign-4680",
+      "title": "Tesla 4680 cell (teardown specifications)",
+      "publisher": "BatteryDesign.net",
+      "url": "https://www.batterydesign.net/tesla-4680-cell/",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "note": "Teardown and testing site; Tesla publishes no cell datasheet."
+    },
+    {
+      "id": "faa-packsafe",
+      "title": "PackSafe: Lithium batteries",
+      "publisher": "U.S. Federal Aviation Administration",
+      "url": "https://www.faa.gov/hazmat/packsafe/lithium-batteries",
+      "accessed": "2026-11-22",
+      "kind": "regulation",
+      "covers": [
+        "transport"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

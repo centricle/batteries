@@ -1,0 +1,224 @@
+{
+  "id": "cr1-3n",
+  "name": "CR1/3N",
+  "category": "photo",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "CR-1/3N",
+    "1/3N"
+  ],
+  "codes": [
+    {
+      "code": "CR11108",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "2L76",
+      "system": "Energizer",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR1/3N",
+      "system": "Duracell",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Also sold as DL1/3N"
+    },
+    {
+      "code": "CR1/3N",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Varta type number 6131"
+    },
+    {
+      "code": "6131",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Type number"
+    },
+    {
+      "code": "DL1/3N",
+      "system": "Duracell",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "BR11108",
+      "system": "IEC",
+      "chemistry": "lithium-carbon-monofluoride",
+      "note": "Rare; some makers use BR1/3N for a manganese-dioxide cell"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 11.6,
+      "min": 10.6,
+      "max": 11.6
+    },
+    "height": {
+      "nominal": 10.8,
+      "min": 9.8,
+      "max": 10.8
+    },
+    "sources": [
+      "energizer-2l76"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3,
+        "cutoff": 2
+      },
+      "capacity_mah": {
+        "typical": 160,
+        "conditions": "15 kilohm continuous (0.16 mA) to 2.0 V, 21 °C"
+      },
+      "weight_g": 3,
+      "max_continuous_ma": 60,
+      "max_pulse_ma": 80,
+      "lithium_content_g": 0.056,
+      "temperature_c": {
+        "operating": [
+          -40,
+          60
+        ],
+        "storage": [
+          -40,
+          60
+        ]
+      },
+      "sources": [
+        "energizer-2l76"
+      ]
+    },
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3,
+        "cutoff": 2
+      },
+      "capacity_mah": {
+        "typical": 160,
+        "range": [
+          160,
+          170
+        ],
+        "conditions": "Duracell DL1/3N and Energizer 2L76 at 15 kΩ to 2.0 V; Varta lists 170 mAh at 5.6 kΩ to 2.0 V (as summarized by Battery Equivalents)"
+      },
+      "weight_g": 3,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ]
+      },
+      "notes": "Weight is from the Varta overview. Operating range shown is the common one; individual makers list from -20 to +75 °C (Duracell) down to -40 °C (Energizer).",
+      "sources": [
+        "varta-primary-lithium",
+        "batteryequivalents-cr11108"
+      ]
+    }
+  ],
+  "devices": [
+    "Film cameras",
+    "Camera exposure meters",
+    "Rangefinders",
+    "Memory backup",
+    "Calculators",
+    "Pet collars",
+    "Computer motherboards",
+    "Rifle scopes"
+  ],
+  "interchange": [
+    {
+      "id": "2cr1-3n",
+      "relation": "same-size",
+      "note": "The 2CR1/3N pack stacks two of these cells for 6 V and has the same diameter class but a longer body."
+    },
+    {
+      "id": "lr44",
+      "relation": "fits-with-caveat",
+      "note": "Two stacked 1.5 V LR44 or SR44 cells have the same 11.6 mm diameter and replace a CR11108 in some devices; check the device's voltage tolerance first."
+    }
+  ],
+  "safety": [
+    "Lithium photo cells are primary cells and are not designed to be recharged; charging can cause venting, fire or rupture.",
+    "Do not short-circuit, crush, heat or disassemble. The cell contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the cell safe to abuse.",
+    "Replace all cells in a device at the same time and do not mix them with used cells or other types.",
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ],
+  "notes": "The name reflects a height about one third of an N cell. Wikipedia notes photographers use a CR1/3N in place of two LR44 cells in some cameras. The coin lane may also hold this size as cr11108.",
+  "sources": [
+    {
+      "id": "energizer-2l76",
+      "title": "Energizer 2L76 (CR11108) product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/2l76.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    },
+    {
+      "id": "buyabattery-cr11108",
+      "title": "Duracell CR11108 Lithium Battery 3V listing (also CR1/3N, 2L76, DL1/3N)",
+      "publisher": "Buy A Battery",
+      "url": "https://www.buyabattery.co.uk/duracell-cr11108-lithium-battery-3v-equivalent.html",
+      "accessed": "2026-11-22",
+      "kind": "retailer",
+      "covers": [
+        "codes"
+      ],
+      "note": "Seen in a search result for the alternate names; page not opened."
+    },
+    {
+      "id": "varta-primary-lithium",
+      "title": "VARTA Primary Lithium Button and Cylindrical Cells product overview",
+      "publisher": "Varta Microbattery",
+      "url": "https://www.direktronik.se/globalassets/_product-images--pdf/2.-kommunikation-datacenter/2.6-test-analys/varta_primary_lithium_en_01.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "batteryequivalents-cr11108",
+      "title": "CR11108, CR1/3N, DL1/3N, 2L76 batteries: equivalents and replacements",
+      "publisher": "Battery Equivalents",
+      "url": "https://batteryequivalents.com/cr11108-cr1-3n-cr-1-3n-dl1-3n-2l76-2lr44-3v-lithium-non-rechargeable-battery-equivalents-and-replacements.html",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "updated": "2026-11-22",
+  "legacy_paths": []
+}

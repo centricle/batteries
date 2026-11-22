@@ -1,0 +1,144 @@
+{
+  "id": "er14505",
+  "name": "ER14505",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "AA lithium thionyl chloride",
+    "3.6 V AA",
+    "LS14500",
+    "TL-5903"
+  ],
+  "codes": [
+    {
+      "code": "ER14505",
+      "system": "IEC",
+      "chemistry": "lithium-thionyl-chloride",
+      "note": "As printed on the Tadiran TL-5903 sheet."
+    },
+    {
+      "code": "LS 14500",
+      "system": "Saft",
+      "chemistry": "lithium-thionyl-chloride"
+    },
+    {
+      "code": "TL-5903",
+      "system": "Tadiran",
+      "chemistry": "lithium-thionyl-chloride"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 14.4,
+      "min": 14.2,
+      "max": 14.6
+    },
+    "height": {
+      "nominal": 50.0,
+      "min": 49.7,
+      "max": 50.3
+    },
+    "note": "Saft drawing: 14.4 +/-0.2 mm diameter and 50 +/-0.3 mm height. The table lists maximums of 14.62 mm and 50.28 mm for the sleeved cell.",
+    "sources": [
+      "saft-ls14500"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button",
+      "diameter": 4.5,
+      "height": 1.5,
+      "note": "Saft drawing: 4.5 mm minimum diameter, 1.5 +/-0.2 mm high."
+    },
+    "negative": {
+      "style": "flat",
+      "diameter": 7.0,
+      "note": "Saft drawing: 7 mm minimum contact diameter."
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-thionyl-chloride",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.6,
+        "open_circuit": 3.67,
+        "cutoff": 2.0
+      },
+      "capacity_mah": {
+        "typical": 2600,
+        "range": [
+          2400,
+          2600
+        ],
+        "conditions": "Saft LS 14500: 14 mA, 20 °C, 2.0 V cut-off. Tadiran TL-5903 lists 2.4 Ah nominal"
+      },
+      "weight_g": 17,
+      "max_continuous_ma": 50,
+      "max_pulse_ma": 250,
+      "lithium_content_g": 0.7,
+      "temperature_c": {
+        "operating": [
+          -60,
+          85
+        ]
+      },
+      "self_discharge": "Under 1 percent per year at 20 °C after the first year (Saft)",
+      "notes": "Tadiran lists 100 mA continuous, 200 mA pulse, 18 g and 0.65 g lithium for the TL-5903. Saft recommends storage at 30 °C maximum.",
+      "sources": [
+        "saft-ls14500",
+        "tadiran-tl-5903"
+      ]
+    }
+  ],
+  "devices": [
+    "Utility meters",
+    "Internet of things sensors",
+    "Tracking devices",
+    "Alarm and security devices",
+    "Medical devices",
+    "Professional electronics"
+  ],
+  "interchange": [
+    {
+      "id": "aa",
+      "relation": "do-not-substitute",
+      "note": "The cell has an AA body but delivers 3.6 V; most devices built for 1.5 V AA cells can be damaged by it."
+    },
+    {
+      "id": "1-2aa",
+      "relation": "same-size",
+      "note": "A 1/2AA Li-SOCl2 cell shares the diameter and chemistry but is about half the length."
+    }
+  ],
+  "safety": [
+    "Primary lithium cells are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Do not solder directly to the cell; use tabbed or pinned versions.",
+    "Lithium thionyl chloride cells run at 3.6 V; most 1.5 V devices are not designed for that voltage."
+  ],
+  "notes": "Industrial AA-size bobbin cell for long-life, low-drain devices with periodic pulses.",
+  "sources": [
+    {
+      "id": "saft-ls14500",
+      "title": "Saft LS 14500 primary Li-SOCl2 cell data sheet",
+      "publisher": "Saft",
+      "url": "https://raw.githack.com/bellaminemo81172/sentinum_documentation/2aac65e9113ce4f842ba6e6f81367a27bc037438/Battery%20safety/LS14500/LS_14500_DB-EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "covers": [
+        "dimensions",
+        "capacity"
+      ]
+    },
+    {
+      "id": "tadiran-tl-5903",
+      "title": "Tadiran TL-5903 technical data sheet",
+      "publisher": "Tadiran",
+      "url": "https://www.farnell.com/datasheets/1769474.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

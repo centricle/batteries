@@ -1,0 +1,152 @@
+{
+  "id": "26650",
+  "name": "26650",
+  "category": "li-ion",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "ANR26650"
+  ],
+  "legacy_paths": [
+    "/lithium-ion/26650"
+  ],
+  "codes": [
+    {
+      "code": "26650",
+      "system": "Industry"
+    },
+    {
+      "code": "ANR26650M1-B",
+      "system": "A123",
+      "chemistry": "lithium-iron-phosphate"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 26
+    },
+    "height": {
+      "nominal": 65
+    },
+    "note": "The A123 ANR26650M1-B data sheet lists the cell as 26 x 65 mm without tolerances. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "sources": [
+      "a123-anr26650m1b"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    },
+    "note": "Button-top versions exist."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-ion",
+      "label": "Generic",
+      "subtype": "NMC, NCA, LCO, LMO and blends",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "range": [
+          3500,
+          7000
+        ],
+        "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
+      },
+      "notes": "Nominal voltage 3.6 to 3.7 V by maker; lithium-ion versions are used in large LED flashlights.",
+      "sources": [
+        "wiki-sizes"
+      ]
+    },
+    {
+      "chemistry": "lithium-iron-phosphate",
+      "label": "A123 ANR26650M1-B",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.3,
+        "charge_max": 3.6
+      },
+      "capacity_mah": {
+        "typical": 2500,
+        "conditions": "Nominal 2.5 Ah, minimum 2.4 Ah at 0.5C"
+      },
+      "weight_g": 76,
+      "max_continuous_ma": 50000,
+      "max_pulse_ma": 120000,
+      "internal_resistance_mohm": 6,
+      "cycle_life": 1000,
+      "temperature_c": {
+        "operating": [
+          -30,
+          55
+        ],
+        "storage": [
+          -40,
+          60
+        ]
+      },
+      "notes": "Charge method 2.5 A CC/CV to 3.6 V in about 60 minutes. Maximum pulse is 120 A for 10 seconds. Impedance is typical at 1 kHz AC. Cycle life is more than 1000 cycles at 20 A discharge and 100% depth. The data sheet gives no discharge cutoff.",
+      "sources": [
+        "a123-anr26650m1b"
+      ]
+    }
+  ],
+  "devices": [
+    "Large LED flashlights",
+    "Radio-control hobby vehicles",
+    "Power tools",
+    "Backup power systems",
+    "Electronic cigarettes and vaporizers"
+  ],
+  "interchange": [],
+  "safety": [
+    "Charge only with a charger made for lithium-ion cells, using constant current then constant voltage (CC/CV) up to the charge voltage in the cell datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5 V for most cells listed here); deep discharge damages the cell and a damaged cell should be discarded.",
+    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the cell against a metal object or an adjacent cell.",
+    "Unprotected cells have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected cells carry a circuit board but should still be charged with a matching charger.",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion cells to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+  ],
+  "notes": "Size code: 26 mm diameter, 65 mm length, 0 for cylindrical. The A123 lithium iron phosphate version is the best-known 26650.",
+  "sources": [
+    {
+      "id": "wiki-sizes",
+      "title": "List of battery sizes (rechargeable lithium-ion cylindrical table)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "nominal size",
+        "capacity range"
+      ]
+    },
+    {
+      "id": "a123-anr26650m1b",
+      "title": "Nanophosphate high power lithium ion cell ANR26650M1-B (MD100113-02)",
+      "publisher": "A123 Systems",
+      "url": "https://bto.pl/files/Karty%20katalogowe/a123%20datasheet_26650m1b.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Third-party copy of the manufacturer data sheet, 2012."
+    },
+    {
+      "id": "faa-packsafe",
+      "title": "PackSafe: Lithium batteries",
+      "publisher": "U.S. Federal Aviation Administration",
+      "url": "https://www.faa.gov/hazmat/packsafe/lithium-batteries",
+      "accessed": "2026-11-22",
+      "kind": "regulation",
+      "covers": [
+        "transport"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

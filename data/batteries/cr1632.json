@@ -1,0 +1,185 @@
+{
+  "id": "cr1632",
+  "name": "CR1632",
+  "legacy_paths": [
+    "/button-cells/cr1632"
+  ],
+  "codes": [
+    {
+      "code": "CR1632",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR1632",
+      "system": "JIS",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR1632",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "BR1632",
+      "system": "Panasonic",
+      "chemistry": "lithium-carbon-monofluoride"
+    },
+    {
+      "code": "BR1632A",
+      "system": "Panasonic",
+      "chemistry": "lithium-carbon-monofluoride",
+      "note": "High-temperature type"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 16.0,
+      "max": 16.0
+    },
+    "height": {
+      "nominal": 3.2,
+      "max": 3.2
+    },
+    "note": "Panasonic publishes maximum dimensions only; nominal is set to the maximum.",
+    "sources": [
+      "panasonic-cr1632",
+      "gp-cr1632"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 140,
+        "conditions": "Panasonic nominal capacity at 0.1 mA continuous standard drain; cutoff voltage not stated"
+      },
+      "weight_g": 1.9,
+      "shelf_life_years": 10,
+      "temperature_c": {
+        "operating": [
+          -30,
+          85
+        ]
+      },
+      "notes": "GP lists 140 mAh and 1.8 g.",
+      "sources": [
+        "panasonic-cr1632",
+        "gp-cr1632"
+      ]
+    },
+    {
+      "chemistry": "lithium-carbon-monofluoride",
+      "label": "BR1632",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 120,
+        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+      },
+      "weight_g": 1.5,
+      "temperature_c": {
+        "operating": [
+          -40,
+          85
+        ]
+      },
+      "notes": "BR1632 is a lithium-carbon-monofluoride cell in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
+      "sources": [
+        "panasonic-br1632"
+      ]
+    }
+  ],
+  "devices": [
+    "Vehicle key fobs",
+    "Tire pressure sensors",
+    "Memory backup",
+    "Remote controls"
+  ],
+  "interchange": [
+    {
+      "id": "cr1616",
+      "relation": "fits-with-caveat",
+      "note": "Same 16 mm diameter and 1.6 mm thinner; much lower capacity and usually loose in a CR1632 holder."
+    },
+    {
+      "id": "cr1620",
+      "relation": "fits-with-caveat",
+      "note": "Same 16 mm diameter and 1.2 mm thinner; lower capacity and may make poor contact in a CR1632 holder."
+    }
+  ],
+  "notes": "Panasonic also lists BR1632A, a carbon-monofluoride cell of the same size rated -40 to +125 °C operating.",
+  "sources": [
+    {
+      "id": "panasonic-cr1632",
+      "title": "CR1632 CR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/CR1632_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-br1632",
+      "title": "BR1632 BR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/BR1632_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-br1632a",
+      "title": "BR1632A BR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/BR1632A_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "gp-cr1632",
+      "title": "GP Lithium Coin Batteries CR1632 data sheet",
+      "publisher": "GP Batteries",
+      "url": "https://uk.gpbatteries.com/cdn/shop/files/GP_Lithium_Coin_Batteries_CR1632_Data_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

@@ -13,8 +13,7 @@
 # Hashed Astro assets are content-addressed, so they can be cached forever.
 # The Netlify adapter used to emit this rule into .netlify/v1/config.json; the
 # adapter was removed (it deployed an SSR catch-all that billed every 404 as a
-# function invocation), so the rule lives here now. See
-# rig/runbooks/ASTRO_UPGRADE.md.
+# function invocation), so the rule lives here now.
 [[headers]]
   for = "/_astro/*"
   [headers.values]

@@ -1,0 +1,108 @@
+{
+  "id": "er26500",
+  "name": "ER26500",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "C lithium thionyl chloride",
+    "3.6 V C",
+    "LS26500"
+  ],
+  "codes": [
+    {
+      "code": "ER26500",
+      "system": "IEC",
+      "chemistry": "lithium-thionyl-chloride"
+    },
+    {
+      "code": "LS 26500",
+      "system": "Saft",
+      "chemistry": "lithium-thionyl-chloride"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 26.0,
+      "max": 26.0
+    },
+    "height": {
+      "nominal": 50.4,
+      "max": 50.4
+    },
+    "note": "Saft lists maximum diameter and height for the sleeved cell.",
+    "sources": [
+      "saft-ls26500plus"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-thionyl-chloride",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.6,
+        "open_circuit": 3.67,
+        "cutoff": 2.0
+      },
+      "capacity_mah": {
+        "typical": 8500,
+        "conditions": "4 mA, 20 °C, 2.0 V cut-off"
+      },
+      "weight_g": 47,
+      "max_continuous_ma": 150,
+      "max_pulse_ma": 300,
+      "lithium_content_g": 2.2,
+      "temperature_c": {
+        "operating": [
+          -60,
+          85
+        ]
+      },
+      "self_discharge": "Under 1 percent after one year at 20 °C (Saft)",
+      "notes": "Data are for the Saft LS 26500plus.",
+      "sources": [
+        "saft-ls26500plus"
+      ]
+    }
+  ],
+  "devices": [
+    "Utility meters",
+    "Internet of things sensors",
+    "Tracking devices",
+    "Alarm and security devices",
+    "Medical devices",
+    "Professional electronics"
+  ],
+  "interchange": [
+    {
+      "id": "c",
+      "relation": "do-not-substitute",
+      "note": "The cell is close to C size but delivers 3.6 V, which can damage devices built for 1.5 V C cells."
+    }
+  ],
+  "safety": [
+    "Primary lithium cells are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Do not solder directly to the cell; use tabbed or pinned versions.",
+    "Lithium thionyl chloride cells run at 3.6 V; most 1.5 V devices are not designed for that voltage."
+  ],
+  "notes": "Industrial C-size bobbin cell for long-life, low-drain devices with periodic pulses.",
+  "sources": [
+    {
+      "id": "saft-ls26500plus",
+      "title": "Saft LS 26500plus primary Li-SOCl2 cell data sheet",
+      "publisher": "Saft",
+      "url": "https://docs.rs-online.com/e6aa/A700000014176449.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

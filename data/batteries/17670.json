@@ -1,0 +1,135 @@
+{
+  "id": "17670",
+  "name": "17670",
+  "category": "li-ion",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "Double-length CR123A Li-ion"
+  ],
+  "codes": [
+    {
+      "code": "17670",
+      "system": "Industry",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "CGR17670HC",
+      "system": "Panasonic",
+      "chemistry": "lithium-ion"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 17
+    },
+    "height": {
+      "nominal": 66.7,
+      "min": 66.4,
+      "max": 67
+    },
+    "note": "From the Panasonic CGR17670HC data sheet (17.0 mm; 66.7 ± 0.3 mm, fresh cell). Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "sources": [
+      "panasonic-cgr17670hc"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    },
+    "note": "Button-top versions exist."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-ion",
+      "label": "Generic",
+      "subtype": "NMC, NCA, LCO, LMO and blends",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "range": [
+          1250,
+          1600
+        ],
+        "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
+      },
+      "notes": "Nominal voltage 3.7 V.",
+      "sources": [
+        "wiki-sizes"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "Panasonic CGR17670HC",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7
+      },
+      "capacity_mah": {
+        "typical": 1250,
+        "conditions": "Standard capacity: 240 mA discharge to 3.0 V at 20 °C after a 4.2 V, 840 mA (max) CC/CV charge for 2 hours"
+      },
+      "weight_g": 35,
+      "notes": "Weight is approximate. The data sheet is an older Panasonic CGR-series sheet.",
+      "sources": [
+        "panasonic-cgr17670hc"
+      ]
+    }
+  ],
+  "devices": [
+    "LED flashlights",
+    "Specialty electronics",
+    "Battery packs"
+  ],
+  "interchange": [],
+  "safety": [
+    "Charge only with a charger made for lithium-ion cells, using constant current then constant voltage (CC/CV) up to the charge voltage in the cell datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5 V for most cells listed here); deep discharge damages the cell and a damaged cell should be discarded.",
+    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the cell against a metal object or an adjacent cell.",
+    "Unprotected cells have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected cells carry a circuit board but should still be charged with a matching charger.",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion cells to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+  ],
+  "notes": "Size code: 17 mm diameter, 67 mm length, 0 for cylindrical. About twice the length of a CR123A.",
+  "sources": [
+    {
+      "id": "wiki-sizes",
+      "title": "List of battery sizes (rechargeable lithium-ion cylindrical table)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "nominal size",
+        "capacity range"
+      ]
+    },
+    {
+      "id": "panasonic-cgr17670hc",
+      "title": "Lithium ion batteries (individual data sheets): CGR17670HC",
+      "publisher": "Panasonic",
+      "url": "https://web.archive.org/web/20160304081235/http://liion.narod.ru/CGR17670HC.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "note": "Archived third-party copy."
+    },
+    {
+      "id": "faa-packsafe",
+      "title": "PackSafe: Lithium batteries",
+      "publisher": "U.S. Federal Aviation Administration",
+      "url": "https://www.faa.gov/hazmat/packsafe/lithium-batteries",
+      "accessed": "2026-11-22",
+      "kind": "regulation",
+      "covers": [
+        "transport"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

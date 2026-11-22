@@ -1,0 +1,112 @@
+{
+  "id": "4-5a",
+  "name": "4/5A",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "4/5 A",
+    "Four-fifths A",
+    "17/43"
+  ],
+  "codes": [
+    {
+      "code": "BK-200A",
+      "system": "Panasonic",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "HHR200A",
+      "system": "Panasonic",
+      "chemistry": "nimh"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 17.0,
+      "min": 16.3,
+      "max": 17.0
+    },
+    "height": {
+      "nominal": 43.0,
+      "min": 41.5,
+      "max": 43.0
+    },
+    "note": "Limits from the Panasonic BK200A datasheet (17.0 +0/-0.7 mm, 43.0 +0/-1.5 mm).",
+    "sources": [
+      "panasonic-bk200a"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "typical": 2040,
+        "conditions": "Charge 0.1 It for 16 h, discharge 0.2 It"
+      },
+      "weight_g": 32,
+      "internal_resistance_mohm": 20,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -10,
+          65
+        ],
+        "storage": [
+          -20,
+          35
+        ]
+      },
+      "notes": "Rated 2,000 mAh minimum. Storage range is for periods under one year.",
+      "sources": [
+        "panasonic-bk200a"
+      ]
+    }
+  ],
+  "devices": [
+    "Cordless power tool packs",
+    "Hobby battery packs",
+    "Older laptop battery packs",
+    "Cordless phone packs",
+    "Medical equipment packs"
+  ],
+  "interchange": [
+    {
+      "id": "a",
+      "relation": "same-size",
+      "note": "A 4/5A cell has the A cell's 17 mm diameter but is 43 mm long instead of 50 mm, so it fits in packs built for it only."
+    }
+  ],
+  "safety": [
+    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
+    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix cells of different capacity, age or charge state in one pack."
+  ],
+  "notes": "Fractional version of the A cell, used to build battery packs.",
+  "sources": [
+    {
+      "id": "panasonic-bk200a",
+      "title": "Panasonic BK200A nickel-metal hydride datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/nickel-metal/BK200A_Datasheet_EN_240701.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}

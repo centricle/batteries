@@ -1,0 +1,213 @@
+{
+  "category": "hearing-aid",
+  "form": "disc",
+  "status": "current",
+  "updated": "2026-11-22",
+  "id": "312",
+  "name": "312",
+  "aliases": [
+    "PR41",
+    "Size 312",
+    "Brown tab",
+    "A312",
+    "ZA312"
+  ],
+  "legacy_paths": [
+    "/hearing-aid/312"
+  ],
+  "codes": [
+    {
+      "code": "PR41",
+      "system": "IEC",
+      "chemistry": "zinc-air"
+    },
+    {
+      "code": "7002ZD",
+      "system": "ANSI",
+      "chemistry": "zinc-air"
+    },
+    {
+      "code": "AC312",
+      "system": "Energizer",
+      "chemistry": "zinc-air",
+      "note": "Also AC312E and AC312EZ"
+    },
+    {
+      "code": "L312ZA",
+      "system": "Rayovac",
+      "chemistry": "zinc-air",
+      "note": "Also 312A and 312AE"
+    },
+    {
+      "code": "DA312",
+      "system": "Duracell",
+      "chemistry": "zinc-air",
+      "note": "Also DA312H and DA312N"
+    },
+    {
+      "code": "312HP",
+      "system": "Duracell",
+      "chemistry": "zinc-air",
+      "note": "Activair"
+    },
+    {
+      "code": "p312",
+      "system": "Power One",
+      "chemistry": "zinc-air"
+    },
+    {
+      "code": "312SA",
+      "system": "Siemens",
+      "chemistry": "zinc-air"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 7.9,
+      "min": 7.55,
+      "max": 7.9
+    },
+    "height": {
+      "nominal": 3.6,
+      "min": 3.25,
+      "max": 3.6
+    },
+    "note": "The negative cap is about 5.0 mm in diameter and stands at least 0.25 mm above the can step.",
+    "sources": [
+      "energizer-312"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap",
+      "diameter": 5
+    },
+    "tab_color": "#7B4A2A",
+    "tab_color_name": "Brown",
+    "note": "Tab color is stated on the Energizer datasheet and matches the Wikipedia size list. Retail and brand pages say the colors are the same across manufacturers, but no standards document that sets them was found."
+  },
+  "variants": [
+    {
+      "chemistry": "zinc-air",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.45
+      },
+      "capacity_mah": {
+        "typical": 189,
+        "range": [
+          160,
+          189
+        ],
+        "conditions": "Power One p312: IEC hearing aid standard test to 1.05 V (2 mA base load, 10 mA 100 ms pulse every 2 h), 20 °C, 55% RH; 173 mAh under the IEC wireless streaming test to 1.1 V. Ansmann A312 sheet: 160 mAh at 1500 ohm, 24 h/day, 25 °C, 60% RH, to 0.9 V"
+      },
+      "weight_g": 0.54,
+      "shelf_life_years": 4,
+      "temperature_c": {
+        "operating": [
+          -10,
+          50
+        ],
+        "storage": [
+          10,
+          30
+        ]
+      },
+      "notes": "Energizer, Rayovac and Power One list 1.45 V nominal; the Ansmann sheet gives 1.4 V at no load. Rayovac rates 151 h in a hearing aid test (1.2 mA background, 5 mA pulse), 90 h in the IEC standard test to 1.05 V and 60 h in the wireless streaming test to 1.1 V at 21 °C.",
+      "sources": [
+        "energizer-312",
+        "rayovac-312",
+        "varta-p312",
+        "ansmann-a312"
+      ]
+    }
+  ],
+  "devices": [
+    "Hearing aids"
+  ],
+  "interchange": [
+    {
+      "id": "13",
+      "relation": "do-not-substitute",
+      "note": "A size 13 has the same 7.9 mm diameter but is 5.4 mm tall, so it generally does not fit a 312 compartment."
+    }
+  ],
+  "safety": [
+    "Swallowed or inserted button batteries can cause severe burns within hours. If a battery may have been swallowed or placed in the nose or ear, call the National Battery Ingestion Hotline at 1-800-498-8666 or a poison center at 1-800-222-1222 immediately, and do not wait for symptoms.",
+    "Keep hearing aid batteries out of reach of children and pets, and check the battery compartment is closed; a battery that looks like a pill can be swallowed by an adult."
+  ],
+  "history": "Rayovac lists the introduction of the zinc-air hearing aid cell in 1977.",
+  "notes": "Remove the plastic tab covering the air holes and let the cell stand about one minute before inserting, so the cell can activate (Rayovac data sheet). The cell starts consuming zinc once the tab is removed, and an unused cell is guaranteed four years only with the tab applied. Zinc-air cells draw oxygen through the air holes in the positive can, so output voltage and service life depend on how much air reaches the cell; Rayovac describes an air management system that meters air to high-drain devices.",
+  "sources": [
+    {
+      "id": "energizer-312",
+      "title": "Energizer 312 size mercury free zinc air product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/ENR_AC312E-1.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "rayovac-312",
+      "title": "Rayovac Premium 312 0 Hg product data sheet S66006",
+      "publisher": "Rayovac (Energizer Holdings)",
+      "url": "https://www.rayovac.com/wp-content/uploads/2021/08/S6600602D.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "varta-p312",
+      "title": "Power One p312 EVOLUTION data sheet (October 2020)",
+      "publisher": "VARTA Microbattery",
+      "url": "https://www.microbattery.com/pub/media/tech-specs/power-one/Data_Sheet_p312_EVOLUTION.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "ansmann-a312",
+      "title": "Specifications for model/type A312 (PR41) Zinc Air Battery, V1",
+      "publisher": "Ansmann",
+      "url": "https://www.farnell.com/datasheets/86334.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "rayovac-summary",
+      "title": "Rayovac Hearing Aid Batteries: Battery Facts and cross reference guide (2014)",
+      "publisher": "Rayovac, hosted by Microbattery",
+      "url": "https://www.microbattery.com/pub/media/tech-specs/rayovac/rayovac-hearing-aid-battery-009-2014.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog",
+      "covers": [
+        "codes",
+        "history",
+        "cochlear"
+      ]
+    },
+    {
+      "id": "poison-org",
+      "title": "Swallowed a button battery? Battery in the nose or ear?",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "safety"
+      ]
+    },
+    {
+      "id": "wikipedia-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ]
+}

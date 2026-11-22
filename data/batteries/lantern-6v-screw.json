@@ -1,0 +1,135 @@
+{
+  "id": "lantern-6v-screw",
+  "name": "6V Lantern (screw)",
+  "category": "specialty",
+  "form": "lantern",
+  "status": "current",
+  "aliases": [
+    "6 V screw-terminal lantern battery",
+    "Screw-top lantern battery"
+  ],
+  "codes": [
+    {
+      "code": "4LR25Y",
+      "system": "IEC",
+      "chemistry": "alkaline",
+      "note": "Wikipedia's lantern battery article. Its list of battery sizes prints 4LR25X for this type, so sources disagree."
+    },
+    {
+      "code": "4R25Y",
+      "system": "IEC",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "915A",
+      "system": "ANSI",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "915",
+      "system": "ANSI",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "EN528",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    }
+  ],
+  "dimensions": {
+    "width": {
+      "nominal": 66.7
+    },
+    "depth": {
+      "nominal": 66.7
+    },
+    "height": {
+      "nominal": 109.5
+    },
+    "note": "Single nominal values from Wikipedia; no tolerance is published in a source fetched for this entry. Height includes the posts.",
+    "sources": [
+      "wikipedia-lantern-battery",
+      "wikipedia-battery-sizes"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "screw",
+      "note": "Corner post, maximum 3.5 mm diameter."
+    },
+    "negative": {
+      "style": "screw",
+      "note": "Center post, maximum 3.5 mm diameter."
+    },
+    "cells": 4
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6.0
+      },
+      "notes": "No manufacturer datasheet was fetched for this size; capacity is not listed.",
+      "sources": [
+        "wikipedia-lantern-battery",
+        "wikipedia-battery-sizes"
+      ]
+    },
+    {
+      "chemistry": "zinc-carbon",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6.0
+      },
+      "sources": [
+        "wikipedia-battery-sizes"
+      ]
+    }
+  ],
+  "devices": [
+    "Railway signal lamps",
+    "Warning beacons",
+    "Hazard lights",
+    "Equipment exposed to vibration",
+    "Emergency lighting"
+  ],
+  "interchange": [
+    {
+      "id": "lantern-6v",
+      "relation": "fits-with-caveat",
+      "note": "The spring-terminal lantern battery has the same 6 V and a similar footprint, but screw terminals need a wired connector, not springs."
+    }
+  ],
+  "safety": [
+    "Do not recharge alkaline or zinc-based lantern batteries.",
+    "Tighten terminal connections without crushing the posts; loose wiring can overheat."
+  ],
+  "notes": "Used where vibration or shock could knock a spring connection loose. A larger double lantern type (ANSI 918, 4R25-2) also exists.",
+  "sources": [
+    {
+      "id": "wikipedia-lantern-battery",
+      "title": "Lantern battery",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Lantern_battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "dimensions"
+      ]
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

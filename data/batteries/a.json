@@ -1,0 +1,155 @@
+{
+  "id": "a",
+  "name": "A",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "A cell",
+    "Single A",
+    "17/50"
+  ],
+  "legacy_paths": [
+    "/traditional/a"
+  ],
+  "codes": [
+    {
+      "code": "R23",
+      "system": "IEC",
+      "chemistry": "zinc-carbon"
+    },
+    {
+      "code": "LR23",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "BK-250A",
+      "system": "Panasonic",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "BK-210A",
+      "system": "Panasonic",
+      "chemistry": "nimh"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 17.0,
+      "min": 16.3,
+      "max": 17.0
+    },
+    "height": {
+      "nominal": 50.0,
+      "min": 48.0,
+      "max": 50.0
+    },
+    "note": "Limits from the Panasonic A-size nickel-metal hydride datasheets (17.0 +0/-0.7 mm diameter, 50.0 +0/-2.0 mm height).",
+    "sources": [
+      "panasonic-bk250a",
+      "panasonic-bk210a"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "typical": 2600,
+        "conditions": "Charge 0.1 It for 16 h, discharge 0.2 It (Panasonic BK250A average; BK210A averages 2,200)",
+        "range": [
+          2200,
+          2600
+        ]
+      },
+      "weight_g": 37,
+      "internal_resistance_mohm": 20,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -30,
+          65
+        ],
+        "storage": [
+          -30,
+          35
+        ]
+      },
+      "notes": "Panasonic rates BK250A at 2,450 mAh minimum and BK210A at 2,100 mAh minimum. Storage range is for periods under one year.",
+      "sources": [
+        "panasonic-bk250a",
+        "panasonic-bk210a"
+      ]
+    },
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.5
+      },
+      "notes": "Listed as LR23; rare as a primary cell and no manufacturer datasheet was fetched.",
+      "sources": [
+        "wikipedia-battery-sizes"
+      ]
+    }
+  ],
+  "devices": [
+    "Cordless power tool packs",
+    "Hobby battery packs",
+    "Older laptop battery packs",
+    "Backup power packs",
+    "Radio-controlled models"
+  ],
+  "interchange": [],
+  "safety": [
+    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
+    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix cells of different capacity, age or charge state in one pack."
+  ],
+  "notes": "More common as a nickel-metal hydride or nickel-cadmium cell for pack assembly than as a primary cell. Fractional sizes such as 4/5A and 2/3A share its diameter.",
+  "sources": [
+    {
+      "id": "panasonic-bk250a",
+      "title": "Panasonic BK250A nickel-metal hydride datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/nickel-metal/BK250A_Datasheet_EN_240701.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-bk210a",
+      "title": "Panasonic BK210A nickel-metal hydride datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/nickel-metal/BK210A_Datasheet_EN_240701.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

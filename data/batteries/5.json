@@ -1,0 +1,156 @@
+{
+  "category": "hearing-aid",
+  "form": "disc",
+  "status": "legacy",
+  "updated": "2026-11-22",
+  "id": "5",
+  "name": "5",
+  "aliases": [
+    "PR63",
+    "Size 5",
+    "Red tab",
+    "A5",
+    "ZA5"
+  ],
+  "codes": [
+    {
+      "code": "PR63",
+      "system": "IEC",
+      "chemistry": "zinc-air"
+    },
+    {
+      "code": "7012ZD",
+      "system": "ANSI",
+      "chemistry": "zinc-air",
+      "note": "Printed as 7012D on the Energizer AC5 sheet"
+    },
+    {
+      "code": "AC5",
+      "system": "Energizer",
+      "chemistry": "zinc-air",
+      "note": "Marked discontinued on the Energizer sheet"
+    },
+    {
+      "code": "5A",
+      "system": "Rayovac",
+      "chemistry": "zinc-air",
+      "note": "Also 5AE"
+    },
+    {
+      "code": "5SA",
+      "system": "Siemens",
+      "chemistry": "zinc-air"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 5.8,
+      "min": 5.55,
+      "max": 5.8
+    },
+    "height": {
+      "nominal": 2.15,
+      "min": 1.9,
+      "max": 2.15
+    },
+    "note": "Energizer AC5 sheet. Wikipedia lists 5.8 by 2.5 mm.",
+    "sources": [
+      "energizer-ac5"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    },
+    "tab_color": "#D62828",
+    "tab_color_name": "Red",
+    "note": "The red tab color comes from Wikipedia and a photograph on the Energizer AC5 sheet; no manufacturer text states it. Tab color is stated on the Energizer datasheet and matches the Wikipedia size list. Retail and brand pages say the colors are the same across manufacturers, but no standards document that sets them was found."
+  },
+  "variants": [
+    {
+      "chemistry": "zinc-air",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 1.4,
+        "cutoff": 0.9
+      },
+      "capacity_mah": {
+        "typical": 33,
+        "conditions": "3 kilohm load to 0.9 V, 21 °C, 50% RH"
+      },
+      "weight_g": 0.2,
+      "notes": "The Energizer AC5 sheet is an older engineering datasheet watermarked discontinued and lists 1.4 V; later Energizer sheets for other sizes list 1.45 V. Impedance is 5 to 20 ohm. At 16 h/day, 0.43 mA drain at 1.3 V gave 77 h and 0.22 mA gave 149 h.",
+      "sources": [
+        "energizer-ac5"
+      ]
+    }
+  ],
+  "devices": [
+    "Hearing aids"
+  ],
+  "interchange": [],
+  "safety": [
+    "Swallowed or inserted button batteries can cause severe burns within hours. If a battery may have been swallowed or placed in the nose or ear, call the National Battery Ingestion Hotline at 1-800-498-8666 or a poison center at 1-800-222-1222 immediately, and do not wait for symptoms.",
+    "Keep hearing aid batteries out of reach of children and pets, and check the battery compartment is closed; a battery that looks like a pill can be swallowed by an adult."
+  ],
+  "notes": "Energizer has marked the AC5 discontinued; the size remains in Rayovac cross reference tables. Remove the plastic tab covering the air holes and let the cell stand about one minute before inserting, so the cell can activate (Rayovac data sheet).",
+  "sources": [
+    {
+      "id": "energizer-ac5",
+      "title": "Energizer No. AC5 engineering datasheet (EBC-4501B)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/ac5.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "rayovac-summary",
+      "title": "Rayovac Hearing Aid Batteries: Battery Facts and cross reference guide (2014)",
+      "publisher": "Rayovac, hosted by Microbattery",
+      "url": "https://www.microbattery.com/pub/media/tech-specs/rayovac/rayovac-hearing-aid-battery-009-2014.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog",
+      "covers": [
+        "codes",
+        "history",
+        "cochlear"
+      ]
+    },
+    {
+      "id": "poison-org",
+      "title": "Swallowed a button battery? Battery in the nose or ear?",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "safety"
+      ]
+    },
+    {
+      "id": "wikipedia-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    },
+    {
+      "id": "rayovac-312-act",
+      "title": "Rayovac Premium 312 0 Hg product data sheet S6600602",
+      "publisher": "Rayovac (Energizer Holdings)",
+      "url": "https://www.rayovac.com/wp-content/uploads/2021/08/S6600602D.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet",
+      "covers": [
+        "activation"
+      ]
+    }
+  ]
+}

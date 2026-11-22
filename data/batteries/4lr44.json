@@ -1,0 +1,199 @@
+{
+  "id": "4lr44",
+  "name": "4LR44",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "6 V alkaline",
+    "Dog collar battery",
+    "Camera battery 6 V",
+    "6 V silver oxide"
+  ],
+  "legacy_paths": [
+    "/camera/4lr44",
+    "/traditional/6v"
+  ],
+  "codes": [
+    {
+      "code": "4LR44",
+      "system": "IEC",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "1414A",
+      "system": "ANSI",
+      "chemistry": "alkaline",
+      "note": "ANSI/NEDA number on the Energizer A544 sheet."
+    },
+    {
+      "code": "A544",
+      "system": "Energizer",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "PX28A",
+      "system": "Industry",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "476A",
+      "system": "Industry",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "K28A",
+      "system": "Industry",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "V34PX",
+      "system": "Varta",
+      "chemistry": "alkaline",
+      "note": "Wikipedia spelling. Retail cross-reference lists also print V4034PX, which is not on a datasheet fetched for this entry."
+    },
+    {
+      "code": "V4034PX",
+      "system": "Varta",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "L1325F",
+      "system": "Industry",
+      "chemistry": "alkaline"
+    },
+    {
+      "code": "28L",
+      "system": "Industry"
+    },
+    {
+      "code": "4SR44",
+      "system": "IEC",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "1406SOP",
+      "system": "ANSI",
+      "chemistry": "silver-oxide",
+      "note": "ANSI/NEDA number on the Energizer 544 sheet."
+    },
+    {
+      "code": "544",
+      "system": "Energizer",
+      "chemistry": "silver-oxide"
+    },
+    {
+      "code": "PX28",
+      "system": "Industry",
+      "chemistry": "silver-oxide",
+      "note": "Originally a mercury cell designation; not printed on the Energizer 544 datasheet."
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 13,
+      "min": 12,
+      "max": 13
+    },
+    "height": {
+      "nominal": 25.2,
+      "min": 23.9,
+      "max": 25.2
+    },
+    "note": "Four LR44 cells stacked in a metal jacket.",
+    "sources": [
+      "energizer-a544",
+      "energizer-544"
+    ]
+  },
+  "geometry": {
+    "cells": 4
+  },
+  "variants": [
+    {
+      "chemistry": "alkaline",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6,
+        "cutoff": 3.6
+      },
+      "capacity_mah": {
+        "typical": 178,
+        "conditions": "30 kohm (0.16 mA) continuous to 3.6 V, 21 °C"
+      },
+      "weight_g": 9.8,
+      "notes": "Energizer describes the A544 as designed specifically for photo use.",
+      "sources": [
+        "energizer-a544"
+      ]
+    },
+    {
+      "chemistry": "silver-oxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 6,
+        "cutoff": 3.6
+      },
+      "capacity_mah": {
+        "typical": 162,
+        "conditions": "30 kohm (0.167 mA) continuous to 3.6 V, 21 °C"
+      },
+      "weight_g": 10,
+      "notes": "Energizer lists a closed circuit voltage of at least 5.1 V on 120 ohm for 0.1 to 2.0 seconds.",
+      "sources": [
+        "energizer-544"
+      ]
+    }
+  ],
+  "devices": [
+    "Film cameras",
+    "Light meters",
+    "Electronic pet training collars",
+    "Camera flash accessories",
+    "Remote controls",
+    "Medical instruments",
+    "Security devices"
+  ],
+  "interchange": [
+    {
+      "id": "2cr1-3n",
+      "relation": "fits-with-caveat",
+      "note": "The 6 V lithium 2CR1/3N is a similar size but has a different voltage profile and a different shape, so check the device before substituting."
+    }
+  ],
+  "safety": [
+    "Do not recharge, short circuit, crush, disassemble or incinerate.",
+    "Keep out of reach of children; swallowing a multi-cell battery can cause serious internal injury."
+  ],
+  "notes": "Four LR44 button cells in series. Shares its envelope with the silver oxide 4SR44.",
+  "sources": [
+    {
+      "id": "energizer-a544",
+      "title": "Energizer A544 product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/a544.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-544",
+      "title": "Energizer 544 silver oxide product datasheet",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/544.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

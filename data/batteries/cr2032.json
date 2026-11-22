@@ -1,0 +1,294 @@
+{
+  "id": "cr2032",
+  "name": "CR2032",
+  "legacy_paths": [
+    "/button-cells/cr2032"
+  ],
+  "aliases": [
+    "Coin cell",
+    "CMOS battery",
+    "BIOS battery",
+    "Watch battery"
+  ],
+  "codes": [
+    {
+      "code": "CR2032",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "5004LC",
+      "system": "ANSI",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2032",
+      "system": "JIS",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2032",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "CR2032",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Varta type number 6032"
+    },
+    {
+      "code": "6032",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Type number"
+    },
+    {
+      "code": "DL2032",
+      "system": "Duracell",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "ECR2032",
+      "system": "Energizer",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "BR2032",
+      "system": "Panasonic",
+      "chemistry": "lithium-carbon-monofluoride"
+    },
+    {
+      "code": "LIR2032",
+      "system": "IEC",
+      "chemistry": "lithium-ion",
+      "note": "Rechargeable lithium-ion cell in the same case; 3.6 V, not interchangeable with CR2032 in devices built for 3 V"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 20.0,
+      "min": 19.8,
+      "max": 20.0
+    },
+    "height": {
+      "nominal": 3.2,
+      "min": 2.9,
+      "max": 3.2
+    },
+    "note": "Minimum and maximum limits from the Energizer engineering datasheet; Panasonic publishes the same maximums. Negative contact is at least 8.0 mm in diameter.",
+    "sources": [
+      "panasonic-cr2032",
+      "energizer-cr2032",
+      "varta-primary-lithium",
+      "gp-cr2032"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap",
+      "diameter": 8.0,
+      "note": "Minimum diameter of the flat negative contact area per Energizer."
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 225,
+        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated",
+        "range": [
+          220,
+          230
+        ]
+      },
+      "weight_g": 2.8,
+      "shelf_life_years": 10,
+      "lithium_content_g": 0.109,
+      "temperature_c": {
+        "operating": [
+          -30,
+          85
+        ]
+      },
+      "notes": "Energizer lists 225 mAh at 10 kΩ to 2.0 V, Varta 230 mAh, GP 220 mAh. Lithium content per Energizer. Weights run 2.8 g (Panasonic) to 3.3 g (Energizer).",
+      "sources": [
+        "panasonic-cr2032",
+        "energizer-cr2032",
+        "varta-primary-lithium",
+        "gp-cr2032"
+      ]
+    },
+    {
+      "chemistry": "lithium-carbon-monofluoride",
+      "label": "BR2032",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "capacity_mah": {
+        "typical": 200,
+        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+      },
+      "weight_g": 2.6,
+      "temperature_c": {
+        "operating": [
+          -40,
+          85
+        ]
+      },
+      "notes": "BR2032 is a lithium-carbon-monofluoride cell in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
+      "sources": [
+        "panasonic-br2032"
+      ]
+    },
+    {
+      "chemistry": "lithium-ion",
+      "label": "LIR2032",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.6
+      },
+      "capacity_mah": {
+        "typical": 35,
+        "conditions": "PowerStream catalog nominal capacity; load and cutoff not stated on the page"
+      },
+      "weight_g": 3.0,
+      "max_continuous_ma": 70,
+      "cycle_life": 500,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ]
+      },
+      "notes": "The LIR2032 is a lithium-ion cell at 3.6 V nominal that charges to a higher voltage than a CR2032 supplies. It is not a drop-in replacement for a CR2032 in a device built for 3 V, and a CR2032 must not be placed in a holder designed to charge a LIR2032.",
+      "sources": [
+        "powerstream-lir",
+        "wikipedia-button-cell"
+      ]
+    }
+  ],
+  "devices": [
+    "Computer motherboards (BIOS and RTC backup)",
+    "Vehicle key fobs",
+    "Remote controls",
+    "Digital thermometers",
+    "Glucose meters",
+    "Digital calipers",
+    "Fitness trackers",
+    "Tire pressure sensors",
+    "LED candles"
+  ],
+  "interchange": [
+    {
+      "id": "cr2025",
+      "relation": "fits-with-caveat",
+      "note": "Same 20 mm diameter and 0.7 mm thinner; lower capacity, and thinner cells can make poor contact in a CR2032 holder."
+    },
+    {
+      "id": "cr2016",
+      "relation": "fits-with-caveat",
+      "note": "Same 20 mm diameter and 1.6 mm thinner; much lower capacity, and thinner cells can make poor contact in a CR2032 holder."
+    }
+  ],
+  "notes": "The most widely used lithium coin cell. BR2032 has the same dimensions and a nominal 3 V but lower rated drain and a wider temperature range; ML2032 and VL2032 are rechargeable cells in the same case per Wikipedia, and fit the same holder only where the device is designed to charge them.",
+  "sources": [
+    {
+      "id": "panasonic-cr2032",
+      "title": "CR2032 CR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/CR2032_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-br2032",
+      "title": "BR2032 BR Coin-type Lithium Battery datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/lithium/BR2032_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "energizer-cr2032",
+      "title": "Energizer CR2032 engineering datasheet (RS Components mirror)",
+      "publisher": "Energizer",
+      "url": "https://assets.rs-online.com/v1698850139/Datasheets/fcff0b16226da70e14ee78f55512077d.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "varta-primary-lithium",
+      "title": "VARTA Primary Lithium Button and Cylindrical Cells product overview",
+      "publisher": "Varta Microbattery",
+      "url": "https://www.direktronik.se/globalassets/_product-images--pdf/2.-kommunikation-datacenter/2.6-test-analys/varta_primary_lithium_en_01.pdf",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "gp-cr2032",
+      "title": "GP Lithium Coin Batteries CR2032 data sheet",
+      "publisher": "GP Batteries",
+      "url": "https://uk.gpbatteries.com/cdn/shop/files/GP_Lithium_Coin_Batteries_CR2032_Data_Sheet.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "powerstream-lir",
+      "title": "Lithium ion rechargeable coin cells (LIR series)",
+      "publisher": "PowerStream",
+      "url": "https://www.powerstream.com/licoin.htm",
+      "accessed": "2026-11-22",
+      "kind": "catalog"
+    },
+    {
+      "id": "batteryequivalents-cr2032",
+      "title": "Lithium CR2032, DL2032, BR2032, ML2032, LiR2032, LR2032 batteries: equivalents and replacements",
+      "publisher": "Battery Equivalents",
+      "url": "https://batteryequivalents.com/lithium-cr2032-dl2032-br2032-ml2032-lir2032-lr2032-batteries-equivalents-and-replacements.html",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "wikipedia-button-cell",
+      "title": "Button cell",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Button_cell",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

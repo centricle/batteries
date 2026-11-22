@@ -1,0 +1,172 @@
+{
+  "id": "cr2020",
+  "name": "CR2020",
+  "codes": [
+    {
+      "code": "CR2020",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "ML2020",
+      "system": "Panasonic",
+      "chemistry": "lithium-manganese-rechargeable"
+    },
+    {
+      "code": "VL2020",
+      "system": "Panasonic",
+      "chemistry": "lithium-vanadium-rechargeable"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 20.0,
+      "max": 20.0
+    },
+    "height": {
+      "nominal": 2.0,
+      "max": 2.0
+    },
+    "note": "Panasonic ML2020 and VL2020 datasheets publish maximum dimensions only; nominal is set to the maximum.",
+    "sources": [
+      "panasonic-ml2020",
+      "panasonic-vl2020",
+      "wikipedia-battery-sizes"
+    ]
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0
+      },
+      "notes": "No CR2020 datasheet was located, so capacity and weight are not published here.",
+      "sources": [
+        "wikipedia-battery-sizes"
+      ]
+    },
+    {
+      "chemistry": "lithium-manganese-rechargeable",
+      "label": "ML2020",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.0,
+        "cutoff": 2.0,
+        "charge_max": 3.2
+      },
+      "capacity_mah": {
+        "typical": 45.0,
+        "conditions": "Panasonic nominal capacity at 0.12 mA standard drain to 2.0 V, 20 °C"
+      },
+      "weight_g": 2.2,
+      "cycle_life": 1000,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ]
+      },
+      "notes": "ML2020 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it. Charging voltage 2.8 to 3.2 V.",
+      "sources": [
+        "panasonic-ml2020"
+      ]
+    },
+    {
+      "chemistry": "lithium-vanadium-rechargeable",
+      "label": "VL2020",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.0,
+        "cutoff": 2.5,
+        "charge_max": 3.55
+      },
+      "capacity_mah": {
+        "typical": 20.0,
+        "conditions": "Panasonic nominal capacity at 0.07 mA standard drain to 2.5 V, 20 °C"
+      },
+      "weight_g": 2.1,
+      "cycle_life": 1000,
+      "temperature_c": {
+        "operating": [
+          -20,
+          60
+        ]
+      },
+      "notes": "VL2020 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it. Charging voltage 3.25 to 3.55 V.",
+      "sources": [
+        "panasonic-vl2020"
+      ]
+    }
+  ],
+  "devices": [
+    "Memory backup",
+    "Real-time clock backup",
+    "Digital watches",
+    "Small electronic devices"
+  ],
+  "interchange": [
+    {
+      "id": "cr2016",
+      "relation": "fits-with-caveat",
+      "note": "Same 20 mm diameter and 0.4 mm thinner; lower capacity and may make poor contact in a CR2020 holder."
+    },
+    {
+      "id": "cr2025",
+      "relation": "fits-with-caveat",
+      "note": "Same 20 mm diameter and 0.5 mm thicker; fits only where the holder has the clearance."
+    }
+  ],
+  "notes": "The ML2020 and VL2020 are the commonly sold rechargeable cells in this size.",
+  "sources": [
+    {
+      "id": "panasonic-ml2020",
+      "title": "ML2020 Coin-type Manganese Rechargeable Lithium Batteries datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/coin-rechargeable/ML2020_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "panasonic-vl2020",
+      "title": "VL2020 Coin-type Vanadium Rechargeable Lithium Batteries datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/coin-rechargeable/VL2020_Datasheet_EN.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    },
+    {
+      "id": "poison-org-battery",
+      "title": "Button batteries and other swallowed batteries",
+      "publisher": "National Capital Poison Center",
+      "url": "https://www.poison.org/battery",
+      "accessed": "2026-11-22",
+      "kind": "reference"
+    }
+  ],
+  "category": "coin",
+  "form": "disc",
+  "status": "current",
+  "geometry": {
+    "positive": {
+      "style": "can"
+    },
+    "negative": {
+      "style": "cap"
+    }
+  },
+  "updated": "2026-11-22",
+  "safety": [
+    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
+    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+  ]
+}

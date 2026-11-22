@@ -1,0 +1,151 @@
+{
+  "id": "sub-c",
+  "name": "Sub-C",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "SC",
+    "Sub C",
+    "SubC",
+    "Type 332"
+  ],
+  "legacy_paths": [
+    "/traditional/sub-c"
+  ],
+  "codes": [
+    {
+      "code": "HR22C429",
+      "system": "IEC",
+      "chemistry": "nimh",
+      "note": "As listed by Wikipedia; nominal 22.2 by 42.9 mm."
+    },
+    {
+      "code": "KR22C429",
+      "system": "IEC",
+      "chemistry": "nicd",
+      "note": "As listed by Wikipedia."
+    },
+    {
+      "code": "BK-300SCP",
+      "system": "Panasonic",
+      "chemistry": "nimh"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 23.0,
+      "min": 22.0,
+      "max": 23.0
+    },
+    "height": {
+      "nominal": 43.0,
+      "min": 41.5,
+      "max": 43.0
+    },
+    "note": "Limits from the Panasonic BK300SCP datasheet (23.0 +0/-1.0 mm, 43.0 +0/-1.5 mm). Wikipedia lists a nominal 22.2 by 42.9 mm.",
+    "sources": [
+      "panasonic-bk300scp",
+      "wikipedia-battery-sizes"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "typical": 3050,
+        "conditions": "Charge 0.1 It for 16 h, discharge 0.2 It (Panasonic BK300SCP average); range is the published span for the size",
+        "range": [
+          1800,
+          5000
+        ]
+      },
+      "weight_g": 57,
+      "internal_resistance_mohm": 4,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -10,
+          65
+        ],
+        "storage": [
+          -20,
+          35
+        ]
+      },
+      "notes": "Panasonic BK300SCP is a high-rate type rated 2,800 mAh minimum. Storage range is for periods under one year.",
+      "sources": [
+        "panasonic-bk300scp",
+        "wikipedia-battery-sizes"
+      ]
+    },
+    {
+      "chemistry": "nicd",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "range": [
+          1200,
+          2400
+        ]
+      },
+      "notes": "Capacity span as listed by Wikipedia; test conditions are not given.",
+      "sources": [
+        "wikipedia-battery-sizes"
+      ]
+    }
+  ],
+  "devices": [
+    "Cordless power tool packs",
+    "Radio-controlled vehicle packs",
+    "Emergency lighting packs",
+    "Two-way radio packs",
+    "Test and measuring instruments"
+  ],
+  "interchange": [],
+  "safety": [
+    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
+    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix cells of different capacity, age or charge state in one pack."
+  ],
+  "notes": "A common cell inside cordless tool packs. Fractional versions (1/2, 2/3, 4/5 and 5/4 Sub-C) differ in length and are not the same size as 1/2AA.",
+  "sources": [
+    {
+      "id": "panasonic-bk300scp",
+      "title": "Panasonic BK300SCP nickel-metal hydride datasheet",
+      "publisher": "Panasonic Energy",
+      "url": "https://energy.panasonic.com/dam/master/pdf/en/datasheet/nickel-metal/BK300SCP_Datasheet_EN_240701.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

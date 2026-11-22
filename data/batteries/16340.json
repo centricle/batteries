@@ -1,0 +1,126 @@
+{
+  "id": "16340",
+  "name": "16340",
+  "category": "li-ion",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "RCR123A",
+    "Rechargeable CR123A",
+    "Li-ion CR123A",
+    "17335"
+  ],
+  "legacy_paths": [
+    "/lithium-ion/16340"
+  ],
+  "codes": [
+    {
+      "code": "16340",
+      "system": "Industry",
+      "chemistry": "lithium-ion"
+    },
+    {
+      "code": "RCR123A",
+      "system": "Industry",
+      "chemistry": "lithium-ion",
+      "note": "Retail name for a rechargeable cell in the CR123A size"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 16
+    },
+    "height": {
+      "nominal": 34
+    },
+    "note": "Nominal size from the size code; no datasheet was fetched for this size. The CR123A primary cell is listed at 17 mm by 34.5 mm. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "sources": [
+      "wiki-sizes"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    },
+    "note": "Button-top versions are the common retail form."
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-ion",
+      "label": "Generic",
+      "subtype": "NMC, NCA, LCO, LMO and blends",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 3.7,
+        "charge_max": 4.2
+      },
+      "capacity_mah": {
+        "range": [
+          550,
+          800
+        ],
+        "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
+      },
+      "notes": "Nominal voltage 3.7 V is the common listing value; no 16340 datasheet was fetched.",
+      "sources": [
+        "wiki-sizes"
+      ]
+    }
+  ],
+  "devices": [
+    "Compact LED flashlights",
+    "Tactical lights",
+    "Laser pointers",
+    "Small security devices"
+  ],
+  "interchange": [
+    {
+      "id": "cr123a",
+      "relation": "fits-with-caveat",
+      "note": "A 16340 is slightly narrower than a CR123A and fits most holders, but it runs at 3.7 V nominal and 4.2 V fresh against the primary cell's 3.0 V nominal, so devices without regulation can be damaged, and devices that count on a 3 V cell may mis-read the charge state."
+    },
+    {
+      "id": "18350",
+      "relation": "do-not-substitute",
+      "note": "The 18350 is wider and about the same length; it does not fit a 16340 compartment and is not a substitute."
+    }
+  ],
+  "safety": [
+    "Charge only with a charger made for lithium-ion cells, using constant current then constant voltage (CC/CV) up to the charge voltage in the cell datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5 V for most cells listed here); deep discharge damages the cell and a damaged cell should be discarded.",
+    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the cell against a metal object or an adjacent cell.",
+    "Unprotected cells have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected cells carry a circuit board but should still be charged with a matching charger.",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion cells to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+  ],
+  "notes": "Size code: 16 mm diameter, 34 mm length, 0 for cylindrical. Sold as RCR123A for CR123A-size holders; check the device's maximum voltage first.",
+  "sources": [
+    {
+      "id": "wiki-sizes",
+      "title": "List of battery sizes (rechargeable lithium-ion cylindrical table)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes",
+        "nominal size",
+        "capacity range"
+      ]
+    },
+    {
+      "id": "faa-packsafe",
+      "title": "PackSafe: Lithium batteries",
+      "publisher": "U.S. Federal Aviation Administration",
+      "url": "https://www.faa.gov/hazmat/packsafe/lithium-batteries",
+      "accessed": "2026-11-22",
+      "kind": "regulation",
+      "covers": [
+        "transport"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

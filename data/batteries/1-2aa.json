@@ -1,0 +1,190 @@
+{
+  "id": "1-2aa",
+  "name": "1/2AA",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "Half AA",
+    "1/2 AA",
+    "CR 1/2 AA",
+    "14250"
+  ],
+  "legacy_paths": [],
+  "codes": [
+    {
+      "code": "CR14250",
+      "system": "IEC",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "ER14250",
+      "system": "IEC",
+      "chemistry": "lithium-thionyl-chloride"
+    },
+    {
+      "code": "CR 1/2 AA",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "6127",
+      "system": "Varta",
+      "chemistry": "lithium-manganese-dioxide",
+      "note": "Varta type number."
+    },
+    {
+      "code": "LS14250",
+      "system": "Saft",
+      "chemistry": "lithium-thionyl-chloride"
+    },
+    {
+      "code": "LS14250C",
+      "system": "Saft",
+      "chemistry": "lithium-thionyl-chloride",
+      "note": "Version recommended for cool temperature environments."
+    },
+    {
+      "code": "TL-5101",
+      "system": "Tadiran",
+      "chemistry": "lithium-thionyl-chloride",
+      "note": "Listed by Wikipedia; no Tadiran sheet was fetched."
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 14.45,
+      "min": 14.15,
+      "max": 14.45
+    },
+    "height": {
+      "nominal": 25.3,
+      "min": 25.09,
+      "max": 25.3
+    },
+    "note": "Limits from the Varta CR 1/2 AA sheet. The Saft LS 14250C sheet lists 14.65 mm maximum diameter and 24.8 mm maximum height.",
+    "sources": [
+      "varta-cr-half-aa",
+      "saft-ls14250c"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "button",
+      "diameter": 7.0,
+      "height": 0.9,
+      "note": "Varta lists a 7.00 mm shoulder diameter and 0.90 mm shoulder height."
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "lithium-manganese-dioxide",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.0,
+        "cutoff": 2.0
+      },
+      "capacity_mah": {
+        "typical": 950,
+        "conditions": "5.6 kohm continuous to 2.0 V, 20 °C"
+      },
+      "weight_g": 11.5,
+      "temperature_c": {
+        "discharge": [
+          -30,
+          75
+        ],
+        "storage": [
+          -55,
+          70
+        ]
+      },
+      "notes": "Varta also lists 930 mAh on 2 kohm and 900 mAh on 1 kohm to 2.0 V.",
+      "sources": [
+        "varta-cr-half-aa"
+      ]
+    },
+    {
+      "chemistry": "lithium-thionyl-chloride",
+      "rechargeable": false,
+      "voltage": {
+        "nominal": 3.6,
+        "open_circuit": 3.67,
+        "cutoff": 2.0
+      },
+      "capacity_mah": {
+        "typical": 1200,
+        "conditions": "1.5 mA, 20 °C, 2.0 V cut-off"
+      },
+      "weight_g": 8.9,
+      "max_pulse_ma": 50,
+      "lithium_content_g": 0.3,
+      "temperature_c": {
+        "operating": [
+          -60,
+          55
+        ]
+      },
+      "notes": "Data are for the Saft LS 14250C (document dated September 2004). Saft recommends storage at 30 °C maximum and quotes under 1 percent self-discharge per year.",
+      "sources": [
+        "saft-ls14250c"
+      ]
+    }
+  ],
+  "devices": [
+    "Utility meters",
+    "Alarm and security devices",
+    "Memory backup",
+    "Real-time clocks",
+    "Tracking devices",
+    "Pulse oximeters",
+    "Professional electronics"
+  ],
+  "interchange": [
+    {
+      "id": "er14505",
+      "relation": "do-not-substitute",
+      "note": "Same diameter as an AA-size Li-SOCl2 cell but about half the length, so it does not fit AA-size holders."
+    }
+  ],
+  "safety": [
+    "Primary lithium cells are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Do not solder directly to the cell; use tabbed or pinned versions.",
+    "Lithium thionyl chloride cells run at 3.6 V; most 1.5 V devices are not designed for that voltage.",
+    "CR14250 (3.0 V) and ER14250 (3.6 V) fit the same holder but are not interchangeable in a device designed for one voltage."
+  ],
+  "notes": "Same diameter as an AA cell and roughly half its length. Two chemistries share the size at different voltages.",
+  "sources": [
+    {
+      "id": "varta-cr-half-aa",
+      "title": "Varta CR 1/2 AA lithium manganese dioxide data sheet (type 6127)",
+      "publisher": "Varta Microbattery",
+      "url": "https://www.farnell.com/datasheets/2023194.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "saft-ls14250c",
+      "title": "Saft LS 14250C primary lithium battery data sheet",
+      "publisher": "Saft",
+      "url": "https://files.batteryjunction.com/frontend/files/LS14250C.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "wikipedia-battery-sizes",
+      "title": "List of battery sizes",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "codes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

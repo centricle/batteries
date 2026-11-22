@@ -1,0 +1,120 @@
+{
+  "id": "2-3a",
+  "name": "2/3A",
+  "category": "specialty",
+  "form": "cylinder",
+  "status": "current",
+  "aliases": [
+    "2/3 A",
+    "Two-thirds A",
+    "17/28"
+  ],
+  "codes": [
+    {
+      "code": "GP110AFH",
+      "system": "GP",
+      "chemistry": "nimh"
+    },
+    {
+      "code": "255032",
+      "system": "Emmerich",
+      "chemistry": "nimh"
+    }
+  ],
+  "dimensions": {
+    "diameter": {
+      "nominal": 17.0
+    },
+    "height": {
+      "nominal": 28.5
+    },
+    "note": "GP publishes a nominal 17.0 by 28.5 mm with sleeve; Emmerich lists 16.5 +/-0.5 by 28.0 +/-0.5 mm for its flat-top cell. The lithium CR-2/3A (CR17335) is a different size, 17 mm by 33.5 mm.",
+    "sources": [
+      "gp-110afh",
+      "emmerich-255032"
+    ]
+  },
+  "geometry": {
+    "positive": {
+      "style": "flat"
+    },
+    "negative": {
+      "style": "flat"
+    }
+  },
+  "variants": [
+    {
+      "chemistry": "nimh",
+      "rechargeable": true,
+      "voltage": {
+        "nominal": 1.2
+      },
+      "capacity_mah": {
+        "typical": 1133,
+        "conditions": "Discharge at 220 mA to 1.0 V, 20 °C (GP110AFH typical; minimum 1,100)"
+      },
+      "weight_g": 21,
+      "internal_resistance_mohm": 22,
+      "temperature_c": {
+        "charge": [
+          0,
+          45
+        ],
+        "discharge": [
+          -20,
+          50
+        ],
+        "storage": [
+          -20,
+          35
+        ]
+      },
+      "max_continuous_ma": 3300,
+      "cycle_life": 500,
+      "notes": "GP lists 500 cycles to IEC 61951-2. Emmerich lists 3.3 A continuous and 11 A momentary maximum discharge for its version.",
+      "sources": [
+        "gp-110afh",
+        "emmerich-255032"
+      ]
+    }
+  ],
+  "devices": [
+    "Cordless phone packs",
+    "Power tool packs",
+    "Camera and flash packs",
+    "Hobby battery packs",
+    "Emergency lighting packs"
+  ],
+  "interchange": [
+    {
+      "id": "cr17335",
+      "relation": "do-not-substitute",
+      "note": "The lithium CR17335 is also sold as 2/3A but is 5 mm longer and runs at 3 V, not 1.2 V."
+    }
+  ],
+  "safety": [
+    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
+    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix cells of different capacity, age or charge state in one pack."
+  ],
+  "notes": "The nickel-metal hydride 2/3A is about 28 mm long; lithium cells sold under the same name are 33.5 mm long.",
+  "sources": [
+    {
+      "id": "gp-110afh",
+      "title": "GP110AFH rechargeable nickel metal hydride cylindrical cell data sheet",
+      "publisher": "GP Batteries",
+      "url": "https://www.acdcshop.gr/content/ACCU-2_3A_1100-GP.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    },
+    {
+      "id": "emmerich-255032",
+      "title": "Emmerich NiMH 2/3A 1100 mAh FT-1Z (255032) specification",
+      "publisher": "Emmerich",
+      "url": "https://asset.conrad.com/media10/add/160267/c1/-/ml/000255032DS01/000255032DS01-ml.pdf",
+      "accessed": "2026-11-22",
+      "kind": "datasheet"
+    }
+  ],
+  "updated": "2026-11-22"
+}
