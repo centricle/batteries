@@ -1,0 +1,24 @@
+---
+// One root-level route for battery pages (/cr2032) and category pages
+// (/coin-cells), so the two dynamic segments can never collide.
+import BatteryPage from '../components/BatteryPage.astro';
+import CategoryPage from '../components/CategoryPage.astro';
+import { batteries, CATEGORY_META } from '../lib/data';
+
+export function getStaticPaths() {
+  const cats = CATEGORY_META.map((c) => ({ params: { slug: c.slug }, props: { kind: 'category' as const, id: c.id } }));
+  const taken = new Set(cats.map((c) => c.params.slug));
+  const bs = batteries()
+    .filter((b) => {
+      if (taken.has(b.id)) throw new Error(`battery id "${b.id}" collides with a category slug`);
+      return true;
+    })
+    .map((b) => ({ params: { slug: b.id }, props: { kind: 'battery' as const, id: b.id } }));
+  return [...cats, ...bs];
+}
+
+const { kind, id } = Astro.props;
+import { batteryById } from '../lib/data';
+---
+
+{kind === 'battery' ? <BatteryPage battery={batteryById(id)!} /> : <CategoryPage id={id} />}

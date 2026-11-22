@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const items = (await getCollection('reference')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99) || a.data.title.localeCompare(b.data.title));
+---
+
+<BaseLayout title="Battery reference: naming, safety, shipping, capacity | batteries.fyi" description="Source-cited reference articles on how battery codes work, flying with lithium batteries, button cell ingestion, capacity, storage, leakage, recycling and standards.">
+  <section class="wrap pt-8 max-w-4xl">
+    <p class="eyebrow">Reference</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Reference</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Plain answers to the questions the specifications raise, each with the primary sources it rests on. See also the <a class="link" href="/chemistry">chemistry pages</a> and the <a class="link" href="/glossary">glossary</a>.</p>
+  </section>
+  <section class="wrap mt-6 max-w-4xl">
+    <ul class="grid gap-3 sm:grid-cols-2">
+      {items.map((e) => (
+        <li><a href={`/reference/${e.id}`} class="card group block p-4 h-full hover:border-accent transition-colors">
+          <span class="font-semibold text-[0.85rem] group-hover:text-accent-ink">{e.data.title}</span>
+          <p class="text-[0.68rem] text-muted mt-1">{e.data.description}</p>
+        </a></li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

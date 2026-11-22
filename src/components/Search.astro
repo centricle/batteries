@@ -1,0 +1,92 @@
+---
+// Site-wide command palette. Opens on "/", Cmd/Ctrl-K, or any [data-search-open].
+// The index (/api/search-index.json) loads on first open, so pages pay nothing
+// until someone searches.
+---
+
+<dialog id="search-dialog" class="search-dialog" aria-label="Search batteries">
+  <div class="card overflow-hidden">
+    <div class="flex items-center gap-2 px-3 border-b border-line">
+      <svg class="w-4 h-4 text-muted shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+      <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="CR2032, 377, LR6, 18650, 20x3.2, 3V…" class="w-full h-12 bg-transparent text-[0.85rem] outline-none placeholder:text-muted" aria-controls="search-results" aria-autocomplete="list" role="combobox" aria-expanded="true" />
+      <kbd class="kbd">esc</kbd>
+    </div>
+    <ul id="search-results" role="listbox" class="max-h-[60vh] overflow-y-auto py-1"></ul>
+    <div class="px-3 py-2 border-t border-line text-[0.6rem] text-muted flex flex-wrap gap-x-4 gap-y-1">
+      <span>Search by name, any brand or standard code, <span class="mono">diameter×height</span>, or voltage</span>
+      <a href="/identify" class="link ml-auto">Identify by measurement</a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .search-dialog { margin: 10vh auto auto; width: min(40rem, calc(100vw - 2rem)); padding: 0; border: 0; background: transparent; color: inherit; }
+  .search-dialog::backdrop { background: oklch(0.2 0.02 248 / 0.35); backdrop-filter: blur(2px); }
+  :global(#search-results li[aria-selected="true"]) { background: var(--accent-soft); }
+</style>
+
+<script>
+  import { rank, type Entry } from '../lib/search';
+
+  const dialog = document.getElementById('search-dialog') as HTMLDialogElement;
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const list = document.getElementById('search-results') as HTMLUListElement;
+  let index: Entry[] | null = null;
+  let sel = 0;
+  let results: ReturnType<typeof rank> = [];
+
+  async function ensure() {
+    if (index) return index;
+    const r = await fetch('/api/search-index.json');
+    index = await r.json();
+    return index!;
+  }
+
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+  function render() {
+    if (!index) return;
+    const q = input.value.trim();
+    results = q ? rank(index, q, 12) : index.filter((e) => ['aa', 'aaa', 'cr2032', '18650', 'lr44', '9v', 'cr123a', '21700'].includes(e.id)).map((e) => ({ e, why: '' }));
+    sel = Math.min(sel, Math.max(0, results.length - 1));
+    list.innerHTML = results.length
+      ? results
+          .map(
+            ({ e, why }, i) => `<li role="option" id="sr-${i}" aria-selected="${i === sel}">
+            <a href="/${e.id}" class="flex items-center gap-3 px-3 py-2">
+              <span class="dot" style="background:${e.col}"></span>
+              <span class="font-semibold text-[0.8rem] w-24 shrink-0">${esc(e.n)}</span>
+              <span class="text-[0.65rem] text-muted truncate">${esc(e.c)} · ${esc(e.s)} · ${esc(e.v)} V</span>
+              ${why ? `<span class="chip ml-auto">${esc(why)}</span>` : ''}
+            </a></li>`,
+          )
+          .join('')
+      : `<li class="px-3 py-6 text-center text-[0.7rem] text-muted">No match for “${esc(q)}”. Try <a class="link" href="/identify">identifying it by measurement</a> or <a class="link" href="/decode?code=${encodeURIComponent(q)}">decoding the code</a>.</li>`;
+    input.setAttribute('aria-activedescendant', results.length ? `sr-${sel}` : '');
+  }
+
+  async function open() {
+    if (!dialog.open) dialog.showModal();
+    input.select();
+    await ensure();
+    render();
+  }
+
+  document.querySelectorAll('[data-search-open]').forEach((b) => b.addEventListener('click', open));
+  document.addEventListener('keydown', (e) => {
+    const t = e.target as HTMLElement;
+    const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+    if ((e.key === '/' && !typing) || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')) {
+      e.preventDefault();
+      open();
+    }
+  });
+  input.addEventListener('input', () => { sel = 0; render(); });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { sel = Math.min(sel + 1, results.length - 1); render(); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { sel = Math.max(sel - 1, 0); render(); e.preventDefault(); }
+    else if (e.key === 'Enter' && results[sel]) { location.href = `/${results[sel].e.id}`; }
+  });
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  window.addEventListener('pageshow', () => dialog.open && dialog.close());
+</script>

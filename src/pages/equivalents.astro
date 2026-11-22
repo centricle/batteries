@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { batteries, categoryById, chem, sizeLabel, voltages, volts, stats } from '../lib/data';
+
+const list = batteries();
+const s = stats();
+const rows = list.map((b) => ({
+  b,
+  iec: [...new Set(b.codes.filter((c) => c.system === 'IEC').map((c) => c.code))],
+  ansi: [...new Set(b.codes.filter((c) => c.system === 'ANSI' || c.system === 'NEDA').map((c) => c.code))],
+  other: b.codes.filter((c) => !['IEC', 'ANSI', 'NEDA'].includes(c.system)),
+}));
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Battery cross-reference and equivalents table',
+  description: `Every IEC, ANSI, JIS and manufacturer code for ${s.batteries} consumer battery sizes, mapped to one physical size each.`,
+  url: 'https://batteries.fyi/equivalents',
+  license: 'https://opensource.org/licenses/MIT',
+  distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://batteries.fyi/api/codes.json' }],
+};
+---
+
+<BaseLayout title="Battery equivalents and cross-reference table | batteries.fyi" description={`Every battery code on one page: ${s.codes.toLocaleString('en-US')} IEC, ANSI, JIS and brand designations for ${s.batteries} sizes. 377 = SR626SW, LR44 = AG13 = 357 = A76, LR6 = AA.`} jsonld={jsonld}>
+  <section class="wrap pt-8">
+    <p class="eyebrow">Cross-reference</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Battery equivalents</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Each row is one physical size, with every code that names it: IEC and ANSI standard designations, JIS names, and manufacturer numbers. Codes in one row fit the same holder. A code that carries a chemistry (LR44 alkaline, SR44 silver oxide) can still behave differently in a device, so check the entry before substituting.</p>
+    <div class="mt-5 max-w-md">
+      <label for="eq-filter" class="sr-only">Filter codes</label>
+      <input id="eq-filter" class="input" placeholder={`Filter ${s.codes.toLocaleString('en-US')} codes: 377, AG13, MN1500…`} autocomplete="off" />
+      <p id="eq-count" class="mt-1 text-[0.6rem] text-muted" aria-live="polite"></p>
+    </div>
+  </section>
+  <section class="wrap mt-5">
+    <div class="card table-scroll">
+      <table class="table min-w-[48rem]">
+        <thead><tr><th>Size</th><th>Type</th><th class="n">mm</th><th class="n">V</th><th>IEC</th><th>ANSI</th><th>Manufacturer and other codes</th></tr></thead>
+        <tbody id="eq-body">
+          {rows.map(({ b, iec, ansi, other }) => (
+            <tr data-k={[b.name, b.id, ...b.aliases, ...b.codes.map((c) => c.code)].join('|').toLowerCase().replace(/[^a-z0-9.|]/g, '')}>
+              <td class="font-semibold whitespace-nowrap"><a href={`/${b.id}`} class="link">{b.name}</a></td>
+              <td class="text-[0.62rem] text-muted whitespace-nowrap">{categoryById[b.category].short}</td>
+              <td class="n whitespace-nowrap text-[0.65rem]">{sizeLabel(b, false)}</td>
+              <td class="n whitespace-nowrap text-[0.65rem]">{voltages(b).map((v) => v).join(' / ')}</td>
+              <td class="mono text-[0.62rem]">{iec.join(', ')}</td>
+              <td class="mono text-[0.62rem]">{ansi.join(', ')}</td>
+              <td class="text-[0.62rem] text-ink-2">
+                {other.map((c, i) => <span class="whitespace-nowrap"><span class="text-muted">{c.system}</span> <span class="mono">{c.code}</span>{i < other.length - 1 ? ' · ' : ''}</span>)}
+                {b.aliases.length > 0 && <span class="text-muted">{other.length ? ' · ' : ''}{b.aliases.join(', ')}</span>}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-3 text-[0.62rem] text-muted">Also available as <a class="link" href="/api/codes.json">JSON</a> and <a class="link" href="/api/batteries.csv">CSV</a>. Sources for every code are listed on each battery's page.</p>
+  </section>
+</BaseLayout>
+
+<script>
+  const input = document.getElementById('eq-filter') as HTMLInputElement;
+  const rows = [...document.querySelectorAll<HTMLTableRowElement>('#eq-body tr')];
+  const count = document.getElementById('eq-count')!;
+  const apply = () => {
+    const q = input.value.toLowerCase().replace(/[^a-z0-9.]/g, '');
+    let n = 0;
+    for (const r of rows) {
+      const hit = !q || r.dataset.k!.split('|').some((k) => k.includes(q));
+      r.hidden = !hit;
+      if (hit) n++;
+    }
+    count.textContent = q ? `${n} size${n === 1 ? '' : 's'} match` : '';
+    const u = new URL(location.href);
+    if (input.value) u.searchParams.set('q', input.value); else u.searchParams.delete('q');
+    history.replaceState(null, '', u);
+  };
+  input.value = new URLSearchParams(location.search).get('q') ?? '';
+  input.addEventListener('input', apply);
+  apply();
+</script>

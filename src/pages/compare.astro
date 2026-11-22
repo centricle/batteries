@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { batteries, modelSpec, searchIndex, primaryVariant, capacityLabel, chemistryGroups, sizeLabel, voltages, volts, fmt, categoryById } from '../lib/data';
+
+const all = batteries();
+const specs = Object.fromEntries(all.map((b) => [b.id, modelSpec(b)]));
+const facts = Object.fromEntries(
+  all.map((b) => {
+    const pv = primaryVariant(b);
+    return [
+      b.id,
+      {
+        name: b.name,
+        cat: categoryById[b.category].short,
+        size: sizeLabel(b),
+        volts: voltages(b).map(volts).join(' / '),
+        cap: capacityLabel(pv),
+        weight: pv.weight_g ? `${fmt(pv.weight_g)} g` : '',
+        chems: chemistryGroups(b).map((g) => g.chem.short).join(', '),
+        codes: [...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name).slice(0, 5).join(' · '),
+        d: b.dimensions.diameter?.nominal ?? null,
+        h: b.dimensions.height.nominal,
+        w: b.dimensions.width?.nominal ?? null,
+        p: b.dimensions.depth?.nominal ?? null,
+        form: b.form,
+      },
+    ];
+  }),
+);
+const presets = [
+  { label: 'Household sizes', ids: 'd,c,aa,aaa,aaaa,n,9v' },
+  { label: 'Lithium-ion sizes', ids: '32650,26650,21700,20700,18650,18350,14500,10440' },
+  { label: 'AA vs 14500', ids: 'aa,14500,er14505' },
+  { label: 'CR123A vs 16340', ids: 'cr123a,16340,cr2' },
+  { label: '20 mm coin cells', ids: 'cr2032,cr2025,cr2016,cr2012' },
+  { label: 'Watch cells', ids: 'lr44,sr1130sw,sr927sw,lr41,sr626sw,sr621sw' },
+  { label: 'Hearing aid sizes', ids: '675,13,312,10,5' },
+  { label: 'Camera packs', ids: 'cr-v3,2cr5,cr-p2,cr123a,cr2' },
+];
+---
+
+<BaseLayout title="Compare battery sizes in 3D, to scale | batteries.fyi" description="Line up any battery sizes side by side at true scale in 3D: AA vs AAA, 18650 vs 21700, CR2032 vs CR2025, with dimensions, voltages and capacities compared.">
+  <section class="wrap pt-8">
+    <p class="eyebrow">Tool</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Compare battery sizes</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Add any sizes to line them up in 3D at true relative scale, on a 10 mm grid. Coin and button cells stand on edge so their diameter reads against the others' length. The link updates as you go, so a comparison can be shared.</p>
+
+    <div class="mt-5 flex flex-wrap items-center gap-2" id="picked" aria-live="polite"></div>
+    <div class="mt-3 relative max-w-md">
+      <label for="cmp-add" class="sr-only">Add a battery</label>
+      <input id="cmp-add" class="input" placeholder="Add a battery: name or any code" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cmp-list" />
+      <ul id="cmp-list" class="card absolute z-20 left-0 right-0 mt-1 max-h-72 overflow-y-auto hidden" role="listbox"></ul>
+    </div>
+    <div class="mt-3 flex flex-wrap gap-1.5">
+      {presets.map((p) => <button type="button" class="btn btn-sm" data-preset={p.ids}>{p.label}</button>)}
+    </div>
+  </section>
+
+  <section class="wrap mt-5">
+    <div id="stage" class="relative rounded-xl overflow-hidden border border-line viewer-stage" style="height:min(30rem,80vw)">
+      <div class="viewer-labels absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute top-2 left-3 text-[0.58rem] text-muted pointer-events-none">Grid: 10 mm</div>
+      <p id="nogl" class="hidden absolute inset-0 flex items-center justify-center text-[0.7rem] text-muted">3D needs WebGL 2. The table below still compares the sizes.</p>
+    </div>
+  </section>
+
+  <section class="wrap mt-8">
+    <h2 class="section-title">Side by side</h2>
+    <div class="card table-scroll"><table class="table min-w-[36rem]" id="cmp-table"></table></div>
+  </section>
+
+  <script type="application/json" id="cmp-specs" set:html={JSON.stringify(specs)} />
+  <script type="application/json" id="cmp-facts" set:html={JSON.stringify(facts)} />
+  <script type="application/json" id="cmp-index" set:html={JSON.stringify(searchIndex())} />
+</BaseLayout>
+
+<style>
+  .viewer-stage { background: radial-gradient(120% 90% at 50% 20%, var(--stage) 0%, var(--stage-2) 100%); }
+  :global(.viewer-label) { position: absolute; transform: translate(-50%, 0); font-size: 0.62rem; font-weight: 650; color: var(--ink); background: color-mix(in oklch, var(--surface) 85%, transparent); border: 1px solid var(--line); border-radius: 0.3rem; padding: 0.05rem 0.35rem; white-space: nowrap; pointer-events: auto; text-decoration: none; }
+  :global(#cmp-list li[aria-selected="true"]) { background: var(--accent-soft); }
+</style>
+
+<script>
+  import { rank, type Entry } from '../lib/search';
+  const specs = JSON.parse(document.getElementById('cmp-specs')!.textContent!);
+  const facts = JSON.parse(document.getElementById('cmp-facts')!.textContent!);
+  const index: Entry[] = JSON.parse(document.getElementById('cmp-index')!.textContent!);
+  const stage = document.getElementById('stage')!;
+  const labelsEl = stage.querySelector('.viewer-labels') as HTMLElement;
+  const picked = document.getElementById('picked')!;
+  const add = document.getElementById('cmp-add') as HTMLInputElement;
+  const list = document.getElementById('cmp-list')!;
+  const table = document.getElementById('cmp-table')!;
+
+  const params = new URLSearchParams(location.search);
+  let ids = (params.get('ids') ?? 'd,c,aa,aaa,9v,18650,cr2032').split(',').filter((id) => specs[id]);
+  let api: any = null;
+  let host: HTMLElement | null = null;
+  let mount: any = null;
+  const hasGL = !!document.createElement('canvas').getContext('webgl2');
+  if (!hasGL) document.getElementById('nogl')!.classList.remove('hidden');
+
+  const esc = (s: string) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+  async function draw() {
+    history.replaceState(null, '', ids.length ? `?ids=${ids.join(',')}` : location.pathname);
+    picked.innerHTML = ids.length
+      ? ids.map((id) => `<span class="chip font-sans text-[0.7rem] py-1 pl-2.5 pr-1"><a href="/${id}" class="font-semibold">${esc(facts[id].name)}</a><button type="button" data-remove="${id}" class="w-5 h-5 rounded-full hover:bg-surface-2" aria-label="Remove ${esc(facts[id].name)}">×</button></span>`).join('')
+      : '<span class="text-[0.7rem] text-muted">Nothing selected. Add a battery or pick a preset.</span>';
+    renderTable();
+    if (!hasGL) return;
+    api?.dispose();
+    host?.remove();
+    labelsEl.innerHTML = '';
+    if (!ids.length) return;
+    mount ??= (await import('../lib/viewer')).mountViewer;
+    host = document.createElement('div');
+    host.className = 'absolute inset-0';
+    stage.prepend(host);
+    const els = new Map<string, HTMLAnchorElement>();
+    api = mount(host, ids.map((id) => specs[id]), {
+      mode: 'lineup',
+      onLabels: (ls: any[]) => {
+        for (const l of ls) {
+          let a = els.get(l.id);
+          if (!a) {
+            a = document.createElement('a');
+            a.className = 'viewer-label';
+            a.href = `/${l.id}`;
+            a.textContent = l.name;
+            labelsEl.appendChild(a);
+            els.set(l.id, a);
+          }
+          a.style.left = `${l.x}px`;
+          a.style.top = `${l.y}px`;
+          a.style.display = l.visible ? '' : 'none';
+        }
+      },
+    });
+  }
+
+  function renderTable() {
+    if (!ids.length) { table.innerHTML = ''; return; }
+    const rows: [string, (f: any) => string][] = [
+      ['Type', (f) => f.cat],
+      ['Size (mm)', (f) => f.size],
+      ['Diameter or width', (f) => `${f.d ?? f.w} mm`],
+      ['Height', (f) => `${f.h} mm`],
+      ['Voltage', (f) => f.volts],
+      ['Typical capacity', (f) => f.cap || '—'],
+      ['Weight', (f) => f.weight || '—'],
+      ['Chemistries', (f) => f.chems],
+      ['Other codes', (f) => `<span class="mono text-[0.6rem] text-muted">${esc(f.codes)}</span>`],
+    ];
+    const base = facts[ids[0]];
+    const delta = (f: any) => {
+      if (f === base) return '<span class="text-muted">reference</span>';
+      const a = base.d ?? base.w, b = f.d ?? f.w;
+      const dd = b - a, dh = f.h - base.h;
+      const s = (x: number) => (x > 0 ? '+' : '') + x.toFixed(2);
+      return `<span class="tabular">${s(dd)} × ${s(dh)} mm</span>`;
+    };
+    table.innerHTML =
+      `<thead><tr><th class="sticky left-0 bg-surface z-10"></th>${ids.map((id) => `<th class="normal-case tracking-normal text-[0.75rem] text-ink"><a class="hover:underline" href="/${id}">${esc(facts[id].name)}</a></th>`).join('')}</tr></thead><tbody>` +
+      rows.map(([label, get]) => `<tr><td class="sticky left-0 bg-surface z-10 text-ink-2 font-medium">${label}</td>${ids.map((id) => `<td class="tabular">${label === 'Other codes' ? get(facts[id]) : esc(get(facts[id]))}</td>`).join('')}</tr>`).join('') +
+      `<tr><td class="sticky left-0 bg-surface z-10 text-ink-2 font-medium">vs ${esc(base.name)}</td>${ids.map((id) => `<td>${delta(facts[id])}</td>`).join('')}</tr></tbody>`;
+  }
+
+  picked.addEventListener('click', (e) => {
+    const id = (e.target as HTMLElement).closest('[data-remove]')?.getAttribute('data-remove');
+    if (id) { ids = ids.filter((x) => x !== id); draw(); }
+  });
+  document.querySelectorAll('[data-preset]').forEach((b) => b.addEventListener('click', () => { ids = (b as HTMLElement).dataset.preset!.split(',').filter((id) => specs[id]); draw(); }));
+
+  let sel = 0;
+  let res: ReturnType<typeof rank> = [];
+  const renderList = () => {
+    res = add.value.trim() ? rank(index, add.value, 8).filter((r) => !ids.includes(r.e.id)) : [];
+    list.classList.toggle('hidden', !res.length);
+    add.setAttribute('aria-expanded', String(!!res.length));
+    list.innerHTML = res.map((r, i) => `<li role="option" aria-selected="${i === sel}" data-id="${r.e.id}" class="px-3 py-2 cursor-pointer flex gap-3 items-center text-[0.72rem]"><span class="dot" style="background:${r.e.col}"></span><strong>${esc(r.e.n)}</strong><span class="text-muted text-[0.62rem]">${esc(r.e.s)}</span>${r.why ? `<span class="chip ml-auto">${esc(r.why)}</span>` : ''}</li>`).join('');
+  };
+  const pick = (id: string) => { if (!ids.includes(id) && ids.length < 12) ids.push(id); add.value = ''; renderList(); draw(); };
+  add.addEventListener('input', () => { sel = 0; renderList(); });
+  add.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { sel = Math.min(sel + 1, res.length - 1); renderList(); e.preventDefault(); }
+    if (e.key === 'ArrowUp') { sel = Math.max(sel - 1, 0); renderList(); e.preventDefault(); }
+    if (e.key === 'Enter' && res[sel]) { e.preventDefault(); pick(res[sel].e.id); }
+    if (e.key === 'Escape') { add.value = ''; renderList(); }
+  });
+  list.addEventListener('mousedown', (e) => { const id = (e.target as HTMLElement).closest('[data-id]')?.getAttribute('data-id'); if (id) { e.preventDefault(); pick(id); } });
+  add.addEventListener('blur', () => setTimeout(() => list.classList.add('hidden'), 100));
+  draw();
+</script>

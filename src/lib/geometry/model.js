@@ -213,8 +213,6 @@ function lantern(b, assumed) {
         const name = i === 0 ? 'positive' : 'negative';
         if (screw) {
           parts.push(circlePart(name + '-post', 'brass', 1.6, [[0, top - 0.2, true], [0, top + topH, 0.3], [-1.58, top + topH]], { at: [x, 0, 0] }));
-          const nut = [];
-          for (let s = 0; s < 18; s++) nut.push(s);
           parts.push(circlePart(name, 'brass', 4.2, fillet([[-3.0, top + topH * 0.2], [0, top + topH * 0.2, 0.5], [0, top + topH * 0.55, 0.5], [-3.0, top + topH * 0.55]], 3), { at: [x, 0, 0] }));
         } else {
           parts.push(circlePart(name + '-base', 'steel', 5, [[0, top - 0.2, true], [0, top + 0.8, true]], { at: [x, 0, 0] }));
@@ -251,10 +249,9 @@ function flatpack(b, assumed) {
     },
   });
   void P;
-  m.terminals = { positive: [-xs, top0(H, longH) + shortH, 0], negative: [xs, H, 0] };
+  m.terminals = { positive: [-xs, H - longH + shortH, 0], negative: [xs, H, 0] };
   return m;
 }
-const top0 = (H, t) => H - t;
 
 function twin(b, assumed) {
   const dims = [b.dimensions.width?.nominal, b.dimensions.depth?.nominal, b.dimensions.height?.nominal].filter(Boolean);

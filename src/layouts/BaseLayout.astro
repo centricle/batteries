@@ -1,203 +1,216 @@
 ---
 import '../styles/global.css';
+import Search from '../components/Search.astro';
 
 export interface Props {
-	title?: string;
-	description?: string;
+  title?: string;
+  description?: string;
+  jsonld?: object | object[];
+  wide?: boolean;
+  noindex?: boolean;
 }
 
 const {
-	title = "batteries.fyi - Complete Battery Database",
-	description = "Comprehensive database of battery specifications, dimensions, and technical data for all consumer battery types."
+  title = 'batteries.fyi: every consumer battery, measured and cited',
+  description = 'Specifications, 3D models, dimensions and cross-reference codes for every consumer battery size, from AA to CR2032 to 18650. Sourced from IEC standards and manufacturer datasheets.',
+  jsonld,
+  noindex = false,
 } = Astro.props;
+
+const nav = [
+  { href: '/batteries', label: 'Batteries' },
+  { href: '/compare', label: 'Compare' },
+  { href: '/identify', label: 'Identify' },
+  { href: '/tools', label: 'Tools' },
+  { href: '/reference', label: 'Reference' },
+];
+const path = Astro.url.pathname;
+const active = (href: string) => path === href || path.startsWith(href + '/');
+const ld = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? 'noindex' : 'index, follow'} />
+    <meta name="theme-color" content="#f8fafb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14181f" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="batteries.fyi" />
+    <meta property="og:image" content="https://batteries.fyi/og-image.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://batteries.fyi/og-image.webp" />
+    <link rel="alternate" type="application/json" href="/api/batteries.json" title="batteries.fyi open data" />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KWF27YQNP4"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-KWF27YQNP4');
+    </script>
+    {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
+    <slot name="head" />
+  </head>
 
-		<!-- Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-KWF27YQNP4"></script>
-		<script is:inline>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-			gtag('config', 'G-KWF27YQNP4');
-		</script>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 z-50 btn">Skip to content</a>
+    <header class="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur-md supports-[backdrop-filter]:bg-bg/75">
+      <div class="wrap flex items-center gap-4 h-14">
+        <a href="/" class="flex items-center gap-2 shrink-0" aria-label="batteries.fyi home">
+          <span class="w-8 h-8 rounded-lg bg-surface border border-line flex items-center justify-center">
+            <svg class="w-5 h-5 text-accent-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="7" y="4" width="10" height="18" rx="2" />
+              <path d="M10 2h4" />
+              <path d="M12 9v6" />
+              <path d="M9 12h6" />
+            </svg>
+          </span>
+          <span class="text-[0.85rem] tracking-tight"><span class="font-normal">batteries</span><span class="font-bold">.fyi</span></span>
+        </a>
 
-		<!-- Open Graph -->
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url} />
-		<meta property="og:site_name" content="batteries.fyi" />
-		<meta property="og:image" content="https://batteries.fyi/og-image.webp" />
+        <nav class="hidden md:flex items-center gap-1 text-[0.7rem] font-medium" aria-label="Main">
+          {nav.map((n) => (
+            <a href={n.href} class:list={['px-2.5 py-1.5 rounded-md transition-colors', active(n.href) ? 'text-ink bg-surface-2' : 'text-ink-2 hover:text-ink hover:bg-surface-2']} aria-current={active(n.href) ? 'page' : undefined}>{n.label}</a>
+          ))}
+        </nav>
 
-		<!-- Twitter Card -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="https://batteries.fyi/og-image.webp" />
-		
-		<!-- SEO -->
-		<link rel="canonical" href={Astro.url} />
-		<meta name="robots" content="index, follow" />
-	</head>
+        <div class="ml-auto flex items-center gap-2">
+          <button type="button" data-search-open class="hidden sm:flex items-center gap-2 h-9 pl-3 pr-2 w-56 lg:w-72 rounded-lg border border-line-2 bg-surface text-muted text-[0.68rem] hover:border-accent transition-colors" aria-label="Search batteries">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+            <span>Search 1,000+ codes</span>
+            <span class="ml-auto kbd">/</span>
+          </button>
+          <button type="button" data-search-open class="sm:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-line-2 bg-surface" aria-label="Search batteries">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+          </button>
+          <button type="button" id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-lg border border-line-2 bg-surface text-ink-2 hover:text-ink" aria-label="Toggle color theme" title="Toggle color theme">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" /></svg>
+          </button>
+          <button type="button" id="mobile-menu-button" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-line-2 bg-surface" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu">
+            <svg id="hamburger-icon" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+            <svg id="close-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden border-t border-line bg-bg">
+        <nav class="wrap py-2 flex flex-col text-[0.8rem]" aria-label="Mobile">
+          {nav.map((n) => <a href={n.href} class="py-2.5 border-b border-line last:border-0">{n.label}</a>)}
+          <a href="/data" class="py-2.5">Open data</a>
+        </nav>
+      </div>
+    </header>
 
-	<body class="bg-gray-50 text-gray-900">
-		<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-900 text-white px-4 py-2 z-50">Skip to main content</a>
-		<header class="shadow-sm border-b border-gray-200">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="flex justify-between items-center py-6">
-					<div class="flex items-center">
-						<a href="/" class="flex items-center gap-2" aria-label="batteries.fyi home page">
-							<div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center">
-								<svg class="w-5 h-5 text-blue-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<rect x="7" y="4" width="10" height="16" rx="1.5"/>
-									<rect x="10" y="2" width="4" height="2" rx="0.5"/>
-									<line x1="12" y1="9" x2="12" y2="15"/>
-									<line x1="9" y1="12" x2="15" y2="12"/>
-								</svg>
-							</div>
-							<span class="text-lg text-slate-800"><span class="font-normal">batteries</span><span class="font-bold">.fyi</span></span>
-						</a>
-					</div>
-					
-					<!-- Desktop Navigation -->
-					<nav class="hidden gap-x-6 text-gray-800 md:flex" aria-label="Main navigation">
-						<a href="/traditional" class="hover:underline" aria-label="Traditional batteries category">Traditional</a>
-						<a href="/lithium-ion" class="hover:underline" aria-label="Lithium-ion batteries category">Lithium-ion</a>
-						<a href="/button-cells" class="hover:underline" aria-label="Button cell batteries category">Button Cells</a>
-						<a href="/camera" class="hover:underline" aria-label="Camera batteries category">Camera</a>
-						<a href="/hearing-aid" class="hover:underline" aria-label="Hearing aid batteries category">Hearing Aid</a>
-						<a href="/search" class="hover:underline" aria-label="Search battery database">Search</a>
-					</nav>
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
 
-					<!-- Mobile Menu Button -->
-					<button 
-						class="md:hidden flex items-center justify-center w-10 h-10 text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-						aria-label="Open navigation menu"
-						aria-expanded="false"
-						id="mobile-menu-button"
-					>
-						<svg class="w-6 h-6 hamburger-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19h16"/>
-						</svg>
-						<svg class="w-6 h-6 close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6 6 18"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 6 12 12"/>
-						</svg>
-					</button>
-				</div>
+    <footer class="border-t border-line mt-16 bg-surface-2/50">
+      <div class="wrap py-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 text-[0.68rem]">
+        <div class="lg:col-span-2 max-w-sm">
+          <p class="font-semibold text-ink mb-2">batteries.fyi</p>
+          <p class="text-muted leading-relaxed">Specifications, dimensions, cross-reference codes and 3D models for consumer batteries, sourced from IEC standards and manufacturer datasheets. No ads. No sponsored content. No affiliate links.</p>
+        </div>
+        <div>
+          <p class="eyebrow mb-2">Batteries</p>
+          <ul class="space-y-1.5 text-ink-2">
+            <li><a class="hover:text-ink" href="/household">Household</a></li>
+            <li><a class="hover:text-ink" href="/coin-cells">Coin cells</a></li>
+            <li><a class="hover:text-ink" href="/button-cells">Button cells</a></li>
+            <li><a class="hover:text-ink" href="/lithium-ion">Lithium-ion</a></li>
+            <li><a class="hover:text-ink" href="/equivalents">Equivalents table</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow mb-2">Tools</p>
+          <ul class="space-y-1.5 text-ink-2">
+            <li><a class="hover:text-ink" href="/compare">Compare sizes</a></li>
+            <li><a class="hover:text-ink" href="/identify">Identify by measurement</a></li>
+            <li><a class="hover:text-ink" href="/decode">Decode a code</a></li>
+            <li><a class="hover:text-ink" href="/actual-size">Actual size</a></li>
+            <li><a class="hover:text-ink" href="/calculators">Calculators</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow mb-2">About</p>
+          <ul class="space-y-1.5 text-ink-2">
+            <li><a class="hover:text-ink" href="/about">About</a></li>
+            <li><a class="hover:text-ink" href="/data">Open data and models</a></li>
+            <li><a class="hover:text-ink" href="/sources">Sources</a></li>
+            <li><a class="hover:text-ink" href="/glossary">Glossary</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap pb-8 text-[0.62rem] text-muted">
+        <div class="flex flex-wrap justify-center gap-2 items-center mb-5">
+          <span>See also:</span>
+          <a href="https://cables.fyi" class="hover:text-ink">Cables</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://fasteners.fyi" class="hover:text-ink">Fasteners</a>
+        </div>
+        <div class="relative flex items-center justify-between border-t border-line pt-5">
+          <span>&copy; {new Date().getFullYear()} Centricle LLC &middot; batteries.fyi</span>
+          <a href="https://centricle.com" title="made by ksmith" aria-label="made by ksmith" class="absolute left-1/2 -translate-x-1/2">
+            <img src="https://centricle.com/brand/avatar-sm.jpg" alt="" width="28" height="28" class="w-7 h-7 rounded-full" loading="lazy" />
+          </a>
+          <a href="/data" class="hover:text-ink">Open data (MIT)</a>
+        </div>
+      </div>
+    </footer>
 
-				<!-- Mobile Navigation Menu -->
-				<div class="md:hidden hidden" id="mobile-menu">
-					<div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-						<a href="/traditional" class="block px-3 py-3 text-gray-700 hover:underline hover:bg-gray-50 text-base font-medium">Traditional Batteries</a>
-						<a href="/lithium-ion" class="block px-3 py-3 text-gray-700 hover:underline hover:bg-gray-50 text-base font-medium">Lithium-ion Batteries</a>
-						<a href="/button-cells" class="block px-3 py-3 text-gray-700 hover:underline hover:bg-gray-50 text-base font-medium">Button Cell Batteries</a>
-						<a href="/camera" class="block px-3 py-3 text-gray-700 hover:underline hover:bg-gray-50 text-base font-medium">Camera Batteries</a>
-						<a href="/hearing-aid" class="block px-3 py-3 text-gray-700 hover:underline hover:bg-gray-50 text-base font-medium">Hearing Aid Batteries</a>
-						<a href="/search" class="block px-3 py-3 text-gray-700 hover:underline hover:bg-gray-50 text-base font-medium">Search Database</a>
-					</div>
-				</div>
-			</div>
-		</header>
-		
-		<main id="main" class="min-h-screen border-b border-gray-400">
-			<slot />
-		</main>
-		
-		<footer class="border-t border-gray-200 mt-auto">
-			<div class="max-w-7xl mx-auto px-8 py-8">
-				<div class="text-sm text-gray-600 text-center mb-4 flex flex-wrap justify-center gap-2 items-center">
-					<span class="font-medium">See also:</span>
-					<a href="https://cables.fyi" class="hover:text-gray-900 transition-colors">Cables</a>
-					<span class="text-gray-400">·</span>
-					<a href="https://fasteners.fyi" class="hover:text-gray-900 transition-colors">Fasteners</a>
-				</div>
-				<div class="pt-4 flex justify-center mb-4">
-					<a href="https://centricle.com" title="made by ksmith" aria-label="made by ksmith">
-						<img src="https://centricle.com/brand/avatar-sm.jpg" alt="" width="28" height="28" class="w-7 h-7 rounded-full" loading="lazy" />
-					</a>
-				</div>
-				<div class="flex items-center justify-between text-sm text-gray-600">
-					<span>&copy; {new Date().getFullYear()} Centricle LLC &middot; batteries.fyi</span>
-					<a href="/about" class="hover:text-gray-900 transition-colors">About</a>
-				</div>
-			</div>
-		</footer>
-		
-		<script>
-			// Mobile menu toggle functionality
-			document.addEventListener('DOMContentLoaded', function() {
-				const button = document.getElementById('mobile-menu-button');
-				const menu = document.getElementById('mobile-menu');
-				
-				if (!button || !menu) return;
-				
-				const hamburgerIcon = button.querySelector('.hamburger-icon');
-				const closeIcon = button.querySelector('.close-icon');
-				let isOpen = false;
-				
-				function toggleMenu() {
-					isOpen = !isOpen;
-					
-					// Update menu visibility
-					menu.classList.toggle('hidden', !isOpen);
-					
-					// Update button state
-					button.setAttribute('aria-expanded', isOpen.toString());
-					button.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
-					
-					// Toggle icons
-					if (hamburgerIcon && closeIcon) {
-						hamburgerIcon.classList.toggle('hidden', isOpen);
-						closeIcon.classList.toggle('hidden', !isOpen);
-					}
-					
-					// Focus management
-					if (isOpen) {
-						const firstLink = menu.querySelector('a');
-						if (firstLink) firstLink.focus();
-					} else {
-						button.focus();
-					}
-				}
-				
-				function closeMenu() {
-					if (isOpen) toggleMenu();
-				}
-				
-				// Button click handler
-				button.addEventListener('click', toggleMenu);
-				
-				// Escape key handler
-				document.addEventListener('keydown', function(event) {
-					if (event.key === 'Escape' && isOpen) {
-						closeMenu();
-					}
-				});
-				
-				// Click outside handler
-				document.addEventListener('click', function(event) {
-					if (isOpen && !menu.contains(event.target) && !button.contains(event.target)) {
-						closeMenu();
-					}
-				});
-				
-				// Close menu when clicking navigation links
-				menu.addEventListener('click', function(event) {
-					if (event.target.tagName === 'A') {
-						closeMenu();
-					}
-				});
-			});
-		</script>
-	</body>
+    <Search />
+
+    <script>
+      // Theme: auto -> dark -> light -> auto.
+      const tbtn = document.getElementById('theme-toggle');
+      tbtn?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const sysDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        const cur = root.dataset.theme ?? (sysDark ? 'dark' : 'light');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        window.dispatchEvent(new CustomEvent('themechange'));
+      });
+
+      // Mobile menu (fleet pattern: Escape, click-outside, icon swap, focus).
+      const button = document.getElementById('mobile-menu-button');
+      const menu = document.getElementById('mobile-menu');
+      const ham = document.getElementById('hamburger-icon');
+      const close = document.getElementById('close-icon');
+      let open = false;
+      const toggle = () => {
+        open = !open;
+        menu?.classList.toggle('hidden', !open);
+        button?.setAttribute('aria-expanded', String(open));
+        button?.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        ham?.classList.toggle('hidden', open);
+        close?.classList.toggle('hidden', !open);
+        if (open) (menu?.querySelector('a') as HTMLElement | null)?.focus();
+        else button?.focus();
+      };
+      button?.addEventListener('click', toggle);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) toggle(); });
+      document.addEventListener('click', (e) => {
+        if (open && menu && button && !menu.contains(e.target as Node) && !button.contains(e.target as Node)) toggle();
+      });
+    </script>
+  </body>
 </html>

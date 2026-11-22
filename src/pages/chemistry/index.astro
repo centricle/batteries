@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { batteries, chemistries, chem, CHEM_FALLBACK, fmt } from '../../lib/data';
+const counts = new Map<string, number>();
+for (const b of batteries()) for (const id of new Set(b.variants.map((v) => v.chemistry))) counts.set(id, (counts.get(id) ?? 0) + 1);
+const list = chemistries().length ? chemistries() : [];
+const rows = Object.keys(CHEM_FALLBACK)
+  .map((id) => ({ id, c: list.find((x) => x.id === id), meta: chem(id), n: counts.get(id) ?? 0 }))
+  .filter((r) => r.c || r.n)
+  .sort((a, b) => b.n - a.n);
+---
+
+<BaseLayout title="Battery chemistries compared: alkaline, lithium, NiMH, Li-ion | batteries.fyi" description="Every consumer battery chemistry: alkaline, zinc-carbon, lithium primaries, silver oxide, zinc-air, NiMH, NiCd, lithium-ion and LiFePO4, with voltages, energy density and the sizes each is made in.">
+  <section class="wrap pt-8">
+    <p class="eyebrow">Reference</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Battery chemistries</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">The chemistry sets a cell's voltage, how that voltage falls as it discharges, how it handles cold and heavy loads, and whether it can be recharged. The IEC letter is the one that opens a designation: the L in LR6, the S in SR44, the C in CR2032.</p>
+  </section>
+  <section class="wrap mt-6">
+    <div class="card table-scroll">
+      <table class="table min-w-[44rem]">
+        <thead><tr><th>Chemistry</th><th>IEC letter</th><th class="n">Nominal</th><th>Rechargeable</th><th class="n">Wh/kg</th><th class="n">Sizes here</th></tr></thead>
+        <tbody>
+          {rows.map(({ id, c, meta, n }) => (
+            <tr>
+              <td><a href={`/chemistry/${id}`} class="flex items-center gap-2 font-semibold hover:text-accent-ink"><span class="dot" style={`background:${meta.color}`}></span>{meta.name}</a>{c?.summary && <span class="block text-[0.6rem] text-muted mt-0.5 max-w-md">{c.summary}</span>}</td>
+              <td class="mono">{c?.iec_letter ?? '—'}</td>
+              <td class="n">{c ? `${fmt(c.voltage.nominal)} V` : '—'}</td>
+              <td>{c ? (c.rechargeable ? 'Yes' : 'No') : '—'}</td>
+              <td class="n">{c?.energy_density_wh_kg ? `${c.energy_density_wh_kg[0]}–${c.energy_density_wh_kg[1]}` : '—'}</td>
+              <td class="n">{n}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>

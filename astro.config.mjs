@@ -2,6 +2,19 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import { fileURLToPath } from 'node:url';
+import { buildRedirects } from './scripts/redirects.mjs';
+
+/** Writes dist/_redirects from the data after every build. */
+const redirects = () => ({
+  name: 'batteries-redirects',
+  hooks: {
+    'astro:build:done': ({ dir, logger }) => {
+      const n = buildRedirects(process.cwd(), fileURLToPath(dir));
+      logger.info(`_redirects: ${n} alias redirects plus legacy paths`);
+    },
+  },
+});
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,9 +25,11 @@ export default defineConfig({
   compressHTML: true,
   site: 'https://batteries.fyi',
   output: 'static',
-  integrations: [sitemap()],
+  devToolbar: { enabled: false },
+  trailingSlash: 'ignore',
+  integrations: [sitemap({ filter: (p) => !p.includes('/api/') }), redirects()],
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   },
   server: {
     port: 7006,

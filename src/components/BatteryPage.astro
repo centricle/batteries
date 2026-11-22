@@ -1,0 +1,388 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Viewer from './Viewer.astro';
+import Silhouette from './Silhouette.astro';
+import { drawingSVG } from '../lib/drawing';
+import { describe } from '../lib/geometry/model.js';
+import {
+  type Battery, categoryById, chem, chemistryGroups, codesBySystem, fmt, inch, interchangeFor, primaryVariant,
+  similar, sizeLabel, shapeWord, summary, volts, capacityLabel, batteryById, voltages,
+} from '../lib/data';
+
+interface Props { battery: Battery }
+const { battery: b } = Astro.props;
+const cat = categoryById[b.category];
+const pv = primaryVariant(b);
+const groups = chemistryGroups(b);
+const sum = summary(b);
+const d = b.dimensions;
+const model = describe(b as any);
+const sims = similar(b, 6);
+const inter = interchangeFor(b);
+const danger = inter.filter((r) => r.relation === 'do-not-substitute');
+const codeGroups = codesBySystem(b);
+const srcIndex = new Map(b.sources.map((s, i) => [s.id, i + 1]));
+const cite = (ids: string[]) => ids.map((id) => srcIndex.get(id)).filter(Boolean).sort((a, c) => a! - c!);
+const url = `https://batteries.fyi/${b.id}`;
+const vs = voltages(b);
+
+const dimRows = (
+  [
+    ['Diameter', d.diameter],
+    [b.form === 'disc' ? 'Thickness' : 'Height', d.height],
+    ['Width', d.width],
+    ['Depth', d.depth],
+  ] as const
+).filter(([, v]) => v);
+
+const props: { key: string; label: string; get: (v: Battery['variants'][number]) => string }[] = [
+  { key: 'nominal', label: 'Nominal voltage', get: (v) => volts(v.voltage.nominal) },
+  { key: 'oc', label: 'Open-circuit voltage', get: (v) => (v.voltage.open_circuit ? volts(v.voltage.open_circuit) : '') },
+  { key: 'cutoff', label: 'Cutoff voltage', get: (v) => (v.voltage.cutoff ? volts(v.voltage.cutoff) : '') },
+  { key: 'charge', label: 'Charge voltage', get: (v) => (v.voltage.charge_max ? volts(v.voltage.charge_max) : '') },
+  { key: 'cap', label: 'Capacity', get: (v) => { const c = v.capacity_mah; if (!c) return ''; const t = c.typical ? `${fmt(c.typical, 0)} mAh` : ''; const r = c.range ? `${fmt(c.range[0], 0)}–${fmt(c.range[1], 0)} mAh` : ''; return [t, r && t ? `(${r})` : r].filter(Boolean).join(' '); } },
+  { key: 'cond', label: 'Capacity rated at', get: (v) => v.capacity_mah?.conditions ?? '' },
+  { key: 'wh', label: 'Energy (typical)', get: (v) => (v.capacity_mah?.typical ? `${fmt((v.capacity_mah.typical / 1000) * v.voltage.nominal, 2)} Wh` : '') },
+  { key: 'weight', label: 'Weight', get: (v) => (v.weight_g ? `${fmt(v.weight_g)} g` : '') },
+  { key: 'cont', label: 'Max continuous current', get: (v) => (v.max_continuous_ma ? (v.max_continuous_ma >= 1000 ? `${fmt(v.max_continuous_ma / 1000, 1)} A` : `${fmt(v.max_continuous_ma, 0)} mA`) : '') },
+  { key: 'pulse', label: 'Max pulse current', get: (v) => (v.max_pulse_ma ? (v.max_pulse_ma >= 1000 ? `${fmt(v.max_pulse_ma / 1000, 1)} A` : `${fmt(v.max_pulse_ma, 0)} mA`) : '') },
+  { key: 'ir', label: 'Internal resistance', get: (v) => (v.internal_resistance_mohm ? `${fmt(v.internal_resistance_mohm)} mΩ` : '') },
+  { key: 'cycles', label: 'Cycle life', get: (v) => (v.cycle_life ? `${fmt(v.cycle_life, 0)} cycles` : '') },
+  { key: 'shelf', label: 'Shelf life', get: (v) => (v.shelf_life_years ? `${fmt(v.shelf_life_years)} years` : '') },
+  { key: 'sd', label: 'Self-discharge', get: (v) => v.self_discharge ?? '' },
+  { key: 'li', label: 'Lithium content', get: (v) => (v.lithium_content_g ? `${fmt(v.lithium_content_g, 3)} g` : '') },
+  { key: 'op', label: 'Operating temperature', get: (v) => { const t = v.temperature_c?.operating ?? v.temperature_c?.discharge; return t ? `${t[0]} to ${t[1]} °C` : ''; } },
+  { key: 'ch', label: 'Charge temperature', get: (v) => (v.temperature_c?.charge ? `${v.temperature_c.charge[0]} to ${v.temperature_c.charge[1]} °C` : '') },
+  { key: 'st', label: 'Storage temperature', get: (v) => (v.temperature_c?.storage ? `${v.temperature_c.storage[0]} to ${v.temperature_c.storage[1]} °C` : '') },
+  { key: 'rech', label: 'Rechargeable', get: (v) => (v.rechargeable ? 'Yes' : 'No') },
+];
+const shownProps = props.filter((p) => b.variants.some((v) => p.get(v)));
+
+const relMeta: Record<string, { label: string; cls: string }> = {
+  equivalent: { label: 'Equivalent', cls: 'ok' },
+  'same-size': { label: 'Same size, different behavior', cls: 'info' },
+  'fits-with-caveat': { label: 'Fits, with a caveat', cls: 'warn' },
+  'do-not-substitute': { label: 'Do not substitute', cls: 'danger' },
+};
+
+const faqs = [
+  { q: `What size is a ${b.name} battery?`, a: `${sizeLabel(b)} (${b.form === 'disc' || b.form === 'cylinder' ? `${inch(d.diameter!.nominal)} × ${inch(d.height.nominal)} in` : `${inch(d.width!.nominal)} × ${inch(d.depth!.nominal)} × ${inch(d.height.nominal)} in`}). ${d.note ?? ''}`.trim() },
+  { q: `What voltage is a ${b.name} battery?`, a: groups.map((g) => `${g.chem.name}: ${volts(g.variants[0].voltage.nominal)} nominal`).join('. ') + '.' },
+  { q: `What are other names for the ${b.name}?`, a: `${[...new Set(b.codes.map((c) => c.code))].join(', ')}${b.aliases.length ? `. Also called ${b.aliases.join(', ')}` : ''}.` },
+  ...inter.slice(0, 6).map((r) => ({ q: `Can a ${batteryById(r.id)!.name} replace a ${b.name}?`, a: `${relMeta[r.relation].label}. ${r.note}` })),
+];
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProductModel',
+    name: `${b.name} battery`,
+    alternateName: [...new Set(b.codes.map((c) => c.code))].slice(0, 30),
+    description: sum,
+    url,
+    category: cat.name,
+    image: 'https://batteries.fyi/og-image.webp',
+    additionalProperty: [
+      ...dimRows.map(([label, v]) => ({ '@type': 'PropertyValue', name: label, value: v!.nominal, unitCode: 'MMT', unitText: 'mm' })),
+      ...groups.map((g) => ({ '@type': 'PropertyValue', name: `Nominal voltage (${g.chem.name})`, value: g.variants[0].voltage.nominal, unitCode: 'VLT', unitText: 'V' })),
+    ],
+    subjectOf: { '@type': '3DModel', name: `${b.name} 3D model`, encodingFormat: 'model/gltf-binary', contentUrl: `https://batteries.fyi/models/${b.id}.glb`, license: 'https://opensource.org/licenses/MIT' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Batteries', item: 'https://batteries.fyi/batteries' },
+      { '@type': 'ListItem', position: 2, name: cat.name, item: `https://batteries.fyi/${cat.slug}` },
+      { '@type': 'ListItem', position: 3, name: b.name, item: url },
+    ],
+  },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+
+const title = `${b.name} battery: size, voltage, equivalents and 3D model | batteries.fyi`;
+const desc = `${sum} ${b.codes.length} cross-reference codes, chemistries, dimensions with tolerances, and a downloadable 3D model.`.slice(0, 300);
+const nav = [
+  ['specs', 'Specs'], ['dimensions', 'Dimensions'], ['codes', 'Codes'],
+  ...(inter.length ? [['interchange', 'Interchange']] : []), ['similar', 'Similar'],
+  ...(b.devices.length ? [['devices', 'Devices']] : []), ...(b.safety.length ? [['safety', 'Safety']] : []), ['sources', 'Sources'],
+];
+const scaleRef = Math.max(...[b, ...sims.map((s) => s.battery)].map((x) => (x.form === 'disc' ? x.dimensions.diameter!.nominal : x.dimensions.height.nominal)));
+const delta = (mm: number, label: string) => {
+  if (Math.abs(mm) < 0.05) return `same ${label}`;
+  const words: Record<string, [string, string]> = { diameter: ['wider', 'narrower'], length: ['longer', 'shorter'], thickness: ['thicker', 'thinner'], height: ['taller', 'shorter'], width: ['wider', 'narrower'], depth: ['deeper', 'shallower'] };
+  const [up, down] = words[label] ?? ['larger', 'smaller'];
+  return `${fmt(Math.abs(mm), 2)} mm ${mm > 0 ? up : down}`;
+};
+---
+
+<BaseLayout title={title} description={desc} jsonld={jsonld}>
+  <div class="wrap pt-5">
+    <nav aria-label="Breadcrumb" class="text-[0.65rem] text-muted flex items-center gap-1.5">
+      <a href="/batteries" class="hover:text-ink">Batteries</a><span aria-hidden="true">/</span>
+      <a href={`/${cat.slug}`} class="hover:text-ink">{cat.name}</a><span aria-hidden="true">/</span>
+      <span class="text-ink-2" aria-current="page">{b.name}</span>
+    </nav>
+  </div>
+
+  <section class="wrap pt-4 pb-8 grid gap-8 lg:grid-cols-[1fr_1.1fr] items-start">
+    <div class="min-w-0">
+      <div class="flex flex-wrap items-center gap-2 mb-2">
+        <span class="eyebrow">{shapeWord(b)}</span>
+        {b.status !== 'current' && <span class="chip" style="border-color:var(--warn);color:var(--warn)">{b.status}</span>}
+      </div>
+      <h1 class="text-[2.6rem] sm:text-[3.2rem] font-[750] tracking-[-0.035em] leading-none">{b.name}</h1>
+      <p class="mt-2 text-[0.85rem] text-ink-2 font-medium tabular">{sizeLabel(b)} · {vs.map((v) => volts(v)).join(' / ')}</p>
+      <p class="mt-4 text-[0.8rem] leading-relaxed text-ink-2 max-w-xl" data-summary>{sum}</p>
+
+      <div class="mt-5 grid grid-cols-2 gap-2">
+        <div class="spec"><span class="eyebrow">Voltage</span><span class="v">{fmt(pv.voltage.nominal)}<span class="u">V</span></span><span class="s">{chem(pv.chemistry).name}{groups.length > 1 ? `, +${groups.length - 1} more` : ''}</span></div>
+        <div class="spec"><span class="eyebrow">Capacity</span>{capacityLabel(pv) ? <span class="v">{capacityLabel(pv).replace(' mAh', '')}<span class="u">mAh</span></span> : <span class="v text-muted">n/p</span>}<span class="s">{pv.capacity_mah?.conditions ? (() => { const c = pv.capacity_mah!.conditions!.split(/[;(]/)[0].trim(); return 'Rated: ' + (c.length > 46 ? c.slice(0, 44).replace(/\s+\S*$/, '') + '…' : c); })() : 'Not published'}</span></div>
+        <div class="spec"><span class="eyebrow">{b.form === 'disc' ? 'Diameter × thickness' : b.form === 'cylinder' ? 'Diameter × length' : 'W × D × H'}</span><span class="v text-[1.05rem]">{sizeLabel(b, false)}<span class="u">mm</span></span><span class="s">{b.form === 'disc' || b.form === 'cylinder' ? `${inch(d.diameter!.nominal)} × ${inch(d.height.nominal)} in` : `${inch(d.width!.nominal)} × ${inch(d.depth!.nominal)} × ${inch(d.height.nominal)} in`}</span></div>
+        <div class="spec"><span class="eyebrow">Weight</span>{pv.weight_g ? <span class="v">{fmt(pv.weight_g)}<span class="u">g</span></span> : <span class="v text-muted">n/p</span>}<span class="s">{pv.weight_g ? `${(pv.weight_g / 28.3495).toFixed(2)} oz, ${chem(pv.chemistry).short}` : 'Not published'}</span></div>
+      </div>
+
+      <div class="mt-5">
+        <p class="eyebrow mb-2">Also known as</p>
+        <div class="flex flex-wrap gap-1.5">
+          {[...new Set(b.codes.map((c) => c.code))].slice(0, 14).map((c) => <span class="chip">{c}</span>)}
+          {b.codes.length > 14 && <a href="#codes" class="chip">+{b.codes.length - 14} more</a>}
+        </div>
+      </div>
+
+      {danger.length > 0 && (
+        <div class="callout danger mt-5">
+          <strong class="text-ink">Lookalike warning.</strong>{' '}
+          {danger.map((r) => <span>Same size as the <a class="link" href={`/${r.id}`}>{batteryById(r.id)!.name}</a>: {r.note} </span>)}
+        </div>
+      )}
+    </div>
+
+    <div class="min-w-0 lg:sticky lg:top-20">
+      <Viewer batteries={[b]} downloads height="min(32rem, 78vw)" />
+      <p class="mt-2 text-[0.6rem] text-muted">Built from the published dimensions{model.assumed.length ? `; ${model.assumed.join(', ')} drawn to typical proportions` : ''}. Label artwork is generic. Drag to rotate.</p>
+    </div>
+  </section>
+
+  <nav class="sticky top-14 z-30 bg-bg/90 backdrop-blur border-y border-line no-print" aria-label="On this page">
+    <div class="wrap flex gap-1 overflow-x-auto text-[0.65rem] font-medium py-1.5">
+      {nav.map(([id, label]) => <a href={`#${id}`} class="px-2.5 py-1 rounded-md text-ink-2 hover:text-ink hover:bg-surface-2 whitespace-nowrap">{label}</a>)}
+      <a href={`/compare?ids=${b.id}${sims[0] ? ',' + sims[0].battery.id : ''}`} class="ml-auto px-2.5 py-1 rounded-md text-accent-ink hover:bg-accent-soft whitespace-nowrap">Compare →</a>
+    </div>
+  </nav>
+
+  <div class="wrap mt-10 space-y-14">
+    <section id="specs">
+      <h2 class="section-title">Specifications by chemistry</h2>
+      <p class="text-[0.7rem] text-muted mb-4 max-w-2xl">Capacity depends on load and cutoff voltage, so each figure carries the conditions its source rated it at. Blank cells were not published by the cited sources. Superscripts refer to <a class="link" href="#sources">sources</a>.</p>
+      <div class="card table-scroll">
+        <table class="table min-w-[36rem]">
+          <thead>
+            <tr>
+              <th class="sticky left-0 bg-surface z-10 min-w-[9rem]">Property</th>
+              {b.variants.map((v) => (
+                <th class="min-w-[9rem] normal-case tracking-normal">
+                  <span class="flex items-center gap-1.5 text-ink text-[0.68rem]"><span class="dot" style={`background:${chem(v.chemistry).color}`}></span><a href={`/chemistry/${v.chemistry}`} class="hover:underline">{v.label ?? chem(v.chemistry).name}</a></span>
+                  {v.label && <span class="block text-[0.58rem] text-muted font-normal mt-0.5">{chem(v.chemistry).name}{v.subtype ? ` · ${v.subtype}` : ''}</span>}
+                  {!v.label && v.subtype && <span class="block text-[0.58rem] text-muted font-normal mt-0.5">{v.subtype}</span>}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {shownProps.map((p) => (
+              <tr>
+                <td class="sticky left-0 bg-surface z-10 text-ink-2 font-medium">{p.label}</td>
+                {b.variants.map((v) => <td class:list={[p.key === 'cond' || p.key === 'sd' ? 'text-[0.62rem] text-muted' : 'tabular']}>{p.get(v) || <span class="text-line-2">—</span>}</td>)}
+              </tr>
+            ))}
+            <tr>
+              <td class="sticky left-0 bg-surface z-10 text-ink-2 font-medium">Sources</td>
+              {b.variants.map((v) => <td class="text-[0.6rem]">{cite(v.sources).map((n) => <a href={`#src-${n}`} class="link mr-1">[{n}]</a>)}</td>)}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      {b.variants.some((v) => v.notes) && (
+        <ul class="mt-4 space-y-1.5 text-[0.7rem] text-ink-2 max-w-3xl">
+          {b.variants.filter((v) => v.notes).map((v) => <li><strong class="text-ink">{v.label ?? chem(v.chemistry).name}:</strong> {v.notes}</li>)}
+        </ul>
+      )}
+    </section>
+
+    <section id="dimensions">
+      <h2 class="section-title">Dimensions</h2>
+      <div class="grid gap-6 lg:grid-cols-[1.3fr_1fr] items-start">
+        <figure class="card p-4 drawing min-w-0">
+          <div class="w-full max-h-[30rem] [&>svg]:w-full [&>svg]:h-auto [&>svg]:max-h-[28rem]" set:html={drawingSVG(b)} />
+          <figcaption class="mt-2 text-[0.6rem] text-muted flex flex-wrap gap-x-4">
+            <span>Nominal dimensions in millimeters, drawn to scale.</span>
+            <a class="link" href={`/actual-size?ids=${b.id}`}>View at actual size</a>
+          </figcaption>
+        </figure>
+        <div class="min-w-0">
+          <div class="card table-scroll">
+            <table class="table">
+              <thead><tr><th></th><th class="n">Nominal</th><th class="n">Min</th><th class="n">Max</th><th class="n">Inches</th></tr></thead>
+              <tbody>
+                {dimRows.map(([label, v]) => (
+                  <tr>
+                    <td class="font-medium text-ink-2">{label}</td>
+                    <td class="n font-semibold">{fmt(v!.nominal)} mm</td>
+                    <td class="n">{v!.min ? `${fmt(v!.min)}` : '—'}</td>
+                    <td class="n">{v!.max ? `${fmt(v!.max)}` : '—'}</td>
+                    <td class="n text-muted">{inch(v!.nominal)}</td>
+                  </tr>
+                ))}
+                {b.geometry?.positive?.diameter && <tr><td class="font-medium text-ink-2">Positive terminal Ø</td><td class="n">{fmt(b.geometry.positive.diameter)} mm</td><td class="n">—</td><td class="n">—</td><td class="n text-muted">{inch(b.geometry.positive.diameter)}</td></tr>}
+                {b.geometry?.positive?.height && <tr><td class="font-medium text-ink-2">Positive terminal height</td><td class="n">{fmt(b.geometry.positive.height)} mm</td><td class="n">—</td><td class="n">—</td><td class="n text-muted">{inch(b.geometry.positive.height)}</td></tr>}
+              </tbody>
+            </table>
+          </div>
+          {d.note && <p class="mt-3 text-[0.7rem] text-ink-2">{d.note}</p>}
+          {b.geometry?.note && <p class="mt-2 text-[0.7rem] text-ink-2">{b.geometry.note}</p>}
+          <p class="mt-3 text-[0.62rem] text-muted">Sources: {cite(d.sources).map((n) => <a href={`#src-${n}`} class="link mr-1">[{n}]</a>)}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="btn btn-sm" href={`/models/${b.id}.stl`} download>Download STL (mm)</a>
+            <a class="btn btn-sm" href={`/models/${b.id}.glb`} download>Download GLB</a>
+            <a class="btn btn-sm" href={`/api/batteries/${b.id}.json`}>JSON</a>
+          </div>
+          <p class="mt-2 text-[0.6rem] text-muted">Models are generated from the nominal dimensions above, are free to use under the MIT license, and suit enclosure and holder design. Check tolerances before you print a tight fit.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="codes">
+      <h2 class="section-title">Equivalent codes and names</h2>
+      <p class="text-[0.7rem] text-muted mb-4 max-w-2xl">Every designation below refers to the same physical size. A chemistry dot marks codes that also specify a chemistry; a code for one chemistry is not interchangeable with another in every device.</p>
+      <div class="card overflow-hidden">
+        <table class="table">
+          <tbody>
+            {codeGroups.map(([sys, codes]) => (
+              <tr>
+                <td class="w-36 font-medium text-ink-2 align-middle">{sys}</td>
+                <td>
+                  <div class="flex flex-wrap gap-1.5">
+                    {codes.map((c) => (
+                      <span class="chip" title={c.chemistry ? chem(c.chemistry).name + (c.note ? ` · ${c.note}` : '') : c.note}>
+                        {c.chemistry && <span class="dot" style={`background:${chem(c.chemistry).color}`}></span>}{c.code}{c.note && <span class="text-muted font-sans">· {c.note}</span>}
+                      </span>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {b.aliases.length > 0 && (
+              <tr><td class="font-medium text-ink-2">Common names</td><td>{b.aliases.join(', ')}</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {inter.length > 0 && (
+      <section id="interchange">
+        <h2 class="section-title">Interchangeability</h2>
+        <div class="grid gap-3 sm:grid-cols-2">
+          {inter.map((r) => {
+            const o = batteryById(r.id)!;
+            return (
+              <a href={`/${o.id}`} class:list={['callout block hover:border-accent transition-colors', relMeta[r.relation].cls]}>
+                <span class="flex items-center justify-between gap-2">
+                  <strong class="text-ink text-[0.85rem]">{o.name}</strong>
+                  <span class="eyebrow">{relMeta[r.relation].label}</span>
+                </span>
+                <span class="block mt-1 text-ink-2">{r.note}</span>
+                <span class="block mt-1 text-[0.6rem] text-muted tabular">{sizeLabel(o)} · {voltages(o).map(volts).join(' / ')}</span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    <section id="similar">
+      <h2 class="section-title">Similar sizes</h2>
+      <p class="text-[0.7rem] text-muted mb-4">The closest physical sizes in the database, drawn to the same scale.</p>
+      <div class="card p-4 overflow-x-auto">
+        <div class="flex items-end gap-6 min-w-max h-44">
+          {[{ battery: b, deltas: [] as { label: string; mm: number }[] }, ...sims].map((s, i) => (
+            <a href={`/${s.battery.id}`} class="group flex flex-col items-center gap-2 h-full justify-end w-20">
+              <div class="h-28 w-full flex items-end justify-center"><Silhouette battery={s.battery} scaleTo={scaleRef} class="max-w-full" /></div>
+              <span class:list={['text-[0.7rem] font-semibold group-hover:text-accent-ink', i === 0 && 'text-accent-ink']}>{s.battery.name}</span>
+              <span class="text-[0.55rem] text-muted text-center leading-tight min-h-[1.6rem]">{i === 0 ? 'This page' : s.deltas.slice(0, 2).map((x) => delta(x.mm, x.label)).join(', ')}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      <a class="link text-[0.7rem] mt-2 inline-block" href={`/compare?ids=${[b.id, ...sims.slice(0, 4).map((s) => s.battery.id)].join(',')}`}>Compare these in 3D</a>
+    </section>
+
+    {b.devices.length > 0 && (
+      <section id="devices">
+        <h2 class="section-title">Typical devices</h2>
+        <ul class="flex flex-wrap gap-2">
+          {b.devices.map((x) => <li class="chip font-sans text-[0.68rem] py-1 px-2.5">{x}</li>)}
+        </ul>
+      </section>
+    )}
+
+    {b.safety.length > 0 && (
+      <section id="safety">
+        <h2 class="section-title">Safety</h2>
+        <ul class="space-y-2 max-w-3xl">
+          {b.safety.map((s) => (
+            <li class="flex gap-2.5 text-[0.75rem] text-ink-2">
+              <svg class="w-4 h-4 text-warn shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+              <span>{s}</span>
+            </li>
+          ))}
+        </ul>
+        {(b.category === 'coin' || b.category === 'button' || b.category === 'hearing-aid') && <p class="mt-3 text-[0.7rem]"><a class="link" href="/reference/button-battery-ingestion">What to do if a button or coin cell is swallowed</a></p>}
+        {b.category === 'li-ion' && <p class="mt-3 text-[0.7rem]"><a class="link" href="/reference/lithium-ion-safety">Lithium-ion safety reference</a> · <a class="link" href="/reference/air-travel">Flying with lithium batteries</a></p>}
+      </section>
+    )}
+
+    {(b.history || b.notes) && (
+      <section>
+        <h2 class="section-title">Notes</h2>
+        <div class="prose">
+          {b.notes && <p>{b.notes}</p>}
+          {b.history && <p>{b.history}</p>}
+        </div>
+      </section>
+    )}
+
+    <section id="sources">
+      <h2 class="section-title">Sources</h2>
+      <ol class="space-y-2 text-[0.7rem] max-w-4xl">
+        {b.sources.map((s, i) => (
+          <li id={`src-${i + 1}`} class="flex gap-3 scroll-mt-28">
+            <span class="text-muted tabular w-6 shrink-0 text-right">{i + 1}.</span>
+            <span>
+              <span class="text-ink-2">{s.publisher}.</span>{' '}
+              {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span class="text-ink">{s.title}</span>}
+              <span class="text-muted">. {s.kind[0].toUpperCase() + s.kind.slice(1)}, accessed {s.accessed}.</span>
+              {s.note && <span class="block text-muted text-[0.62rem]">{s.note}</span>}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="card p-5 grid gap-4 md:grid-cols-2">
+      <div>
+        <h2 class="text-[0.85rem] font-semibold mb-1">Cite this page</h2>
+        <p class="text-[0.68rem] text-ink-2 mono leading-relaxed select-all">batteries.fyi. “{b.name} battery specifications.” Updated {b.updated}. {url}</p>
+      </div>
+      <div class="text-[0.68rem] text-ink-2">
+        <h2 class="text-[0.85rem] font-semibold mb-1 text-ink">Found an error?</h2>
+        <p>Every value here traces to a listed source. Corrections with a source are welcome on <a class="link" href={`https://github.com/centricle/batteries/blob/main/data/batteries/${b.id}.json`}>GitHub</a>, where this entry is one JSON file.</p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .drawing { color: var(--ink-2); --draw-dim: var(--accent-ink); --draw-bg: var(--surface); --draw-fill: color-mix(in oklch, var(--accent) 7%, transparent); }
+</style>

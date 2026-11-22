@@ -1,21 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const title = '404 - Page Not Found | batteries.fyi';
-const description = 'The requested page could not be found.';
 ---
 
-<BaseLayout title={title} description={description}>
-  <div class="bg-white min-h-screen flex items-center justify-center">
-    <div class="text-center">
-      <h1 class="text-6xl font-bold text-gray-900 mb-4">404</h1>
-      <p class="text-2xl text-gray-600 mb-8">Page not found</p>
-      <a 
-        href="/" 
-        class="inline-flex items-center px-6 py-3 bg-blue-900 text-white font-medium hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-300 focus:outline-none"
-      >
-        Return Home
-      </a>
+<BaseLayout title="Not found | batteries.fyi" description="The requested page could not be found." noindex>
+  <section class="wrap py-20 max-w-xl text-center">
+    <p class="eyebrow">404</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">No battery at this address</h1>
+    <p class="mt-3 text-[0.8rem] text-ink-2">The page may have moved. Most battery codes work as addresses (<a class="link" href="/cr2032">/cr2032</a>, <a class="link" href="/377">/377</a>, <a class="link" href="/lr6">/lr6</a>), and search accepts any of them.</p>
+    <div class="mt-6 flex justify-center gap-2">
+      <button type="button" class="btn btn-primary" data-search-open>Search</button>
+      <a href="/batteries" class="btn">Browse all sizes</a>
     </div>
-  </div>
+  </section>
 </BaseLayout>

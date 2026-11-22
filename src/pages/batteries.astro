@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Silhouette from '../components/Silhouette.astro';
+import { batteries, CATEGORY_META, sizeLabel, voltages, volts, stats } from '../lib/data';
+
+const s = stats();
+const groups = CATEGORY_META.map((c) => ({ c, list: batteries().filter((b) => b.category === c.id) })).filter((g) => g.list.length);
+---
+
+<BaseLayout title={`All ${s.batteries} battery sizes | batteries.fyi`} description={`Every battery size in the database, ${s.batteries} in all, grouped by type: household, lithium-ion, coin, button and watch, hearing aid, photo and specialty cells.`}>
+  <section class="wrap pt-8">
+    <p class="eyebrow">Index</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">All battery sizes</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">{s.batteries} physical sizes, {s.variants} chemistry variants and {s.codes.toLocaleString('en-US')} codes. Pick a type, or jump to any size below.</p>
+    <nav class="mt-4 flex flex-wrap gap-1.5 text-[0.65rem]" aria-label="Jump to type">
+      {groups.map(({ c, list }) => <a href={`#${c.slug}`} class="chip font-sans">{c.short} <span class="text-muted">{list.length}</span></a>)}
+    </nav>
+  </section>
+  {groups.map(({ c, list }) => {
+    const scale = Math.max(...list.map((b) => (b.form === 'disc' ? b.dimensions.diameter!.nominal : b.dimensions.height.nominal)));
+    return (
+      <section class="wrap mt-10" id={c.slug}>
+        <div class="flex items-baseline justify-between gap-4 mb-3">
+          <h2 class="section-title mb-0"><a href={`/${c.slug}`} class="hover:text-accent-ink">{c.name}</a></h2>
+          <a href={`/${c.slug}`} class="link text-[0.65rem] whitespace-nowrap">Category page</a>
+        </div>
+        <ul class="grid gap-2 grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8">
+          {list.map((b) => (
+            <li>
+              <a href={`/${b.id}`} class="card group flex flex-col items-center p-2 h-full hover:border-accent transition-colors">
+                <div class="h-16 w-full flex items-end justify-center mb-1.5"><Silhouette battery={b} scaleTo={scale} class="max-w-full" /></div>
+                <span class="text-[0.7rem] font-semibold group-hover:text-accent-ink text-center leading-tight">{b.name}</span>
+                <span class="text-[0.52rem] text-muted tabular text-center">{voltages(b).map(volts).join(' / ')}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  })}
+</BaseLayout>

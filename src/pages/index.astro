@@ -1,82 +1,141 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BatteryCard from '../components/BatteryCard.astro';
-import { getAllCategories } from '../utils/batteryData';
+import Viewer from '../components/Viewer.astro';
+import Silhouette from '../components/Silhouette.astro';
+import { batteries, batteryById, CATEGORY_META, stats } from '../lib/data';
 
-const categories = getAllCategories();
+const s = stats();
+const pick = (ids: string[]) => ids.map((id) => batteryById(id)).filter(Boolean) as ReturnType<typeof batteries>;
+const lineup = pick(['d', 'c', 'aa', 'aaa', 'aaaa', '9v', '21700', '18650', 'cr123a', 'cr2032', 'lr44', '312']);
+const common = pick(['aa', 'aaa', 'cr2032', 'cr2025', 'cr2016', 'lr44', 'sr626sw', '9v', 'cr123a', '18650', '21700', 'cr2', '312', 'cr1220', 'c', 'd', 'a23', 'cr2450']);
+const tools = [
+  { href: '/compare', title: 'Compare in 3D', body: 'Line up any sizes at true scale and read the differences.' },
+  { href: '/identify', title: 'Identify by measurement', body: 'Enter diameter and height from calipers or a ruler. Get the closest matches.' },
+  { href: '/decode', title: 'Decode a code', body: 'LR6, SR626SW, INR18650, 6LR61. Each letter and number explained.' },
+  { href: '/equivalents', title: 'Equivalents table', body: 'Every code, every brand number, one table. 377 = SR626SW = AG4.' },
+  { href: '/actual-size', title: 'Actual size', body: 'Calibrate your screen with a card, then hold the battery up to it.' },
+  { href: '/calculators', title: 'Calculators', body: 'Runtime, watt-hours, series and parallel packs, airline limits.' },
+];
+const catRep: Record<string, string> = { household: 'aa', 'li-ion': '18650', coin: 'cr2032', button: 'lr44', 'hearing-aid': '312', photo: 'cr123a', specialty: 'lantern-6v' };
+const jsonld = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'batteries.fyi', url: 'https://batteries.fyi/', potentialAction: { '@type': 'SearchAction', target: 'https://batteries.fyi/search?q={query}', 'query-input': 'required name=query' } },
+  { '@context': 'https://schema.org', '@type': 'Dataset', name: 'batteries.fyi consumer battery specifications', description: `Dimensions, chemistries, voltages, capacities and cross-reference codes for ${s.batteries} consumer battery sizes, with sources.`, url: 'https://batteries.fyi/data', license: 'https://opensource.org/licenses/MIT', creator: { '@type': 'Organization', name: 'Centricle LLC' }, distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://batteries.fyi/api/batteries.json' }, { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: 'https://batteries.fyi/api/batteries.csv' }] },
+];
 ---
 
-<BaseLayout>
-  <div class="bg-slate-800 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="text-center">
-        <h1 class="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
-          Complete Battery Database
-        </h1>
-        <p class="mt-6 max-w-3xl mx-auto text-xl text-blue-100">
-          Comprehensive specifications, dimensions, and technical data for every consumer battery type. 
-          From AA alkalines to 18650 lithium-ions to button cells.
-        </p>
-        <div class="mt-8">
-          <form method="GET" action="/search" class="flex justify-center" role="search" aria-label="Search batteries">
-            <div class="relative w-full max-w-lg">
-              <input 
-                type="search" 
-                name="q"
-                placeholder="Search batteries (e.g. AA, 18650, CR2032)..."
-                aria-label="Search battery database"
-                class="w-full px-4 py-3 pr-12 text-gray-900 bg-white border-0 shadow-lg focus:ring-2 focus:ring-blue-300 focus:outline-none"
-              />
-              <button
-                type="submit"
-                aria-label="Search batteries"
-                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-900 transition-colors"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.34-4.34"/>
-                </svg>
-              </button>
-            </div>
-          </form>
-        </div>
+<BaseLayout jsonld={jsonld}>
+  <section class="relative overflow-hidden border-b border-line">
+    <div class="absolute inset-0 grid-paper opacity-70 pointer-events-none" aria-hidden="true"></div>
+    <div class="wrap relative pt-10 sm:pt-14 pb-6">
+      <p class="eyebrow">The consumer battery reference</p>
+      <h1 class="mt-2 text-[2.2rem] sm:text-[3.4rem] font-[760] tracking-[-0.04em] leading-[0.98] max-w-3xl">Every battery, measured and cited.</h1>
+      <p class="mt-4 text-[0.85rem] sm:text-[0.95rem] text-ink-2 max-w-2xl">Dimensions with tolerances, every chemistry, every brand and standard code, and a true-scale 3D model for {s.batteries} battery sizes. Each value traces to an IEC standard or a manufacturer datasheet.</p>
+      <form action="/search" class="mt-6 max-w-xl relative" role="search" id="hero-search">
+        <label for="hero-q" class="sr-only">Search batteries</label>
+        <svg class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+        <input id="hero-q" name="q" class="input h-14 pl-11 text-[0.95rem] shadow-sm" placeholder="377, CR2032, LR6, 18650, 20 x 3.2" autocomplete="off" />
+      </form>
+      <div class="mt-3 flex flex-wrap gap-1.5 max-w-3xl">
+        {common.map((b) => <a href={`/${b.id}`} class="chip font-sans font-medium text-[0.66rem] py-1 px-2.5 bg-surface/80">{b.name}</a>)}
       </div>
     </div>
-  </div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-gray-900 mb-4">Battery Categories</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">
-        Browse batteries by category or search for specific types. All data is sourced from manufacturer specifications and industry standards.
-      </p>
+    <div class="wrap relative pb-8">
+      <Viewer batteries={lineup} mode="lineup" height="min(26rem, 70vw)" controls={false} class="border-0 bg-transparent" />
+      <p class="text-[0.6rem] text-muted mt-1">To scale, from the D cell to the size 312 hearing aid cell. Drag to orbit. Labels link to each entry.</p>
     </div>
+  </section>
 
-    <div class="space-y-16">
-      {categories.map((category) => (
-        <section>
-          <div class="mb-8">
-            <div class="flex justify-between items-center">
-              <h3 class="text-2xl font-bold text-gray-900">{category.name}</h3>
-              <a 
-                href={`/${category.slug}`} 
-                class="mb-3 inline-flex items-center border border-transparent bg-blue-100 px-4 py-2 font-medium whitespace-nowrap text-blue-900 uppercase transition-colors hover:bg-blue-200 focus:ring-2 focus:ring-blue-300 focus:outline-none"
-              >
-                View All
-                <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                </svg>
-              </a>
-            </div>
-            <p class="text-gray-600 mt-1">{category.description}</p>
-          </div>
+  <section class="wrap mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
+    {[
+      [s.batteries, 'battery sizes'],
+      [s.codes, 'cross-reference codes'],
+      [s.variants, 'chemistry variants'],
+      [s.sources, 'cited sources'],
+    ].map(([n, label]) => (
+      <div class="spec"><span class="v">{Number(n).toLocaleString('en-US')}</span><span class="s">{label}</span></div>
+    ))}
+  </section>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {category.batteries.slice(0, 3).map((battery) => (
-              <BatteryCard battery={battery} category={category.slug} />
-            ))}
-          </div>
-        </section>
+  <section class="wrap mt-12">
+    <div class="flex items-baseline justify-between mb-4">
+      <h2 class="section-title mb-0">Browse by type</h2>
+      <a href="/batteries" class="link text-[0.7rem]">All {s.batteries} sizes</a>
+    </div>
+    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {CATEGORY_META.map((c) => {
+        const rep = batteryById(catRep[c.id]);
+        const n = batteries().filter((b) => b.category === c.id).length;
+        return (
+          <li>
+            <a href={`/${c.slug}`} class="card group flex gap-4 p-4 h-full hover:border-accent transition-colors">
+              <div class="w-16 h-20 shrink-0 flex items-end justify-center">{rep && <Silhouette battery={rep} class="max-h-full max-w-full" />}</div>
+              <div class="min-w-0">
+                <span class="flex items-baseline gap-2"><span class="font-semibold text-[0.85rem] group-hover:text-accent-ink">{c.name}</span><span class="text-[0.6rem] text-muted">{n}</span></span>
+                <p class="text-[0.65rem] text-muted mt-1 leading-snug">{c.description}</p>
+              </div>
+            </a>
+          </li>
+        );
+      })}
+      <li>
+        <a href="/equivalents" class="card group flex flex-col justify-center p-4 h-full hover:border-accent transition-colors bg-accent-soft border-accent/30">
+          <span class="font-semibold text-[0.85rem] text-accent-ink">Equivalents table</span>
+          <p class="text-[0.65rem] text-ink-2 mt-1 leading-snug">All {s.codes.toLocaleString('en-US')} codes on one page, searchable.</p>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="wrap mt-12">
+    <h2 class="section-title">Tools</h2>
+    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {tools.map((t) => (
+        <li><a href={t.href} class="card block p-4 h-full hover:border-accent transition-colors group">
+          <span class="font-semibold text-[0.85rem] group-hover:text-accent-ink">{t.title} <span aria-hidden="true">→</span></span>
+          <p class="text-[0.68rem] text-muted mt-1">{t.body}</p>
+        </a></li>
       ))}
+    </ul>
+  </section>
+
+  <section class="wrap mt-12 grid gap-6 lg:grid-cols-2">
+    <div class="card p-5">
+      <h2 class="text-[0.95rem] font-semibold">How the data is built</h2>
+      <ul class="mt-3 space-y-2 text-[0.72rem] text-ink-2">
+        <li><strong class="text-ink">One entry per physical size.</strong> AA alkaline, AA lithium and AA NiMH are variants of one size, so their codes and dimensions live together.</li>
+        <li><strong class="text-ink">No number without a source.</strong> Every value lists the datasheet or standard it came from and the date it was read. Unpublished values stay blank.</li>
+        <li><strong class="text-ink">Models from measurements.</strong> Each 3D model, drawing and silhouette is generated from the same dimensions the table shows.</li>
+        <li><strong class="text-ink">Open.</strong> The whole dataset and every model are downloadable under the MIT license.</li>
+      </ul>
+      <a href="/data" class="btn mt-4">Open data and models</a>
     </div>
-  </div>
+    <div class="card p-5">
+      <h2 class="text-[0.95rem] font-semibold">Reference</h2>
+      <ul class="mt-3 grid gap-1.5 text-[0.72rem]">
+        <li><a class="link" href="/reference/battery-naming">How battery names and codes work</a></li>
+        <li><a class="link" href="/reference/air-travel">Lithium batteries on airplanes</a></li>
+        <li><a class="link" href="/reference/button-battery-ingestion">Swallowed coin and button cells</a></li>
+        <li><a class="link" href="/reference/capacity-explained">What mAh and Wh mean, and why capacity varies</a></li>
+        <li><a class="link" href="/reference/rechargeable-vs-disposable">Rechargeable and disposable, compared</a></li>
+        <li><a class="link" href="/chemistry">Battery chemistries</a></li>
+        <li><a class="link" href="/glossary">Glossary</a></li>
+      </ul>
+    </div>
+  </section>
 </BaseLayout>
+
+<script>
+  // The hero field hands off to the command palette as soon as someone types.
+  const f = document.getElementById('hero-q') as HTMLInputElement | null;
+  f?.addEventListener('input', () => {
+    const open = document.querySelector('[data-search-open]') as HTMLElement | null;
+    const v = f.value;
+    open?.click();
+    const si = document.getElementById('search-input') as HTMLInputElement | null;
+    if (si) {
+      si.value = v;
+      si.dispatchEvent(new Event('input'));
+    }
+    f.value = '';
+  });
+</script>

@@ -3,15 +3,21 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "node scripts/build-models.mjs && astro dev",
+    "build": "node scripts/validate.mjs && node scripts/build-models.mjs && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "validate": "node scripts/validate.mjs",
+    "models": "node scripts/build-models.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
+    "@gltf-transform/core": "^4.5.1",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.9",
-    "tailwindcss": "^4.3.3"
+    "marked": "^18.2.1",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.187.0",
+    "zod": "^4.6.7"
   }
 }

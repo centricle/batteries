@@ -1,0 +1,80 @@
+---
+// Elevation silhouette from the same parametric model as the 3D viewer.
+// Discs render face-on (the view you identify them by); everything else
+// renders front elevation. `scaleTo` sizes several silhouettes against one
+// reference length so a row of them stays true to scale.
+import { describe, MATERIALS } from '../lib/geometry/model.js';
+import { chem, primaryVariant, type Battery } from '../lib/data';
+
+interface Props {
+  battery: Battery;
+  class?: string;
+  scaleTo?: number;
+  view?: 'auto' | 'front' | 'face';
+  title?: boolean;
+}
+const { battery: b, class: cls = '', scaleTo, view = 'auto', title = false } = Astro.props;
+const m = describe(b as any);
+const wrapColor = chem(primaryVariant(b).chemistry).color;
+const fillFor = (mat: string) => (mat === 'wrap' ? wrapColor : mat === 'tab' && b.geometry?.tab_color ? b.geometry.tab_color : (MATERIALS as any)[mat]?.color ?? '#999');
+const face = view === 'face' || (view === 'auto' && b.form === 'disc');
+
+let vb: number[];
+let shapes: { d?: string; cx?: number; cy?: number; r?: number; fill: string; mat: string }[] = [];
+if (face) {
+  const R = b.dimensions.diameter!.nominal / 2;
+  vb = [-R - 0.2, -R - 0.2, 2 * R + 0.4, 2 * R + 0.4];
+  shapes.push({ cx: 0, cy: 0, r: R, fill: fillFor('can'), mat: 'can' });
+  shapes.push({ cx: 0, cy: 0, r: R * 0.9, fill: fillFor('can'), mat: 'can-inner' });
+  if (b.category === 'hearing-aid') shapes.push({ cx: 0, cy: 0, r: R * 0.93, fill: fillFor('tab'), mat: 'tab' });
+} else {
+  const [x0, y0] = m.bounds.min;
+  const [x1, y1] = m.bounds.max;
+  const pad = Math.max(x1 - x0, y1 - y0) * 0.01;
+  vb = [x0 - pad, -(y1 + pad), x1 - x0 + 2 * pad, y1 - y0 + 2 * pad];
+  // Paint back to front: wrap first, then caps and terminals.
+  const order = ['wrap', 'cap-plastic', 'can', 'gasket', 'steel', 'insulator', 'ring', 'brass', 'spring', 'tab'];
+  const parts = [...m.parts].sort((a: any, c: any) => order.indexOf(a.material) - order.indexOf(c.material));
+  shapes = parts.map((p: any) => ({
+    d: 'M' + p.front.map(([x, y]: number[]) => `${x.toFixed(3)} ${(-y).toFixed(3)}`).join('L') + 'Z',
+    fill: fillFor(p.material),
+    mat: p.material,
+  }));
+}
+const realH = face ? b.dimensions.diameter!.nominal : m.bounds.size[1];
+const style = scaleTo ? `height:${((realH / scaleTo) * 100).toFixed(2)}%` : '';
+const gid = `g-${b.id}`;
+---
+
+<svg viewBox={vb.join(' ')} class:list={['silhouette', cls]} style={style} preserveAspectRatio="xMidYMax meet" role={title ? 'img' : undefined} aria-hidden={title ? undefined : 'true'} aria-label={title ? `${b.name} silhouette` : undefined}>
+  <defs>
+    <linearGradient id={gid} x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity="0.22" />
+      <stop offset="0.35" stop-color="#fff" stop-opacity="0.18" />
+      <stop offset="0.6" stop-color="#fff" stop-opacity="0" />
+      <stop offset="1" stop-color="#000" stop-opacity="0.28" />
+    </linearGradient>
+    <radialGradient id={`${gid}-r`} cx="0.38" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.35" />
+      <stop offset="1" stop-color="#000" stop-opacity="0.2" />
+    </radialGradient>
+  </defs>
+  {shapes.map((s) =>
+    s.d ? (
+      <g>
+        <path d={s.d} fill={s.fill} />
+        {s.mat !== 'tab' && <path d={s.d} fill={`url(#${gid})`} />}
+      </g>
+    ) : (
+      <g>
+        <circle cx={s.cx} cy={s.cy} r={s.r} fill={s.fill} />
+        <circle cx={s.cx} cy={s.cy} r={s.r} fill={`url(#${gid}-r)`} />
+        {s.mat === 'can-inner' && <circle cx={s.cx} cy={s.cy} r={s.r} fill="none" stroke="#000" stroke-opacity="0.12" stroke-width={s.r! * 0.02} />}
+      </g>
+    ),
+  )}
+</svg>
+
+<style>
+  .silhouette { display: block; overflow: visible; }
+</style>

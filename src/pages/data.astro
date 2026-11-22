@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { stats, batteries } from '../lib/data';
+const s = stats();
+const sample = batteries().find((b) => b.id === 'cr2032') ?? batteries()[0];
+const files = [
+  { href: '/api/batteries.json', name: 'batteries.json', body: 'The full dataset: every battery and chemistry, exactly as validated at build.' },
+  { href: '/api/batteries.csv', name: 'batteries.csv', body: 'One row per chemistry variant, for spreadsheets.' },
+  { href: '/api/codes.json', name: 'codes.json', body: 'Flat cross-reference: every code mapped to its battery.' },
+  { href: `/api/batteries/${sample.id}.json`, name: '/api/batteries/{id}.json', body: 'One battery per file, at the same id as its page.' },
+  { href: '/api/search-index.json', name: 'search-index.json', body: 'The compact index the site search uses.' },
+];
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'batteries.fyi consumer battery specifications',
+  description: `Dimensions, chemistries, voltages, capacities, cross-reference codes and 3D models for ${s.batteries} consumer battery sizes, each value with its source.`,
+  url: 'https://batteries.fyi/data',
+  license: 'https://opensource.org/licenses/MIT',
+  isAccessibleForFree: true,
+  creator: { '@type': 'Organization', name: 'Centricle LLC', url: 'https://centricle.com' },
+  variableMeasured: ['diameter', 'height', 'nominal voltage', 'capacity', 'weight', 'operating temperature'],
+  distribution: [
+    { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://batteries.fyi/api/batteries.json' },
+    { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: 'https://batteries.fyi/api/batteries.csv' },
+  ],
+};
+---
+
+<BaseLayout title="Open battery data and 3D models | batteries.fyi" description={`Download the batteries.fyi dataset (${s.batteries} sizes, ${s.codes.toLocaleString('en-US')} codes) as JSON or CSV, and a GLB and STL model of every battery. MIT licensed.`} jsonld={jsonld}>
+  <section class="wrap pt-8 max-w-4xl">
+    <p class="eyebrow">Open data</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Data and models</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2">Everything on this site is generated from one folder of JSON files, one per battery size, each validated against a schema at build. The data, the generated 3D models and the code are published under the MIT license. Use them for anything; a link back is appreciated.</p>
+  </section>
+
+  <section class="wrap mt-8 max-w-4xl">
+    <h2 class="section-title">Downloads</h2>
+    <ul class="card divide-y divide-[var(--line)]">
+      {files.map((f) => (
+        <li class="p-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <a href={f.href} class="link mono text-[0.75rem]">{f.name}</a>
+          <span class="text-[0.7rem] text-muted">{f.body}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="wrap mt-10 max-w-4xl">
+    <h2 class="section-title">3D models</h2>
+    <p class="text-[0.75rem] text-ink-2">Every battery page offers two files, generated from the entry's nominal dimensions by the same code that draws the on-page model:</p>
+    <ul class="mt-3 space-y-2 text-[0.72rem] text-ink-2">
+      <li><strong class="text-ink">GLB</strong> (<span class="mono">/models/&#123;id&#125;.glb</span>): glTF 2.0 binary with PBR materials, true scale in meters, Y up. Opens in Blender, three.js, model viewers and AR Quick Look converters.</li>
+      <li><strong class="text-ink">STL</strong> (<span class="mono">/models/&#123;id&#125;.stl</span>): binary, millimeters, Z up. For CAD, enclosure design and battery holder prints. Each part is a closed shell; slicers merge them.</li>
+    </ul>
+    <p class="mt-3 callout info">Models use nominal dimensions. For a press fit, design to the maximum dimensions in the entry's tolerance table, not the model.</p>
+  </section>
+
+  <section class="wrap mt-10 max-w-4xl">
+    <h2 class="section-title">Schema</h2>
+    <p class="text-[0.75rem] text-ink-2">Each battery is one physical size with an array of chemistry <span class="mono">variants</span>. Every IEC, ANSI, JIS and manufacturer designation lives in one <span class="mono">codes</span> array. Every number traces to an entry in <span class="mono">sources</span>, and dimensions and variants list which sources support them. The field reference is <a class="link" href="https://github.com/centricle/batteries/blob/main/data/SCHEMA.md">SCHEMA.md</a>; the validator is <a class="link" href="https://github.com/centricle/batteries/blob/main/src/lib/schema.mjs">schema.mjs</a>.</p>
+    <details class="card mt-4 p-4">
+      <summary class="cursor-pointer text-[0.72rem] font-semibold">Example: {sample.name}</summary>
+      <pre class="mt-3 text-[0.58rem] leading-snug overflow-x-auto max-h-[28rem]"><code>{JSON.stringify(sample, null, 2)}</code></pre>
+    </details>
+  </section>
+
+  <section class="wrap mt-10 max-w-4xl">
+    <h2 class="section-title">Contributing corrections</h2>
+    <p class="text-[0.75rem] text-ink-2">The repository is <a class="link" href="https://github.com/centricle/batteries">centricle/batteries</a>. A correction is an edit to one JSON file with a source that supports it: a manufacturer datasheet, a standard, or a distributor listing that reproduces one. Run <span class="mono">npm run validate</span> before opening a pull request; the build refuses data that fails the schema.</p>
+  </section>
+</BaseLayout>

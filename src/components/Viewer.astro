@@ -1,0 +1,161 @@
+---
+// 3D viewer for one battery or a lineup. Renders a static silhouette first
+// (no JS, no WebGL, print), then swaps in three.js when scrolled into view.
+import Silhouette from './Silhouette.astro';
+import type { Battery } from '../lib/data';
+import { modelSpec } from '../lib/data';
+
+interface Props {
+  batteries: Battery[];
+  mode?: 'single' | 'lineup';
+  class?: string;
+  controls?: boolean;
+  downloads?: boolean;
+  height?: string;
+  autoRotate?: boolean;
+}
+const { batteries, mode = batteries.length > 1 ? 'lineup' : 'single', class: cls = '', controls = true, downloads = false, height = '28rem', autoRotate } = Astro.props;
+const specs = batteries.map(modelSpec);
+const single = batteries.length === 1 ? batteries[0] : null;
+const chems = specs[0]?.chemistries ?? [];
+---
+
+<battery-viewer data-specs={JSON.stringify(specs)} data-mode={mode} data-autorotate={autoRotate === undefined ? '' : String(autoRotate)} class:list={['relative block rounded-xl overflow-hidden border border-line viewer-stage', cls]} style={`height:${height}`}>
+  <div class="viewer-fallback absolute inset-0 flex items-end justify-center gap-[3%] p-[8%]" aria-hidden="true">
+    {batteries.map((b) => <Silhouette battery={b} class="h-full max-w-full" scaleTo={Math.max(...batteries.map((x) => x.form === 'disc' ? x.dimensions.diameter!.nominal : x.dimensions.height.nominal))} />)}
+  </div>
+  <div class="viewer-labels absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+  <p class="sr-only">Interactive 3D model{batteries.length > 1 ? 's' : ''} of {batteries.map((b) => b.name).join(', ')}, built from the published dimensions. Drag to rotate, scroll or pinch to zoom.</p>
+
+  {controls && (
+    <div class="absolute left-2 right-2 bottom-2 flex flex-wrap items-center gap-1.5 no-print">
+      {single && chems.length > 1 && (
+        <div class="flex flex-wrap gap-1" role="group" aria-label="Chemistry">
+          {chems.map((c, i) => (
+            <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-chem={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+              <span class="dot" style={`background:${c.color}`}></span>{c.short}
+            </button>
+          ))}
+        </div>
+      )}
+      <div class="ml-auto flex gap-1">
+        <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-act="explode" aria-pressed="false" title="Separate the parts">Explode</button>
+        <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-act="rotate" aria-pressed="true" title="Auto-rotate">Rotate</button>
+        <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-act="reset" title="Reset view">Reset</button>
+        <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-act="full" title="Full screen" aria-label="Full screen">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
+        </button>
+      </div>
+    </div>
+  )}
+  {downloads && single && (
+    <div class="absolute top-2 right-2 flex gap-1 no-print">
+      <a class="btn btn-sm bg-surface/90 backdrop-blur" href={`/models/${single.id}.glb`} download>GLB</a>
+      <a class="btn btn-sm bg-surface/90 backdrop-blur" href={`/models/${single.id}.stl`} download>STL</a>
+    </div>
+  )}
+  <div class="absolute top-2 left-3 text-[0.58rem] text-muted no-print pointer-events-none">Grid: 10 mm</div>
+</battery-viewer>
+
+<style>
+  .viewer-stage {
+    background:
+      radial-gradient(120% 90% at 50% 20%, var(--stage) 0%, var(--stage-2) 100%);
+  }
+  battery-viewer[data-live] .viewer-fallback { opacity: 0; transition: opacity 0.4s; }
+  battery-viewer:fullscreen { border-radius: 0; height: 100vh !important; }
+  :global(.viewer-label) {
+    position: absolute; transform: translate(-50%, 0);
+    font-size: 0.62rem; font-weight: 650; color: var(--ink);
+    background: color-mix(in oklch, var(--surface) 85%, transparent);
+    border: 1px solid var(--line); border-radius: 0.3rem; padding: 0.05rem 0.35rem;
+    white-space: nowrap; pointer-events: auto; text-decoration: none;
+  }
+  :global(.viewer-label:hover) { border-color: var(--accent); color: var(--accent-ink); }
+</style>
+
+<script>
+  class BatteryViewer extends HTMLElement {
+    api: any;
+    connectedCallback() {
+      const start = async () => {
+        if (this.api) return;
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl2');
+        if (!gl) return; // keep the static silhouette
+        const { mountViewer } = await import('../lib/viewer');
+        const specs = JSON.parse(this.dataset.specs!);
+        const mode = this.dataset.mode as 'single' | 'lineup';
+        const labelsEl = this.querySelector('.viewer-labels') as HTMLElement;
+        const ar = this.dataset.autorotate;
+        const labelEls = new Map<string, HTMLAnchorElement>();
+        const host = document.createElement('div');
+        host.className = 'absolute inset-0';
+        this.prepend(host);
+        this.api = mountViewer(host, specs, {
+          mode,
+          autoRotate: ar === '' ? undefined : ar === 'true',
+          onLabels:
+            mode === 'lineup'
+              ? (labels) => {
+                  for (const l of labels) {
+                    let a = labelEls.get(l.id);
+                    if (!a) {
+                      a = document.createElement('a');
+                      a.className = 'viewer-label';
+                      a.href = `/${l.id}`;
+                      a.textContent = l.name;
+                      labelsEl.appendChild(a);
+                      labelEls.set(l.id, a);
+                    }
+                    a.style.left = `${l.x}px`;
+                    a.style.top = `${l.y}px`;
+                    a.style.display = l.visible ? '' : 'none';
+                  }
+                }
+              : undefined,
+        });
+        this.setAttribute('data-live', '');
+        const fb = this.querySelector('.viewer-fallback') as HTMLElement | null;
+        if (fb) fb.style.display = 'none';
+        const rot = this.querySelector('[data-act="rotate"]');
+        rot?.setAttribute('aria-pressed', String(mode === 'single' && ar !== 'false' && !matchMedia('(prefers-reduced-motion: reduce)').matches));
+      };
+      const io = new IntersectionObserver(
+        (es) => {
+          if (es.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            start();
+          }
+        },
+        { rootMargin: '200px' },
+      );
+      io.observe(this);
+
+      this.addEventListener('click', (e) => {
+        const b = (e.target as HTMLElement).closest('button');
+        if (!b || !this.api) return;
+        if (b.dataset.chem) {
+          this.querySelectorAll('[data-chem]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+          this.api.setChemistry(Number(b.dataset.chem));
+        }
+        const act = b.dataset.act;
+        if (act === 'explode' || act === 'rotate') {
+          const on = b.getAttribute('aria-pressed') !== 'true';
+          b.setAttribute('aria-pressed', String(on));
+          if (act === 'explode') this.api.setExplode(on);
+          else this.api.setAutoRotate(on);
+        }
+        if (act === 'reset') this.api.reset();
+        if (act === 'full') {
+          if (document.fullscreenElement) document.exitFullscreen();
+          else this.requestFullscreen?.();
+        }
+      });
+    }
+    disconnectedCallback() {
+      this.api?.dispose();
+    }
+  }
+  if (!customElements.get('battery-viewer')) customElements.define('battery-viewer', BatteryViewer);
+</script>

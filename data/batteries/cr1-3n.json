@@ -82,7 +82,11 @@
       },
       "capacity_mah": {
         "typical": 160,
-        "conditions": "15 kilohm continuous (0.16 mA) to 2.0 V, 21 °C"
+        "range": [
+          160,
+          170
+        ],
+        "conditions": "15 kilohm continuous (0.16 mA) to 2.0 V, 21 °C (Energizer 2L76); Varta lists 170 mAh at 5.6 kilohm to 2.0 V"
       },
       "weight_g": 3,
       "max_continuous_ma": 60,
@@ -99,36 +103,11 @@
         ]
       },
       "sources": [
-        "energizer-2l76"
-      ]
-    },
-    {
-      "chemistry": "lithium-manganese-dioxide",
-      "rechargeable": false,
-      "voltage": {
-        "nominal": 3,
-        "cutoff": 2
-      },
-      "capacity_mah": {
-        "typical": 160,
-        "range": [
-          160,
-          170
-        ],
-        "conditions": "Duracell DL1/3N and Energizer 2L76 at 15 kΩ to 2.0 V; Varta lists 170 mAh at 5.6 kΩ to 2.0 V (as summarized by Battery Equivalents)"
-      },
-      "weight_g": 3,
-      "temperature_c": {
-        "operating": [
-          -20,
-          60
-        ]
-      },
-      "notes": "Weight is from the Varta overview. Operating range shown is the common one; individual makers list from -20 to +75 °C (Duracell) down to -40 °C (Energizer).",
-      "sources": [
+        "energizer-2l76",
         "varta-primary-lithium",
         "batteryequivalents-cr11108"
-      ]
+      ],
+      "notes": "Operating range is from the Energizer 2L76 datasheet; other makers list from -20 °C (Varta) to +75 °C (Duracell)."
     }
   ],
   "devices": [

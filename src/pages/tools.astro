@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const tools = [
+  { href: '/compare', title: 'Compare sizes in 3D', body: 'Line up any batteries at true scale on a 10 mm grid, with a side-by-side spec table. Shareable links.' },
+  { href: '/identify', title: 'Identify by measurement', body: 'Measure diameter and height with calipers or a ruler and get the closest sizes, with the difference for each.' },
+  { href: '/decode', title: 'Decode a code', body: 'Break any designation into its parts: chemistry letter, shape, size number, series count and suffix.' },
+  { href: '/equivalents', title: 'Equivalents table', body: 'Every IEC, ANSI, JIS and brand code for every size, filterable on one page.' },
+  { href: '/actual-size', title: 'Actual size', body: 'Calibrate your screen against a bank card, then compare a battery in hand to its true-size outline. Prints at 1:1.' },
+  { href: '/calculators', title: 'Calculators', body: 'Energy in Wh, runtime at a load, series and parallel pack math, and the airline watt-hour limits.' },
+  { href: '/search', title: 'Search', body: 'Search by name, any code, a voltage, or a size written as diameter × height.' },
+  { href: '/data', title: 'Open data and models', body: 'The full dataset as JSON and CSV, and a GLB and STL model of every battery.' },
+];
+---
+
+<BaseLayout title="Battery tools: compare, identify, decode, calculate | batteries.fyi" description="Free battery tools: 3D size comparison, identification by measurement, battery code decoder, equivalents table, actual-size view and calculators.">
+  <section class="wrap pt-8">
+    <p class="eyebrow">Tools</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Tools</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Each tool runs in the browser on the same dataset as the battery pages. Nothing is uploaded or tracked beyond page views.</p>
+  </section>
+  <section class="wrap mt-6">
+    <ul class="grid gap-3 sm:grid-cols-2">
+      {tools.map((t) => (
+        <li><a href={t.href} class="card group block p-5 h-full hover:border-accent transition-colors">
+          <span class="font-semibold text-[0.9rem] group-hover:text-accent-ink">{t.title} <span aria-hidden="true">→</span></span>
+          <p class="text-[0.7rem] text-muted mt-1">{t.body}</p>
+        </a></li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
