@@ -1,28 +1,32 @@
 ---
-// Site-wide command palette. Opens on "/", Cmd/Ctrl-K, or any [data-search-open].
-// The index (/api/search-index.json) loads on first open, so pages pay nothing
-// until someone searches.
+// Site-wide search box. Opens from the header's Search button or any
+// [data-search-open], and from "/" or Cmd/Ctrl-K for anyone who knows the
+// shortcut (no key hints are shown). The index (/api/search-index.json)
+// loads on first open, so pages pay nothing until someone searches.
 ---
 
-<dialog id="search-dialog" class="search-dialog" aria-label="Search batteries">
+<dialog id="search-dialog" class="search-dialog" aria-label="Search for a battery or device">
   <div class="card overflow-hidden">
-    <div class="flex items-center gap-2 px-3 border-b border-line">
-      <svg class="w-4 h-4 text-muted shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
-      <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="CR2032, 377, LR6, 20x3.2, AirTag, RAV4 key…" class="w-full h-12 bg-transparent text-[0.85rem] outline-none placeholder:text-muted" aria-controls="search-results" aria-autocomplete="list" role="combobox" aria-expanded="true" />
-      <kbd class="kbd">esc</kbd>
+    <div class="flex items-center gap-2 pl-3 pr-1.5 border-b border-line">
+      <svg class="w-5 h-5 text-ink-2 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+      <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="CR2032, AA, AirTag, garage door" class="w-full min-h-12 bg-transparent font-mono text-lg outline-none placeholder:text-muted" aria-label="Battery name or device" aria-controls="search-results" aria-autocomplete="list" role="combobox" aria-expanded="true" />
+      <button type="button" class="btn btn-sm shrink-0" data-search-close>Close</button>
     </div>
     <ul id="search-results" role="listbox" class="max-h-[60vh] overflow-y-auto py-1"></ul>
-    <div class="px-3 py-2 border-t border-line text-[0.6rem] text-muted flex flex-wrap gap-x-4 gap-y-1">
-      <span>Search by name, any brand or standard code, <span class="mono">diameter×height</span>, or voltage</span>
-      <a href="/identify" class="link ml-auto">Identify by measurement</a>
+    <div class="px-3 py-2.5 border-t border-line text-sm text-ink-2 flex flex-wrap gap-x-4 gap-y-1">
+      <span>Type the name printed on the battery, or what it goes in.</span>
+      <a href="/identify" class="link">Identify a battery by its size</a>
     </div>
   </div>
 </dialog>
 
 <style>
-  .search-dialog { margin: 10vh auto auto; width: min(40rem, calc(100vw - 2rem)); padding: 0; border: 0; background: transparent; color: inherit; }
+  .search-dialog { margin: 8vh auto auto; width: min(40rem, calc(100vw - 2rem)); padding: 0; border: 0; background: transparent; color: inherit; }
   .search-dialog::backdrop { background: oklch(0.2 0.02 248 / 0.35); backdrop-filter: blur(2px); }
-  :global(#search-results li[aria-selected="true"]) { background: var(--accent-soft); }
+  :global(#search-results li[aria-selected="true"]) { background: var(--wash); }
+  :global(#search-results a:hover) { background: var(--surface-2); }
+  /* The browser's own clear button: off, there is a Close button. */
+  #search-input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
 </style>
 
 <script>
@@ -46,22 +50,59 @@
   }
 
   const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const mm = (n: number | null) => `${Number(n ?? 0).toLocaleString('en-US', { maximumFractionDigits: 1 })} mm`;
+
+  /** One plain line: the size in words and the voltage, "20 mm across, 3.2 mm thick, 3 V". */
+  function line(e: Entry) {
+    const size =
+      e.f === 'disc' ? `${mm(e.d)} across, ${mm(e.h)} thick`
+      : e.d ? `${mm(e.d)} across, ${mm(e.h)} long`
+      : e.w ? `${mm(e.h)} tall, ${mm(e.w)} wide`
+      : e.s;
+    // Every voltage the size is sold at, as a range: "1.2 to 1.6 V".
+    const v = [...new Set(e.v.split(' / ').map(Number).filter((x) => x > 0))].sort((a, b) => a - b);
+    const volts = v.length > 1 ? `${v[0]} to ${v[v.length - 1]} V` : v.length ? `${v[0]} V` : '';
+    return volts ? `${size}, ${volts}` : size;
+  }
+
+  /** "a" or "an" by how the name is said: an AA, an LR44, an 18650, a CR2032, a 9V. */
+  function art(name: string) {
+    const n = name.trim();
+    if (/^\d/.test(n)) {
+      const digits = n.match(/^\d+/)![0];
+      return /^8/.test(digits) || (/^1[18]/.test(digits) && [2, 4, 5].includes(digits.length)) ? 'an' : 'a';
+    }
+    return /^[AEFHILMNORSX]/i.test(n) ? 'an' : 'a';
+  }
+
+  /** Why a result matched, when it was another of its names ("Also called LR6"). */
+  function matched(e: Entry, why: string) {
+    if (!why || why === e.s || /^\d+(\.\d+)? V$/.test(why)) return '';
+    return `Also called ${why}`;
+  }
 
   function render() {
     if (!index) return;
     const q = input.value.trim();
-    const bats = q ? rank(index, q, 12) : index.filter((e) => ['aa', 'aaa', 'cr2032', '18650', 'lr44', '9v', 'cr123a', '21700'].includes(e.id)).map((e) => ({ e, why: '', score: 0 }));
+    const bats = q ? rank(index, q, 12) : index.filter((e) => ['aa', 'aaa', 'c', 'd', '9v', 'cr2032', 'lr44', 'cr123a'].includes(e.id)).map((e) => ({ e, why: '', score: 0 }));
     const devs = q ? rankDevices(dindex, q, 6) : [];
     const merged: { score: number; hit: Hit }[] = [
-      ...bats.map(({ e, why, score }) => ({ score, hit: { href: `/${e.id}`, html: `
-              <span class="dot" style="background:${e.col}"></span>
-              <span class="font-semibold text-[0.8rem] w-24 shrink-0">${esc(e.n)}</span>
-              <span class="text-[0.65rem] text-muted truncate">${esc(e.c)} · ${esc(e.s)} · ${esc(e.v)} V</span>
-              ${why ? `<span class="chip ml-auto">${esc(why)}</span>` : ''}` } })),
+      ...bats.map(({ e, why, score }) => {
+        const also = matched(e, why);
+        return { score, hit: { href: `/${e.id}`, html: `
+              <span class="flex flex-col sm:flex-row sm:items-baseline sm:gap-3 min-w-0">
+                <span class="font-mono font-semibold text-lg sm:min-w-22 shrink-0">${esc(e.n)}</span>
+                <span class="flex flex-col min-w-0">
+                  <span class="text-sm text-ink-2">${esc(line(e))}</span>
+                  ${also ? `<span class="text-sm text-muted">${esc(also)}</span>` : ''}
+                </span>
+              </span>` } };
+      }),
       ...devs.map(({ d, score }) => ({ score, hit: { href: `/devices/${d.id}`, html: `
-              <span class="text-[0.62rem] text-muted w-3 shrink-0" aria-hidden="true">↳</span>
-              <span class="font-semibold text-[0.8rem] truncate">${esc(d.n)}</span>
-              <span class="chip ml-auto shrink-0">${d.q > 1 ? `${d.q} × ` : ''}${esc(d.b)}</span>` } })),
+              <span class="flex flex-col min-w-0">
+                <span class="font-semibold">${esc(d.n)}</span>
+                <span class="text-sm text-ink-2">Takes ${d.q > 1 ? `${d.q} ${esc(d.b)} batteries` : `${art(d.b)} ${esc(d.b)} battery`}</span>
+              </span>` } })),
     ];
     results = merged.sort((a, b) => b.score - a.score).slice(0, 14).map((m) => m.hit);
     sel = Math.min(sel, Math.max(0, results.length - 1));
@@ -69,11 +110,11 @@
       ? results
           .map(
             ({ href, html }, i) => `<li role="option" id="sr-${i}" aria-selected="${i === sel}">
-            <a href="${href}" class="flex items-center gap-3 px-3 py-2">${html}
+            <a href="${href}" class="flex items-center gap-3 px-3 py-2 min-h-11">${html}
             </a></li>`,
           )
           .join('')
-      : `<li class="px-3 py-6 text-center text-[0.7rem] text-muted">No match for “${esc(q)}”. Try <a class="link" href="/identify">identifying it by measurement</a> or <a class="link" href="/decode?code=${encodeURIComponent(q)}">decoding the code</a>.</li>`;
+      : `<li class="px-3 py-5 text-base">Nothing found for “${esc(q)}”. Try <a class="link" href="/identify">measuring it</a>, or see <a class="link" href="/decode?code=${encodeURIComponent(q)}">what the letters and numbers mean</a>.</li>`;
     input.setAttribute('aria-activedescendant', results.length ? `sr-${sel}` : '');
   }
 
@@ -85,6 +126,7 @@
   }
 
   document.querySelectorAll('[data-search-open]').forEach((b) => b.addEventListener('click', open));
+  dialog.querySelector('[data-search-close]')?.addEventListener('click', () => dialog.close());
   document.addEventListener('keydown', (e) => {
     const t = e.target as HTMLElement;
     const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);

@@ -13,8 +13,8 @@ export interface Props {
 }
 
 const {
-  title = 'batteries.fyi: every consumer battery, measured and cited',
-  description = 'Specifications, 3D models, dimensions and cross-reference codes for every consumer battery size, from AA to CR2032 to 18650. Sourced from IEC standards and manufacturer datasheets.',
+  title = 'Battery sizes, names and replacements | batteries.fyi',
+  description = "Look up any household, coin or button battery by the name printed on it or the device it goes in. Sizes, other names, what else fits and what uses it, checked against the makers’ own datasheets.",
   jsonld,
   noindex = false,
 } = Astro.props;
@@ -22,10 +22,53 @@ const {
 const nav = [
   { href: '/batteries', label: 'Batteries' },
   { href: '/devices', label: 'Devices' },
-  { href: '/compare', label: 'Compare' },
   { href: '/identify', label: 'Identify' },
-  { href: '/tools', label: 'Tools' },
-  { href: '/reference', label: 'Reference' },
+  { href: '/compare', label: 'Compare' },
+  { href: '/reference', label: 'Guides' },
+];
+
+const footer = [
+  {
+    head: 'Batteries',
+    links: [
+      { href: '/household', label: 'Household' },
+      { href: '/coin-cells', label: 'Coin' },
+      { href: '/button-cells', label: 'Button' },
+      { href: '/hearing-aid', label: 'Hearing aid' },
+      { href: '/lithium-ion', label: 'Rechargeable lithium-ion' },
+      { href: '/batteries', label: 'All batteries' },
+    ],
+  },
+  {
+    head: 'Find one',
+    links: [
+      { href: '/devices', label: 'By device' },
+      { href: '/identify', label: 'Identify a battery' },
+      { href: '/actual-size', label: 'Actual size' },
+      { href: '/compare', label: 'Compare sizes' },
+      { href: '/equivalents', label: 'Other names' },
+    ],
+  },
+  {
+    head: 'Guides',
+    links: [
+      { href: '/reference/button-battery-ingestion', label: 'If a battery is swallowed' },
+      { href: '/reference/air-travel', label: 'Flying with batteries' },
+      { href: '/reference/leakage', label: 'When a battery leaks' },
+      { href: '/reference/recycling-and-disposal', label: 'Throwing batteries away' },
+      { href: '/reference', label: 'All guides' },
+    ],
+  },
+  {
+    head: 'About',
+    links: [
+      { href: '/about', label: 'About' },
+      { href: '/sources', label: 'Sources' },
+      { href: '/data', label: 'Data and 3D models' },
+      { href: '/glossary', label: 'Glossary' },
+      { href: '/about#funding', label: 'How it is paid for' },
+    ],
+  },
 ];
 // build.format 'file' puts .html in the pathname at build; public URLs never have it.
 const path = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
@@ -45,7 +88,8 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={noindex ? 'noindex' : 'index, follow'} />
-    <meta name="theme-color" content="#f8f7f2" media="(prefers-color-scheme: light)" />
+    <!-- The --bg of each theme in src/styles/global.css, as hex. -->
+    <meta name="theme-color" content="#f8f5f0" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0f1113" media="(prefers-color-scheme: dark)" />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/ibm-plex-mono-400.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/ibm-plex-mono-600.woff2" crossorigin />
@@ -90,40 +134,38 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
   <body class="min-h-screen flex flex-col">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 z-50 btn">Skip to content</a>
     <header class="sticky top-0 z-40 border-b border-line-2 bg-bg">
-      <div class="wrap flex items-center gap-4 h-14">
-        <a href="/" class="flex items-center gap-2.5 shrink-0" aria-label="batteries.fyi home">
-          <Mark class="w-[32px] h-[32px]" />
-          <span class="text-[0.8rem]"><span class="font-normal">batteries</span><span class="font-semibold">.fyi</span></span>
+      <div class="wrap flex items-center gap-2.5 sm:gap-3 h-14">
+        <a href="/" class="flex items-center gap-1.5 sm:gap-2 shrink-0 min-h-9" aria-label="batteries.fyi home">
+          <Mark class="w-[36px] h-[36px]" />
+          <span class="font-mono text-base sm:text-lg"><span class="font-normal">batteries</span><span class="font-semibold">.fyi</span></span>
         </a>
 
-        <nav class="hidden md:flex items-stretch self-stretch gap-0.5 text-[0.58rem] font-medium uppercase tracking-[0.08em]" aria-label="Main">
+        <nav class="hidden lg:flex items-stretch self-stretch ml-2 text-sm font-medium" aria-label="Main">
           {nav.map((n) => (
-            <a href={n.href} class:list={['flex items-center px-2.5 border-b-2 -mb-px transition-colors', active(n.href) ? 'text-ink border-accent' : 'text-ink-2 border-transparent hover:text-ink hover:border-line-2']} aria-current={active(n.href) ? 'page' : undefined}>{n.label}</a>
+            <a href={n.href} class:list={['flex items-center px-2.5 border-b-[3px] -mb-px transition-colors', active(n.href) ? 'text-ink border-accent-ink' : 'text-ink-2 border-transparent hover:text-ink hover:border-line-2']} aria-current={active(n.href) ? 'page' : undefined}>{n.label}</a>
           ))}
         </nav>
 
-        <div class="ml-auto flex items-center gap-2">
-          <button type="button" data-search-open class="hidden sm:flex items-center gap-2 h-9 pl-3 pr-2 w-56 lg:w-72 rounded-lg border border-line-2 bg-surface text-muted text-[0.68rem] hover:border-accent transition-colors" aria-label="Search batteries">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
-            <span>Search 1,000+ codes</span>
-            <span class="ml-auto kbd">/</span>
+        <div class="ml-auto flex items-center gap-1.5 sm:gap-2">
+          <button type="button" data-search-open class="btn hidden sm:inline-flex">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+            Search
           </button>
-          <button type="button" data-search-open class="sm:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-line-2 bg-surface" aria-label="Search batteries">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+          <button type="button" data-search-open class="btn sm:hidden w-9 h-9 p-0" aria-label="Search">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
           </button>
-          <button type="button" id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-lg border border-line-2 bg-surface text-ink-2 hover:text-ink" aria-label="Toggle color theme" title="Toggle color theme">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" /></svg>
-          </button>
-          <button type="button" id="mobile-menu-button" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-line-2 bg-surface" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu">
+          <button type="button" id="mobile-menu-button" class="btn lg:hidden h-9 min-w-9 p-0 sm:px-3" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open the menu">
             <svg id="hamburger-icon" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
             <svg id="close-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+            <span class="hidden sm:inline" aria-hidden="true">Menu</span>
           </button>
         </div>
       </div>
-      <div id="mobile-menu" class="hidden md:hidden border-t border-line bg-bg">
-        <nav class="wrap py-2 flex flex-col text-[0.8rem]" aria-label="Mobile">
-          {nav.map((n) => <a href={n.href} class="py-2.5 border-b border-line last:border-0">{n.label}</a>)}
-          <a href="/data" class="py-2.5">Open data</a>
+      <div id="mobile-menu" class="hidden lg:hidden border-t border-line bg-bg">
+        <nav class="wrap py-1 flex flex-col text-base" aria-label="Menu">
+          {nav.map((n) => (
+            <a href={n.href} class:list={['flex items-center min-h-11 border-b border-line last:border-0', active(n.href) ? 'font-semibold text-ink' : 'text-ink-2']} aria-current={active(n.href) ? 'page' : undefined}>{n.label}</a>
+          ))}
         </nav>
       </div>
     </header>
@@ -132,78 +174,76 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
       <slot />
     </main>
 
-    <footer class="border-t border-line mt-16 bg-surface-2/50">
-      <div class="wrap py-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 text-[0.68rem]">
+    <footer class="border-t border-line-2 mt-16 bg-surface-2">
+      <div class="wrap py-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-6 text-sm">
         <div class="lg:col-span-2 max-w-sm">
-          <a href="/" class="inline-flex items-center gap-2 font-semibold text-ink mb-2"><Mark class="w-[16px] h-[16px]" />batteries.fyi</a>
-          <p class="text-muted leading-relaxed">Specifications, dimensions, cross-reference codes and 3D models for consumer batteries, sourced from IEC standards and manufacturer datasheets. Open data, MIT licensed.</p>
+          <a href="/" class="inline-flex items-center gap-2 min-h-8 font-mono font-semibold text-base text-ink mb-2"><Mark class="w-[28px] h-[28px]" />batteries.fyi</a>
+          <p class="text-ink-2">Battery sizes, names and what fits what, checked against makers’ datasheets and published standards. Free to use.</p>
         </div>
-        <div>
-          <p class="eyebrow mb-2">Batteries</p>
-          <ul class="space-y-1.5 text-ink-2">
-            <li><a class="hover:text-ink" href="/household">Household</a></li>
-            <li><a class="hover:text-ink" href="/coin-cells">Coin cells</a></li>
-            <li><a class="hover:text-ink" href="/button-cells">Button cells</a></li>
-            <li><a class="hover:text-ink" href="/lithium-ion">Lithium-ion</a></li>
-            <li><a class="hover:text-ink" href="/equivalents">Equivalents table</a></li>
-            <li><a class="hover:text-ink" href="/devices">What battery does it take?</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="eyebrow mb-2">Tools</p>
-          <ul class="space-y-1.5 text-ink-2">
-            <li><a class="hover:text-ink" href="/compare">Compare sizes</a></li>
-            <li><a class="hover:text-ink" href="/identify">Identify by measurement</a></li>
-            <li><a class="hover:text-ink" href="/decode">Decode a code</a></li>
-            <li><a class="hover:text-ink" href="/actual-size">Actual size</a></li>
-            <li><a class="hover:text-ink" href="/calculators">Calculators</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="eyebrow mb-2">About</p>
-          <ul class="space-y-1.5 text-ink-2">
-            <li><a class="hover:text-ink" href="/about">About</a></li>
-            <li><a class="hover:text-ink" href="/data">Open data and models</a></li>
-            <li><a class="hover:text-ink" href="/sources">Sources</a></li>
-            <li><a class="hover:text-ink" href="/glossary">Glossary</a></li>
-            <li><a class="hover:text-ink" href="/about#funding">How it is paid for</a></li>
-          </ul>
-        </div>
+        {footer.map((col) => (
+          <div>
+            <h2 class="label mb-1.5">{col.head}</h2>
+            <ul>
+              {col.links.map((l) => (
+                <li><a class="footer-link" href={l.href}>{l.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-      <div class="wrap pb-8 text-[0.62rem] text-muted">
-        {paid && <p class="text-center mb-4">As an Amazon Associate, batteries.fyi earns from qualifying purchases. No listing or value on this site depends on it.</p>}
-        <div class="flex flex-wrap justify-center gap-2 items-center mb-5">
-          <span>See also:</span>
-          <a href="https://cables.fyi" class="hover:text-ink">Cables</a>
-          <span aria-hidden="true">·</span>
-          <a href="https://fasteners.fyi" class="hover:text-ink">Fasteners</a>
+      <div class="wrap pb-8 text-sm text-ink-2">
+        {paid && <p class="mb-4">As an Amazon Associate, batteries.fyi earns from qualifying purchases. No listing or value on this site depends on it.</p>}
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+          <p>See also <a class="link" href="https://cables.fyi">cables.fyi</a> and <a class="link" href="https://fasteners.fyi">fasteners.fyi</a>.</p>
+          <button type="button" class="btn btn-sm" data-theme-toggle>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" /></svg>
+            <span data-theme-label>Dark mode</span>
+          </button>
         </div>
-        <div class="relative flex items-center justify-between border-t border-line pt-5">
+        <div class="relative flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-line pt-5 text-xs text-muted">
           <span>&copy; {new Date().getFullYear()} Centricle LLC &middot; batteries.fyi</span>
-          <a href="https://centricle.com" title="made by ksmith" aria-label="made by ksmith" class="absolute left-1/2 -translate-x-1/2">
+          <a href="https://centricle.com" title="made by ksmith" aria-label="made by ksmith" class="sm:absolute sm:left-1/2 sm:-translate-x-1/2">
             <img src="https://centricle.com/brand/avatar-sm.jpg" alt="" width="28" height="28" class="w-7 h-7 rounded-full" loading="lazy" />
           </a>
-          <a href="/data" class="hover:text-ink">Open data (MIT)</a>
+          <a href="/data" class="footer-link">Free to use (MIT license)</a>
         </div>
       </div>
     </footer>
 
     <Search />
 
-    <script>
-      // Theme: auto -> dark -> light -> auto.
-      const tbtn = document.getElementById('theme-toggle');
-      tbtn?.addEventListener('click', () => {
-        const root = document.documentElement;
-        const sysDark = matchMedia('(prefers-color-scheme: dark)').matches;
-        const cur = root.dataset.theme ?? (sysDark ? 'dark' : 'light');
-        const next = cur === 'dark' ? 'light' : 'dark';
-        root.dataset.theme = next;
-        try { localStorage.setItem('theme', next); } catch (e) {}
-        window.dispatchEvent(new CustomEvent('themechange'));
-      });
+    <style>
+      /* Footer links: quietly underlined, tall enough to tap. */
+      .footer-link {
+        display: inline-flex; align-items: center; min-height: 2rem;
+        text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em;
+        text-decoration-color: var(--line-2);
+      }
+      .footer-link:hover { color: var(--ink); text-decoration-color: currentColor; }
+    </style>
 
-      // Mobile menu (fleet pattern: Escape, click-outside, icon swap, focus).
+    <script>
+      // Theme: follows the system until someone picks; the button flips
+      // between light and dark and says which one it will switch to.
+      const root = document.documentElement;
+      const current = () => root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const labelTheme = () => {
+        const next = current() === 'dark' ? 'Light mode' : 'Dark mode';
+        document.querySelectorAll('[data-theme-label]').forEach((el) => (el.textContent = next));
+      };
+      labelTheme();
+      matchMedia('(prefers-color-scheme: dark)').addEventListener('change', labelTheme);
+      document.querySelectorAll('[data-theme-toggle]').forEach((b) =>
+        b.addEventListener('click', () => {
+          const next = current() === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try { localStorage.setItem('theme', next); } catch (e) {}
+          labelTheme();
+          window.dispatchEvent(new CustomEvent('themechange'));
+        }),
+      );
+
+      // Menu (fleet pattern: Escape, click-outside, icon swap, focus).
       const button = document.getElementById('mobile-menu-button');
       const menu = document.getElementById('mobile-menu');
       const ham = document.getElementById('hamburger-icon');
@@ -213,7 +253,7 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
         open = !open;
         menu?.classList.toggle('hidden', !open);
         button?.setAttribute('aria-expanded', String(open));
-        button?.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        button?.setAttribute('aria-label', open ? 'Close the menu' : 'Open the menu');
         ham?.classList.toggle('hidden', open);
         close?.classList.toggle('hidden', !open);
         if (open) (menu?.querySelector('a') as HTMLElement | null)?.focus();

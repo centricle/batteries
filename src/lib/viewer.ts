@@ -44,6 +44,10 @@ export interface ModelSpec {
 export interface ViewerOptions {
   mode?: 'single' | 'lineup';
   autoRotate?: boolean;
+  /** Drag to turn and nothing else: no zoom by wheel, pinch or button, no pan. */
+  turnOnly?: boolean;
+  /** Called when a drag, pinch or zoom stops the automatic spin, so a Spin button can show it. */
+  onSpinStop?: () => void;
   onLabels?: (labels: { id: string; name: string; x: number; y: number; visible: boolean }[]) => void;
 }
 
@@ -51,6 +55,45 @@ const isDark = () => {
   const t = document.documentElement.dataset.theme;
   return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
 };
+
+// Colors arrive from the data as hex or as oklch(L C h). The canvas would
+// take either, but three's Color parser knows no oklch, so everything is
+// turned into sRGB hex first, and the label ink is chosen on OKLCH lightness.
+const srgbEncode = (x: number) => Math.min(1, Math.max(0, x <= 0.0031308 ? 12.92 * x : 1.055 * x ** (1 / 2.4) - 0.055));
+const srgbDecode = (x: number) => (x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4);
+const OKLCH = /^oklch\(\s*([\d.]+)(%?)\s+([\d.]+)(%?)\s+([\d.]+)(?:deg)?/i;
+
+/** A CSS color as #rrggbb (hex passes through; oklch is converted, clipped to sRGB). */
+function cssHex(css: string) {
+  const m = String(css).trim().match(OKLCH);
+  if (!m) return css;
+  const L = parseFloat(m[1]) / (m[2] ? 100 : 1);
+  const C = parseFloat(m[3]) * (m[4] ? 0.004 : 1);
+  const h = (parseFloat(m[5]) * Math.PI) / 180;
+  const a = C * Math.cos(h);
+  const b = C * Math.sin(h);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const mm = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const s = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
+  const rgb = [
+    4.0767416621 * l - 3.3077115913 * mm + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * mm - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * mm + 1.707614701 * s,
+  ];
+  return '#' + rgb.map((v) => Math.round(srgbEncode(v) * 255).toString(16).padStart(2, '0')).join('');
+}
+
+/** OKLCH lightness (0 to 1) of a hex or oklch() color. */
+function lightness(css: string) {
+  const m = String(css).trim().match(OKLCH);
+  if (m) return parseFloat(m[1]) / (m[2] ? 100 : 1);
+  const n = parseInt(cssHex(css).slice(1), 16);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => srgbDecode(v / 255));
+  const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
+  const mm = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
+  const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
+  return 0.2104542553 * Math.cbrt(l) + 0.793617785 * Math.cbrt(mm) - 0.0040720468 * Math.cbrt(s);
+}
 
 function toGeometry(m: { positions: number[]; normals: number[]; uvs: number[]; indices: number[] }) {
   const g = new BufferGeometry();
@@ -61,16 +104,10 @@ function toGeometry(m: { positions: number[]; normals: number[]; uvs: number[]; 
   return g;
 }
 
-function luminance(hex: string) {
-  const n = parseInt(hex.slice(1), 16);
-  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => v / 255);
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-}
-
 /** Shrink-wrap label: chemistry color, size name along the axis, voltage, polarity band. */
 function wrapTexture(spec: ModelSpec, chemIdx: number, label: any) {
   const c = spec.chemistries[chemIdx] ?? spec.chemistries[0];
-  const color = c?.color ?? spec.color;
+  const color = cssHex(c?.color ?? spec.color);
   const pxmm = Math.min(28, 2048 / Math.max(label.circumference, label.length));
   const W = Math.max(64, Math.round(label.circumference * pxmm));
   const H = Math.max(64, Math.round(label.length * pxmm));
@@ -80,7 +117,9 @@ function wrapTexture(spec: ModelSpec, chemIdx: number, label: any) {
   const x = cv.getContext('2d')!;
   x.fillStyle = color;
   x.fillRect(0, 0, W, H);
-  const light = luminance(color) > 0.5;
+  // Dark ink on any wrap lighter than OKLCH L 0.55, white on darker ones.
+  // The washes all sit between L 0.60 and 0.74, so in practice dark ink.
+  const light = lightness(color) > 0.55;
   const ink = light ? 'rgba(15,20,28,0.88)' : 'rgba(255,255,255,0.94)';
   const faint = light ? 'rgba(15,20,28,0.16)' : 'rgba(255,255,255,0.16)';
   // v band (texture v is bottom-up; canvas y is top-down).
@@ -103,14 +142,14 @@ function wrapTexture(spec: ModelSpec, chemIdx: number, label: any) {
   for (const u of centers) {
     const cx = u * W;
     if (isBox || bandH < W * 0.5) {
-      // Horizontal text (boxes, and short fat cells like D or 26650).
+      // Horizontal text (boxes, and short fat batteries like D or 26650).
       const fs = Math.min(bandH * 0.22, W * 0.09);
       x.font = `700 ${Math.round(fs)}px system-ui, sans-serif`;
       x.fillText(name, cx, yTop + bandH * 0.42);
       x.font = `500 ${Math.round(fs * 0.55)}px system-ui, sans-serif`;
       x.fillText(sub, cx, yTop + bandH * 0.42 + fs * 0.95);
     } else {
-      // Along the axis, reading bottom to top, as printed on real cells.
+      // Along the axis, reading bottom to top, as printed on real batteries.
       x.save();
       x.translate(cx, yTop + bandH / 2);
       x.rotate(-Math.PI / 2);
@@ -120,7 +159,7 @@ function wrapTexture(spec: ModelSpec, chemIdx: number, label: any) {
       x.font = `500 ${Math.round(fs * 0.5)}px system-ui, sans-serif`;
       x.fillText(sub, 0, fs * 0.55);
       x.restore();
-      // Polarity arrow toward the positive end.
+      // Plus sign at the positive end.
       x.font = `700 ${Math.round(fs * 0.6)}px system-ui, sans-serif`;
       x.fillText('+', cx, yTop + bandH * 0.06 + fs * 0.25);
     }
@@ -146,7 +185,7 @@ function boxFaceCenters({ W, P, r }: { W: number; P: number; r: number }) {
   return [1 - c1, 1 - c2];
 }
 
-/** Engraved-look marking on the positive face of coin and button cells. */
+/** Engraved-look marking on the positive face of coin and button batteries. */
 function faceTexture(spec: ModelSpec, chemIdx: number) {
   const c = spec.chemistries[chemIdx] ?? spec.chemistries[0];
   const S = 512;
@@ -183,11 +222,11 @@ function faceTexture(spec: ModelSpec, chemIdx: number) {
 }
 
 /**
- * The light the cells are seen in: a plain gray room with one tall softbox
+ * The light the batteries are seen in: a plain gray room with one tall softbox
  * front-left, a narrow strip behind on the right and a dim panel overhead.
  * The strips run floor to ceiling, so a cylinder shades across its width and
  * not down its length. three's RoomEnvironment hangs its lights near the
- * ceiling, which gave every cell a top-to-bottom fade that reads as rendered
+ * ceiling, which gave every battery a top-to-bottom fade that reads as rendered
  * rather than seen.
  */
 function studioScene() {
@@ -262,7 +301,6 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
   renderer.domElement.style.display = 'block';
   renderer.domElement.style.width = '100%';
   renderer.domElement.style.height = '100%';
-  renderer.domElement.style.touchAction = 'none';
   el.appendChild(renderer.domElement);
 
   const scene = new Scene();
@@ -270,6 +308,7 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
   scene.environment = pmrem.fromScene(studioScene(), 0.035).texture;
   scene.environmentIntensity = 1.0;
 
+  const turnOnly = !!opts.turnOnly;
   const camera = new PerspectiveCamera(28, 1, 0.5, 5000);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -277,7 +316,76 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
   controls.autoRotate = (opts.autoRotate ?? mode === 'single') && !reduced;
   controls.autoRotateSpeed = 1.2;
   controls.maxPolarAngle = Math.PI * 0.495;
-  controls.enablePan = mode === 'lineup';
+  controls.enablePan = mode === 'lineup' && !turnOnly;
+  controls.enableZoom = !turnOnly;
+
+  // The viewer never traps the page. Read against three r187's
+  // OrbitControls: connect() (run by the constructor) puts pointerdown,
+  // pointercancel and a non-passive wheel listener on the canvas, and sets
+  // the canvas to touch-action: none. Its wheel handler calls
+  // preventDefault, so once it runs the page cannot scroll.
+  //
+  // Wheel: a capture listener on the host runs before the canvas listener
+  // and stops the event short of it, so the browser scrolls the page as
+  // usual. The wheel reaches OrbitControls only when the visitor asks to
+  // zoom (Ctrl or Cmd held; a trackpad pinch arrives as Ctrl+wheel) or the
+  // viewer fills the screen.
+  //
+  // Touch: pan-y hands a vertical swipe to the browser, which scrolls and
+  // sends pointercancel; OrbitControls routes pointercancel to its pointerup
+  // handler, which drops the pointer, fires 'end' and returns to idle, so the
+  // model is not left mid-turn. A sideways drag turns it and a two-finger
+  // pinch zooms it. A turn-only viewer lets the browser have the pinch, so
+  // the page can still be zoomed over it. Full screen takes every gesture.
+  const fullscreenEl = () => document.fullscreenElement ?? (document as any).webkitFullscreenElement ?? null;
+  const isFull = () => !!fullscreenEl()?.contains(el);
+  const setTouch = () => {
+    renderer.domElement.style.touchAction = isFull() ? 'none' : turnOnly ? 'pan-y pinch-zoom' : 'pan-y';
+  };
+  setTouch();
+  const onWheel = (e: WheelEvent) => {
+    if (!turnOnly && (e.ctrlKey || e.metaKey || isFull())) return;
+    e.stopPropagation();
+  };
+  el.addEventListener('wheel', onWheel, { capture: true, passive: true });
+  const onFullscreen = () => {
+    setTouch();
+    needs = true;
+  };
+  document.addEventListener('fullscreenchange', onFullscreen);
+  document.addEventListener('webkitfullscreenchange', onFullscreen);
+
+  // Touch, outside full screen: hold a finger's moves back until its
+  // direction is clear. A mostly vertical move belongs to the browser, which
+  // scrolls and then cancels the pointer; without this, the few moves sent
+  // before it does would tip the model as the page starts to move. A
+  // sideways move goes through and turns the model; a second finger (a
+  // pinch) goes straight through. OrbitControls hears pointermove on the
+  // document, after the canvas has captured the pointer, so these capture
+  // listeners on the host run first.
+  const touches = new Map<number, { x: number; y: number; turn: boolean | null }>();
+  const onTouchDown = (e: PointerEvent) => {
+    if (e.pointerType !== 'touch') return;
+    if (e.isPrimary) touches.clear();
+    touches.set(e.pointerId, { x: e.clientX, y: e.clientY, turn: null });
+  };
+  const onTouchMove = (e: PointerEvent) => {
+    if (e.pointerType !== 'touch' || isFull() || touches.size !== 1) return;
+    const t = touches.get(e.pointerId);
+    if (!t) return;
+    if (t.turn === null) {
+      const dx = Math.abs(e.clientX - t.x);
+      const dy = Math.abs(e.clientY - t.y);
+      if (Math.max(dx, dy) < 8) return e.stopPropagation();
+      t.turn = dx > dy;
+    }
+    if (!t.turn) e.stopPropagation();
+  };
+  const onTouchEnd = (e: PointerEvent) => touches.delete(e.pointerId);
+  el.addEventListener('pointerdown', onTouchDown, { capture: true });
+  el.addEventListener('pointermove', onTouchMove, { capture: true });
+  el.addEventListener('pointerup', onTouchEnd, { capture: true });
+  el.addEventListener('pointercancel', onTouchEnd, { capture: true });
 
   const world = new Group();
   scene.add(world);
@@ -306,12 +414,12 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
           mat.map = wrapTexture(spec, 0, model.label);
           wrapMats.push(mat);
         } else {
-          mat.color = new Color(spec.color);
+          mat.color = new Color(cssHex(spec.color));
           wrapMats.push(mat);
           (mat as any).userData.plain = true;
         }
       } else {
-        const color = p.material === 'tab' && spec.geometry?.tab_color ? spec.geometry.tab_color : base.color;
+        const color = cssHex(p.material === 'tab' && spec.geometry?.tab_color ? spec.geometry.tab_color : base.color);
         // Bare metal a touch less mirror-like than the export, so caps read as
         // brushed steel under one softbox instead of a hall of reflections.
         const roughness = base.metalness > 0.5 ? Math.max(base.roughness, 0.3) : base.roughness;
@@ -335,7 +443,7 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
     let height = size[1];
     if (isDisc && mode === 'lineup') {
       // Stand coins on edge, positive face toward the camera, so the diameter
-      // reads against the other cells' height. Rotating +90° about X maps +Y
+      // reads against the other batteries' height. Rotating +90° about X maps +Y
       // to +Z; lift by the radius so the rim sits on the ground.
       const R = size[0] / 2;
       group.rotation.x = Math.PI / 2;
@@ -358,30 +466,64 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
 
   for (const s of specs) items.push(buildItem(s));
 
-  // Layout: single centered; lineup left to right with a gap scaled to size.
+  for (const it of items) world.add(it.group);
   const maxH = Math.max(...items.map((i) => i.height));
-  const gap = Math.max(4, maxH * 0.18);
-  let x = 0;
-  const totalW = items.reduce((n, i) => n + i.width, 0) + gap * (items.length - 1);
-  for (const it of items) {
-    it.group.position.x = x - totalW / 2 + it.width / 2;
-    x += it.width + gap;
-    world.add(it.group);
+  const maxDepth = Math.max(...items.map((i) => i.depth));
+
+  /** Camera distance that fits a lineup row `tw` mm wide, and the view's horizontal half-angle tangent. */
+  function lineupFit(tw: number) {
+    const tanV = Math.tan((camera.fov * Math.PI) / 360);
+    const tanH = tanV * (camera.aspect || 1);
+    // Fit the row's width and the tallest battery, leaving room for labels below.
+    const dw = (tw / 2) / tanH * 1.1 + maxDepth;
+    const dh = (maxH / 2) / tanV * 1.45 + maxDepth;
+    return { dist: Math.max(dw, dh), tanH };
   }
 
-  const span = Math.max(totalW, maxH);
-  (ground.material as ShaderMaterial).uniforms.uFade.value = Math.max(60, span * 1.6);
+  // Lineup labels are 0.9rem Plex Mono 600 (an advance of 0.6 em per
+  // character), 0.5rem of padding a side and a 1px border, and at least 2rem
+  // tall; see .viewer-label in Viewer.astro.
+  const rem = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 21;
+  const labelW = (name: string) => (name.length * 0.54 + 1) * rem() + 2;
+  const labelRow = () => 2 * rem() + 6;
+
+  // Layout: single centered; lineup left to right. The gap between two
+  // batteries starts in proportion to the tallest, then widens until their
+  // labels clear each other at this width, so small batteries in a row of
+  // big ones do not stack their labels. Labels are fixed in pixels and the
+  // row is scaled to fit the stage, so the gaps are solved together with the
+  // scale (a few passes; each only widens, up to a cap).
+  let totalW = 0;
+  let laidOutAt = -1;
+  function layout() {
+    const base = Math.max(4, maxH * 0.18);
+    const sumW = items.reduce((n, i) => n + i.width, 0);
+    let gaps = items.slice(1).map(() => base);
+    const W = el.clientWidth;
+    if (opts.onLabels && W > 0 && items.length > 1) {
+      const need = items.slice(1).map((it, i) => (labelW(items[i].spec.name) + labelW(it.spec.name)) / 2 + 12);
+      const cap = Math.max(base, maxH * 0.6);
+      for (let pass = 0; pass < 8; pass++) {
+        const { dist, tanH } = lineupFit(sumW + gaps.reduce((a, b) => a + b, 0));
+        const pxPerMm = W / (2 * dist * tanH);
+        gaps = need.map((px, i) => Math.min(cap, Math.max(base, px / pxPerMm - (items[i].width + items[i + 1].width) / 2)));
+      }
+    }
+    totalW = sumW + gaps.reduce((a, b) => a + b, 0);
+    let x = -totalW / 2;
+    items.forEach((it, i) => {
+      it.group.position.x = x + it.width / 2;
+      x += it.width + (gaps[i] ?? 0);
+    });
+    (ground.material as ShaderMaterial).uniforms.uFade.value = Math.max(60, Math.max(totalW, maxH) * 1.6);
+    laidOutAt = W;
+  }
 
   function frame() {
     const aspect = camera.aspect || 1;
     const vfov = (camera.fov * Math.PI) / 180;
-    const hfov = 2 * Math.atan(Math.tan(vfov / 2) * aspect);
     if (mode === 'lineup') {
-      // Fit the row's width and the tallest cell, leaving room for labels below.
-      const depth = Math.max(...items.map((i) => i.depth));
-      const dw = (totalW / 2) / Math.tan(hfov / 2) * 1.1 + depth;
-      const dh = (maxH / 2) / Math.tan(vfov / 2) * 1.45 + depth;
-      const dist = Math.max(dw, dh);
+      const { dist } = lineupFit(totalW);
       const elev = 0.2;
       const ty = maxH * 0.4;
       camera.position.set(0, ty + dist * Math.sin(elev), dist * Math.cos(elev));
@@ -434,7 +576,13 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
   const ro = new ResizeObserver(() => {
     const first = !camera.userData.framed;
     resize();
-    if (first) {
+    if (!el.clientWidth) return;
+    if (mode === 'lineup' && el.clientWidth !== laidOutAt) {
+      // A new width moves the label spacing, so lay out and frame again.
+      layout();
+      frame();
+      camera.userData.framed = true;
+    } else if (first) {
       frame();
       camera.userData.framed = true;
     }
@@ -446,11 +594,39 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
   const tmp = new Vector3();
   let raf = 0;
   let interacting = false;
-  controls.addEventListener('start', () => { interacting = true; controls.autoRotate = false; });
+  const stopSpin = () => {
+    if (controls.autoRotate) opts.onSpinStop?.();
+    controls.autoRotate = false;
+  };
+  controls.addEventListener('start', () => { interacting = true; stopSpin(); });
   controls.addEventListener('end', () => (interacting = false));
+  // Runs after OrbitControls' own pointercancel handler (registered first,
+  // in its constructor). Clears this file's flag even if that handler threw.
+  const onCancel = () => {
+    interacting = false;
+    needs = true;
+  };
+  renderer.domElement.addEventListener('pointercancel', onCancel);
+
+  // Zoom buttons ease the camera along its line of sight, clamped to the
+  // same min and max distance OrbitControls enforces for wheel and pinch.
+  let zoomLeft = 0; // natural log of the distance factor still to apply
+  const off = new Vector3();
+  function stepZoom() {
+    const step = Math.abs(zoomLeft) < 0.002 ? zoomLeft : zoomLeft * 0.25;
+    zoomLeft -= step;
+    off.copy(camera.position).sub(controls.target);
+    const d = off.length() * Math.exp(step);
+    const clamped = Math.min(controls.maxDistance, Math.max(controls.minDistance, d));
+    if (clamped !== d) zoomLeft = 0;
+    camera.position.copy(controls.target).add(off.setLength(clamped));
+    needs = true;
+  }
+
   function loop() {
     raf = requestAnimationFrame(loop);
     if (!visible) return;
+    if (zoomLeft) stepZoom();
     if (Math.abs(explode - explodeTarget) > 0.001) {
       explode += (explodeTarget - explode) * 0.12;
       for (const it of items) {
@@ -467,9 +643,11 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
     renderer.render(scene, camera);
     if (opts.onLabels) {
       const rect = el.getBoundingClientRect();
-      // Labels sit on the ground in front of each cell; when two would
-      // overlap, the later one drops to the next row.
+      // Labels sit on the ground in front of each battery. layout() spaces
+      // the row so they clear each other; if the stage is too narrow for
+      // that (or the row is turned edge-on), the later one drops a row.
       const rows: number[] = [];
+      const step = labelRow();
       const placed = items
         .map((it) => {
           tmp.set(it.group.position.x, 0, it.depth / 2 + 1).project(camera);
@@ -477,16 +655,17 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
         })
         .sort((a, b) => a.x - b.x)
         .map((p) => {
-          const w = p.it.spec.name.length * 7 + 14;
+          const w = labelW(p.it.spec.name);
           let row = 0;
           while (rows[row] !== undefined && p.x - w / 2 < rows[row] + 4) row++;
           rows[row] = p.x + w / 2;
-          return { id: p.it.spec.id, name: p.it.spec.name, x: p.x, y: p.y + 8 + row * 19, visible: p.visible };
+          return { id: p.it.spec.id, name: p.it.spec.name, x: p.x, y: p.y + 8 + row * step, visible: p.visible };
         });
       opts.onLabels(placed);
     }
   }
   resize();
+  layout(); // after resize(): the label spacing depends on the stage's aspect
   frame();
   camera.userData.framed = el.clientWidth > 0;
   themeColors();
@@ -502,7 +681,7 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
       if (!it) return;
       it.chem = chemIdx;
       for (const m of it.wrapMats) {
-        if ((m as any).userData.plain) m.color = new Color(it.spec.chemistries[chemIdx]?.color ?? it.spec.color);
+        if ((m as any).userData.plain) m.color = new Color(cssHex(it.spec.chemistries[chemIdx]?.color ?? it.spec.color));
         else if (it.label) {
           m.map?.dispose();
           m.map = wrapTexture(it.spec, chemIdx, it.label);
@@ -522,7 +701,14 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
     setAutoRotate(on: boolean) {
       controls.autoRotate = on && !reduced;
     },
+    /** One press of a zoom button: +1 moves in, -1 moves out. */
+    zoom(dir: 1 | -1) {
+      if (turnOnly) return;
+      stopSpin();
+      zoomLeft += dir * Math.log(0.8);
+    },
     reset() {
+      zoomLeft = 0;
       frame();
       needs = true;
     },
@@ -536,6 +722,14 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
       io.disconnect();
       window.removeEventListener('themechange', onTheme);
       mq.removeEventListener('change', onTheme);
+      el.removeEventListener('wheel', onWheel, { capture: true });
+      el.removeEventListener('pointerdown', onTouchDown, { capture: true });
+      el.removeEventListener('pointermove', onTouchMove, { capture: true });
+      el.removeEventListener('pointerup', onTouchEnd, { capture: true });
+      el.removeEventListener('pointercancel', onTouchEnd, { capture: true });
+      document.removeEventListener('fullscreenchange', onFullscreen);
+      document.removeEventListener('webkitfullscreenchange', onFullscreen);
+      renderer.domElement.removeEventListener('pointercancel', onCancel);
       controls.dispose();
       mats.forEach((m) => m.dispose());
       scene.traverse((o) => (o as Mesh).geometry?.dispose());
