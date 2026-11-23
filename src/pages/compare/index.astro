@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { batteries, modelSpec, searchIndex, primaryVariant, capacityLabel, chemistryGroups, sizeLabel, voltages, volts, fmt, categoryById } from '../../lib/data';
+import { pairs } from '../../lib/pairs';
+import { CATEGORY_META, batteries, modelSpec, searchIndex, primaryVariant, capacityLabel, chemistryGroups, sizeLabel, voltages, volts, fmt, categoryById } from '../../lib/data';
 
 const all = batteries();
 const specs = Object.fromEntries(all.map((b) => [b.id, modelSpec(b)]));
@@ -37,6 +38,10 @@ const presets = [
   { label: 'Hearing aid sizes', ids: '675,13,312,10,5' },
   { label: 'Camera packs', ids: 'cr-v3,2cr5,cr-p2,cr123a,cr2' },
 ];
+const pairGroups = CATEGORY_META.map((c) => ({
+  c,
+  list: [...pairs().values()].filter((p) => p.a.category === c.id).sort((x, y) => x.slug.localeCompare(y.slug, 'en', { numeric: true })),
+})).filter((g) => g.list.length);
 ---
 
 <BaseLayout title="Compare battery sizes in 3D, to scale | batteries.fyi" description="Line up any battery sizes side by side at true scale in 3D: AA vs AAA, 18650 vs 21700, CR2032 vs CR2025, with dimensions, voltages and capacities compared.">
@@ -72,6 +77,20 @@ const presets = [
   <script type="application/json" id="cmp-specs" set:html={JSON.stringify(specs)} />
   <script type="application/json" id="cmp-facts" set:html={JSON.stringify(facts)} />
   <script type="application/json" id="cmp-index" set:html={JSON.stringify(searchIndex())} />
+  <section class="wrap mt-14" id="all-pairs">
+    <h2 class="section-title">Head-to-head pages</h2>
+    <p class="text-[0.7rem] text-muted mb-4 max-w-2xl">Every pair of sizes that are close enough to confuse, or that the data says can or cannot replace each other.</p>
+    <div class="grid gap-6 md:grid-cols-2">
+      {pairGroups.map((g) => (
+        <div>
+          <h3 class="eyebrow mb-2">{g.c.name}</h3>
+          <ul class="flex flex-wrap gap-1.5">
+            {g.list.map((p) => <li><a href={`/compare/${p.slug}`} class="chip font-sans text-[0.65rem] hover:border-accent hover:text-accent-ink">{p.a.name} vs {p.b.name}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
 </BaseLayout>
 
 <style>

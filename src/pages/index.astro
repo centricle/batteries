@@ -3,11 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Viewer from '../components/Viewer.astro';
 import Silhouette from '../components/Silhouette.astro';
 import { batteries, batteryById, CATEGORY_META, stats } from '../lib/data';
+import { pairs } from '../lib/pairs';
 
 const s = stats();
 const pick = (ids: string[]) => ids.map((id) => batteryById(id)).filter(Boolean) as ReturnType<typeof batteries>;
 const lineup = pick(['d', 'c', 'aa', 'aaa', 'aaaa', '9v', '21700', '18650', 'cr123a', 'cr2032', 'lr44', '312']);
 const common = pick(['aa', 'aaa', 'cr2032', 'cr2025', 'cr2016', 'lr44', 'sr626sw', '9v', 'cr123a', '18650', '21700', 'cr2', '312', 'cr1220', 'c', 'd', 'a23', 'cr2450']);
+const popularPairs = ['cr2032-vs-cr2025', 'cr2032-vs-cr2016', '18650-vs-21700', 'cr123a-vs-16340', 'aa-vs-14500', 'aa-vs-aaa', 'lr43-vs-lr44', 'lr44-vs-675', 'cr2025-vs-cr2016', '18650-vs-20700']
+  .map((slug) => pairs().get(slug) ?? pairs().get(slug.split('-vs-').reverse().join('-vs-')))
+  .filter(Boolean);
 const tools = [
   { href: '/compare', title: 'Compare in 3D', body: 'Line up any sizes at true scale and read the differences.' },
   { href: '/identify', title: 'Identify by measurement', body: 'Enter diameter and height from calipers or a ruler. Get the closest matches.' },
@@ -85,6 +89,16 @@ const jsonld = [
       </li>
     </ul>
   </section>
+
+  {popularPairs.length > 0 && (
+    <section class="wrap mt-12">
+      <h2 class="section-title">Head to head</h2>
+      <ul class="flex flex-wrap gap-2">
+        {popularPairs.map((p) => <li><a href={`/compare/${p!.slug}`} class="chip font-sans text-[0.72rem] py-1.5 px-3 hover:border-accent hover:text-accent-ink">{p!.a.name} vs {p!.b.name}</a></li>)}
+        <li><a href="/compare#all-pairs" class="chip font-sans text-[0.72rem] py-1.5 px-3 text-muted hover:text-ink">All {pairs().size} comparisons</a></li>
+      </ul>
+    </section>
+  )}
 
   <section class="wrap mt-12">
     <h2 class="section-title">Tools</h2>
