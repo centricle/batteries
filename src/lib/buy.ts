@@ -28,9 +28,10 @@ export function amazonUrl(query: string) {
   return u.href;
 }
 
-// Loose lithium-ion cells get no store link. Marketplace listings for these
-// sizes often claim capacities no cell maker publishes, and a reference should
-// not send readers into that. The page states the sourced ceiling instead.
+// Loose lithium-ion batteries get no store link. Marketplace listings for
+// these sizes often claim capacities no maker publishes, and a reference
+// should not send readers into that. The page states the sourced ceiling
+// instead.
 export const sellable = (b: Battery) => b.category !== 'li-ion';
 
 /** The largest rechargeable capacity any source on the page gives for this size. */

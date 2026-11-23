@@ -260,7 +260,7 @@
           50
         ]
       },
-      "notes": "Cycle life and retention are from the Wikipedia table of eneloop generations; the Panasonic specification sheet gives minimum capacity, impedance (about 25 milliohms at 1 kHz) and temperature limits. The cell measures 14.35 mm by 50.4 mm with label.",
+      "notes": "Cycle life and retention are from the Wikipedia table of eneloop generations; the Panasonic specification sheet gives minimum capacity, impedance (about 25 milliohms at 1 kHz) and temperature limits. The battery measures 14.35 mm by 50.4 mm with label.",
       "sources": [
         "panasonic-bk3mcc",
         "wikipedia-eneloop"
@@ -284,7 +284,7 @@
           55
         ]
       },
-      "notes": "Energizer states that most cylindrical Eveready carbon zinc cells use the zinc chloride system.",
+      "notes": "Energizer states that most cylindrical Eveready carbon zinc batteries use the zinc chloride system.",
       "sources": [
         "energizer-1215",
         "energizer-r6-eu",
@@ -313,7 +313,7 @@
           60
         ]
       },
-      "notes": "Specification of one 1000 mAh product; the cell is slightly smaller than the standard envelope (14.5 mm by 49.0 mm with tube).",
+      "notes": "Specification of one 1000 mAh product; the battery is slightly smaller than the standard envelope (14.5 mm by 49.0 mm with tube).",
       "sources": [
         "emmerich-nicd-aa"
       ]
@@ -354,7 +354,7 @@
           65
         ]
       },
-      "notes": "The 1.6 V nominal voltage is above the 1.5 V of primary cells, which some devices do not tolerate. A second manufacturer sheet (Voltcraft HR6) also lists 1.6 V and 1500 mAh.",
+      "notes": "The 1.6 V nominal voltage is above the 1.5 V of single-use batteries, which some devices do not tolerate. A second manufacturer sheet (Voltcraft HR6) also lists 1.6 V and 1500 mAh.",
       "sources": [
         "pkcell-nizn-aa",
         "voltcraft-nizn-aa"
@@ -426,7 +426,7 @@
     "Only NiMH, NiCd, nickel-zinc and USB-rechargeable lithium-ion AA batteries are designed to be recharged; charging alkaline, zinc-carbon or lithium iron disulfide AA batteries can cause leakage or rupture.",
     "Nickel-zinc batteries (1.6 V) and Oxyride batteries (1.7 V initial) start above 1.5 V and can mislead battery gauges."
   ],
-  "notes": "The most widely used consumer battery size. The size letter predates IEC; IEC names the size 6 and prefixes a chemistry letter. JIS UM-3 names the zinc-carbon cell and AM-3 the alkaline cell.",
+  "notes": "The most widely used consumer battery size. The size letter predates IEC; IEC names the size 6 and prefixes a chemistry letter. JIS UM-3 names the zinc-carbon battery and AM-3 the alkaline battery.",
   "sources": [
     {
       "id": "energizer-e91",

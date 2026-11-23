@@ -99,7 +99,7 @@
     "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage.",
     "Saft notes that currents above the recommended continuous level may require thermal protection."
   ],
-  "notes": "Industrial D-size bobbin cell with a high capacity for long-life, low-drain devices.",
+  "notes": "Industrial D-size bobbin battery with a high capacity for long-life, low-drain devices.",
   "sources": [
     {
       "id": "saft-ls33600c",

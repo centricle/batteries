@@ -31,7 +31,7 @@
       "nominal": 49.36,
       "max": 49.36
     },
-    "note": "Maximum dimensions with tube from the Panasonic NCR18500A data sheet. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Maximum dimensions with tube from the Panasonic NCR18500A data sheet. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "panasonic-ncr18500a"
     ]
@@ -114,7 +114,7 @@
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
     "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
   ],
-  "notes": "Size code: 18 mm diameter, 50 mm length, 0 for cylindrical. About the length of an A cell with a larger diameter.",
+  "notes": "Size code: 18 mm diameter, 50 mm length, 0 for cylindrical. About the length of an A battery with a larger diameter.",
   "sources": [
     {
       "id": "wiki-sizes",

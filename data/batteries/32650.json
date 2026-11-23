@@ -30,7 +30,7 @@
       "min": 67.3,
       "max": 67.9
     },
-    "note": "From the Heter LFP-32650 specification (32.02 ± 0.05 mm by 67.6 ± 0.3 mm), which is taller than the 65 mm in the size code. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "From the Heter LFP-32650 specification (32.02 ± 0.05 mm by 67.6 ± 0.3 mm), which is taller than the 65 mm in the size code. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "heter-lfp32650"
     ]
@@ -78,7 +78,7 @@
         ],
         "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
       },
-      "notes": "Lithium-ion 32650 cells are occasionally found in large LED flashlights. Nominal voltage 3.7 V is the common listing value.",
+      "notes": "Lithium-ion 32650 batteries are occasionally found in large LED flashlights. Nominal voltage 3.7 V is the common listing value.",
       "sources": [
         "wiki-sizes"
       ]
@@ -98,7 +98,7 @@
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
     "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
   ],
-  "notes": "Size code: 32 mm diameter, 65 mm length, 0 for cylindrical. Most 32650 cells sold are lithium iron phosphate.",
+  "notes": "Size code: 32 mm diameter, 65 mm length, 0 for cylindrical. Most 32650 batteries sold are lithium iron phosphate.",
   "sources": [
     {
       "id": "wiki-sizes",

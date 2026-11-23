@@ -12,7 +12,7 @@
       "max_open_circuit_voltage": 1.725,
       "status": "current",
       "standard": "IEC 60086-1",
-      "note": "No letter. Covers both the Leclanché (ammonium chloride) and zinc chloride (heavy duty) cells, which this site lists separately as zinc-carbon and zinc-chloride. Example: R6."
+      "note": "No letter. Covers both the Leclanché (ammonium chloride) and zinc chloride (heavy duty) batteries, which this site lists separately as zinc-carbon and zinc-chloride. Example: R6."
     },
     {
       "letter": "A",
@@ -25,7 +25,7 @@
       "max_open_circuit_voltage": 1.55,
       "status": "rare",
       "standard": "IEC 60086-1",
-      "note": "Unlikely to be found in consumer or general-purpose batteries. Consumer zinc-air cells use P (alkaline electrolyte)."
+      "note": "Unlikely to be found in consumer or general-purpose batteries. Consumer zinc-air batteries use P (alkaline electrolyte)."
     },
     {
       "letter": "B",
@@ -141,7 +141,7 @@
       "max_open_circuit_voltage": 1.68,
       "status": "current",
       "standard": "IEC 60086-1",
-      "note": "Edition 13 (2021) lists the nominal voltage as 1.4 V or 1.45 V. The hearing aid chemistry."
+      "note": "Edition 13 (2021) lists the voltage as 1.4 V or 1.45 V. The kind used in hearing aid batteries."
     },
     {
       "letter": "S",
@@ -193,7 +193,7 @@
       "max_open_circuit_voltage": null,
       "status": "current",
       "standard": "IEC 61951-2",
-      "note": "Rechargeable. Cells interchangeable with primary sizes reuse the primary designation, as in HR6."
+      "note": "Rechargeable. A rechargeable battery made to fit a single-use size reuses that size's name, as in HR6."
     },
     {
       "letter": "K",
@@ -206,7 +206,7 @@
       "max_open_circuit_voltage": null,
       "status": "current",
       "standard": "IEC 61951-1",
-      "note": "Rechargeable. Cells interchangeable with primary sizes reuse the primary designation, as in KR6."
+      "note": "Rechargeable. A rechargeable battery made to fit a single-use size reuses that size's name, as in KR6."
     }
   ],
   "li_ion_letters": [
@@ -310,7 +310,7 @@
     {
       "letter": "P",
       "name": "Prismatic",
-      "note": "In IEC 61960-3 lithium-ion designations, P also means prismatic."
+      "note": "In IEC 61960-3 lithium-ion names, P also means prismatic."
     },
     {
       "letter": "F",
@@ -597,17 +597,17 @@
     },
     {
       "code": "R10",
-      "size": "Cell of the 2R10 (Duplex) battery",
+      "size": "One of the two inside a 2R10 (Duplex) battery",
       "note": "Dimensions not given in the sources consulted."
     },
     {
       "code": "R61",
-      "size": "Inner cell of a 6LR61 9 V battery",
+      "size": "One of the six inside a 6LR61 9 V battery",
       "note": "Six R61 cells in series form most alkaline 9 V batteries. Slightly smaller than an LR8D425 (AAAA) cell."
     },
     {
       "code": "F22",
-      "size": "Flat cell of a 6F22 9 V battery",
+      "size": "One of the six flat layers inside a 6F22 9 V battery",
       "note": "Six flat cells stacked in series form the zinc-carbon 9 V battery."
     },
     {

@@ -53,7 +53,7 @@
       "min": 69.85,
       "max": 70.15
     },
-    "note": "Limits from the Molicel INR-21700-P45B specification (21.40 ± 0.15 mm by 70.00 ± 0.15 mm). Other datasheets give maximums of 21.25 mm by 70.80 mm (Samsung 50E), 21.22 by 70.30 (Samsung 40T) and 21.44 by 70.65 (LG M50LT). Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Limits from the Molicel INR-21700-P45B specification (21.40 ± 0.15 mm by 70.00 ± 0.15 mm). Other datasheets give maximums of 21.25 mm by 70.80 mm (Samsung 50E), 21.22 by 70.30 (Samsung 40T) and 21.44 by 70.65 (LG M50LT). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "molicel-p45b",
       "samsung-50e",

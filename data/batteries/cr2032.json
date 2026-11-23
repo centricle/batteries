@@ -144,7 +144,7 @@
           85
         ]
       },
-      "notes": "BR2032 is a lithium-carbon-monofluoride cell in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
+      "notes": "BR2032 is a lithium-carbon-monofluoride battery in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
       "sources": [
         "panasonic-br2032"
       ]
@@ -169,7 +169,7 @@
           60
         ]
       },
-      "notes": "The LIR2032 is a lithium-ion cell at 3.6 V nominal that charges to a higher voltage than a CR2032 supplies. It is not a drop-in replacement for a CR2032 in a device built for 3 V, and a CR2032 must not be placed in a holder designed to charge a LIR2032.",
+      "notes": "The LIR2032 is a lithium-ion battery at 3.6 V nominal that charges to a higher voltage than a CR2032 supplies. It is not a drop-in replacement for a CR2032 in a device built for 3 V, and a CR2032 must not be placed in a holder designed to charge a LIR2032.",
       "sources": [
         "powerstream-lir",
         "wikipedia-button-cell"
@@ -205,7 +205,7 @@
       "note": "Same 3.2 mm thickness, but 30 mm across instead of 20 mm; does not fit a CR2032 holder."
     }
   ],
-  "notes": "The most widely used lithium coin cell. BR2032 has the same dimensions and a nominal 3 V but lower rated drain and a wider temperature range; ML2032 and VL2032 are rechargeable cells in the same case per Wikipedia, and fit the same holder only where the device is designed to charge them.",
+  "notes": "The most widely used lithium coin battery. BR2032 has the same dimensions and a nominal 3 V but lower rated drain and a wider temperature range; ML2032 and VL2032 are rechargeable batteries in the same case per Wikipedia, and fit the same holder only where the device is designed to charge them.",
   "sources": [
     {
       "id": "panasonic-cr2032",

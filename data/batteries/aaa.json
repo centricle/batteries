@@ -317,7 +317,7 @@
     "Do not mix chemistries, brands or charge states in one device.",
     "Only NiMH and USB-rechargeable lithium-ion AAA batteries are designed to be recharged; charging alkaline, zinc-carbon or lithium iron disulfide AAA batteries can cause leakage or rupture."
   ],
-  "notes": "JIS UM-4 names the zinc-carbon cell and AM-4 the alkaline cell. Wikipedia also lists ZR03 for nickel oxyhydroxide; no datasheet was found for that cell.",
+  "notes": "JIS UM-4 names the zinc-carbon battery and AM-4 the alkaline battery. Wikipedia also lists ZR03 for nickel oxyhydroxide; no datasheet was found for that battery.",
   "sources": [
     {
       "id": "energizer-en92",

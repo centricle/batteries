@@ -22,7 +22,7 @@
     "height": {
       "nominal": 43
     },
-    "note": "Nominal size from the size code; no datasheet was fetched for this size. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Nominal size from the size code; no datasheet was fetched for this size. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "wiki-sizes"
     ]

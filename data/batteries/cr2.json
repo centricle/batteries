@@ -116,7 +116,7 @@
     "Do not short-circuit, crush, heat or disassemble. The battery contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the battery safe to abuse.",
     "Replace all batteries in a device at the same time and do not mix them with used batteries or other types."
   ],
-  "notes": "Wikipedia lists a rechargeable lithium-ion cell in this size (15270, nominally 3.6 V, 450 to 800 mAh depending on the product); it is a different product and not a drop-in for devices specified for 3.0 V primary cells.",
+  "notes": "Wikipedia lists a rechargeable lithium-ion battery in this size (15270, nominally 3.6 V, 450 to 800 mAh depending on the product); it is a different product and not a drop-in for devices specified for 3.0 V single-use batteries.",
   "sources": [
     {
       "id": "energizer-cr2",

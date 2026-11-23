@@ -133,7 +133,7 @@
     "Replace all batteries in a device at the same time and do not mix them with used batteries or other types.",
     "A rechargeable 3.7 V lithium-ion battery sold in this size is a different product (see 16340) and must not be used where a 3.0 V single-use battery is specified unless the device maker allows it."
   ],
-  "notes": "The IEC code CR17345 encodes a diameter of 17 mm and a height of 34.5 mm. The name 123A is a consumer name that has no relation to the A (17 mm by 50 mm) cell size.",
+  "notes": "The IEC code CR17345 encodes a diameter of 17 mm and a height of 34.5 mm. The name 123A is a consumer name that has no relation to the A (17 mm by 50 mm) battery size.",
   "sources": [
     {
       "id": "energizer-123",

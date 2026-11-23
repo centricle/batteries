@@ -150,7 +150,7 @@
     "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage.",
     "CR14250 (3.0 V) and ER14250 (3.6 V) fit the same holder, but one does not work in place of the other in a device designed for one voltage."
   ],
-  "notes": "Same diameter as an AA cell and roughly half its length. Two chemistries share the size at different voltages.",
+  "notes": "Same diameter as an AA battery and roughly half its length. Two chemistries share the size at different voltages.",
   "sources": [
     {
       "id": "varta-cr-half-aa",

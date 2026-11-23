@@ -102,7 +102,7 @@
           85
         ]
       },
-      "notes": "BR1220 is a lithium-carbon-monofluoride cell in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
+      "notes": "BR1220 is a lithium-carbon-monofluoride battery in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
       "sources": [
         "panasonic-br1220"
       ]
@@ -128,7 +128,7 @@
           60
         ]
       },
-      "notes": "VL1220 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it.",
+      "notes": "VL1220 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it.",
       "sources": [
         "panasonic-vl1220"
       ]
@@ -154,7 +154,7 @@
       "note": "Same width and 0.5 mm thicker; fits only where the holder has the clearance."
     }
   ],
-  "notes": "Wikipedia also lists an ML1220 manganese rechargeable cell in this size. Panasonic's VL1220 uses constant-voltage charging at 3.25 to 3.55 V.",
+  "notes": "Wikipedia also lists an ML1220 manganese rechargeable battery in this size. Panasonic's VL1220 uses constant-voltage charging at 3.25 to 3.55 V.",
   "sources": [
     {
       "id": "panasonic-cr1220",

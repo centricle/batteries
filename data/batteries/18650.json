@@ -68,7 +68,7 @@
       "min": 64.8,
       "max": 65.2
     },
-    "note": "Limits from the LG INR18650HG2 specification (18.3 +0.2/-0.3 mm by 65.0 ± 0.2 mm). Other datasheets give 18.33 ± 0.07 by 64.85 ± 0.15 (Samsung), 18.29 ± 0.11 by 65.20 max (LG MH1), and 18.5 by 65.3 max (Panasonic NCR18650B, with tube). Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Limits from the LG INR18650HG2 specification (18.3 +0.2/-0.3 mm by 65.0 ± 0.2 mm). Other datasheets give 18.33 ± 0.07 by 64.85 ± 0.15 (Samsung), 18.29 ± 0.11 by 65.20 max (LG MH1), and 18.5 by 65.3 max (Panasonic NCR18650B, with tube). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "lg-hg2",
       "samsung-30q",
@@ -140,7 +140,7 @@
           60
         ]
       },
-      "notes": "Weight is the maximum. Maximum continuous discharge is 15 A at 25 °C, with 60% capacity remaining at 250 cycles. Temperatures are cell surface; storage is one month. Specification version 0.0."
+      "notes": "Weight is the maximum. Maximum continuous discharge is 15 A at 25 °C, with 60% capacity remaining at 250 cycles. Temperatures are battery surface; storage is one month. Specification version 0.0."
     },
     {
       "chemistry": "lithium-ion",
@@ -174,7 +174,7 @@
           60
         ]
       },
-      "notes": "Weight is the maximum. Maximum continuous discharge is 20 A at 25 °C, with 60% capacity remaining at 250 cycles. Temperatures are cell surface; storage is one month."
+      "notes": "Weight is the maximum. Maximum continuous discharge is 20 A at 25 °C, with 60% capacity remaining at 250 cycles. Temperatures are battery surface; storage is one month."
     },
     {
       "chemistry": "lithium-ion",
@@ -208,7 +208,7 @@
           60
         ]
       },
-      "notes": "Weight is the maximum. Temperatures are cell surface; storage is one month."
+      "notes": "Weight is the maximum. Temperatures are battery surface; storage is one month."
     },
     {
       "chemistry": "lithium-ion",

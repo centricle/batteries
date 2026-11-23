@@ -202,7 +202,7 @@
           50
         ]
       },
-      "notes": "Internal resistance is for a charged cell; it rises to 21 milliohms at half discharge.",
+      "notes": "Internal resistance is for a charged battery; it rises to 21 milliohms at half discharge.",
       "sources": [
         "energizer-nh35"
       ]
@@ -233,7 +233,7 @@
     "Do not mix chemistries, brands or charge states in one device.",
     "Only NiMH and NiCd C batteries are designed to be recharged; charging alkaline or zinc-carbon batteries can cause leakage or rupture."
   ],
-  "notes": "Wikipedia lists BA-42 as the US military designation (World War II to the 1980s). NiCd and nickel oxyhydroxide C cells exist (KR14, ZR14) but no datasheet was found for either.",
+  "notes": "Wikipedia lists BA-42 as the US military designation (World War II to the 1980s). NiCd and nickel oxyhydroxide C batteries exist (KR14, ZR14) but no datasheet was found for either.",
   "sources": [
     {
       "id": "energizer-e93",

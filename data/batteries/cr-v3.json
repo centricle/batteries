@@ -45,7 +45,7 @@
       "min": 51.5,
       "max": 52.5
     },
-    "note": "Width is the long side of the two-lobed top view, about the width of two AA cells side by side. The datasheet drawing also shows 14.0 to 14.6 mm and 6.4 to 7.7 mm dimensions on the end-face contacts.",
+    "note": "Width is the long side of the two-lobed top view, about the width of two AA batteries side by side. The datasheet drawing also shows 14.0 to 14.6 mm and 6.4 to 7.7 mm dimensions on the end-face contacts.",
     "sources": [
       "energizer-crv3"
     ]
@@ -122,7 +122,7 @@
     "Replace all batteries in a device at the same time and do not mix them with used batteries or other types.",
     "The rechargeable RCR-V3 runs at 3.7 V and charges to a higher voltage; use it only in devices that allow it."
   ],
-  "notes": "Digital cameras designed for two AA cells or one CR-V3 accept both, and some cameras not designed for it also accept it, per Wikipedia.",
+  "notes": "Digital cameras designed for two AA batteries or one CR-V3 accept both, and some cameras not designed for it also accept it, per Wikipedia.",
   "sources": [
     {
       "id": "energizer-crv3",

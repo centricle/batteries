@@ -136,7 +136,7 @@
     "Swallowed or inserted button batteries can cause severe burns within hours. If a battery may have been swallowed or placed in the nose or ear, call the National Battery Ingestion Hotline at 1-800-498-8666 or a poison center at 1-800-222-1222 immediately, and do not wait for symptoms.",
     "Keep hearing aid batteries out of reach of children and pets, and check the battery compartment is closed; a battery that looks like a pill can be swallowed by an adult."
   ],
-  "notes": "Remove the plastic tab covering the air holes and let the cell stand about one minute before inserting, so the cell can activate (Rayovac data sheet). The cell starts consuming zinc once the tab is removed, and an unused cell is guaranteed four years only with the tab applied. Zinc-air cells draw oxygen through the air holes in the positive can, so output voltage and service life depend on how much air reaches the cell; Rayovac describes an air management system that meters air to high-drain devices.",
+  "notes": "Remove the plastic tab covering the air holes and let the battery stand about one minute before inserting, so the battery can activate (Rayovac data sheet). The battery starts consuming zinc once the tab is removed, and an unused battery is guaranteed four years only with the tab applied. Zinc-air batteries draw oxygen through the air holes in the positive can, so output voltage and service life depend on how much air reaches the battery; Rayovac describes an air management system that meters air to high-drain devices.",
   "sources": [
     {
       "id": "energizer-675",

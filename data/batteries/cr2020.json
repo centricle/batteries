@@ -67,7 +67,7 @@
           60
         ]
       },
-      "notes": "ML2020 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it. Charging voltage 2.8 to 3.2 V.",
+      "notes": "ML2020 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it. Charging voltage 2.8 to 3.2 V.",
       "sources": [
         "panasonic-ml2020"
       ]
@@ -93,7 +93,7 @@
           60
         ]
       },
-      "notes": "VL2020 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it. Charging voltage 3.25 to 3.55 V.",
+      "notes": "VL2020 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it. Charging voltage 3.25 to 3.55 V.",
       "sources": [
         "panasonic-vl2020"
       ]
@@ -117,7 +117,7 @@
       "note": "Same 20 mm width and 0.5 mm thicker; fits only where the holder has the clearance."
     }
   ],
-  "notes": "The ML2020 and VL2020 are the commonly sold rechargeable cells in this size.",
+  "notes": "The ML2020 and VL2020 are the commonly sold rechargeable batteries in this size.",
   "sources": [
     {
       "id": "panasonic-ml2020",

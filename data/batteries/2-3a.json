@@ -28,7 +28,7 @@
     "height": {
       "nominal": 28.5
     },
-    "note": "GP publishes a nominal 17.0 by 28.5 mm with sleeve; Emmerich lists 16.5 +/-0.5 by 28.0 +/-0.5 mm for its flat-top cell. The lithium CR-2/3A (CR17335) is a different size, 17 mm by 33.5 mm.",
+    "note": "GP publishes a nominal 17.0 by 28.5 mm with sleeve; Emmerich lists 16.5 +/-0.5 by 28.0 +/-0.5 mm for its flat-top battery. The lithium CR-2/3A (CR17335) is a different size, 17 mm by 33.5 mm.",
     "sources": [
       "gp-110afh",
       "emmerich-255032"
@@ -97,7 +97,7 @@
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
     "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
-  "notes": "The nickel-metal hydride 2/3A is about 28 mm long; lithium cells sold under the same name are 33.5 mm long.",
+  "notes": "The nickel-metal hydride 2/3A is about 28 mm long; lithium batteries sold under the same name are 33.5 mm long.",
   "sources": [
     {
       "id": "gp-110afh",

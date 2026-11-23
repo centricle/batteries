@@ -28,7 +28,7 @@
     "height": {
       "nominal": 65
     },
-    "note": "The A123 ANR26650M1-B data sheet lists the cell as 26 x 65 mm without tolerances. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "The A123 ANR26650M1-B data sheet lists the battery as 26 x 65 mm without tolerances. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "a123-anr26650m1b"
     ]

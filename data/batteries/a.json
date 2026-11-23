@@ -102,7 +102,7 @@
       "voltage": {
         "nominal": 1.5
       },
-      "notes": "Listed as LR23; rare as a primary cell and no manufacturer datasheet was fetched.",
+      "notes": "Listed as LR23; rare as a single-use battery and no manufacturer datasheet was fetched.",
       "sources": [
         "wikipedia-battery-sizes"
       ]
@@ -132,7 +132,7 @@
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
     "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
-  "notes": "More common as a nickel-metal hydride or nickel-cadmium cell for pack assembly than as a primary cell. Fractional sizes such as 4/5A and 2/3A share its diameter.",
+  "notes": "More common as a nickel-metal hydride or nickel-cadmium battery for pack assembly than as a single-use battery. Fractional sizes such as 4/5A and 2/3A share its diameter.",
   "sources": [
     {
       "id": "panasonic-bk250a",

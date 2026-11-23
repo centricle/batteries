@@ -76,7 +76,7 @@
           60
         ]
       },
-      "notes": "VL3032 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it.",
+      "notes": "VL3032 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it.",
       "sources": [
         "panasonic-vl3032"
       ]
@@ -90,7 +90,7 @@
     "Industrial data loggers"
   ],
   "interchange": [],
-  "notes": "VL3032 is a rechargeable cell for devices designed to charge it.",
+  "notes": "VL3032 is a rechargeable battery for devices designed to charge it.",
   "sources": [
     {
       "id": "panasonic-cr3032",

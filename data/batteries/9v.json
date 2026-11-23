@@ -300,7 +300,7 @@
           50
         ]
       },
-      "notes": "Eight-cell 9.6 V packs run above the 9 V of a primary battery and are not interchangeable with 8.4 V packs in every device. The cycle life is a reference figure under IEC 61951-2.",
+      "notes": "Eight-cell 9.6 V packs run above the 9 V of a single-use battery and are not interchangeable with 8.4 V packs in every device. The cycle life is a reference figure under IEC 61951-2.",
       "sources": [
         "emmerich-nimh-96v"
       ]

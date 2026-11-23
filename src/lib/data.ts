@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { batterySchema, chemistrySchema, deviceSchema, CATEGORIES, DEVICE_CATEGORIES } from './schema.mjs';
 import type { z } from 'zod';
+import { COMMON } from './plain';
 
 export type Battery = z.infer<typeof batterySchema>;
 export type Variant = Battery['variants'][number];
@@ -107,23 +108,39 @@ export const devices = () => load().devices;
 export const deviceById = (id: string) => devices().find((d) => d.id === id);
 export const devicesFor = (batteryId: string) => devices().filter((d) => d.battery === batteryId);
 
-export const DEVICE_CATEGORY_META: Record<(typeof DEVICE_CATEGORIES)[number], { name: string; one: string }> = {
-  tracker: { name: 'Item trackers', one: 'tracker' },
-  'car-key': { name: 'Car key fobs', one: 'key fob' },
-  garage: { name: 'Garage door remotes', one: 'garage remote' },
-  remote: { name: 'TV remotes and controllers', one: 'remote' },
-  'smart-home': { name: 'Smart home sensors and locks', one: 'smart home device' },
-  safety: { name: 'Smoke and CO alarms', one: 'alarm' },
-  health: { name: 'Health devices', one: 'health device' },
-  fitness: { name: 'Fitness sensors', one: 'sensor' },
-  watch: { name: 'Watches', one: 'watch' },
-  tool: { name: 'Tools and meters', one: 'tool' },
-  household: { name: 'Household', one: 'device' },
-  computer: { name: 'Computer accessories', one: 'accessory' },
-  camera: { name: 'Cameras', one: 'camera' },
-  audio: { name: 'Audio', one: 'device' },
-  toy: { name: 'Toys', one: 'toy' },
+// `words` are what people type for the whole category ("car remote", "smoke
+// detector"). Search only: they make a device findable by its kind, never a
+// claim about one device.
+export const DEVICE_CATEGORY_META: Record<(typeof DEVICE_CATEGORIES)[number], { name: string; one: string; words: string[] }> = {
+  tracker: { name: 'Item trackers', one: 'tracker', words: ['item tracker', 'Bluetooth tracker', 'key finder'] },
+  'car-key': { name: 'Car key fobs', one: 'key fob', words: ['car key', 'car remote', 'key fob', 'keyless remote', 'keyless entry', 'remote key', 'smart key'] },
+  garage: { name: 'Garage door remotes', one: 'garage remote', words: ['garage door', 'garage door opener', 'garage opener', 'garage remote'] },
+  remote: { name: 'TV remotes and controllers', one: 'remote', words: ['TV remote', 'remote control', 'game controller'] },
+  'smart-home': { name: 'Smart home sensors and locks', one: 'smart home device', words: ['smart home', 'home sensor', 'smart lock'] },
+  safety: { name: 'Smoke and CO alarms', one: 'alarm', words: ['smoke alarm', 'smoke detector', 'CO alarm', 'CO detector', 'carbon monoxide alarm', 'carbon monoxide detector'] },
+  health: { name: 'Health devices', one: 'health device', words: ['medical device', 'health monitor'] },
+  fitness: { name: 'Fitness sensors', one: 'sensor', words: ['fitness sensor', 'heart rate monitor', 'chest strap', 'bike sensor'] },
+  watch: { name: 'Watches', one: 'watch', words: ['watch', 'wristwatch'] },
+  tool: { name: 'Tools and meters', one: 'tool', words: ['tool', 'meter', 'tester'] },
+  household: { name: 'Household', one: 'device', words: ['household', 'home', 'kitchen'] },
+  computer: { name: 'Computer accessories', one: 'accessory', words: ['computer', 'computer accessory'] },
+  camera: { name: 'Cameras', one: 'camera', words: ['camera'] },
+  audio: { name: 'Audio', one: 'device', words: ['audio'] },
+  toy: { name: 'Toys', one: 'toy', words: ['toy', 'game'] },
 };
+
+// A battery's own `devices` strings that name one of the categories above get
+// that category's words too, so "TV remote" finds the batteries listed for
+// "Remote controls". The words name the same thing; no use is added.
+const USE_CATEGORY: [RegExp, (typeof DEVICE_CATEGORIES)[number]][] = [
+  [/\bremote controls?\b/i, 'remote'],
+  [/\bsmoke\b|carbon monoxide/i, 'safety'],
+  [/\bkey fobs?\b|\bkeyless\b|\bcar alarm remotes?\b/i, 'car-key'],
+  [/\bgarage door\b/i, 'garage'],
+  [/\b(item|bluetooth) trackers?\b/i, 'tracker'],
+  [/\bwatch(es)?\b|\bwristwatch/i, 'watch'],
+];
+const categoryWords = (c: (typeof DEVICE_CATEGORIES)[number]) => [DEVICE_CATEGORY_META[c].name, ...DEVICE_CATEGORY_META[c].words];
 export const DEVICE_CATEGORY_ORDER = DEVICE_CATEGORIES;
 
 /** "Apple AirTag", but "Toyota RAV4 smart key" when the name already starts with the maker. */
@@ -354,6 +371,28 @@ export function modelSpec(b: Battery) {
   };
 }
 
+/** What a battery is used in, as search phrases with a weight: its category
+ *  name, its own `devices` strings (earlier ones weigh more), the category
+ *  words those strings name, and the words for each kind of device the device
+ *  pages say takes it, weighted by how many do. */
+function usePhrases(b: Battery): [string, number][] {
+  const m = new Map<string, [string, number]>();
+  const add = (s: string, w: number) => {
+    const k = s.toLowerCase();
+    if (!m.has(k) || m.get(k)![1] < w) m.set(k, [s, w]);
+  };
+  add(categoryById[b.category].name, 1);
+  b.devices.forEach((s, i) => {
+    const w = 3 - Math.min(i, 3);
+    add(s.replace(/\s*\([^)]*\)/g, ''), w);
+    for (const [re, c] of USE_CATEGORY) if (re.test(s)) categoryWords(c).forEach((x) => add(x, w));
+  });
+  const counts = new Map<string, number>();
+  for (const d of devicesFor(b.id)) counts.set(d.category, (counts.get(d.category) ?? 0) + 1);
+  for (const [c, n] of counts) categoryWords(c as (typeof DEVICE_CATEGORIES)[number]).forEach((x) => add(x, n));
+  return [...m.values()];
+}
+
 export function searchIndex() {
   return batteries().map((b) => ({
     id: b.id,
@@ -369,6 +408,9 @@ export function searchIndex() {
     p: b.dimensions.depth?.nominal ?? null,
     x: chemistryGroups(b).map((g) => g.chem.short),
     col: chem(primaryVariant(b).chemistry).color,
+    u: usePhrases(b),
+    // The sizes people look for most rank first among equal use matches.
+    pop: COMMON.includes(b.id) ? (COMMON.length - COMMON.indexOf(b.id)) / 2 : 0,
   }));
 }
 
@@ -406,7 +448,8 @@ export function deviceIndex() {
   return devices().map((d) => ({
     id: d.id,
     n: deviceTitle(d),
-    k: [d.maker, d.name, d.models ?? '', DEVICE_CATEGORY_META[d.category].one].filter(Boolean),
+    k: [d.maker, d.name, d.models ?? ''].filter(Boolean),
+    g: [DEVICE_CATEGORY_META[d.category].one, ...categoryWords(d.category)],
     b: batteryById(d.battery)!.name,
     bid: d.battery,
     q: d.count,

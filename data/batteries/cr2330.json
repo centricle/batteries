@@ -79,7 +79,7 @@
           85
         ]
       },
-      "notes": "BR2330 is a lithium-carbon-monofluoride cell in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
+      "notes": "BR2330 is a lithium-carbon-monofluoride battery in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
       "sources": [
         "panasonic-br2330"
       ]
@@ -105,7 +105,7 @@
           60
         ]
       },
-      "notes": "VL2330 is a rechargeable cell in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the primary CR cell unless the device is designed for it.",
+      "notes": "VL2330 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it.",
       "sources": [
         "panasonic-vl2330"
       ]
@@ -130,7 +130,7 @@
       "note": "Same 23 mm width and 0.5 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
     }
   ],
-  "notes": "BR2330 is rated -40 to +85 °C operating per Panasonic, a wider range than the CR type. VL2330 is a rechargeable cell for devices designed to charge it.",
+  "notes": "BR2330 is rated -40 to +85 °C operating per Panasonic, a wider range than the CR type. VL2330 is a rechargeable battery for devices designed to charge it.",
   "sources": [
     {
       "id": "panasonic-cr2330",

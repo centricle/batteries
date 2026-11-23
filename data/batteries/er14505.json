@@ -39,7 +39,7 @@
       "min": 49.7,
       "max": 50.3
     },
-    "note": "Saft drawing: 14.4 +/-0.2 mm diameter and 50 +/-0.3 mm height. The table lists maximums of 14.62 mm and 50.28 mm for the sleeved cell.",
+    "note": "Saft drawing: 14.4 +/-0.2 mm diameter and 50 +/-0.3 mm height. The table lists maximums of 14.62 mm and 50.28 mm for the sleeved battery.",
     "sources": [
       "saft-ls14500"
     ]
@@ -112,7 +112,7 @@
     "Do not solder directly to the battery; use tabbed or pinned versions.",
     "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage."
   ],
-  "notes": "Industrial AA-size bobbin cell for long-life, low-drain devices with periodic pulses.",
+  "notes": "Industrial AA-size bobbin battery for long-life, low-drain devices with periodic pulses.",
   "sources": [
     {
       "id": "saft-ls14500",

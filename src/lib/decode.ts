@@ -1,9 +1,13 @@
-// Battery code decoder: IEC 60086 (primary), IEC 61951 (NiMH, NiCd), IEC 61960
-// (lithium-ion) and ANSI C18. Pure functions with no DOM, so the /decode page
-// runs them in the browser and its server-rendered example uses the same code.
-// The built-in tables follow IEC 60086-1 as summarized by Wikipedia's "Battery
-// nomenclature" and "List of battery sizes" (read 2026-11-22). When
+// Battery name decoder: IEC 60086 (single-use), IEC 61951 (NiMH, NiCd), IEC
+// 61960 (lithium-ion) and ANSI C18. Pure functions with no DOM, so the /decode
+// page runs them in the browser and its server-rendered example uses the same
+// code. The built-in tables follow IEC 60086-1 as summarized by Wikipedia's
+// "Battery nomenclature" and "List of battery sizes" (read 2026-11-22). When
 // data/iec-system.json exists, mergeTables() lets its entries override these.
+//
+// Every string here can reach a visitor on /decode, so it follows the site's
+// plain vocabulary: "battery", "across", "long" or "thick", "maker", "kind".
+// `voltage.cells` keeps its name because the page reads it.
 
 export type Role = 'series' | 'chem' | 'shape' | 'size' | 'suffix' | 'parallel' | 'prefix' | 'model' | 'name' | 'voltage';
 
@@ -51,20 +55,20 @@ export const BUILTIN: Tables = {
   // IEC 60086-1 electrochemical system letters. '' is the absent letter.
   chem: {
     '': { name: 'Zinc-carbon', v: 1.5, chemistry: 'zinc-carbon', note: 'No letter: zinc negative, ammonium or zinc chloride electrolyte, manganese dioxide positive.' },
-    A: { name: 'Zinc-air, neutral electrolyte', v: 1.4, chemistry: 'zinc-air', note: 'Rare in consumer cells; consumer zinc-air cells use P.' },
+    A: { name: 'Zinc-air, neutral electrolyte', v: 1.4, chemistry: 'zinc-air', note: 'Rare in consumer batteries; consumer zinc-air batteries use P.' },
     B: { name: 'Lithium carbon monofluoride', v: 3.0, chemistry: 'lithium-carbon-monofluoride' },
     C: { name: 'Lithium manganese dioxide', v: 3.0, chemistry: 'lithium-manganese-dioxide' },
     E: { name: 'Lithium thionyl chloride', v: 3.6, chemistry: 'lithium-thionyl-chloride' },
     F: { name: 'Lithium iron disulfide', v: 1.5, chemistry: 'lithium-iron-disulfide' },
-    G: { name: 'Lithium copper oxide', v: 1.5, note: 'Rare in consumer cells.' },
+    G: { name: 'Lithium copper oxide', v: 1.5, note: 'Rare in consumer batteries.' },
     L: { name: 'Alkaline', v: 1.5, chemistry: 'alkaline', note: 'Zinc negative, alkali metal hydroxide electrolyte, manganese dioxide positive.' },
     M: { name: 'Mercuric oxide', v: 1.35, chemistry: 'mercury-oxide', withdrawn: true },
     N: { name: 'Mercuric oxide and manganese dioxide', v: 1.4, chemistry: 'mercury-oxide', withdrawn: true },
-    P: { name: 'Zinc-air', v: 1.4, chemistry: 'zinc-air', note: 'Alkaline electrolyte; the hearing aid chemistry.' },
+    P: { name: 'Zinc-air', v: 1.4, chemistry: 'zinc-air', note: 'Alkaline electrolyte; the kind used in hearing aid batteries.' },
     S: { name: 'Silver oxide', v: 1.55, chemistry: 'silver-oxide' },
     Z: { name: 'Nickel oxyhydroxide', v: 1.5, chemistry: 'nickel-oxyhydroxide' },
   },
-  // IEC 61951-1 and -2: rechargeable cells that share primary sizes.
+  // IEC 61951-1 and -2: rechargeable batteries that share single-use sizes.
   recharge: {
     H: { name: 'Nickel-metal hydride (rechargeable)', v: 1.2, chemistry: 'nimh', note: 'IEC 61951-2.' },
     K: { name: 'Nickel-cadmium (rechargeable)', v: 1.2, chemistry: 'nicd', note: 'IEC 61951-1.' },
@@ -72,11 +76,11 @@ export const BUILTIN: Tables = {
   shape: {
     R: { name: 'Round', note: 'Cylindrical, coin or button.' },
     P: { name: 'Prismatic', note: 'Non-round.' },
-    F: { name: 'Flat (layer-built)', note: 'Still in use, not used for new designations.' },
-    S: { name: 'Square or rectangular', note: 'Still in use, not used for new designations.' },
+    F: { name: 'Flat (layer-built)', note: 'Still in use, not used for new names.' },
+    S: { name: 'Square or rectangular', note: 'Still in use, not used for new names.' },
   },
   // Size numbers kept from earlier editions of IEC 60086, keyed by shape + number.
-  // Dimensions are nominal diameter x height in mm.
+  // d and h are the stated width across and length (or thickness) in mm.
   legacy: {
     R03: { name: 'AAA', d: 10.5, h: 44.5 },
     R1: { name: 'N', d: 12, h: 30.2 },
@@ -88,7 +92,7 @@ export const BUILTIN: Tables = {
     R23: { name: 'A', d: 17, h: 50 },
     R25: { name: 'F', d: 32, h: 91 },
     R40: { name: 'No. 6', d: 67, h: 172 },
-    R61: { name: 'Inner cell of a 9 V battery', note: 'Six of them stack into a 6LR61. Similar in size to AAAA.' },
+    R61: { name: 'One of the six inside a 9 V battery', note: 'Six of them stack into a 6LR61. Similar in size to AAAA.' },
     R41: { name: 'Button', d: 7.9, h: 3.6 },
     R42: { name: 'Button', d: 11.6, h: 3.6 },
     R43: { name: 'Button', d: 11.6, h: 4.2 },
@@ -112,21 +116,21 @@ export const BUILTIN: Tables = {
     R68: { name: 'Button', d: 9.5, h: 1.6 },
     R69: { name: 'Button', d: 9.5, h: 2.1 },
     R70: { name: 'Button', d: 5.8, h: 3.6 },
-    F22: { name: 'Flat cell, size 22', note: 'Six of them stack into a 6F22 (9 V) battery.' },
+    F22: { name: 'One of the six flat layers inside a 9 V battery', note: 'Six of them stack into a 6F22 (9 V) battery.' },
   },
-  // IEC recommended diameter codes: code -> maximum diameter in mm.
+  // IEC recommended diameter codes: code -> the most it measures across, in mm.
   diameter: { '4': 4.8, '5': 5.8, '6': 6.8, '7': 7.9, '9': 9.5, '10': 10, '11': 11.6, '12': 12.5, '16': 16, '20': 20, '23': 23, '24': 24.5 },
   suffix: {
-    SW: 'Low drain silver oxide cell (manufacturer usage). W alone marks the high drain version of the same size.',
-    W: 'Meets IEC 60086-3, the watch battery standard. In manufacturer usage, W alone marks a high drain cell and SW a low drain cell.',
+    SW: "Low drain silver oxide battery (makers' usage). W alone marks the high drain version of the same size.",
+    W: "Meets IEC 60086-3, the watch battery standard. In makers' usage, W alone marks a high drain battery and SW a low drain one.",
     X: 'Terminal style or variant of the same battery.',
     Y: 'Terminal style or variant of the same battery.',
-    S: 'Performance level or electrolyte variant (manufacturer-defined).',
-    P: 'Performance level (manufacturer-defined); often a high-power or photo grade.',
-    C: 'Performance level (manufacturer-defined).',
-    CF: 'Performance level (manufacturer-defined).',
-    HH: 'Performance level (manufacturer-defined).',
-    HB: 'Performance level (manufacturer-defined).',
+    S: 'Performance level or electrolyte variant (set by the maker).',
+    P: 'Performance level (set by the maker); often a high-power or camera grade.',
+    C: 'Performance level (set by the maker).',
+    CF: 'Performance level (set by the maker).',
+    HH: 'Performance level (set by the maker).',
+    HB: 'Performance level (set by the maker).',
   },
   // IEC 61960-3 letters (checked against its 2017 sample pages).
   liAnode: {
@@ -142,7 +146,7 @@ export const BUILTIN: Tables = {
     Mp: { name: 'Manganese phosphate positive electrode' },
     V: { name: 'Vanadium-based positive electrode' },
     T: { name: 'Titanium-based positive electrode' },
-    F: { name: 'Iron-based positive electrode', note: 'In IEC 61960 F means iron and Fp means iron phosphate. Makers print IFR for LiFePO4 cells; the strict IEC form is IFpR.' },
+    F: { name: 'Iron-based positive electrode', note: 'In IEC 61960 F means iron and Fp means iron phosphate. Makers print IFR for LiFePO4 batteries; the strict IEC form is IFpR.' },
     Fp: { name: 'Iron phosphate positive electrode', note: 'LiFePO4 (LFP).' },
     X: { name: 'Other positive electrode' },
   },
@@ -173,25 +177,25 @@ export const BUILTIN: Tables = {
 // Modifier letters for a size code: A..L without F and I, worth 0..9 tenths.
 const MOD = 'ABCDEGHJKL';
 
-// Manufacturer and industry prefixes that look like IEC letters but are not.
-const PREFIXES: Record<string, { title: string; meaning: string; rest: 'size' | 'number' | 'cell' }> = {
-  LIR: { title: 'Lithium-ion, round', meaning: 'Industry prefix for rechargeable lithium-ion coin and small round cells, 3.6 to 3.7 V. Not an IEC 60086 code.', rest: 'size' },
-  ML: { title: 'Panasonic: manganese lithium, rechargeable', meaning: 'Panasonic prefix for rechargeable lithium manganese coin cells, 3 V.', rest: 'size' },
-  VL: { title: 'Panasonic: vanadium lithium, rechargeable', meaning: 'Panasonic prefix for rechargeable vanadium pentoxide lithium coin cells, 3 V.', rest: 'size' },
-  MS: { title: 'Seiko: manganese silicon lithium, rechargeable', meaning: 'Seiko Instruments prefix for rechargeable manganese silicon lithium cells, 3 V. Not the IEC letters M (mercury) and S (square).', rest: 'size' },
-  LSH: { title: 'Saft: lithium thionyl chloride, high power', meaning: 'Saft prefix for high-power lithium thionyl chloride cells, 3.6 V.', rest: 'size' },
-  LS: { title: 'Saft: lithium thionyl chloride', meaning: 'Saft prefix for lithium thionyl chloride cells, 3.6 V. The IEC equivalent letters are ER.', rest: 'size' },
-  NCR: { title: 'Panasonic lithium-ion', meaning: "Panasonic's prefix for its nickel-based lithium-ion cells. Not an IEC 61960 code.", rest: 'size' },
-  UR: { title: 'Panasonic (Sanyo) lithium-ion', meaning: 'Panasonic and former Sanyo prefix for lithium-ion cells.', rest: 'size' },
-  US: { title: 'Sony and Murata lithium-ion', meaning: 'Sony, now Murata, prefix for lithium-ion cells.', rest: 'size' },
-  AG: { title: 'Alkaline button, industry number', meaning: 'Industry numbering for alkaline button cells. The number is a sequence, not a size: AG13 is LR44.', rest: 'number' },
-  SG: { title: 'Silver oxide button, industry number', meaning: 'Industry numbering for silver oxide button cells, parallel to AG.', rest: 'number' },
-  PX: { title: 'Legacy Eveready and Duracell number', meaning: 'Prefix from the mercury cell era, still used on some replacements.', rest: 'number' },
-  EPX: { title: 'Energizer number', meaning: 'Energizer prefix for replacements of former PX cells.', rest: 'number' },
+// Maker and industry prefixes that look like IEC letters but are not.
+const PREFIXES: Record<string, { title: string; meaning: string; rest: 'size' | 'number' | 'name' }> = {
+  LIR: { title: 'Lithium-ion, round', meaning: 'Industry prefix for rechargeable lithium-ion coin and small round batteries, 3.6 to 3.7 V. Not an IEC 60086 name.', rest: 'size' },
+  ML: { title: 'Panasonic: manganese lithium, rechargeable', meaning: 'Panasonic prefix for rechargeable lithium manganese coin batteries, 3 V.', rest: 'size' },
+  VL: { title: 'Panasonic: vanadium lithium, rechargeable', meaning: 'Panasonic prefix for rechargeable vanadium pentoxide lithium coin batteries, 3 V.', rest: 'size' },
+  MS: { title: 'Seiko: manganese silicon lithium, rechargeable', meaning: 'Seiko Instruments prefix for rechargeable manganese silicon lithium batteries, 3 V. Not the IEC letters M (mercury) and S (square).', rest: 'size' },
+  LSH: { title: 'Saft: lithium thionyl chloride, high power', meaning: 'Saft prefix for high-power lithium thionyl chloride batteries, 3.6 V.', rest: 'size' },
+  LS: { title: 'Saft: lithium thionyl chloride', meaning: 'Saft prefix for lithium thionyl chloride batteries, 3.6 V. The IEC equivalent letters are ER.', rest: 'size' },
+  NCR: { title: 'Panasonic lithium-ion', meaning: "Panasonic's prefix for its nickel-based lithium-ion batteries. Not an IEC 61960 name.", rest: 'size' },
+  UR: { title: 'Panasonic (Sanyo) lithium-ion', meaning: 'Panasonic and former Sanyo prefix for lithium-ion batteries.', rest: 'size' },
+  US: { title: 'Sony and Murata lithium-ion', meaning: 'Sony, now Murata, prefix for lithium-ion batteries.', rest: 'size' },
+  AG: { title: 'Alkaline button, industry number', meaning: 'Industry numbering for alkaline button batteries. The number is a sequence, not a size: AG13 is LR44.', rest: 'number' },
+  SG: { title: 'Silver oxide button, industry number', meaning: 'Industry numbering for silver oxide button batteries, parallel to AG.', rest: 'number' },
+  PX: { title: 'Legacy Eveready and Duracell number', meaning: 'Prefix from the mercury battery era, still used on some replacements.', rest: 'number' },
+  EPX: { title: 'Energizer number', meaning: 'Energizer prefix for replacements of former PX batteries.', rest: 'number' },
   MN: { title: 'Duracell number', meaning: 'Duracell alkaline product numbering (MN1500 is AA).', rest: 'number' },
-  DL: { title: 'Duracell lithium', meaning: 'Duracell prefix for lithium cells; the rest is the cell name.', rest: 'cell' },
-  EL: { title: 'Energizer lithium', meaning: 'Energizer prefix for lithium cells; the rest is the cell name.', rest: 'cell' },
-  KL: { title: 'Kodak lithium', meaning: 'Kodak prefix for lithium cells; the rest is the cell name.', rest: 'cell' },
+  DL: { title: 'Duracell lithium', meaning: 'Duracell prefix for lithium batteries; the rest is the battery name.', rest: 'name' },
+  EL: { title: 'Energizer lithium', meaning: 'Energizer prefix for lithium batteries; the rest is the battery name.', rest: 'name' },
+  KL: { title: 'Kodak lithium', meaning: 'Kodak prefix for lithium batteries; the rest is the battery name.', rest: 'name' },
 };
 
 // Names that are not systematic codes.
@@ -210,53 +214,53 @@ const COMMON: Record<string, { iec: string; note: string }> = {
   SUBC: { iec: 'HR22C429', note: 'Common name for a rechargeable size. IEC: HR22C429 (NiMH), KR22C429 (NiCd).' },
 };
 
-// Whole-code exceptions: manufacturer names that sit in the IEC namespace.
+// Whole-name exceptions: makers' names that sit in the IEC namespace.
 const EXCEPTIONS: Record<string, { segments: Omit<Segment, 'text'>[]; split: string[]; summary: string; notes?: string[] }> = {
   CR123A: {
     split: ['C', 'R', '123A'],
     segments: [
-      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3.0 V nominal.' },
-      { role: 'shape', title: 'Round', meaning: 'Cylindrical cell.' },
-      { role: 'name', title: 'Size name, not a size code', meaning: 'A manufacturer name that became standard. The systematic IEC code is CR17345: 17 mm by 34.5 mm.' },
+      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3 volts.' },
+      { role: 'shape', title: 'Round', meaning: 'A cylinder.' },
+      { role: 'name', title: 'Size name, not a size number', meaning: "A maker's name that became standard. The systematic IEC name is CR17345: 17 mm across and 34.5 mm long." },
     ],
-    summary: 'A 3 V lithium manganese dioxide photo cell. The systematic IEC code is CR17345 (17 mm by 34.5 mm).',
+    summary: 'A 3-volt lithium manganese dioxide camera battery. The systematic IEC name is CR17345 (17 mm across, 34.5 mm long).',
   },
   CR2: {
     split: ['C', 'R', '2'],
     segments: [
-      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3.0 V nominal.' },
-      { role: 'shape', title: 'Round', meaning: 'Cylindrical cell.' },
-      { role: 'name', title: 'Size name, not a size code', meaning: 'The systematic IEC code is CR15H270: 15 mm plus modifier H (0.6 mm), so 15.6 mm, by 27.0 mm.' },
+      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3 volts.' },
+      { role: 'shape', title: 'Round', meaning: 'A cylinder.' },
+      { role: 'name', title: 'Size name, not a size number', meaning: 'The systematic IEC name is CR15H270: 15 mm plus modifier H (0.6 mm), so 15.6 mm across, and 27.0 mm long.' },
     ],
-    summary: 'A 3 V lithium manganese dioxide photo cell. The systematic IEC code is CR15H270 (15.6 mm by 27.0 mm).',
+    summary: 'A 3-volt lithium manganese dioxide camera battery. The systematic IEC name is CR15H270 (15.6 mm across, 27.0 mm long).',
   },
   CRP2: {
     split: ['C', 'R', '-P2'],
     segments: [
-      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3.0 V per cell.' },
-      { role: 'shape', title: 'Round cells', meaning: 'The pack holds round cells.' },
-      { role: 'name', title: 'Pack name', meaning: 'A two-cell 6 V photo pack. P2 is a manufacturer pack name, not a size code.' },
+      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3 volts for each battery inside.' },
+      { role: 'shape', title: 'Round, inside', meaning: 'The pack holds round batteries.' },
+      { role: 'name', title: 'Pack name', meaning: "A 6-volt camera pack of two batteries. P2 is a maker's pack name, not a size number." },
     ],
-    summary: 'A 6 V lithium photo pack of two cells in series.',
+    summary: 'A 6-volt lithium camera pack with two batteries inside, joined in series.',
   },
   CRV3: {
     split: ['C', 'R', '-V3'],
     segments: [
-      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3.0 V per cell.' },
-      { role: 'shape', title: 'Round cells', meaning: 'The pack holds round cells.' },
-      { role: 'name', title: 'Pack name', meaning: 'A 3 V pack the size of two AA cells side by side. V3 is a manufacturer name, not a size code.' },
+      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3 volts for each battery inside.' },
+      { role: 'shape', title: 'Round, inside', meaning: 'The pack holds round batteries.' },
+      { role: 'name', title: 'Pack name', meaning: "A 3-volt pack the size of two AA batteries side by side. V3 is a maker's name, not a size number." },
     ],
-    summary: 'A 3 V lithium pack the size of two AA cells side by side.',
+    summary: 'A 3-volt lithium pack the size of two AA batteries side by side.',
   },
   '2CR5': {
     split: ['2', 'C', 'R', '5'],
     segments: [
-      { role: 'series', title: '2 cells in series', meaning: '2 × 3.0 V = 6 V.' },
-      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3.0 V per cell.' },
-      { role: 'shape', title: 'Round cells', meaning: 'The pack holds round cells.' },
-      { role: 'size', title: 'Size code 5', meaning: 'The standardized code for this pack, not a cell dimension.' },
+      { role: 'series', title: '2 inside, in series', meaning: '2 × 3.0 V = 6 V.' },
+      { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3 volts for each battery inside.' },
+      { role: 'shape', title: 'Round, inside', meaning: 'The pack holds round batteries.' },
+      { role: 'size', title: 'Size number 5', meaning: 'The standard size number for this pack, not a measurement.' },
     ],
-    summary: 'A 6 V lithium photo pack of two round cells in series.',
+    summary: 'A 6-volt lithium camera pack with two round batteries inside, joined in series.',
   },
 };
 
@@ -275,13 +279,17 @@ function chemSeg(t: Tables, letter: string): Segment | null {
     text: letter || '·',
     role: 'chem',
     title: letter ? c.name : `No letter: ${lc(c.name)}`,
-    meaning: [c.v ? `${f(c.v)} V nominal.` : '', c.withdrawn ? 'Withdrawn from the standard.' : '', c.note ?? '', `(${std})`].filter(Boolean).join(' '),
+    meaning: [c.v ? `${f(c.v)} volts.` : '', c.withdrawn ? 'Withdrawn from the standard.' : '', c.note ?? '', `(${std})`].filter(Boolean).join(' '),
   };
 }
 
-/** Size digits after the shape letter: legacy number, or diameter + height. */
+/** "long" for a cylinder, "thick" for a coin or button. */
+const hWord = (d: number, h: number) => (h < d ? 'thick' : 'long');
+const hNoun = (d: number, h: number) => (h < d ? 'Thickness' : 'Length');
+
+/** Size digits after the shape letter: legacy number, or width across + length. */
 function sizeSegs(t: Tables, shape: string, size: string): { segs: Segment[]; dims?: Decoded['dims']; ok: boolean; name?: string } {
-  // Diameter with a modifier letter: 8D425 = 8.3 mm x 42.5 mm.
+  // Width with a modifier letter: 8D425 = 8.3 mm across, 42.5 mm long.
   const mod = size.match(/^(\d{1,2})([A-HJ-L])(\d{2,3})$/);
   if (mod) {
     const d = parseInt(mod[1], 10) + MOD.indexOf(mod[2]) / 10;
@@ -290,22 +298,22 @@ function sizeSegs(t: Tables, shape: string, size: string): { segs: Segment[]; di
       ok: true,
       dims: { d, h },
       segs: [
-        { text: mod[1] + mod[2], role: 'size', title: `Diameter ${mm(d)}`, meaning: `${mod[1]} mm plus modifier ${mod[2]} (${MOD.indexOf(mod[2])} tenths): ${mm(d)} maximum.` },
-        { text: mod[3], role: 'size', title: `Height ${mm(h)}`, meaning: `Height in tenths of a millimeter: ${mod[3]} = ${mm(h)}.` },
+        { text: mod[1] + mod[2], role: 'size', title: `${mm(d)} across`, meaning: `${mod[1]} mm plus modifier ${mod[2]} (${MOD.indexOf(mod[2])} tenths): at most ${mm(d)} across.` },
+        { text: mod[3], role: 'size', title: `${mm(h)} ${hWord(d, h)}`, meaning: `${hNoun(d, h)} in tenths of a millimeter: ${mod[3]} = ${mm(h)}.` },
       ],
     };
   }
-  // Oblique form for cells 100 mm or larger: diameter/height in mm.
+  // Slash form for batteries 100 mm or larger: across/long in mm.
   const ob = size.match(/^(\d+)\/(\d+)$/);
   if (ob) {
     const d = parseInt(ob[1], 10), h = parseInt(ob[2], 10);
-    return { ok: true, dims: { d, h }, segs: [{ text: size, role: 'size', title: `${d} by ${h} mm`, meaning: 'A dimension of 100 mm or more is written diameter / height in whole millimeters.' }] };
+    return { ok: true, dims: { d, h }, segs: [{ text: size, role: 'size', title: `${d} mm across, ${h} mm ${hWord(d, h)}`, meaning: `A size of 100 mm or more is written as the width across, a slash, then the ${hNoun(d, h).toLowerCase()}, in whole millimeters.` }] };
   }
   if (/^\d{1,2}$/.test(size)) {
     const key = shape + size;
     const L = t.legacy[key];
     if (L) {
-      const dimsTxt = L.d && L.h ? `${mm(L.d)} by ${mm(L.h)} nominal.` : '';
+      const dimsTxt = L.d && L.h ? `Stated size: ${mm(L.d)} across and ${mm(L.h)} ${hWord(L.d, L.h)}.` : '';
       return {
         ok: true,
         name: L.name,
@@ -316,12 +324,12 @@ function sizeSegs(t: Tables, shape: string, size: string): { segs: Segment[]; di
     return { ok: false, segs: [{ text: size, role: 'size', title: `Size ${size}`, meaning: 'A one- or two-digit legacy size number. This one is not in the table this page uses.' }] };
   }
   if (shape !== 'R') {
-    return { ok: true, segs: [{ text: size, role: 'size', title: `Size code ${size}`, meaning: `A size code for a ${t.shape[shape]?.name.toLowerCase() ?? 'non-round'} cell or battery. For non-round shapes it does not read as diameter and height.` }] };
+    return { ok: true, segs: [{ text: size, role: 'size', title: `Size number ${size}`, meaning: `A size number for a ${t.shape[shape]?.name.toLowerCase() ?? 'non-round'} battery. For shapes that are not round it does not read as width across and length.` }] };
   }
   if (/^\d{3,5}$/.test(size)) {
-    // 3 digits: one-digit diameter code + height in tenths (626 = 6.8 x 2.6).
-    // 4 digits: two-digit diameter + height in tenths (2032 = 20 x 3.2).
-    // 5 digits: two-digit diameter + three-digit height in tenths (17345 = 17 x 34.5).
+    // 3 digits: one-digit width code + length in tenths (626 = 6.8 x 2.6).
+    // 4 digits: two-digit width + length in tenths (2032 = 20 x 3.2).
+    // 5 digits: two-digit width + three-digit length in tenths (17345 = 17 x 34.5).
     const dLen = size.length === 3 ? 1 : 2;
     const dc = size.slice(0, dLen);
     const hc = size.slice(dLen);
@@ -332,8 +340,8 @@ function sizeSegs(t: Tables, shape: string, size: string): { segs: Segment[]; di
       ok: true,
       dims: { d, h, approx: !table },
       segs: [
-        { text: dc, role: 'size', title: table ? `Diameter up to ${mm(d)}` : `Diameter about ${mm(d)}`, meaning: table ? `Diameter code ${dc}: ${mm(d)} maximum (IEC recommended diameter codes).` : `Diameter in whole millimeters, truncated: ${dc} = ${mm(d)} and up to just under ${mm(d + 1)}.` },
-        { text: hc, role: 'size', title: `Height ${mm(h)}`, meaning: `Height (thickness for a coin) in tenths of a millimeter: ${hc} = ${mm(h)}.` },
+        { text: dc, role: 'size', title: table ? `Up to ${mm(d)} across` : `About ${mm(d)} across`, meaning: table ? `Width code ${dc}: at most ${mm(d)} across (the IEC recommended width codes).` : `Width across in whole millimeters, rounded down: ${dc} = ${mm(d)} up to just under ${mm(d + 1)}.` },
+        { text: hc, role: 'size', title: `${mm(h)} ${hWord(d, h)}`, meaning: `${hNoun(d, h)} in tenths of a millimeter: ${hc} = ${mm(h)}.` },
       ],
     };
   }
@@ -359,7 +367,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
   if (!raw) return null;
   const key = raw.replace(/-/g, '');
 
-  // 1. Manufacturer names in the IEC namespace.
+  // 1. Makers' names in the IEC namespace.
   const ex = EXCEPTIONS[key];
   if (ex) {
     const total = ex.segments.find((s) => s.role === 'series') ? 6 : undefined;
@@ -380,12 +388,12 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       input: raw,
       system: 'Common name',
       segments: [{ text: raw, role: 'name', title: 'Common size name', meaning: cm.note }],
-      summary: `${raw} is a common name, not a systematic code. ${cm.note}`,
-      notes: [`Decode the IEC code instead: ${cm.iec}.`],
+      summary: `${raw} is a common name, not a systematic IEC name. ${cm.note}`,
+      notes: [`Read the IEC name instead: ${cm.iec}.`],
     };
   }
 
-  // 3. IEC 61960 lithium-ion: [cells] I/L, cathode, R/P, then dimensions.
+  // 3. IEC 61960 lithium-ion: [how many inside] I/L, cathode, R/P, then size.
   // Input is upper-cased, so the two-letter positives (Fp, Mp) arrive as FP, MP.
   const li = raw.match(/^(\d{1,2})?([ILTX])(FP|MP|[CNMVTFX])([RP])-?(\d{2})\/(\d{1,3})(?:\/(\d{1,3}))?(?:-(\d+))?$/);
   const li5 = raw.match(/^(\d{1,2})?([ILTX])(FP|MP|[CNMVTFX])([RP])-?(\d{4,5})(?:-?([A-Z0-9][A-Z0-9-]*))?$/);
@@ -393,7 +401,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
     const m = (li ?? li5)!;
     const segs: Segment[] = [];
     const cells = m[1] ? parseInt(m[1], 10) : 1;
-    if (m[1]) segs.push({ text: m[1], role: 'series', title: `${m[1]} cells in series`, meaning: 'Number of cells connected in series (batteries only).' });
+    if (m[1]) segs.push({ text: m[1], role: 'series', title: `${m[1]} inside, in series`, meaning: 'How many are joined in series inside a pack. Only packs carry this number.' });
     segs.push({ text: m[2], role: 'chem', title: t.liAnode[m[2]] ?? m[2], meaning: 'First letter: the negative electrode. I = carbon (ordinary lithium-ion), L = lithium metal or alloy, T = titanium, X = other.' });
     const pos = m[3].length === 2 ? m[3][0] + 'p' : m[3];
     const cat = t.liCathode[pos];
@@ -404,11 +412,11 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
     if (li) {
       const d = parseInt(li[5], 10);
       if (li[7]) {
-        segs.push({ text: `${li[5]}/${li[6]}/${li[7]}`, role: 'size', title: `${li[5]} × ${li[6]} × ${li[7]} mm`, meaning: 'Maximum thickness / width / height in mm (prismatic).' });
+        segs.push({ text: `${li[5]}/${li[6]}/${li[7]}`, role: 'size', title: `${li[5]} × ${li[6]} × ${li[7]} mm`, meaning: 'At most this thick, this wide and this tall, in that order, in millimeters (prismatic).' });
       } else {
         const h = parseInt(li[6], 10);
         dims = { d, h };
-        segs.push({ text: `${li[5]}/${li[6]}`, role: 'size', title: `${mm(d)} by ${mm(h)}`, meaning: 'Maximum diameter / maximum height in mm.' });
+        segs.push({ text: `${li[5]}/${li[6]}`, role: 'size', title: `${mm(d)} across, ${mm(h)} long`, meaning: 'At most this wide across and at most this long, in millimeters.' });
       }
       if (li[8]) segs.push({ text: `-${li[8]}`, role: 'parallel', title: `${li[8]} in parallel`, meaning: 'Number of parallel strings (shown only when more than one).' });
     } else {
@@ -416,25 +424,25 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       const d = parseInt(s.slice(0, 2), 10);
       const h = s.length === 5 ? parseInt(s.slice(2), 10) / 10 : parseInt(s.slice(2), 10);
       dims = { d, h };
-      segs.push({ text: s.slice(0, 2), role: 'size', title: `Diameter ${mm(d)}`, meaning: 'Diameter in whole millimeters.' });
-      segs.push({ text: s.slice(2), role: 'size', title: `Length ${mm(h)}`, meaning: s.length === 5 ? `Length in tenths of a millimeter: ${s.slice(2)} = ${mm(h)}.` : `Length in whole millimeters: ${s.slice(2)} mm.` });
-      if (li5![6]) segs.push({ text: li5![6], role: 'model', title: 'Manufacturer model', meaning: "The maker's model code for this specific cell. It sets capacity and current ratings, not size." });
-      notes.push('The five-digit size (18650) is the form makers print, following the IEC 60086 round-cell pattern of diameter then length. IEC 61960 itself writes maximum dimensions with slashes, for example ICR19/66.');
+      segs.push({ text: s.slice(0, 2), role: 'size', title: `${mm(d)} across`, meaning: 'Width across, in whole millimeters.' });
+      segs.push({ text: s.slice(2), role: 'size', title: `${mm(h)} long`, meaning: s.length === 5 ? `Length in tenths of a millimeter: ${s.slice(2)} = ${mm(h)}.` : `Length in whole millimeters: ${s.slice(2)} mm.` });
+      if (li5![6]) segs.push({ text: li5![6], role: 'model', title: "Maker's model", meaning: "The maker's model number for this battery. It sets capacity and current ratings, not size." });
+      notes.push('The five-digit size (18650) is the form makers print, following the IEC 60086 pattern for round batteries: width across, then length. IEC 61960 itself writes the largest allowed sizes with slashes, for example ICR19/66.');
     }
     const kind = m[4] === 'R' ? 'cylindrical' : 'prismatic';
     const chemTxt = pos === 'F' || pos === 'Fp' ? 'lithium iron phosphate' : `lithium-ion (${(cat?.name ?? '').toLowerCase().replace(' positive electrode', '')})`;
-    const dimTxt = dims ? `, ${mm(dims.d!)} in diameter and ${mm(dims.h!)} long` : '';
+    const dimTxt = dims ? `, ${mm(dims.d!)} across and ${mm(dims.h!)} long` : '';
     return {
       input: raw,
       system: 'IEC 61960 (lithium-ion)',
       segments: segs,
-      summary: `${cells > 1 ? `A battery of ${cells} ` : 'A '}${chemTxt} ${kind} cell${cells > 1 ? 's' : ''}${dimTxt}.`,
+      summary: `${cells > 1 ? `A pack of ${cells} ` : 'A '}${chemTxt} ${kind} batter${cells > 1 ? 'ies' : 'y'}${dimTxt}.`,
       dims,
       notes,
     };
   }
 
-  // 4. Manufacturer prefixes that would otherwise misparse as IEC letters.
+  // 4. Maker prefixes that would otherwise misparse as IEC letters.
   for (const p of Object.keys(PREFIXES).sort((a, b) => b.length - a.length)) {
     if (!key.startsWith(p)) continue;
     const rest = key.slice(p.length);
@@ -449,9 +457,9 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       dims = s.dims;
       if (digits[2]) segs.push({ text: digits[2], role: 'model', title: 'Model or variant', meaning: "The maker's model or variant letters." });
     } else {
-      segs.push({ text: rest, role: 'model', title: P.rest === 'cell' ? 'Cell name' : 'Product number', meaning: P.rest === 'cell' ? `The cell name: compare ${/^\d+[A-Z]?$/.test(rest) ? 'CR' : ''}${rest}.` : 'A catalog number. It does not encode dimensions.' });
+      segs.push({ text: rest, role: 'model', title: P.rest === 'name' ? 'Battery name' : 'Product number', meaning: P.rest === 'name' ? `The battery name: compare ${/^\d+[A-Z]?$/.test(rest) ? 'CR' : ''}${rest}.` : 'A catalog number. It does not give the size.' });
     }
-    return { input: raw, system: 'Manufacturer prefix', segments: segs, summary: `${P.title}. ${P.meaning}`, dims, notes: [] };
+    return { input: raw, system: 'Maker prefix', segments: segs, summary: `${P.title}. ${P.meaning}`, dims, notes: [] };
   }
 
   // 5. Fractional sizes: CR1/3N, 2/3A, 1/2AA.
@@ -461,25 +469,26 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
     const segs: Segment[] = [];
     const c = letter ? t.chem[letter] ?? t.recharge[letter] : undefined;
     const cells = series ? parseInt(series, 10) : 1;
-    if (series) segs.push({ text: series, role: 'series', title: `${series} cells in series`, meaning: c?.v ? `${series} × ${f(c.v)} V = ${f(cells * c.v)} V nominal.` : 'Number of cells in series.' });
+    if (series) segs.push({ text: series, role: 'series', title: `${series} inside, in series`, meaning: c?.v ? `${series} × ${f(c.v)} V = ${f(cells * c.v)} V.` : 'How many are joined in series inside.' });
     if (letter) segs.push(chemSeg(t, letter)!);
-    if (shape) segs.push({ text: 'R', role: 'shape', title: 'Round', meaning: 'Cylindrical cell.' });
+    if (shape) segs.push({ text: 'R', role: 'shape', title: 'Round', meaning: 'A cylinder.' });
     const words: Record<string, string> = { '1/2': 'Half', '1/3': 'One third', '2/3': 'Two thirds', '4/5': 'Four fifths', '1/4': 'One quarter', '3/4': 'Three quarters' };
     const fracTxt = `${num}/${den}`;
-    segs.push({ text: fracTxt, role: 'size', title: `${words[fracTxt] ?? fracTxt} of the length`, meaning: 'A fractional size: the diameter of the base size with a fraction of its length. The fraction is nominal; check the listed length.' });
+    segs.push({ text: fracTxt, role: 'size', title: `${words[fracTxt] ?? fracTxt} of the length`, meaning: 'A fractional size: as wide as the base size, with a fraction of its length. The fraction is part of the name, not a measurement; check the listed length.' });
     const L = t.legacy[{ AA: 'R6', AAA: 'R03', A: 'R23', N: 'R1', C: 'R14', D: 'R20' }[base] ?? ''];
-    segs.push({ text: base, role: 'size', title: `Base size ${base}`, meaning: L?.d && L?.h ? `${base} is ${mm(L.d)} by ${mm(L.h)}.` : `The ${base} size.` });
+    segs.push({ text: base, role: 'size', title: `Base size ${base}`, meaning: L?.d && L?.h ? `${base} is ${mm(L.d)} across and ${mm(L.h)} long.` : `The ${base} size.` });
+    const baseArt = /^[AN]/.test(base) ? 'an' : 'a';
     return {
       input: raw,
       system: 'Fractional size',
       segments: segs,
-      summary: `${cells > 1 ? `${cells} ` : 'A '}${c ? lc(c.name) + ' ' : ''}cell${cells > 1 ? 's' : ''} with the diameter of ${base} and about ${(words[fracTxt] ?? fracTxt).toLowerCase()} of its length.`,
+      summary: `${cells > 1 ? `${cells} ` : 'A '}${c ? lc(c.name) + ' ' : ''}batter${cells > 1 ? 'ies, each' : 'y'} as wide as ${baseArt} ${base} and about ${(words[fracTxt] ?? fracTxt).toLowerCase()} of its length.`,
       voltage: c?.v ? { cells, per: c.v, total: cells * c.v } : undefined,
       notes: [],
     };
   }
 
-  // 6. IEC 60086 primary and IEC 61951 rechargeable.
+  // 6. IEC 60086 single-use and IEC 61951 rechargeable.
   const iec = raw.match(/^(\d{1,2}(?=[A-Z]))?([A-Z]?)([RFSP])(\d+(?:[A-HJ-L]\d{2,3})?(?:\/\d+)?)([A-Z]*)(?:-(\d+))?$/);
   if (iec) {
     const [, series, letter, shape, size, suffix, par] = iec;
@@ -488,7 +497,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       const segs: Segment[] = [];
       const c = t.chem[letter] ?? t.recharge[letter];
       const cells = series ? parseInt(series, 10) : 1;
-      if (series) segs.push({ text: series, role: 'series', title: `${series} cells in series`, meaning: c.v ? `${series} × ${f(c.v)} V = ${f(cells * c.v)} V nominal.` : 'Number of cells in series.' });
+      if (series) segs.push({ text: series, role: 'series', title: `${series} inside, in series`, meaning: c.v ? `${series} × ${f(c.v)} V = ${f(cells * c.v)} V.` : 'How many are joined in series inside.' });
       segs.push(cs);
       const sh = t.shape[shape];
       segs.push({ text: shape, role: 'shape', title: sh.name, meaning: sh.note ?? '' });
@@ -499,18 +508,19 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
         const parts = t.suffix[suffix] || suffix.length === 1 ? [suffix] : suffix.match(/SW|CF|HH|HB|[A-Z]/g) ?? [suffix];
         parts.forEach((s) => segs.push(suffixSeg(t, s)));
       }
-      if (par) segs.push({ text: `-${par}`, role: 'parallel', title: `${par} in parallel`, meaning: 'Number of parallel strings of cells.' });
+      if (par) segs.push({ text: `-${par}`, role: 'parallel', title: `${par} in parallel`, meaning: 'How many rows sit side by side, joined in parallel.' });
       const shapeWord = shape === 'R' ? (sz.dims && sz.dims.d && sz.dims.h && sz.dims.h < sz.dims.d ? 'button or coin' : 'round') : sh.name.toLowerCase();
       const chemName = lc(c.name.replace(' (rechargeable)', ''));
-      const dimTxt = sz.dims?.d && sz.dims?.h ? `, ${sz.dims.approx ? 'about ' : ''}${mm(sz.dims.d)} in diameter and ${mm(sz.dims.h)} ${sz.dims.h < sz.dims.d ? 'thick' : 'tall'}` : '';
+      const dimTxt = sz.dims?.d && sz.dims?.h ? `, ${sz.dims.approx ? 'about ' : ''}${mm(sz.dims.d)} across and ${mm(sz.dims.h)} ${hWord(sz.dims.d, sz.dims.h)}` : '';
       const legacyName = sz.name && /^([A-Z]{1,4}|No\. \d+)$/.test(sz.name) ? ` (size ${size}: ${sz.name})` : '';
-      const strings = par ? `${par} parallel strings of ${cells}` : `${cells}`;
+      const rows = par ? `${par} rows of ${cells}` : `${cells}`;
+      const one = `${chemName}${t.recharge[letter] ? ' rechargeable' : ''} ${shapeWord} battery`;
       const summary = cells > 1
-        ? `A ${f(cells * (c.v ?? 0))} V battery of ${strings} ${chemName} ${shapeWord} cells in series${legacyName}.`
-        : `One ${chemName}${t.recharge[letter] ? ' rechargeable' : ''} ${shapeWord} cell${c.v ? ` at ${f(c.v)} V` : ''}${legacyName}${dimTxt}.`;
+        ? `A ${f(cells * (c.v ?? 0))}-volt battery made of ${rows} ${chemName} ${shapeWord} batteries joined in series${par ? ', the rows side by side' : ''}${legacyName}.`
+        : `${/^[aeiou]/i.test(one) ? 'An' : 'A'} ${one}${c.v ? `, ${f(c.v)} volts` : ''}${legacyName}${dimTxt}.`;
       return {
         input: raw,
-        system: t.recharge[letter] ? 'IEC 61951 (NiMH and NiCd)' : 'IEC 60086 (primary)',
+        system: t.recharge[letter] ? 'IEC 61951 (NiMH and NiCd)' : 'IEC 60086 (single-use)',
         segments: segs,
         summary,
         voltage: c.v ? { cells, per: c.v, total: cells * c.v } : undefined,
@@ -530,11 +540,11 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       input: raw,
       system: 'ANSI C18 (rechargeable)',
       segments: [
-        { text: ar[1], role: 'voltage', title: `${ar[1]} V nominal`, meaning: 'Nominal voltage of the cell or battery.' },
+        { text: ar[1], role: 'voltage', title: `${ar[1]} V`, meaning: 'The rated voltage of the battery.' },
         { text: ar[2], role: 'chem', title: s.name, meaning: `ANSI system letter; IEC letter ${s.iec}.` },
         { text: ar[3], role: 'size', title: `Size number ${ar[3]}`, meaning: 'An ANSI size number in the rechargeable series. It does not encode dimensions.' },
       ],
-      summary: `A ${ar[1]} V ${lc(s.name)} battery in ANSI rechargeable size ${ar[3]}.`,
+      summary: `A ${ar[1]}-volt ${lc(s.name)} battery in ANSI rechargeable size ${ar[3]}.`,
       notes: [],
     };
   }
@@ -547,10 +557,10 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
     const sizeMeaning = name
       ? `ANSI size number ${an[1]} = ${name}.`
       : /^5\d{3}$/.test(an[1])
-        ? 'A number in the 5000 range, which ANSI assigns to lithium coin cells. It does not encode dimensions.'
+        ? 'A number in the 5000 range, which ANSI assigns to lithium coin batteries. It does not give the size in millimeters.'
         : /^7\d{3}$/.test(an[1])
-          ? 'A number in the 7000 range, used for zinc-air button cells. It does not encode dimensions.'
-          : 'An ANSI size number. It does not encode dimensions.';
+          ? 'A number in the 7000 range, used for zinc-air button batteries. It does not give the size in millimeters.'
+          : 'An ANSI size number. It does not give the size in millimeters.';
     return {
       input: raw,
       system: 'ANSI C18',
@@ -571,12 +581,12 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       input: raw,
       system: 'Size digits (lithium-ion convention)',
       segments: [
-        { text: key.slice(0, 2), role: 'size', title: `Diameter ${mm(d)}`, meaning: 'Diameter in whole millimeters.' },
-        { text: key.slice(2), role: 'size', title: `Length ${mm(h)}`, meaning: `Length in tenths of a millimeter: ${key.slice(2)} = ${mm(h)}.` },
+        { text: key.slice(0, 2), role: 'size', title: `${mm(d)} across`, meaning: 'Width across, in whole millimeters.' },
+        { text: key.slice(2), role: 'size', title: `${mm(h)} long`, meaning: `Length in tenths of a millimeter: ${key.slice(2)} = ${mm(h)}.` },
       ],
-      summary: `A cylindrical cell ${mm(d)} in diameter and ${mm(h)} long. The digits give only the size; the chemistry is not encoded.`,
+      summary: `A cylindrical battery ${mm(d)} across and ${mm(h)} long. The digits give only the size, not the kind.`,
       dims: { d, h },
-      notes: ['Most cells named this way are lithium-ion (3.6 to 3.7 V) or lithium iron phosphate (3.2 V). The size alone does not say which.'],
+      notes: ['Most batteries named this way are lithium-ion (3.6 to 3.7 V) or lithium iron phosphate (3.2 V). The size alone does not say which.'],
     };
   }
   if (/^\d{4}$/.test(key) && opts.liIon) {
@@ -586,10 +596,10 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       input: raw,
       system: 'Size digits (lithium-ion convention)',
       segments: [
-        { text: key.slice(0, 2), role: 'size', title: `Diameter ${mm(d)}`, meaning: 'Diameter in whole millimeters.' },
-        { text: key.slice(2), role: 'size', title: `Length ${mm(h)}`, meaning: 'Length in whole millimeters. Four digits are either a large-format name (4680) or a shortened five-digit name (2170 for 21700).' },
+        { text: key.slice(0, 2), role: 'size', title: `${mm(d)} across`, meaning: 'Width across, in whole millimeters.' },
+        { text: key.slice(2), role: 'size', title: `${mm(h)} long`, meaning: 'Length in whole millimeters. Four digits are either a large-format name (4680) or a shortened five-digit name (2170 for 21700).' },
       ],
-      summary: `A cylindrical cell about ${mm(d)} in diameter and ${mm(h)} long. The digits give only the size; the chemistry is not encoded.`,
+      summary: `A cylindrical battery about ${mm(d)} across and ${mm(h)} long. The digits give only the size, not the kind.`,
       dims: { d, h, approx: true },
       notes: [],
     };
@@ -601,20 +611,20 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       input: raw,
       system: 'Size digits only',
       segments: [
-        { text: key.slice(0, 2), role: 'size', title: `Diameter about ${mm(d)}`, meaning: 'Read as a coin cell code: diameter in whole millimeters.' },
-        { text: key.slice(2), role: 'size', title: `Thickness ${mm(h)}`, meaning: `Thickness in tenths of a millimeter: ${key.slice(2)} = ${mm(h)}.` },
+        { text: key.slice(0, 2), role: 'size', title: `About ${mm(d)} across`, meaning: 'Read as a coin battery name: width across in whole millimeters.' },
+        { text: key.slice(2), role: 'size', title: `${mm(h)} thick`, meaning: `Thickness in tenths of a millimeter: ${key.slice(2)} = ${mm(h)}.` },
       ],
-      summary: `Read as coin cell digits: about ${mm(d)} across and ${mm(h)} thick, as in CR${key}. Without letters the chemistry is not given.`,
+      summary: `Read as coin battery digits: about ${mm(d)} across and ${mm(h)} thick, as in CR${key}. Without letters the kind is not given.`,
       dims: { d, h, approx: true },
-      notes: ['Four digits can also be a shortened lithium-ion name (2170 for 21700) or a catalog number. The cross-reference below settles it when the code is listed.'],
+      notes: ['Four digits can also be a shortened lithium-ion name (2170 for 21700) or a catalog number. The list of names below settles it when the name is listed.'],
     };
   }
   if (/^\d{1,3}[A-Z]{0,2}$/.test(key)) {
     return {
       input: raw,
-      system: 'Manufacturer or hearing aid number',
-      segments: [{ text: raw, role: 'model', title: 'Catalog number', meaning: 'Watch cell numbers (377, 364), hearing aid sizes (312, 13, 675) and similar are catalog numbers. They do not encode dimensions or chemistry.' }],
-      summary: `${raw} is a catalog or size number, not a systematic code. It identifies a cell only through a cross-reference.`,
+      system: 'Maker or hearing aid number',
+      segments: [{ text: raw, role: 'model', title: 'Catalog number', meaning: 'Watch battery numbers (377, 364), hearing aid sizes (312, 13, 675) and similar are catalog numbers. They give neither the size nor the kind.' }],
+      summary: `${raw} is a catalog or size number, not a systematic name. It identifies a battery only through a list of other names.`,
       notes: [],
     };
   }
@@ -710,45 +720,6 @@ export function mergeTables(ext: unknown): Tables {
 }
 
 // ------------------------------------------------------------------ render
-
-const ROLE_CLASS: Record<Role, string> = {
-  series: 'bg-warn-soft border-warn',
-  chem: 'bg-accent-soft border-accent',
-  shape: 'bg-ok-soft border-ok',
-  size: 'bg-surface-3 border-line-2',
-  suffix: 'bg-surface-2 border-line-2 border-dashed',
-  parallel: 'bg-surface-2 border-line-2 border-dashed',
-  prefix: 'bg-warn-soft border-warn border-dashed',
-  model: 'bg-surface-2 border-line-2 border-dashed',
-  name: 'bg-surface-3 border-line-2',
-  voltage: 'bg-warn-soft border-warn',
-};
-export const ROLE_LABEL: Record<Role, string> = {
-  series: 'Cells in series',
-  chem: 'Chemistry',
-  shape: 'Shape',
-  size: 'Size',
-  suffix: 'Suffix',
-  parallel: 'Parallel',
-  prefix: 'Maker prefix',
-  model: 'Model or number',
-  name: 'Name',
-  voltage: 'Voltage',
-};
+// The tiles, their colors and their role labels live in src/pages/decode.astro.
 
 export const esc = (s: string) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
-
-/** The colored tile breakdown, as an HTML string (server example and client share it). */
-export function tilesHTML(d: Decoded) {
-  const tiles = d.segments
-    .map(
-      (s) => `<li class="flex flex-col min-w-[5.5rem] max-w-[16rem] flex-1">
-        <span class="block rounded-md border px-3 py-2 text-center font-mono text-[1.35rem] font-semibold text-ink ${ROLE_CLASS[s.role]}">${esc(s.text)}</span>
-        <span class="mt-1.5 eyebrow">${esc(ROLE_LABEL[s.role])}</span>
-        <span class="text-[0.7rem] font-semibold text-ink leading-snug">${esc(s.title)}</span>
-        <span class="mt-0.5 text-[0.62rem] text-muted leading-snug">${esc(s.meaning)}</span>
-      </li>`,
-    )
-    .join('');
-  return `<ol class="flex flex-wrap gap-3" aria-label="Parts of ${esc(d.input)}">${tiles}</ol>`;
-}

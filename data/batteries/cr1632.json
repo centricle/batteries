@@ -90,7 +90,7 @@
           85
         ]
       },
-      "notes": "BR1632 is a lithium-carbon-monofluoride cell in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
+      "notes": "BR1632 is a lithium-carbon-monofluoride battery in the same case. It has a flatter discharge curve and lower pulse capability than the CR type, and lower rated drain.",
       "sources": [
         "panasonic-br1632"
       ]
@@ -114,7 +114,7 @@
       "note": "Same 16 mm width and 1.2 mm thinner; lower capacity and may make poor contact in a CR1632 holder."
     }
   ],
-  "notes": "Panasonic also lists BR1632A, a carbon-monofluoride cell of the same size rated -40 to +125 °C operating.",
+  "notes": "Panasonic also lists BR1632A, a carbon-monofluoride battery of the same size rated -40 to +125 °C operating.",
   "sources": [
     {
       "id": "panasonic-cr1632",

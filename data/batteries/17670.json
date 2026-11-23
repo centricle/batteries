@@ -28,7 +28,7 @@
       "min": 66.4,
       "max": 67
     },
-    "note": "From the Panasonic CGR17670HC data sheet (17.0 mm; 66.7 ± 0.3 mm, fresh cell). Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "From the Panasonic CGR17670HC data sheet (17.0 mm; 66.7 ± 0.3 mm, fresh battery). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "panasonic-cgr17670hc"
     ]

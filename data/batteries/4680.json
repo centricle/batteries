@@ -27,7 +27,7 @@
     "height": {
       "nominal": 80
     },
-    "note": "Nominal size from the size code; Tesla publishes no cell datasheet. The five-digit form is 46800.",
+    "note": "Nominal size from the size code; Tesla publishes no datasheet for it. The five-digit form is 46800.",
     "sources": [
       "wiki-sizes",
       "batterydesign-4680"

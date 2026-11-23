@@ -91,7 +91,7 @@
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
     "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
-  "notes": "Fractional version of the A cell, used to build battery packs.",
+  "notes": "Fractional version of the A battery, used to build battery packs.",
   "sources": [
     {
       "id": "panasonic-bk200a",

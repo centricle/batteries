@@ -331,7 +331,7 @@
     "Remove exhausted batteries from the device promptly, because leaking batteries can damage it.",
     "Do not recharge, short-circuit, dismantle, heat or burn the battery; do not mix types, brands or charge states."
   ],
-  "notes": "9.5 mm by 2.05 mm. The same case is sold as alkaline (LR69/LR920) and as silver oxide (SR69); both hold the same size, but silver oxide holds a nearly flat voltage near 1.55 V until late in discharge while alkaline voltage declines gradually, which matters for watches, calipers and light meters. Low drain (SW) and high drain (W) silver oxide cells share the case but differ in electrolyte; the manufacturer numbers differ.",
+  "notes": "9.5 mm by 2.05 mm. The same case is sold as alkaline (LR69/LR920) and as silver oxide (SR69); both hold the same size, but silver oxide holds a nearly flat voltage near 1.55 V until late in discharge while alkaline voltage declines gradually, which matters for watches, calipers and light meters. Low drain (SW) and high drain (W) silver oxide batteries share the case but differ in electrolyte; the manufacturer numbers differ.",
   "sources": [
     {
       "id": "energizer-370",

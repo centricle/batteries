@@ -97,7 +97,7 @@
       "voltage": {
         "nominal": 1.5
       },
-      "notes": "Listed as LR25; rare as a retail primary cell and no manufacturer datasheet was fetched.",
+      "notes": "Listed as LR25; rare as a retail single-use battery and no manufacturer datasheet was fetched.",
       "sources": [
         "wikipedia-battery-sizes"
       ]

@@ -181,7 +181,7 @@
           40
         ]
       },
-      "notes": "Internal resistance is for a charged cell; it rises to 21 milliohms at half discharge.",
+      "notes": "Internal resistance is for a charged battery; it rises to 21 milliohms at half discharge.",
       "sources": [
         "energizer-nh50"
       ]
@@ -213,7 +213,7 @@
           45
         ]
       },
-      "notes": "This cell measures 33.0 mm by 60.5 mm with tube, slightly under the standard D envelope.",
+      "notes": "This battery measures 33.0 mm by 60.5 mm with tube, slightly under the standard D envelope.",
       "sources": [
         "nicd-d4000h"
       ]

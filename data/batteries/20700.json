@@ -29,7 +29,7 @@
       "nominal": 70.3,
       "max": 70.3
     },
-    "note": "Maximum dimensions with tube from the Panasonic NCR20700B data sheet. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Maximum dimensions with tube from the Panasonic NCR20700B data sheet. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "panasonic-ncr20700b"
     ]

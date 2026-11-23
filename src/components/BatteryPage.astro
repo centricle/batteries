@@ -282,7 +282,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
       {isSmallRound && (
         <p class="callout warn mt-5">
           A swallowed coin or button battery can cause severe burns in as little as 2 hours. If anyone swallows one, call the National Battery Ingestion Hotline at <a class="link whitespace-nowrap" href="tel:+18004988666">1-800-498-8666</a> right away, without waiting for symptoms.{' '}
-          <a class="link" href="/reference/button-battery-ingestion">If a battery is swallowed</a>
+          <a class="link" href="/reference/button-battery-ingestion">If a button or coin battery is swallowed</a>
         </p>
       )}
 
@@ -447,10 +447,10 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
             </li>
           ))}
         </ul>
-        {isSmallRound && <p class="mt-3 text-base"><a class="link" href="/reference/button-battery-ingestion">If a battery is swallowed</a></p>}
+        {isSmallRound && <p class="mt-3 text-base"><a class="link" href="/reference/button-battery-ingestion">If a button or coin battery is swallowed</a></p>}
         {b.category === 'li-ion' && (
           <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-base">
-            <li><a class="link" href="/reference/lithium-ion-safety">Lithium-ion safety</a></li>
+            <li><a class="link" href="/reference/lithium-ion-safety">Lithium-ion battery safety</a></li>
             <li><a class="link" href="/reference/air-travel">Flying with batteries</a></li>
           </ul>
         )}

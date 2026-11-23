@@ -37,7 +37,7 @@
       "nominal": 50.3,
       "max": 50.3
     },
-    "note": "Maximum bare-cell dimensions from one lithium iron phosphate cell specification; lithium-ion 14500 cells are listed at 14 by 50 mm nominal. Unprotected cell. Protected cells (with a circuit board) and button-top cells are longer than the bare flat-top cell, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Maximum dimensions of a bare battery, from one lithium iron phosphate battery specification; lithium-ion 14500 batteries are listed at 14 by 50 mm nominal. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "oew-ifr14500",
       "wiki-sizes"
@@ -165,7 +165,7 @@
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
     "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
   ],
-  "notes": "Size code: 14 mm diameter, 50 mm length, 0 for cylindrical. Same size as an AA cell; device compartments and chargers for AA cells do not make a 14500 safe to use.",
+  "notes": "Size code: 14 mm diameter, 50 mm length, 0 for cylindrical. Same size as an AA battery; device compartments and chargers for AA batteries do not make a 14500 safe to use.",
   "sources": [
     {
       "id": "wiki-sizes",
