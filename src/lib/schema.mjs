@@ -234,3 +234,51 @@ export const chemistrySchema = z
     updated: isoDate,
   })
   .strict();
+
+// Devices: which battery a product takes, as its maker states it. One file per
+// device in data/devices/. The rule is in data/SCHEMA.md: the source is the
+// device maker (manual, support page, spec sheet), and `source.quote` carries
+// the sentence that says so, so every entry can be checked in one click.
+export const DEVICE_CATEGORIES = [
+  'tracker',
+  'car-key',
+  'garage',
+  'remote',
+  'smart-home',
+  'safety',
+  'health',
+  'fitness',
+  'watch',
+  'tool',
+  'household',
+  'computer',
+  'camera',
+  'audio',
+  'toy',
+];
+
+export const deviceSchema = z
+  .object({
+    id: slug,
+    name: z.string().min(1),
+    maker: z.string().min(1),
+    category: z.enum(DEVICE_CATEGORIES),
+    models: z.string().optional(),
+    years: z.string().regex(/^\d{4}(-(\d{4})?)?$/, 'YYYY, YYYY-YYYY or YYYY-').optional(),
+    battery: slug,
+    // The code as the maker writes it, when it is not the battery's page name
+    // (Mitutoyo says SR44; the size's page is LR44).
+    code: z.string().min(1).optional(),
+    count: z.number().int().positive(),
+    note: z.string().optional(),
+    source: z
+      .object({
+        title: z.string().min(3),
+        publisher: z.string().min(2),
+        url: z.string().url(),
+        accessed: isoDate,
+        quote: z.string().min(3).max(300),
+      })
+      .strict(),
+  })
+  .strict();

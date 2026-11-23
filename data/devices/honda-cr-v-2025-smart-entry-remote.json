@@ -1,0 +1,17 @@
+{
+  "id": "honda-cr-v-2025-smart-entry-remote",
+  "name": "CR-V remote",
+  "maker": "Honda",
+  "category": "car-key",
+  "models": "CR-V",
+  "years": "2025",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Replacing the Remote Battery | CR-V 2025 | Honda Owners Manual",
+    "publisher": "Honda",
+    "url": "https://techinfo.honda.com/rjanisis/pubs/OM/AH/A3A02525IOM/enu/details/131240047-392820.html",
+    "accessed": "2026-11-22",
+    "quote": "Battery type: CR2032"
+  }
+}

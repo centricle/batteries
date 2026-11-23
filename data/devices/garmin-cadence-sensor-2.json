@@ -1,0 +1,15 @@
+{
+  "id": "garmin-cadence-sensor-2",
+  "name": "Cadence Sensor 2",
+  "maker": "Garmin",
+  "category": "fitness",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Speed Sensor 2 and Cadence Sensor 2 Owner's Manual",
+    "publisher": "Garmin",
+    "url": "https://www8.garmin.com/manuals/webhelp/cadencespeedsensors2/EN-US/Cadence_Speed_Sensors_2_OM_EN-US.pdf",
+    "accessed": "2026-11-22",
+    "quote": "The device uses one CR2032 battery."
+  }
+}

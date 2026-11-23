@@ -1,0 +1,16 @@
+{
+  "id": "samsung-galaxy-smarttag2",
+  "name": "Galaxy SmartTag2",
+  "maker": "Samsung",
+  "category": "tracker",
+  "models": "EI-T5600",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "How to replace the battery on Galaxy SmartTag 2",
+    "publisher": "Samsung",
+    "url": "https://www.samsung.com/ae/support/mobile-devices/how-to-replace-the-battery-on-galaxy-smarttag-2",
+    "accessed": "2026-11-22",
+    "quote": "Learn how to safely replace the CR2032 battery on your Samsung Galaxy SmartTag 2"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "chevrolet-silverado-1500-2026-remote-key",
+  "name": "Silverado 1500 remote key",
+  "maker": "Chevrolet",
+  "category": "car-key",
+  "models": "Silverado 1500",
+  "years": "2026",
+  "battery": "cr2450",
+  "count": 1,
+  "source": {
+    "title": "2026 Chevrolet Silverado Owner Manual, Remote Key Battery Replacement",
+    "publisher": "General Motors",
+    "url": "https://contentdelivery.ext.gm.com/content/dam/cope/en_us/public/pdf_assets/active/owners_manuals_browse/2026/chevrolet/silverado_1500/26_CHEV_Silverado_1500_OM_en_US_U_86595939C_2026JUN15_3P.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Insert the new battery, positive side facing up. Replace with a CR2450 Lithium or equivalent battery."
+  }
+}

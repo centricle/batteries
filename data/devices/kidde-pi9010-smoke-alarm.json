@@ -1,0 +1,17 @@
+{
+  "id": "kidde-pi9010-smoke-alarm",
+  "name": "PI9010 Smoke Alarm",
+  "maker": "Kidde",
+  "category": "safety",
+  "models": "PI9010",
+  "battery": "9v",
+  "count": 1,
+  "note": "Kidde says not to use lithium batteries in this unit. Its 10-year sealed models have no replaceable battery.",
+  "source": {
+    "title": "PI9010 User's Guide",
+    "publisher": "Kidde",
+    "url": "https://brand.kidde.com/m/6fd20c8486fae838/original/UG_PI9010-ENG.pdf",
+    "accessed": "2026-11-22",
+    "quote": "The Model PI9010 Smoke Alarm is powered by a 9V alkaline battery."
+  }
+}

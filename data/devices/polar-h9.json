@@ -1,0 +1,15 @@
+{
+  "id": "polar-h9",
+  "name": "H9 Heart Rate Sensor",
+  "maker": "Polar",
+  "category": "fitness",
+  "battery": "cr2025",
+  "count": 1,
+  "source": {
+    "title": "How do I change the battery to my H10/H9 heart rate sensor?",
+    "publisher": "Polar",
+    "url": "https://support.polar.com/en/support/FAQs/Battery_Empty_in_the_Polar_Transmitter",
+    "accessed": "2026-11-22",
+    "quote": "To ensure normal operation and performance of the sensor, use only CR2025 battery."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "hyundai-tucson-2025-remote-key",
+  "name": "Tucson remote key",
+  "maker": "Hyundai",
+  "category": "car-key",
+  "models": "Tucson",
+  "years": "2025",
+  "battery": "cr2032",
+  "count": 1,
+  "note": "This is the folding remote key. The Tucson smart key takes a CR2450.",
+  "source": {
+    "title": "Remote Key Operation & Battery | 2025 Hyundai Tucson",
+    "publisher": "Hyundai",
+    "url": "https://ownersmanual.hyundai.com/full_webhelp/NX4/2025/en_GN/idfd7ae74058a.html",
+    "accessed": "2026-11-22",
+    "quote": "Battery Type: CR2032"
+  }
+}

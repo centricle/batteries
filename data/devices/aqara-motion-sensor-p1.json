@@ -1,0 +1,15 @@
+{
+  "id": "aqara-motion-sensor-p1",
+  "name": "Motion Sensor P1",
+  "maker": "Aqara",
+  "category": "smart-home",
+  "battery": "cr2450",
+  "count": 2,
+  "source": {
+    "title": "Aqara Motion Sensor P1",
+    "publisher": "Aqara",
+    "url": "https://www.aqara.com/en/product/motion-sensor-p1/",
+    "accessed": "2026-11-22",
+    "quote": "2 x CR2450"
+  }
+}

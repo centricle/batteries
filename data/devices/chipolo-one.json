@@ -1,0 +1,16 @@
+{
+  "id": "chipolo-one",
+  "name": "Chipolo ONE",
+  "maker": "Chipolo",
+  "category": "tracker",
+  "battery": "cr2032",
+  "count": 1,
+  "note": "Chipolo says the older Chipolo Classic used a CR2025.",
+  "source": {
+    "title": "Chipolo ONE: the key finder with a replaceable battery",
+    "publisher": "Chipolo",
+    "url": "https://chipolo.net/en/blogs/chipolo-one-the-key-finder-with-a-replaceable-battery",
+    "accessed": "2026-11-22",
+    "quote": "Chipolo ONE uses a simple coin-shaped replaceable battery, model CR2032"
+  }
+}

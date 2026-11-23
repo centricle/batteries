@@ -1,0 +1,17 @@
+{
+  "id": "toyota-camry-2025-smart-key",
+  "name": "Camry smart key",
+  "maker": "Toyota",
+  "category": "car-key",
+  "models": "Camry",
+  "years": "2025",
+  "battery": "cr2450",
+  "count": 1,
+  "source": {
+    "title": "2025 Camry Owner's Manual (OM06266U), Replacing the battery",
+    "publisher": "Toyota",
+    "url": "https://assets.sia.toyota.com/publications/en/om-s/OM06266U/pdf/OM06266U.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Use a CR2450 lithium battery"
+  }
+}

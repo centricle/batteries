@@ -1,0 +1,16 @@
+{
+  "id": "fluke-117",
+  "name": "117 True-rms Multimeter",
+  "maker": "Fluke",
+  "category": "tool",
+  "models": "117",
+  "battery": "9v",
+  "count": 1,
+  "source": {
+    "title": "114, 115, 116, and 117 Calibration Information",
+    "publisher": "Fluke",
+    "url": "https://assets.fluke.com/manuals/114_____cieng0000.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Battery 9 Volt Alkaline, NEDA 1604A / IEC 6LR61"
+  }
+}

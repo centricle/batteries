@@ -1,0 +1,15 @@
+{
+  "id": "garmin-hrm-pro-plus",
+  "name": "HRM-Pro Plus",
+  "maker": "Garmin",
+  "category": "fitness",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "HRM-Pro Plus Owner's Manual",
+    "publisher": "Garmin",
+    "url": "https://www8.garmin.com/manuals/webhelp/GUID-57B75051-8E96-44B8-A89E-470B3E3BCD32/EN-US/HRM-Pro_Plus_QSM_EN-US.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Battery type User-replaceable CR2032, 3 V"
+  }
+}

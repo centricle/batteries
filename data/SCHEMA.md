@@ -61,3 +61,35 @@ one file in `data/chemistries/<id>.json`. Both are validated against
 | `temperature_c` | Ranges `[min, max]` in °C: `operating`, `discharge`, `charge`, `storage`. |
 | `notes` | One or two sentences. |
 | `sources` | Ids from the file's `sources` that support this variant. Required. |
+
+## Chemistry names
+
+A chemistry's `name` has no parentheses ("Lithium manganese dioxide"); its
+`short` carries the formula with subscripts ("Li-MnO₂").
+
+## Devices
+
+One file per device in `data/devices/`, named `<id>.json`: which battery a
+product takes, as its maker states it. Validated against `deviceSchema` in
+`src/lib/schema.mjs`; the build fails on a bad file or on a `battery` with no
+entry.
+
+**The rule: the device maker says so, or the device is not listed.** The
+source is the maker's owner's manual, support page or spec sheet. Never a
+retailer, forum, battery seller's "fits" page, video or AI answer. A device
+whose maker does not state the battery is skipped, not estimated.
+
+| Field | Notes |
+|---|---|
+| `id` | Lowercase kebab, maker first: `apple-airtag`, `toyota-camry-2025-smart-key`. |
+| `name`, `maker` | `name` without the model year (the year goes in `years`). |
+| `category` | One of `DEVICE_CATEGORIES`. |
+| `models`, `years` | Optional. `years` is `2025`, `2019-2024` or `2021-` and only what the source itself covers: a manual's model year, never one inferred from elsewhere. |
+| `battery` | A battery id. The size, not the chemistry: SR44 and LR44 are both `lr44`. |
+| `code` | Optional: the code as the maker writes it, when it differs from the battery's page name (Mitutoyo writes SR44). Pages show this, not the page name. |
+| `count` | Cells the device takes. |
+| `note` | Optional, for the reader: a generation change, a maker's chemistry restriction. Not provenance. |
+| `source` | `title`, `publisher`, `url`, `accessed`, and `quote`: the maker's own sentence or table cell naming the battery, under 300 characters. The quote is what makes the entry checkable in one click. |
+
+Retail links never touch this data: no device is added, removed or ordered
+because of whether its battery sells (`src/lib/buy.ts`).

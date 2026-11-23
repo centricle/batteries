@@ -7,11 +7,12 @@
 // between ids and alias redirects.
 import fs from 'node:fs';
 import path from 'node:path';
-import { batterySchema, chemistrySchema } from '../src/lib/schema.mjs';
+import { batterySchema, chemistrySchema, deviceSchema } from '../src/lib/schema.mjs';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const bDir = path.join(root, 'data/batteries');
 const cDir = path.join(root, 'data/chemistries');
+const dDir = path.join(root, 'data/devices');
 
 const args = process.argv.slice(2);
 const only = args.length ? new Set(args.map((a) => path.basename(a))) : null;
@@ -80,9 +81,30 @@ for (const { file, b } of batteries) {
   }
 }
 
+// Devices: schema, filename, and a battery id that exists.
+const deviceIds = new Set();
+for (const file of readDir(dDir)) {
+  if (only) break;
+  let raw;
+  try {
+    raw = JSON.parse(fs.readFileSync(path.join(dDir, file), 'utf8'));
+  } catch (e) {
+    fail(`devices/${file}`, `invalid JSON: ${e.message}`);
+    continue;
+  }
+  const r = deviceSchema.safeParse(raw);
+  if (!r.success) {
+    for (const i of r.error.issues) fail(`devices/${file}`, `${i.path.join('.')}: ${i.message}`);
+    continue;
+  }
+  if (r.data.id + '.json' !== file) fail(`devices/${file}`, `id "${r.data.id}" does not match filename`);
+  if (!ids.has(r.data.battery)) fail(`devices/${file}`, `battery "${r.data.battery}" has no entry`);
+  deviceIds.add(r.data.id);
+}
+
 const n = only ? only.size : batteries.length;
 if (errors) {
   console.error(`\n${errors} error(s)`);
   process.exit(1);
 }
-console.log(`✓ ${n} battery file(s) valid${only ? '' : `, ${readDir(cDir).length} chemistry file(s)`}`);
+console.log(`✓ ${n} battery file(s) valid${only ? '' : `, ${readDir(cDir).length} chemistry file(s), ${deviceIds.size} device file(s)`}`);

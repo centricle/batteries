@@ -1,0 +1,16 @@
+{
+  "id": "nest-x-yale-lock",
+  "name": "Nest x Yale Lock",
+  "maker": "Google",
+  "category": "smart-home",
+  "battery": "aa",
+  "count": 4,
+  "note": "Google says not to use rechargeable NiMH batteries.",
+  "source": {
+    "title": "How to check and change your Nest x Yale Lock's batteries",
+    "publisher": "Google",
+    "url": "https://support.google.com/googlehome/answer/9231025?hl=en",
+    "accessed": "2026-11-22",
+    "quote": "you only need four standard AA alkaline batteries"
+  }
+}

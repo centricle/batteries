@@ -1,0 +1,16 @@
+{
+  "id": "google-nest-protect-battery",
+  "name": "Nest Protect (battery powered)",
+  "maker": "Google",
+  "category": "safety",
+  "battery": "aa",
+  "count": 6,
+  "note": "Google specifies Energizer Ultimate Lithium L91 only. Wired Nest Protect uses 3 as backup.",
+  "source": {
+    "title": "Batteries for Nest products",
+    "publisher": "Google",
+    "url": "https://support.google.com/googlehome/answer/9297548?hl=en",
+    "accessed": "2026-11-22",
+    "quote": "Nest Protect (battery powered) uses 6 Energizer Ultimate Lithium AA (L91) batteries as its sole power source."
+  }
+}

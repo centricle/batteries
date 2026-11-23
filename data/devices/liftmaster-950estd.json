@@ -1,0 +1,16 @@
+{
+  "id": "liftmaster-950estd",
+  "name": "LiftMaster 950ESTD remote",
+  "maker": "LiftMaster",
+  "category": "garage",
+  "models": "950ESTD",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "How to Change the Battery in a Remote Control",
+    "publisher": "Chamberlain Group",
+    "url": "https://support.chamberlaingroup.com/s/article/How-do-I-remove-and-replace-the-battery-in-my-remote-control-1484145519292",
+    "accessed": "2026-11-22",
+    "quote": "Insert a 3V CR2032 coin cell battery with the positive side (+) facing up."
+  }
+}

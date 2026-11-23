@@ -1,0 +1,17 @@
+{
+  "id": "gmc-sierra-1500-2026-remote-key",
+  "name": "Sierra 1500 remote key",
+  "maker": "GMC",
+  "category": "car-key",
+  "models": "Sierra 1500, Sierra Denali 1500",
+  "years": "2026",
+  "battery": "cr2450",
+  "count": 1,
+  "source": {
+    "title": "2026 GMC Sierra/Sierra Denali 1500 Owner Manual, Remote Key Battery Replacement",
+    "publisher": "General Motors",
+    "url": "https://contentdelivery.ext.gm.com/content/dam/cope/en_us/public/pdf_assets/active/owners_manuals_browse/2026/gmc/sierra_1500/26_GMC_Sierra_Sierra_Denali_1500_OM_en_US_U_86595943C_2026JUN15_3P.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Insert the new battery, positive side facing up. Replace with a CR2450 Lithium or equivalent battery."
+  }
+}

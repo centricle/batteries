@@ -1,0 +1,15 @@
+{
+  "id": "accu-chek-guide",
+  "name": "Accu-Chek Guide",
+  "maker": "Accu-Chek",
+  "category": "health",
+  "battery": "cr2032",
+  "count": 2,
+  "source": {
+    "title": "Accu-Chek Guide meter",
+    "publisher": "Roche Accu-Chek",
+    "url": "https://www.accu-chek.com/products/meters/guide",
+    "accessed": "2026-11-22",
+    "quote": "Two, 3-volt coin-cell batteries (CR2032)"
+  }
+}

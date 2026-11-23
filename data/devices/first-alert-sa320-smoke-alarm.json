@@ -1,0 +1,17 @@
+{
+  "id": "first-alert-sa320-smoke-alarm",
+  "name": "SA320 Smoke Alarm",
+  "maker": "First Alert",
+  "category": "safety",
+  "models": "SA320",
+  "battery": "aa",
+  "count": 2,
+  "note": "The maker’s manual is dated 2012.",
+  "source": {
+    "title": "SA320 User's Manual (rev. 07/12)",
+    "publisher": "First Alert",
+    "url": "https://support.firstalert.com/sfc/servlet.shepherd/document/download/0694x00000PlvItAAJ",
+    "accessed": "2026-11-22",
+    "quote": "Your Smoke Alarm requires two \"AA\" Duracell MN1500 batteries."
+  }
+}

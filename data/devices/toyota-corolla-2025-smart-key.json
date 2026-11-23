@@ -1,0 +1,18 @@
+{
+  "id": "toyota-corolla-2025-smart-key",
+  "name": "Corolla smart key",
+  "maker": "Toyota",
+  "category": "car-key",
+  "models": "Corolla",
+  "years": "2025",
+  "battery": "cr2450",
+  "count": 1,
+  "note": "Smart key vehicles take CR2450; vehicles without smart key take CR2032.",
+  "source": {
+    "title": "2025 Corolla Owner's Manual (OM02688U), Replacing the battery",
+    "publisher": "Toyota",
+    "url": "https://assets.sia.toyota.com/publications/en/om-s/OM02688U/pdf/OM02688U.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Use a CR2032 (vehicles without a smart key system), or CR2450 (vehicles with a smart key system) lithium battery"
+  }
+}

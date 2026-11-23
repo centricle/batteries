@@ -1,0 +1,15 @@
+{
+  "id": "aqara-door-window-sensor",
+  "name": "Door and Window Sensor",
+  "maker": "Aqara",
+  "category": "smart-home",
+  "battery": "cr1632",
+  "count": 1,
+  "source": {
+    "title": "Aqara Door and Window Sensor specs",
+    "publisher": "Aqara",
+    "url": "https://www.aqara.com/en/product/door-and-window-sensor/specs/",
+    "accessed": "2026-11-22",
+    "quote": "CR1632"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "onetouch-verio-reflect",
+  "name": "OneTouch Verio Reflect",
+  "maker": "OneTouch",
+  "category": "health",
+  "battery": "cr2032",
+  "count": 2,
+  "note": "OneTouch says to use only CR2032 lithium batteries.",
+  "source": {
+    "title": "OneTouch Verio Reflect Owner's Booklet",
+    "publisher": "OneTouch",
+    "url": "https://www.onetouch.com/sites/onetouch_us/files/2021-10/07201102A_OTVR_OB_US_en_R3_full_web_v1_FVID234914.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Your OneTouch Verio Reflect Meter uses 2x CR2032 lithium"
+  }
+}

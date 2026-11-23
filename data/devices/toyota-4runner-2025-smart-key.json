@@ -1,0 +1,18 @@
+{
+  "id": "toyota-4runner-2025-smart-key",
+  "name": "4Runner smart key",
+  "maker": "Toyota",
+  "category": "car-key",
+  "models": "4Runner",
+  "years": "2025",
+  "battery": "cr2450",
+  "count": 1,
+  "note": "From the owner’s manual for the gasoline model.",
+  "source": {
+    "title": "2025 4Runner Owner's Manual (OM35B85U), Replacing the battery",
+    "publisher": "Toyota",
+    "url": "https://assets.sia.toyota.com/publications/en/om-s/OM35B85U/pdf/OM35B85U.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Use a CR2450 lithium battery"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "toyota-rav4-smart-key",
+  "name": "RAV4 smart key",
+  "maker": "Toyota",
+  "category": "car-key",
+  "models": "Owner's manual OM0R063U",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "RAV4 Owner's Manual (OM0R063U), Replacing the battery",
+    "publisher": "Toyota",
+    "url": "https://assets.sia.toyota.com/publications/en/om-s/OM0R063U/pdf/OM0R063U.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Use a CR2032 lithium battery"
+  }
+}

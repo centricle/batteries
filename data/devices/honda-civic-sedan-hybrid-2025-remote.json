@@ -1,0 +1,17 @@
+{
+  "id": "honda-civic-sedan-hybrid-2025-remote",
+  "name": "Civic Sedan Hybrid remote",
+  "maker": "Honda",
+  "category": "car-key",
+  "models": "Civic Sedan Hybrid",
+  "years": "2025",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Replacing the Remote Battery | CIVIC SEDAN Hybrid 2025 | Honda Owners Manual",
+    "publisher": "Honda",
+    "url": "https://techinfo.honda.com/rjanisis/pubs/OM/AH/AT542525IOM/enu/details/131266047-44194.html",
+    "accessed": "2026-11-22",
+    "quote": "Battery type: CR2032"
+  }
+}

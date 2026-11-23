@@ -2,13 +2,14 @@
 // a value is computed once and every page agrees.
 import fs from 'node:fs';
 import path from 'node:path';
-import { batterySchema, chemistrySchema, CATEGORIES } from './schema.mjs';
+import { batterySchema, chemistrySchema, deviceSchema, CATEGORIES, DEVICE_CATEGORIES } from './schema.mjs';
 import type { z } from 'zod';
 
 export type Battery = z.infer<typeof batterySchema>;
 export type Variant = Battery['variants'][number];
 export type Chemistry = z.infer<typeof chemistrySchema>;
 export type Source = Battery['sources'][number];
+export type Device = z.infer<typeof deviceSchema>;
 
 const ROOT = process.cwd();
 const read = (dir: string) => {
@@ -40,7 +41,7 @@ export const CATEGORY_META: CategoryMeta[] = [
 ];
 export const categoryById = Object.fromEntries(CATEGORY_META.map((c) => [c.id, c])) as Record<string, CategoryMeta>;
 
-let cache: { batteries: Battery[]; chemistries: Chemistry[] } | null = null;
+let cache: { batteries: Battery[]; chemistries: Chemistry[]; devices: Device[] } | null = null;
 
 function natural(a: string, b: string) {
   return a.localeCompare(b, 'en', { numeric: true, sensitivity: 'base' });
@@ -67,13 +68,25 @@ export function load() {
     }
     chemistries.push(r.data);
   }
+  const devices: Device[] = [];
+  for (const { f, json } of read('data/devices')) {
+    const r = deviceSchema.safeParse(json);
+    if (!r.success) {
+      errors.push(`devices/${f}: ${r.error.issues.map((i) => `${i.path.join('.')} ${i.message}`).join('; ')}`);
+      continue;
+    }
+    if (!batteries.some((b) => b.id === r.data.battery)) errors.push(`devices/${f}: battery "${r.data.battery}" has no entry`);
+    devices.push(r.data);
+  }
   if (errors.length) {
     // Fail the build: bad data must never ship. `npm run validate` shows the same list.
     throw new Error(`Invalid data:\n${errors.join('\n')}`);
   }
   const order = Object.fromEntries(CATEGORY_META.map((c, i) => [c.id, i]));
   batteries.sort((a, b) => order[a.category] - order[b.category] || sizeKey(a) - sizeKey(b) || natural(a.name, b.name));
-  cache = { batteries, chemistries };
+  const dorder = Object.fromEntries(DEVICE_CATEGORIES.map((c, i) => [c, i]));
+  devices.sort((a, b) => dorder[a.category] - dorder[b.category] || natural(a.maker, b.maker) || natural(a.name, b.name));
+  cache = { batteries, chemistries, devices };
   return cache;
 }
 
@@ -88,6 +101,40 @@ export const batteries = () => load().batteries;
 export const chemistries = () => load().chemistries;
 export const batteryById = (id: string) => batteries().find((b) => b.id === id);
 export const chemistryById = (id: string) => chemistries().find((c) => c.id === id);
+export const devices = () => load().devices;
+export const deviceById = (id: string) => devices().find((d) => d.id === id);
+export const devicesFor = (batteryId: string) => devices().filter((d) => d.battery === batteryId);
+
+export const DEVICE_CATEGORY_META: Record<(typeof DEVICE_CATEGORIES)[number], { name: string; one: string }> = {
+  tracker: { name: 'Item trackers', one: 'tracker' },
+  'car-key': { name: 'Car key fobs', one: 'key fob' },
+  garage: { name: 'Garage door remotes', one: 'garage remote' },
+  remote: { name: 'TV remotes and controllers', one: 'remote' },
+  'smart-home': { name: 'Smart home sensors and locks', one: 'smart home device' },
+  safety: { name: 'Smoke and CO alarms', one: 'alarm' },
+  health: { name: 'Health devices', one: 'health device' },
+  fitness: { name: 'Fitness sensors', one: 'sensor' },
+  watch: { name: 'Watches', one: 'watch' },
+  tool: { name: 'Tools and meters', one: 'tool' },
+  household: { name: 'Household', one: 'device' },
+  computer: { name: 'Computer accessories', one: 'accessory' },
+  camera: { name: 'Cameras', one: 'camera' },
+  audio: { name: 'Audio', one: 'device' },
+  toy: { name: 'Toys', one: 'toy' },
+};
+export const DEVICE_CATEGORY_ORDER = DEVICE_CATEGORIES;
+
+/** "Apple AirTag", but "Toyota RAV4 smart key" when the name already starts with the maker. */
+export const deviceTitle = (d: Device) => (d.name.toLowerCase().startsWith(d.maker.toLowerCase()) ? d.name : `${d.maker} ${d.name}`);
+
+/** The one-sentence answer, the line an answer engine should quote. */
+export function deviceAnswer(d: Device) {
+  const b = batteryById(d.battery)!;
+  const code = d.code ?? b.name;
+  const n = d.count === 1 ? `one ${code}` : `${d.count} ${code}`;
+  const yrs = d.years ? ` (${d.years.endsWith('-') ? `${d.years.slice(0, -1)} on` : d.years.replace('-', '–')})` : '';
+  return `The ${deviceTitle(d)}${yrs} takes ${n} ${d.count === 1 ? 'battery' : 'batteries'}, according to ${d.source.publisher}.`;
+}
 
 // ------------------------------------------------------------- formatting
 
@@ -345,4 +392,16 @@ export function stats() {
     sources: allSources().length,
     chemistries: new Set(bs.flatMap((b) => b.variants.map((v) => v.chemistry))).size,
   };
+}
+
+export function deviceIndex() {
+  return devices().map((d) => ({
+    id: d.id,
+    n: deviceTitle(d),
+    k: [d.maker, d.name, d.models ?? '', DEVICE_CATEGORY_META[d.category].one].filter(Boolean),
+    b: batteryById(d.battery)!.name,
+    bid: d.battery,
+    q: d.count,
+    c: DEVICE_CATEGORY_META[d.category].name,
+  }));
 }

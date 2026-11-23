@@ -1,0 +1,18 @@
+{
+  "id": "nissan-altima-2025-intelligent-key",
+  "name": "Altima Intelligent Key",
+  "maker": "Nissan",
+  "category": "car-key",
+  "models": "Altima",
+  "years": "2025",
+  "battery": "cr2032",
+  "count": 1,
+  "note": "Nissan specifies “CR2032 or equivalent.”",
+  "source": {
+    "title": "2025 Nissan Altima Owner's Manual, key battery replacement",
+    "publisher": "Nissan",
+    "url": "https://www.nissanusa.com/content/dam/Nissan/us/manuals-and-guides/altima/2025/2025-nissan-altima-owner-manual.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Recommended battery: CR2032 or equivalent."
+  }
+}

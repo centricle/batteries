@@ -1,0 +1,16 @@
+{
+  "id": "tesla-model-3-key-fob",
+  "name": "Model 3 key fob",
+  "maker": "Tesla",
+  "category": "car-key",
+  "models": "Model 3",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Replacing the Key Fob Battery",
+    "publisher": "Tesla",
+    "url": "https://service.tesla.com/docs/Public/diy/model3/en_us/GUID-049829F3-D101-4EDB-B878-36AE0644E2A7.html",
+    "accessed": "2026-11-22",
+    "quote": "insert the new battery (type CR2032 ) with the '+' side facing up."
+  }
+}

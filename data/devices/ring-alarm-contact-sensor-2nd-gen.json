@@ -1,0 +1,16 @@
+{
+  "id": "ring-alarm-contact-sensor-2nd-gen",
+  "name": "Alarm Contact Sensor (2nd Gen)",
+  "maker": "Ring",
+  "category": "smart-home",
+  "battery": "cr2032",
+  "count": 2,
+  "note": "The 1st generation sensor takes one CR123A.",
+  "source": {
+    "title": "Replacing batteries in Ring Alarm devices",
+    "publisher": "Ring",
+    "url": "https://ring.com/support/articles/d46gw/Replacing-batteries-in-Ring-Alarm-devices",
+    "accessed": "2026-11-22",
+    "quote": "Ring Alarm Contact Sensor (2nd Gen) uses two CR2032 batteries."
+  }
+}

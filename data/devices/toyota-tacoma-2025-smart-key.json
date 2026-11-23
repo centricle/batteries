@@ -1,0 +1,17 @@
+{
+  "id": "toyota-tacoma-2025-smart-key",
+  "name": "Tacoma smart key",
+  "maker": "Toyota",
+  "category": "car-key",
+  "models": "Tacoma",
+  "years": "2025",
+  "battery": "cr2450",
+  "count": 1,
+  "source": {
+    "title": "2025 Tacoma Owner's Manual (OM04011U), Replacing the battery",
+    "publisher": "Toyota",
+    "url": "https://assets.sia.toyota.com/publications/en/om-s/OM04011U/pdf/OM04011U.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Use a CR2450 lithium battery"
+  }
+}

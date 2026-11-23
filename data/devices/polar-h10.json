@@ -1,0 +1,15 @@
+{
+  "id": "polar-h10",
+  "name": "H10 Heart Rate Sensor",
+  "maker": "Polar",
+  "category": "fitness",
+  "battery": "cr2025",
+  "count": 1,
+  "source": {
+    "title": "H10 User Manual: Batteries",
+    "publisher": "Polar",
+    "url": "https://support.polar.com/e_manuals/h10-heart-rate-sensor/polar-h10-user-manual-english/batteries.htm",
+    "accessed": "2026-11-22",
+    "quote": "Insert the new battery CR2025 inside the cover with the positive (+) side downwards."
+  }
+}

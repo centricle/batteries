@@ -1,0 +1,18 @@
+{
+  "id": "mitutoyo-digimatic-caliper-500-196-30",
+  "name": "Digimatic Caliper 500-196-30",
+  "maker": "Mitutoyo",
+  "category": "tool",
+  "models": "500-193-30, 500-195-30, 500-196-30, 500-197-30",
+  "battery": "lr44",
+  "code": "SR44",
+  "count": 1,
+  "note": "SR44 is the silver oxide version of the LR44 size; the alkaline LR44 is the same size.",
+  "source": {
+    "title": "User's Manual No. 99MAD027A (ABS Digimatic Caliper)",
+    "publisher": "Mitutoyo",
+    "url": "https://manual.mitutoyo.co.jp/download/pdf?id=193185&type=web",
+    "accessed": "2026-11-22",
+    "quote": "Be sure to use SR44 (a silver oxide battery)."
+  }
+}

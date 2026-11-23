@@ -1,0 +1,17 @@
+{
+  "id": "toyota-highlander-smart-key",
+  "name": "Highlander smart key",
+  "maker": "Toyota",
+  "category": "car-key",
+  "models": "Owner's manual OM0E144U",
+  "battery": "cr2450",
+  "count": 1,
+  "note": "From the owner’s manual for the gasoline model; the Highlander Hybrid has a separate manual.",
+  "source": {
+    "title": "Highlander Owner's Manual (OM0E144U), Replacing the battery",
+    "publisher": "Toyota",
+    "url": "https://assets.sia.toyota.com/publications/en/om-s/OM0E144U/pdf/OM0E144U.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Use a CR2450 lithium battery"
+  }
+}

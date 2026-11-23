@@ -1,0 +1,17 @@
+{
+  "id": "honda-accord-2025-remote",
+  "name": "Accord remote",
+  "maker": "Honda",
+  "category": "car-key",
+  "models": "Accord",
+  "years": "2025",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Replacing the Remote Battery | 2025 Accord | Honda Owners Manual",
+    "publisher": "Honda",
+    "url": "https://techinfo.honda.com/rjanisis/pubs/OM/AH/A30A2525IOM/enu/details/131222047-44194.html",
+    "accessed": "2026-11-22",
+    "quote": "Battery type: CR2032"
+  }
+}

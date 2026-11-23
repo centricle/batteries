@@ -1,0 +1,17 @@
+{
+  "id": "honda-pilot-2025-remote",
+  "name": "Pilot remote",
+  "maker": "Honda",
+  "category": "car-key",
+  "models": "Pilot",
+  "years": "2025",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Replacing the Remote Battery | PILOT 2025 | Honda Owners Manual",
+    "publisher": "Honda",
+    "url": "https://techinfo.honda.com/rjanisis/pubs/OM/AH/at902525iom/enu/details/131247047-577887.html",
+    "accessed": "2026-11-22",
+    "quote": "Battery type: CR2032"
+  }
+}

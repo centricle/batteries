@@ -1,0 +1,15 @@
+{
+  "id": "google-nest-temperature-sensor",
+  "name": "Nest Temperature Sensor",
+  "maker": "Google",
+  "category": "smart-home",
+  "battery": "cr2",
+  "count": 1,
+  "source": {
+    "title": "Batteries for Nest products",
+    "publisher": "Google",
+    "url": "https://support.google.com/googlehome/answer/9297548?hl=en",
+    "accessed": "2026-11-22",
+    "quote": "The Nest Temperature Sensor uses one disposable battery that you'll need to replace when it gets low. 1 CR2 3V Lithium battery"
+  }
+}

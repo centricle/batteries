@@ -1,0 +1,17 @@
+{
+  "id": "apple-airtag",
+  "name": "AirTag",
+  "maker": "Apple",
+  "category": "tracker",
+  "models": "A2187",
+  "battery": "cr2032",
+  "count": 1,
+  "note": "Apple suggests a bitterant-coated CR2032 whose packaging says it is compatible with AirTag, and notes that some bitterant-coated CR2032 cells might not work with it.",
+  "source": {
+    "title": "How to replace the battery in your AirTag",
+    "publisher": "Apple",
+    "url": "https://support.apple.com/102600",
+    "accessed": "2026-11-22",
+    "quote": "Insert a new CR2032 lithium 3V coin battery (available at most electronic and drug stores) with the positive side facing up."
+  }
+}

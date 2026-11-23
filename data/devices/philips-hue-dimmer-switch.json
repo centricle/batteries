@@ -1,0 +1,16 @@
+{
+  "id": "philips-hue-dimmer-switch",
+  "name": "Hue Dimmer Switch (latest model)",
+  "maker": "Philips Hue",
+  "category": "smart-home",
+  "battery": "cr2032",
+  "count": 1,
+  "note": "The older dimmer with separate on and off buttons used a CR2450.",
+  "source": {
+    "title": "Hue Dimmer Switch (latest model)",
+    "publisher": "Philips Hue",
+    "url": "https://www.philips-hue.com/en-us/p/hue-dimmer-switch--latest-model-/046677562779",
+    "accessed": "2026-11-22",
+    "quote": "1 x CR2032"
+  }
+}

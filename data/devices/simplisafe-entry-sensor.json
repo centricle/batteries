@@ -1,0 +1,16 @@
+{
+  "id": "simplisafe-entry-sensor",
+  "name": "Entry Sensor",
+  "maker": "SimpliSafe",
+  "category": "smart-home",
+  "battery": "cr2032",
+  "count": 1,
+  "note": "Original-generation SimpliSafe sensors differ; this is the current Entry Sensor.",
+  "source": {
+    "title": "How to Replace the Entry Sensor's Battery",
+    "publisher": "SimpliSafe",
+    "url": "https://support.simplisafe.com/articles/entry-sensor/how-to-replace-entry-sensor-battery",
+    "accessed": "2026-11-22",
+    "quote": "one Duracell CR-2032 Lithium 3V battery"
+  }
+}

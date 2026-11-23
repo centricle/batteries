@@ -1,0 +1,15 @@
+{
+  "id": "samsung-galaxy-smarttag",
+  "name": "Galaxy SmartTag",
+  "maker": "Samsung",
+  "category": "tracker",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "How to replace the battery in a Samsung SmartTag",
+    "publisher": "Samsung",
+    "url": "https://www.samsung.com/ae/support/mobile-devices/how-to-change-the-battery-for-samsung-smarttag/",
+    "accessed": "2026-11-22",
+    "quote": "The Samsung SmartTag uses a CR2032 coin-shaped lithium battery that typically lasts up to a year depending on usage."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "aqara-temperature-humidity-sensor",
+  "name": "Temperature and Humidity Sensor",
+  "maker": "Aqara",
+  "category": "smart-home",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Aqara Temperature and Humidity Sensor specs",
+    "publisher": "Aqara",
+    "url": "https://www.aqara.com/en/product/temperature-humidity-sensor/specs/",
+    "accessed": "2026-11-22",
+    "quote": "CR2032"
+  }
+}

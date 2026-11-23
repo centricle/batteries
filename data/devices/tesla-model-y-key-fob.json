@@ -1,0 +1,16 @@
+{
+  "id": "tesla-model-y-key-fob",
+  "name": "Model Y key fob",
+  "maker": "Tesla",
+  "category": "car-key",
+  "models": "Model Y",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Replacing the Key Fob Battery",
+    "publisher": "Tesla",
+    "url": "https://service.tesla.com/docs/Public/diy/modely/en_us/GUID-D8453B26-9C94-4A46-8C1F-A8AB758A9057.html",
+    "accessed": "2026-11-22",
+    "quote": "insert the new battery (type CR2032 ) with the '+' side facing up."
+  }
+}

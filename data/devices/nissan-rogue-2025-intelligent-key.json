@@ -1,0 +1,18 @@
+{
+  "id": "nissan-rogue-2025-intelligent-key",
+  "name": "Rogue Intelligent Key",
+  "maker": "Nissan",
+  "category": "car-key",
+  "models": "Rogue",
+  "years": "2025",
+  "battery": "cr2032",
+  "count": 1,
+  "note": "Nissan specifies “CR2032 or equivalent.”",
+  "source": {
+    "title": "2025 Nissan Rogue Owner's Manual, Intelligent Key battery replacement (Do-it-yourself, p. 523)",
+    "publisher": "Nissan",
+    "url": "https://www.nissanusa.com/content/dam/Nissan/us/manuals-and-guides/rogue/2025/2025-nissan-rogue-owner-manual.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Recommended battery: CR2032 or equivalent"
+  }
+}

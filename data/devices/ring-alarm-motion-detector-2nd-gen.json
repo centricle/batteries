@@ -1,0 +1,16 @@
+{
+  "id": "ring-alarm-motion-detector-2nd-gen",
+  "name": "Alarm Motion Detector (2nd Gen)",
+  "maker": "Ring",
+  "category": "smart-home",
+  "battery": "aa",
+  "count": 2,
+  "note": "The 1st generation detector takes one CR123A.",
+  "source": {
+    "title": "Replacing batteries in Ring Alarm devices",
+    "publisher": "Ring",
+    "url": "https://ring.com/support/articles/d46gw/Replacing-batteries-in-Ring-Alarm-devices",
+    "accessed": "2026-11-22",
+    "quote": "The Motion Detector (2nd Gen) uses two AA batteries."
+  }
+}

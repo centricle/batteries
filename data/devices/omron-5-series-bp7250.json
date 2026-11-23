@@ -1,0 +1,16 @@
+{
+  "id": "omron-5-series-bp7250",
+  "name": "5 Series Wireless Upper Arm Blood Pressure Monitor",
+  "maker": "Omron",
+  "category": "health",
+  "models": "BP7250",
+  "battery": "aa",
+  "count": 4,
+  "source": {
+    "title": "5 Series BP7250 Instruction Manual",
+    "publisher": "Omron Healthcare",
+    "url": "https://omronhealthcare.com/storage/pdfs/5-series-wireless-upper-arm-blood-pressure-monitor-bp7250-im-en_3608778-6j.pdf",
+    "accessed": "2026-11-22",
+    "quote": "ONLY use 4 \"AA\" alkaline or manganese batteries with this monitor."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "klein-tools-ncvt-3p",
+  "name": "NCVT-3P Dual Range Non-Contact Voltage Tester",
+  "maker": "Klein Tools",
+  "category": "tool",
+  "models": "NCVT-3P",
+  "battery": "aaa",
+  "count": 2,
+  "source": {
+    "title": "NCVT-3P Instructions",
+    "publisher": "Klein Tools",
+    "url": "https://data.kleintools.com/sites/all/product_assets/documents/instructions/klein/NCVT-3P_WEBMANUAL.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Batteries: 2x AAA 1.5V Alkaline"
+  }
+}

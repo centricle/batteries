@@ -1,0 +1,15 @@
+{
+  "id": "garmin-hrm-dual",
+  "name": "HRM-Dual",
+  "maker": "Garmin",
+  "category": "fitness",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "HRM-Dual Installation Instructions",
+    "publisher": "Garmin",
+    "url": "https://www8.garmin.com/manuals/webhelp/hrm-dual/EN-US/HRM-Dual_QSM_EN-US.pdf",
+    "accessed": "2026-11-22",
+    "quote": "Battery type User-replaceable CR2032, 3 V"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-surface-pen-aaaa",
+  "name": "Surface Pen (replaceable-battery models)",
+  "maker": "Microsoft",
+  "category": "computer",
+  "battery": "aaaa",
+  "count": 1,
+  "note": "Slim Pen models have no replaceable battery. Two-button pens also hold coin cells in the cap.",
+  "source": {
+    "title": "Change Surface Pen batteries",
+    "publisher": "Microsoft",
+    "url": "https://support.microsoft.com/en-us/surface/pen/change-surface-pen-batteries",
+    "accessed": "2026-11-22",
+    "quote": "Replace the AAAA battery with the positive (+) end of the battery pointing toward the tail end of the pen."
+  }
+}

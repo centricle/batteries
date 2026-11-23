@@ -1,0 +1,17 @@
+{
+  "id": "honda-civic-hatchback-2025-remote",
+  "name": "Civic Hatchback remote",
+  "maker": "Honda",
+  "category": "car-key",
+  "models": "Civic Hatchback",
+  "years": "2025",
+  "battery": "cr2032",
+  "count": 1,
+  "source": {
+    "title": "Replacing the Remote Battery | CIVIC HATCHBACK 2025 | Honda Owners Manual",
+    "publisher": "Honda",
+    "url": "https://techinfo.honda.com/rjanisis/pubs/OM/AH/AT402525IOM/enu/details/131271047-44194.html",
+    "accessed": "2026-11-22",
+    "quote": "Battery type: CR2032"
+  }
+}

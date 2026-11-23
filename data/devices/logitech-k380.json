@@ -1,0 +1,16 @@
+{
+  "id": "logitech-k380",
+  "name": "K380 Multi-Device Bluetooth Keyboard",
+  "maker": "Logitech",
+  "category": "computer",
+  "models": "Y-R0056",
+  "battery": "aaa",
+  "count": 2,
+  "source": {
+    "title": "K380 Technical Specifications",
+    "publisher": "Logitech",
+    "url": "https://support.logi.com/hc/en-us/articles/360023464473-K380-Technical-Specifications",
+    "accessed": "2026-11-22",
+    "quote": "Battery Details 2 x AAA"
+  }
+}
