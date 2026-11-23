@@ -200,9 +200,19 @@ const jsonld = {
     const w = portrait ? CARD.h : CARD.w;
     const h = portrait ? CARD.w : CARD.h;
     const pad = 2;
-    calStage.innerHTML = `<svg width="${(w + pad * 2) * k}" height="${(h + pad * 2) * k}" viewBox="${-pad} ${-pad} ${w + pad * 2} ${h + pad * 2}" role="img" aria-label="Card outline, ${portrait ? 'standing upright' : 'lying flat'}, 85.6 by 54 millimeters at the current setting">
-      <rect x="0" y="0" width="${w}" height="${h}" rx="${CARD.r}" class="as-card" stroke-width="${1.5 / k}" />
-      <text x="${w / 2}" y="${h / 2}" text-anchor="middle" dominant-baseline="middle" class="as-muted" font-size="${FS.size / k}">Bank card, 85.6 × 54 mm</text>
+    // The viewBox is in screen pixels: the outline is drawn in millimeters
+    // inside a group scaled by k, and the label sits outside it, so its size
+    // is screen pixels at any setting.
+    const W = (w + pad * 2) * k;
+    const H = (h + pad * 2) * k;
+    const label = 'Bank card, 85.6 × 54 mm';
+    const oneLine = label.length * FS.size * 0.55 < w * k - 16;
+    const text = oneLine
+      ? `<text x="${W / 2}" y="${H / 2}" text-anchor="middle" dominant-baseline="middle" class="as-muted as-label" font-size="${FS.size}">${label}</text>`
+      : `<text x="${W / 2}" y="${H / 2 - FS.size * 0.65}" text-anchor="middle" dominant-baseline="middle" class="as-muted as-label" font-size="${FS.size}"><tspan x="${W / 2}">Bank card,</tspan><tspan x="${W / 2}" dy="${FS.size * 1.3}">85.6 × 54 mm</tspan></text>`;
+    calStage.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Card outline, ${portrait ? 'standing upright' : 'lying flat'}, 85.6 by 54 millimeters at the current setting">
+      <g transform="scale(${k}) translate(${pad} ${pad})"><rect x="0" y="0" width="${w}" height="${h}" rx="${CARD.r}" class="as-card" stroke-width="${1.5 / k}" /></g>
+      ${text}
     </svg>`;
     const unset = Math.abs(k - BASE) < 0.005;
     read.textContent = unset
@@ -320,8 +330,16 @@ const jsonld = {
     return rows;
   }
 
-  /** The ruler under a row: ticks every millimeter or every 1/16 inch. */
-  function ruler(width: number, margin: number, px: number, u: Unit) {
+  /**
+   * A label at (x, y) in millimeters, written in the SVG's own units (`S` per
+   * millimeter) outside the scaled drawing group, so `size` (in millimeters,
+   * as the layout math uses) comes out as that many units times S.
+   */
+  const label = (S: number, x: number, y: number, size: number, cls: string, text: string, extra = '') =>
+    `<text x="${(x * S).toFixed(2)}" y="${(y * S).toFixed(2)}" class="${cls} as-label" font-size="${(size * S).toFixed(2)}"${extra}>${text}</text>`;
+
+  /** The ruler under a row: ticks every millimeter or every 1/16 inch. Ticks in millimeters, numbers as labels. */
+  function ruler(width: number, margin: number, px: number, u: Unit, S: number) {
     const numFS = Math.max(FS.small * px, 1.8);
     const base = 3.6;
     const stroke = Math.max(px, 0.12);
@@ -330,60 +348,80 @@ const jsonld = {
     const major = u === 'mm' ? 10 : 16;
     const len = Math.ceil((width + margin) / (u === 'mm' ? 10 : INCH)) * (u === 'mm' ? 10 : INCH);
     const count = Math.round(len / step);
-    let out = `<line x1="${margin}" y1="0" x2="${margin + len}" y2="0" class="as-tick" stroke-width="${stroke}" />`;
+    // Number every major tick when the numbers fit between them; on a coarse
+    // screen, every second or fifth, so "100" and "110" never run together.
+    const numW = String(u === 'mm' ? count : count / 16).length * numFS * 0.6 + 4 * px;
+    const majorLen = major * step;
+    const every = major * (numW < majorLen ? 1 : numW < 2 * majorLen ? 2 : 5);
+    const last = Math.floor(count / every) * every;
+    let lines = `<line x1="${margin}" y1="0" x2="${margin + len}" y2="0" class="as-tick" stroke-width="${stroke}" />`;
+    let labels = '';
     for (let i = 0; i <= count; i++) {
       const x = margin + i * step;
       const t = u === 'mm'
         ? (i % 10 === 0 ? 3.2 : i % 5 === 0 ? 2.2 : 1.2)
         : (i % 16 === 0 ? 3.2 : i % 8 === 0 ? 2.6 : i % 4 === 0 ? 2 : i % 2 === 0 ? 1.5 : 1);
-      out += `<line x1="${x}" y1="0" x2="${x}" y2="${t}" class="as-tick" stroke-width="${thin}" />`;
-      if (i % major === 0) {
+      lines += `<line x1="${x}" y1="0" x2="${x}" y2="${t}" class="as-tick" stroke-width="${thin}" />`;
+      if (i % every === 0) {
         const n = u === 'mm' ? i : i / 16;
-        out += `<text x="${x + 0.6}" y="${base + numFS * 0.85}" class="as-muted" font-size="${numFS}">${n}${i === count ? (u === 'mm' ? ' mm' : ' in') : ''}</text>`;
+        labels += label(S, x + 0.6, base + numFS * 0.85, numFS, 'as-muted', `${n}${i === last ? (u === 'mm' ? ' mm' : ' in') : ''}`);
       }
     }
-    return { svg: out, len, h: base + numFS * 1.1 };
+    return { lines, labels, len, h: base + numFS * 1.1 };
   }
 
   /**
-   * One row as SVG. `unit` sets the outer size: 'px' scales mm by k for the
+   * One row as SVG. `out` sets the outer size: 'px' scales mm by k for the
    * screen; 'mm' writes CSS millimeters for print. `px` is the size of one
    * screen pixel in mm, used to keep strokes and text legible.
+   *
+   * The layout is worked out in millimeters. The shapes and ticks are drawn in
+   * millimeters inside a group scaled by S, and the labels sit outside that
+   * group in the SVG's own units, which are screen pixels on screen (S = k).
+   * So a label's font size is the size it shows at, at any setting, and never
+   * a few "millimeter" units magnified by the drawing.
    */
   function rowSVG(row: Group[], gap: number, out: 'px' | 'mm', px: number, ri: number) {
+    const S = out === 'px' ? 1 / px : 96 / INCH;
     const margin = 3;
     const width = row.reduce((a, g) => a + slot(g, px), 0) + gap * (row.length - 1);
     const hasViews = row.some((g) => g.views.length > 1);
     const top = Math.max(...row.map((g) => g.h)) + (hasViews ? FS.small * 1.4 * px : 0) + 2;
-    const r = ruler(width, margin, px, unit);
+    const r = ruler(width, margin, px, unit, S);
     const lineName = FS.name * 1.35 * px, lineSize = FS.size * 1.3 * px;
     const labelH = lineName + 2 * lineSize + 4 * px;
     const totalW = r.len + margin * 2 + Math.max(64 * px, 10);
     const totalH = top + r.h + labelH;
     const gid = `asg-${out}-${ri}`;
-    let body = '';
+    let shapes = '';
+    let labels = '';
     let x = margin;
+    const mid = ' text-anchor="middle"';
     for (const g of row) {
       const sw = slot(g, px);
       let vx = x + (sw - drawW(g, px)) / 2;
       for (const v of g.views) {
-        body += v.svg(vx, gid);
-        if (g.views.length > 1 && VIEW_NAME[v.kind]) body += `<text x="${vx + v.w / 2}" y="${-v.h - 5 * px}" text-anchor="middle" class="as-muted" font-size="${FS.small * px}">${VIEW_NAME[v.kind]}</text>`;
+        shapes += v.svg(vx, gid);
+        if (g.views.length > 1 && VIEW_NAME[v.kind]) labels += label(S, vx + v.w / 2, -v.h - 5 * px, FS.small * px, 'as-muted', VIEW_NAME[v.kind], mid);
         vx += v.w + viewGap(g, px);
       }
       const cx = x + sw / 2;
-      body += `<text x="${cx}" y="${r.h + lineName}" text-anchor="middle" class="as-text" font-weight="600" font-size="${FS.name * px}">${esc(g.name)}</text>`;
-      body += `<text x="${cx}" y="${r.h + lineName + lineSize}" text-anchor="middle" class="as-muted" font-size="${FS.size * px}">${esc(g.size)}</text>`;
-      body += `<text x="${cx}" y="${r.h + lineName + 2 * lineSize}" text-anchor="middle" class="as-muted" font-size="${FS.size * px}">${esc(g.sizeIn)}</text>`;
+      labels += label(S, cx, r.h + lineName, FS.name * px, 'as-text', esc(g.name), `${mid} font-weight="600"`);
+      labels += label(S, cx, r.h + lineName + lineSize, FS.size * px, 'as-muted', esc(g.size), mid);
+      labels += label(S, cx, r.h + lineName + 2 * lineSize, FS.size * px, 'as-muted', esc(g.sizeIn), mid);
       x += sw + gap;
     }
-    const outerW = out === 'px' ? `${(totalW / px).toFixed(2)}` : `${totalW}mm`;
-    const outerH = out === 'px' ? `${(totalH / px).toFixed(2)}` : `${totalH}mm`;
+    // On screen the outer size and the viewBox are the same numbers, so one
+    // unit is one pixel; for print, one unit is one CSS pixel of a CSS mm.
+    const vbW = (totalW * S).toFixed(2);
+    const vbH = (totalH * S).toFixed(2);
+    const outerW = out === 'px' ? vbW : `${totalW}mm`;
+    const outerH = out === 'px' ? vbH : `${totalH}mm`;
     const defs = `<defs>
       <linearGradient id="${gid}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.1" /><stop offset="0.06" stop-color="#000" stop-opacity="0.1" /><stop offset="0.06" stop-color="#fff" stop-opacity="0" /><stop offset="0.2" stop-color="#fff" stop-opacity="0" /><stop offset="0.2" stop-color="#fff" stop-opacity="0.2" /><stop offset="0.3" stop-color="#fff" stop-opacity="0.2" /><stop offset="0.3" stop-color="#fff" stop-opacity="0" /><stop offset="0.74" stop-color="#000" stop-opacity="0" /><stop offset="0.74" stop-color="#000" stop-opacity="0.14" /><stop offset="1" stop-color="#000" stop-opacity="0.14" /></linearGradient>
     </defs>`;
     const names = row.map((g) => g.name).join(', ');
-    return `<svg width="${outerW}" height="${outerH}" viewBox="0 ${-top} ${totalW} ${totalH}" role="img" aria-label="${esc(names)} at actual size over a ruler in ${unit === 'mm' ? 'millimeters' : 'inches'}" style="display:block;overflow:visible">${defs}${body}${r.svg}</svg>`;
+    return `<svg width="${outerW}" height="${outerH}" viewBox="0 ${(-top * S).toFixed(2)} ${vbW} ${vbH}" role="img" aria-label="${esc(names)} at actual size over a ruler in ${unit === 'mm' ? 'millimeters' : 'inches'}" style="display:block;overflow:visible">${defs}<g transform="scale(${S})">${shapes}${r.lines}</g>${labels}${r.labels}</svg>`;
   }
 
   // --------------------------------------------------------------- state

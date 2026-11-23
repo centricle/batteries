@@ -4,7 +4,9 @@ import Viewer from '../components/Viewer.astro';
 import Silhouette from '../components/Silhouette.astro';
 import { batteries, batteryById, categoryById, CATEGORY_META, stats, deviceById, devices, deviceTitle, DEVICE_CATEGORY_META, DEVICE_CATEGORY_ORDER, primaryVariant, fmt, type Battery, type Device } from '../lib/data';
 import { pairs } from '../lib/pairs';
-import { KIND_WORD, usesLine, acrossThick, brandNames } from '../lib/home';
+import { KIND_WORD, HOME_USES, usesLine, acrossThick, brandNames } from '../lib/home';
+// @ts-ignore: plain JS module shared with the 3D viewer
+import { describe } from '../lib/geometry/model.js';
 
 const s = stats();
 const pick = (ids: string[]) => ids.map((id) => batteryById(id)).filter((b): b is Battery => !!b);
@@ -30,6 +32,10 @@ for (const d of devices()) if (featured.length < 8 && !featured.includes(d)) fea
 
 const round = pick(['cr2032', 'cr2025', 'cr2016', 'cr1632', 'cr2450', 'lr44', 'lr41', 'sr626sw']);
 const roundScale = Math.max(...round.map((b) => b.dimensions.diameter!.nominal));
+// The edge views sit in a box only as tall as the thickest edge, sized so a
+// millimeter is the same length in the face and the edge drawings.
+const edgeScale = Math.max(...round.map((b) => describe(b as any).bounds.size[1] as number));
+const edgeRatio = (edgeScale / roundScale).toFixed(4);
 
 const pairLinks = ['cr2032-vs-cr2025', 'cr2032-vs-cr2016', 'cr2025-vs-cr2016', 'aa-vs-aaa', 'lr43-vs-lr44', 'lr44-vs-675', 'aa-vs-14500', 'cr123a-vs-16340', '18650-vs-21700']
   .map((slug) => {
@@ -101,30 +107,37 @@ const jsonld = [
       <Viewer batteries={lineup} mode="lineup" height="min(24rem, 46vw)" controls={false} zoom={false} />
       <p class="mt-2 text-sm text-ink-2">Drawn to scale. Drag to turn them. Choose a name to open that battery.</p>
     </div>
-    <ul class="md:hidden mt-3 grid grid-cols-2 gap-2">
-      {lineup.map((b) => (
-        <li>
-          <a href={`/${b.id}`} class="card tile flex flex-col h-full">
-            <div class="h-24 flex items-end justify-center" aria-hidden="true">
-              <Silhouette battery={b} scaleTo={lineupScale} class="max-w-full" />
-            </div>
-            <span class="mt-3 font-mono font-semibold text-lg">{b.name}</span>
-            {b.devices.length > 0 && <p class="mt-1 text-sm text-ink-2">{usesLine(b.devices)}</p>}
-          </a>
-        </li>
-      ))}
+    {/* Phones: one row per battery, the drawing in a fixed box at one shared scale on the left. */}
+    <ul class="md:hidden mt-3 tile-list sm:grid-cols-2 sm:gap-2">
+      {lineup.map((b) => {
+        const uses = usesLine(b.devices, HOME_USES[b.id]);
+        return (
+          <li>
+            <a href={`/${b.id}`} class="card tile flex items-center gap-2 h-full min-h-12 px-2 py-2">
+              <div class="w-14 h-14 shrink-0 flex items-center justify-center" aria-hidden="true">
+                <Silhouette battery={b} scaleTo={lineupScale} class="max-w-full" />
+              </div>
+              <div class="min-w-0">
+                <span class="tile-name">{b.name}</span>
+                {uses && <p class="text-sm leading-snug text-ink-2">{uses}</p>}
+              </div>
+            </a>
+          </li>
+        );
+      })}
     </ul>
   </section>
 
-  <section class="wrap mt-14">
+  <section class="wrap mt-8 sm:mt-14">
     <h2 class="section-title">What does it go in?</h2>
     <p class="lede measure">If you know the device, start there. Every answer quotes the maker’s own manual or support page.</p>
-    <ul class="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+    {/* Rows (name left, count right) until five columns fit, then stacked tiles. */}
+    <ul class="mt-5 tile-list sm:grid-cols-2 lg:grid-cols-5 sm:gap-2">
       {deviceGroups.map((g) => (
         <li>
-          <a href={`/devices#${g.id}`} class="card tile block h-full">
-            <span class="block font-mono font-semibold text-lg">{g.name}</span>
-            <span class="block mt-1 text-sm text-muted">{g.n} {g.n === 1 ? 'device' : 'devices'}</span>
+          <a href={`/devices#${g.id}`} class="card tile flex items-center justify-between gap-3 h-full min-h-12 px-3 py-2 lg:block lg:p-4">
+            <span class="tile-name">{g.name}</span>
+            <span class="shrink-0 text-sm text-muted lg:block lg:mt-1">{g.n} {g.n === 1 ? 'device' : 'devices'}</span>
           </a>
         </li>
       ))}
@@ -134,7 +147,7 @@ const jsonld = [
         const b = batteryById(d.battery)!;
         return (
           <li class="border-b border-line">
-            <a href={`/devices/${d.id}`} class="flex items-baseline justify-between gap-4 py-3 min-h-11 hover:bg-surface-2">
+            <a href={`/devices/${d.id}`} class="flex items-baseline justify-between gap-4 py-2 min-h-11 hover:bg-surface-2">
               <span class="link font-sans text-base">{deviceTitle(d)}</span>
               <span class="font-mono font-semibold text-base shrink-0">{d.count > 1 ? `${d.count} ` : ''}{d.code ?? b.name}</span>
             </a>
@@ -142,111 +155,116 @@ const jsonld = [
         );
       })}
     </ul>
-    <p class="mt-4"><a href="/devices" class="link text-base">All {deviceCount} devices</a></p>
+    <p class="mt-2"><a href="/devices" class="link tap text-base">All {deviceCount} devices</a></p>
   </section>
 
-  <section class="wrap mt-14">
+  <section class="wrap mt-8 sm:mt-14">
     <h2 class="section-title">Small round batteries</h2>
     <p class="lede measure">Coin and button batteries look alike, but a small difference in size or voltage matters. The name is stamped on the flat side.</p>
-    <ul class="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+    {/* Rows until four columns fit, then stacked tiles. */}
+    <ul class="round mt-5 tile-list sm:grid-cols-2 lg:grid-cols-4 sm:gap-2">
       {round.map((b) => {
         const names = brandNames(b);
         return (
           <li>
-            <a href={`/${b.id}`} class="card tile flex flex-col h-full">
-              {/* Face and edge at one scale for all eight: the edge shows the thickness that tells them apart. */}
-              <div class="h-12 sm:h-16 flex items-end gap-2" aria-hidden="true">
-                <Silhouette battery={b} scaleTo={roundScale} />
-                <Silhouette battery={b} view="front" scaleTo={roundScale} />
+            <a href={`/${b.id}`} class="card tile flex items-center gap-2 h-full min-h-12 px-2 py-2 lg:flex-col lg:items-stretch lg:gap-0 lg:p-4">
+              {/* Face and edge at one scale for all eight: the edge shows the thickness that tells them apart. In a row the edge sits under the face; in a tile, beside it. */}
+              <div class="w-14 shrink-0 flex flex-col items-center gap-1 lg:w-auto lg:flex-row lg:items-end lg:gap-2" aria-hidden="true">
+                <div class="round-face flex items-end justify-center"><Silhouette battery={b} scaleTo={roundScale} /></div>
+                <div class="round-edge flex items-end justify-center" style={`--edge:${edgeRatio}`}><Silhouette battery={b} view="front" scaleTo={edgeScale} /></div>
               </div>
-              <span class="mt-3 font-mono font-semibold text-lg">{b.name}</span>
-              <p class="mt-1 text-sm text-ink-2">{acrossThick(b)}</p>
-              <p class="text-sm text-ink-2">{fmt(primaryVariant(b).voltage.nominal)} volts</p>
-              {names.length > 0 && (
-                <p class="mt-1 text-sm text-ink-2">
-                  Also sold as {names.map((x, i) => <>{i > 0 && ' and '}{x.brand} <span class="font-mono">{x.code}</span></>)}
+              <div class="min-w-0 lg:mt-3">
+                <p class="flex flex-wrap items-baseline justify-between gap-x-3">
+                  <span class="tile-name">{b.name}</span>
+                  <span class="text-sm text-ink-2">{fmt(primaryVariant(b).voltage.nominal)} volts</span>
                 </p>
-              )}
+                <p class="text-sm leading-snug text-ink-2">{acrossThick(b)}</p>
+                {names.length > 0 && (
+                  <p class="mt-0.5 text-sm leading-snug text-ink-2">
+                    Also sold as {names.map((x, i) => <>{i > 0 && ' and '}{x.brand} <span class="font-mono">{x.code}</span></>)}
+                  </p>
+                )}
+              </div>
             </a>
           </li>
         );
       })}
     </ul>
-    <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-base">
+    <ul class="mt-2 flex flex-wrap gap-x-6 text-base">
       <li><a class="link" href={`/${categoryById.coin.slug}`}>All coin batteries</a></li>
       <li><a class="link" href={`/${categoryById.button.slug}`}>All button batteries</a></li>
       <li><a class="link" href={`/${categoryById['hearing-aid'].slug}`}>Hearing aid batteries</a></li>
     </ul>
   </section>
 
-  <section class="wrap mt-14">
+  <section class="wrap mt-8 sm:mt-14">
     <h2 class="section-title">Not sure which one you have?</h2>
-    <ul class="grid sm:grid-cols-3 gap-2">
+    <ul class="tile-list sm:grid-cols-2 lg:grid-cols-3 sm:gap-2">
       {finders.map((t) => (
         <li>
-          <a href={t.href} class="card tile block h-full">
-            <span class="block font-mono font-semibold text-lg">{t.title}</span>
-            <p class="mt-1 text-base text-ink-2">{t.body}</p>
+          <a href={t.href} class="card tile block h-full min-h-12 px-3 py-2 sm:p-4">
+            <span class="tile-name">{t.title}</span>
+            <p class="mt-0.5 text-sm leading-snug text-ink-2">{t.body}</p>
           </a>
         </li>
       ))}
     </ul>
   </section>
 
-  <section class="wrap mt-14">
+  <section class="wrap mt-8 sm:mt-14">
     <h2 class="section-title">Can I use one instead of the other?</h2>
     <p class="lede measure">Two batteries that look alike are not always a safe swap. Each page below puts a pair side by side.</p>
     <ul class="mt-5 flex flex-wrap gap-2">
       {pairLinks.map((p) => <li><a href={p.href} class="chip">{p.label}</a></li>)}
     </ul>
-    <p class="mt-4"><a href="/compare#all-pairs" class="link text-base">All {pairs().size} comparisons</a></p>
+    <p class="mt-2"><a href="/compare#all-pairs" class="link tap text-base">All {pairs().size} comparisons</a></p>
   </section>
 
-  <section class="wrap mt-14">
+  <section class="wrap mt-8 sm:mt-14">
     <h2 class="section-title">Safety and care</h2>
     <div class="callout danger measure">
-      <p class="font-mono font-semibold text-lg"><a class="link" href="/reference/button-battery-ingestion">If a battery is swallowed</a></p>
-      <p class="mt-1 text-base">
+      <p class="font-mono font-semibold text-lg"><a class="link tap" href="/reference/button-battery-ingestion">If a battery is swallowed</a></p>
+      <p class="text-base">
         Call the National Battery Ingestion Hotline at <a class="link font-mono whitespace-nowrap" href="tel:+18004988666">1-800-498-8666</a> or Poison Help at <a class="link font-mono whitespace-nowrap" href="tel:+18002221222">1-800-222-1222</a> right away, without waiting for symptoms.
       </p>
     </div>
-    <ul class="mt-6 grid gap-x-8 gap-y-5 sm:grid-cols-2 max-w-4xl">
+    <ul class="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2 max-w-4xl">
       {guides.map((g) => (
         <li>
-          <a class="link font-semibold text-base" href={`/reference/${g.slug}`}>{g.title}</a>
-          <p class="mt-1 text-base text-ink-2">{g.line}</p>
+          <a class="link tap font-semibold text-base" href={`/reference/${g.slug}`}>{g.title}</a>
+          <p class="text-base text-ink-2">{g.line}</p>
         </li>
       ))}
     </ul>
   </section>
 
-  <section class="wrap mt-14">
+  <section class="wrap mt-8 sm:mt-14">
     <h2 class="section-title">All batteries by type</h2>
-    <ul class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="tile-list sm:grid-cols-2 lg:grid-cols-3 sm:gap-2">
       {CATEGORY_META.map((c) => {
         const rep = batteryById(catRep[c.id]);
         const n = batteries().filter((b) => b.category === c.id).length;
         return (
           <li>
-            <a href={`/${c.slug}`} class="card tile flex gap-4 h-full">
-              <div class="w-16 h-20 shrink-0 flex items-end justify-center" aria-hidden="true">{rep && <Silhouette battery={rep} class="max-h-full max-w-full" />}</div>
+            <a href={`/${c.slug}`} class="card tile flex items-center gap-2 h-full min-h-12 px-2 py-2 sm:items-start sm:gap-4 sm:p-4">
+              <div class="w-14 h-14 shrink-0 flex items-center justify-center" aria-hidden="true">{rep && <Silhouette battery={rep} class="max-h-full max-w-full" />}</div>
               <div class="min-w-0">
-                <span class="block font-mono font-semibold text-lg">{c.name}</span>
-                <p class="mt-1 text-sm text-ink-2">{c.description}</p>
-                <p class="mt-1 text-sm text-muted">{n} {n === 1 ? 'size' : 'sizes'}</p>
+                <span class="tile-name">{c.name}</span>
+                <p class="text-sm leading-snug text-ink-2">{c.description}</p>
+                <p class="mt-0.5 text-sm leading-snug text-muted">{n} {n === 1 ? 'size' : 'sizes'}</p>
               </div>
             </a>
           </li>
         );
       })}
     </ul>
-    <p class="mt-4"><a href="/batteries" class="link text-base">All {s.batteries} sizes</a></p>
+    <p class="mt-2"><a href="/batteries" class="link tap text-base">All {s.batteries} sizes</a></p>
   </section>
 
-  <section class="wrap mt-14 pb-6">
+  <section class="wrap mt-8 sm:mt-14 pb-6">
     <h2 class="section-title">Where these numbers come from</h2>
     <p class="lede measure">Every size, voltage and weight on this site was read from the battery maker’s own datasheet or from the published standard. Each battery page lists its sources, and nothing here is ranked or recommended. The data is free to use.</p>
-    <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-base">
+    <ul class="mt-2 flex flex-wrap gap-x-6 text-base">
       <li><a class="link" href="/about">About this site</a></li>
       <li><a class="link" href="/sources">Sources</a></li>
       <li><a class="link" href="/data">Data, 3D models and API</a></li>
@@ -255,6 +273,13 @@ const jsonld = [
 </BaseLayout>
 
 <style>
+  /* Small round batteries: --face is the drawn width of the widest face, and
+     the edge box is as tall as the thickest edge at that same scale. */
+  .round { --face: 2.4rem; }
+  @media (min-width: 1024px) { .round { --face: 4rem; } }
+  .round-face { height: var(--face); }
+  .round-edge { height: calc(var(--face) * var(--edge)); }
+
   /* The highlighted match: a pale wash and an ink bar, so it shows without color vision. */
   #hero-results :global([aria-selected='true'] > a) {
     background: var(--wash, var(--surface-2));

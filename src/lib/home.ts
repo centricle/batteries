@@ -52,20 +52,34 @@ export function deviceLine(d: DeviceEntry) {
 }
 
 /**
- * The first two or three entries of a battery's `devices` list as one short
- * line. Parenthetical detail is dropped ("Computer motherboards (BIOS and RTC
- * backup)" reads "Computer motherboards"); a third entry is added only if the
- * line stays short enough for a phone tile.
+ * Which entries of each battery's own `devices` list the home page names, by
+ * index: the uses a person replacing that battery is most likely holding. The
+ * first entries in the data are not always those (a CR2032 is also a
+ * motherboard battery, a 9V also powers guitar pedals). Indexes point into the
+ * data file, so check them when its `devices` list is reordered.
  */
-export function usesLine(list: string[], budget = 52) {
-  const items = list.map((s) => s.replace(/\s*\([^)]*\)/g, '').trim()).filter(Boolean);
-  const out: string[] = [];
-  for (const it of items) {
-    if (out.length === 3) break;
-    if (out.length === 2 && [...out, it].join(', ').length > budget) break;
-    out.push(it);
-  }
-  return out.map((s, i) => (i === 0 ? s : lowerFirst(s))).join(', ');
+export const HOME_USES: Record<string, number[]> = {
+  aaa: [0, 1],
+  aa: [0, 1],
+  c: [0, 1, 2],
+  d: [0, 1],
+  '9v': [0],
+  cr123a: [0, 3, 4],
+  '18650': [4, 1, 2],
+  cr2032: [0, 1, 3],
+  lr44: [1, 2, 6],
+  '312': [0],
+};
+
+/**
+ * The chosen entries of a battery's `devices` list as one plain comma list,
+ * only the first word capitalized. Every word comes from the data; bracketed
+ * detail is dropped ("Computer motherboards (BIOS and RTC backup)" reads
+ * "Computer motherboards"). Without picks, the first two entries.
+ */
+export function usesLine(list: string[], picks: number[] = [0, 1]) {
+  const items = picks.map((i) => list[i]?.replace(/\s*\([^)]*\)/g, '').trim()).filter((s): s is string => !!s);
+  return items.map((s, i) => (i === 0 ? s : lowerFirst(s))).join(', ');
 }
 
 /** "20 mm across, 3.2 mm thick" for a flat round battery. */

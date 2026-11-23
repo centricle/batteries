@@ -227,8 +227,38 @@ html {
     text-decoration: none;
     transition: border-color 0.12s;
   }
-  .tile:hover, .tile:focus-visible { border-color: var(--ink); }
+  /* Raised so a hovered or focused tile's border and focus ring are not
+     painted over by the next tile in a ruled list. */
+  .tile:hover, .tile:focus-visible { border-color: var(--ink); position: relative; z-index: 1; }
   .tile .name, .tile-name { display: block; font-family: var(--font-mono); font-size: 1.15rem; line-height: 1.3; font-weight: 600; color: var(--ink); }
+
+  /* A grid of tiles that is a ruled list on a phone: one column, each row
+     sharing its rule with the next. Columns and gaps from sm are utilities
+     on the list (sm:gap-2 sm:grid-cols-2). */
+  .tile-list { display: grid; }
+  @media (max-width: 639.98px) {
+    .tile-list > li + li { margin-top: -1px; }
+  }
+
+  /* Tap height. A link that stands on its own gets a target at least 2rem
+     tall from padding or min-height, never a bigger font. A link inside a
+     sentence keeps its line. .tap is for markup; the rest catch the common
+     shapes on every page: list items that are one link, a link heading with
+     its line under it, breadcrumbs, links in a flex row, links in table
+     cells, and links inside a chip. */
+  .tap,
+  :where(ul, ol) > li > a.link:only-child,
+  :where(li, div) > a.link:first-child:has(+ p),
+  nav > a.link,
+  .flex > a.link,
+  .chip > a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+  }
+  /* In a table the padding reaches the cell edges (cells are padded 0.5rem),
+     so the whole row height is the target and the row does not grow. */
+  :where(td, th) > a.link { padding-block: 0.5rem; }
 
   .chip {
     display: inline-flex; align-items: center; gap: 0.35em;
@@ -239,7 +269,10 @@ html {
     line-height: 1.4;
     color: var(--ink-2);
     background: var(--surface);
-    white-space: nowrap;
+    /* A chip keeps its label on one line while the line has room; a label
+       longer than a phone screen wraps inside the chip instead of pushing
+       the page sideways. */
+    max-width: 100%;
   }
   a.chip { min-height: 2rem; color: var(--ink); text-decoration: none; }
   a.chip:hover { border-color: var(--ink); background: var(--surface-2); }
