@@ -1,11 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { batteries, categoryById, fmt, sizeLabel, voltages, stats } from '../lib/data';
+import { nicknames } from '../lib/plain';
 
 const list = batteries();
 const s = stats();
+// Aliases that say "cell" or "primary" stay in the filter keys, so typing
+// "coin cell" still finds the CR2032, and out of the visible list.
 const rows = list.map((b) => ({
   b,
+  aliases: nicknames(b),
   iec: [...new Set(b.codes.filter((c) => c.system === 'IEC').map((c) => c.code))],
   ansi: [...new Set(b.codes.filter((c) => c.system === 'ANSI' || c.system === 'NEDA').map((c) => c.code))],
   other: b.codes.filter((c) => !['IEC', 'ANSI', 'NEDA'].includes(c.system)),
@@ -38,7 +42,7 @@ const jsonld = {
       <table class="table min-w-[48rem]">
         <thead><tr><th>Battery</th><th>Type</th><th class="n">Size (mm)</th><th class="n">Volts</th><th>Standard name (IEC)</th><th>US standard (ANSI)</th><th>Maker and other names</th></tr></thead>
         <tbody id="eq-body">
-          {rows.map(({ b, iec, ansi, other }) => (
+          {rows.map(({ b, aliases, iec, ansi, other }) => (
             <tr data-k={[b.name, b.id, ...b.aliases, ...b.codes.map((c) => c.code)].join('|').toLowerCase().replace(/[^a-z0-9.|]/g, '')}>
               <td class="font-semibold whitespace-nowrap"><a href={`/${b.id}`} class="link">{b.name}</a></td>
               <td class="whitespace-nowrap text-ink-2">{categoryById[b.category].short}</td>
@@ -47,8 +51,8 @@ const jsonld = {
               <td class="mono">{iec.join(', ')}</td>
               <td class="mono">{ansi.join(', ')}</td>
               <td class="text-ink-2">
-                {other.map((c, i) => <span class="whitespace-nowrap">{c.system} <span class="mono text-ink">{c.code}</span>{i < other.length - 1 || b.aliases.length ? ', ' : ''}</span>)}
-                {b.aliases.length > 0 && <span>{b.aliases.join(', ')}</span>}
+                {other.map((c, i) => <span class="whitespace-nowrap">{c.system} <span class="mono text-ink">{c.code}</span>{i < other.length - 1 || aliases.length ? ', ' : ''}</span>)}
+                {aliases.length > 0 && <span>{aliases.join(', ')}</span>}
               </td>
             </tr>
           ))}

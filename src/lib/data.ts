@@ -355,6 +355,15 @@ export function interchangeFor(b: Battery) {
 // ------------------------------------------------------------- client data
 
 /** What the 3D viewer needs to rebuild the model in the browser. */
+/** The kind as printed on the generic label of the 3D model. A chemical
+ *  formula (Li-MnO₂, Li-FeS₂, HgO) means nothing to most readers, so those
+ *  print the plain kind word up to its first "(" or ",": "Lithium" from
+ *  "Lithium (3 V)". Abbreviations (Li-ion, NiMH, LTO) stay. */
+const FORMULA = /[₀-₉]|MnO|FeS|SOCl|CFx|HgO/;
+export const labelKind = (c: { short: string; plainName: string }) =>
+  FORMULA.test(c.short) ? c.plainName.split(/[(,]/)[0].trim() : c.short;
+
+// src/lib/viewer.ts draws the label text from `short` here.
 export function modelSpec(b: Battery) {
   const v = primaryVariant(b);
   return {
@@ -366,8 +375,8 @@ export function modelSpec(b: Battery) {
     geometry: b.geometry,
     color: chem(v.chemistry).color,
     voltage: v.voltage.nominal,
-    chemistry: chem(v.chemistry).short,
-    chemistries: chemistryGroups(b).map((g) => ({ id: g.chem.id, short: g.chem.short, color: g.chem.color, voltage: g.variants[0].voltage.nominal })),
+    chemistry: labelKind(chem(v.chemistry)),
+    chemistries: chemistryGroups(b).map((g) => ({ id: g.chem.id, short: labelKind(g.chem), color: g.chem.color, voltage: g.variants[0].voltage.nominal })),
   };
 }
 

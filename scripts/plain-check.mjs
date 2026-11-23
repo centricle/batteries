@@ -130,10 +130,14 @@ eq('voltage cr2032', lines('cr2032'), '3 V lithium | 3.6 V rechargeable, sold as
 eq('voltage 9v', lines('9v'), '9 V alkaline, heavy duty and lithium | 8.4 or 9.6 V rechargeable NiMH | 9 V rechargeable lithium');
 eq('weight aa', plainWeight(byId.aa), 'About 23 g (0.8 oz), alkaline');
 eq('weight 18650', plainWeight(byId['18650']), '45 to 48.5 g (1.6 to 1.7 oz), depending on the product');
-eq('other names aa', otherNames(byId.aa).join(', '), 'MN1500, E91, 815');
-eq('other names cr2032', otherNames(byId.cr2032).join(', '), 'DL2032, ECR2032, 5004LC');
-eq('other names lr44 (brands first)', otherNames(byId.lr44).join(', '), 'PX76A, A76, RW82');
-eq('other names sr416sw (watchmaker number last)', otherNames(byId.sr416sw).join(', '), 'V337, SR416, 280-75');
+eq('other names aa (IEC name first)', otherNames(byId.aa).join(', '), 'LR6, MN1500, E91');
+eq('other names cr2032 (no US standard or type number)', otherNames(byId.cr2032).join(', '), 'DL2032, ECR2032');
+eq('other names cr2025 (none on a pack)', otherNames(byId.cr2025).join(', '), '');
+eq('other names lr44 (IEC, then AG, then brands)', otherNames(byId.lr44).join(', '), 'LR1154, AG13, PX76A, A76');
+eq('other names sr416sw (no watchmaker number)', otherNames(byId.sr416sw).join(', '), 'SR416, V337');
+eq('other names 312 (IEC name that is also an alias)', otherNames(byId['312']).join(', '), 'PR41, DA312, AC312');
+eq('other names sr626sw (no AG name of another kind)', otherNames(byId.sr626sw).join(', '), 'SR626, D377, SR626W');
+eq('tile names lr44 (two only)', tileFacts(byId.lr44).names.join(', '), 'LR1154, AG13');
 eq('tile volts aa', plainVoltsShort(byId.aa), '1.5 volts; rechargeable 1.2 volts');
 eq('tile volts lr44', plainVoltsShort(byId.lr44), '1.5 volts; silver oxide 1.55 volts');
 eq('tile volts cr2032', plainVoltsShort(byId.cr2032), '3 volts');

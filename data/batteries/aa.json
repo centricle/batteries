@@ -413,7 +413,7 @@
     {
       "id": "aaa",
       "relation": "does-not-fit",
-      "note": "AAA batteries share the 1.5 V alkaline chemistry but are smaller, and do not work in place of AA batteries."
+      "note": "AAA batteries are also 1.5 V alkaline but are smaller, and do not work in place of AA batteries."
     },
     {
       "id": "2-3aa",

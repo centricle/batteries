@@ -55,7 +55,8 @@ const voltLines = voltageLines(b, (c) => chem(c).status === 'current');
 // structured data, where people who type them find the page, and out of
 // anything a visitor reads.
 const shownAliases = nicknames(b);
-const alsoCalled = [...shownAliases.slice(0, 3), ...otherNames(b)];
+// A Set: the IEC name can also be an alias (PR41 on the 312).
+const alsoCalled = [...new Set([...shownAliases.slice(0, 3), ...otherNames(b)])];
 const allNames = [...new Set([...b.codes.map((c) => c.code), ...shownAliases])].filter((n) => n !== b.name);
 const searchNames = [...new Set([...b.codes.map((c) => c.code), ...b.aliases])].filter((n) => n !== b.name);
 
@@ -83,7 +84,8 @@ const sameAs = otherNames(b);
 const equiv = swapNames('equivalent');
 const caveat = swapNames('fits-with-caveat');
 const swapLine = [
-  sameAs.length ? `Any battery sold as ${orList(sameAs)} is ${withArt(b.name)}.` : '',
+  // Only names a shopper sees on a pack (plain.ts otherNames); with none, say so plainly.
+  sameAs.length ? `Any battery sold as ${orList(sameAs)} is ${withArt(b.name)}.` : `Any brand marked ${b.name} is the same battery.`,
   equiv.length ? `${capFirst(orList(equiv))} works the same.` : '',
   caveat.length ? `${capFirst(orList(caveat))} also fits, with a catch.` : '',
 ].filter(Boolean).join(' ');
@@ -237,7 +239,7 @@ const jsonld = [
 const title = `${b.name} battery: size, other names and what else fits | batteries.fyi`;
 const jump = [
   ['codes', 'Other names'],
-  ...(inter.length ? [['interchange', 'What else works']] : [['similar', 'Close in size']]),
+  ...(inter.length ? [['interchange', 'Will another battery work?']] : [['similar', 'Close in size']]),
   ...(kindRows.length > 1 ? [['kinds', 'Kinds']] : []),
   ...(sourced.length || b.devices.length ? [['devices', 'What uses it']] : []),
   ...(b.safety.length ? [['safety', 'Safety']] : []),
@@ -264,7 +266,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
       <p class="lede measure mt-3" data-summary>{summary}</p>
       {swapLine && (
         <p class="measure mt-3 text-base" data-swap>
-          {swapLine}{inter.length > 0 && <>{' '}<a class="link" href="#interchange">What else works</a></>}
+          {swapLine}{inter.length > 0 && <>{' '}<a class="link" href="#interchange">Will another battery work?</a></>}
         </p>
       )}
       {statusText && <p class="mt-3 chip">{statusText}</p>}
@@ -290,7 +292,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
           <dt class="label">Also called</dt>
           <dd class="text-base">
             {alsoCalled.length > 0 && <span>{alsoCalled.join(', ')}. </span>}
-            <a class="link font-sans" href="#codes">All {allNames.length + 1} names</a>
+            <a class="link tap font-sans" href="#codes">All {allNames.length + 1} names</a>
           </dd>
         </div>
       </dl>
@@ -405,7 +407,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
           ))}
         </ul>
       </div>
-      <p class="mt-3 text-base"><a class="link" href={`/compare?ids=${[b.id, ...sims.slice(0, 4).map((s) => s.battery.id)].join(',')}`}>See these sizes side by side in 3D</a></p>
+      <p class="mt-3 text-base"><a class="link tap" href={`/compare?ids=${[b.id, ...sims.slice(0, 4).map((s) => s.battery.id)].join(',')}`}>See these sizes side by side in 3D</a></p>
       {headToHead.length > 0 && (
         <div class="mt-4">
           <p class="text-base font-semibold">Compare side by side:</p>
@@ -473,7 +475,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
             </li>
           ))}
         </ul>
-        {isSmallRound && <p class="mt-3 text-base"><a class="link" href="/reference/button-battery-ingestion">If a button or coin battery is swallowed</a></p>}
+        {isSmallRound && <p class="mt-3 text-base"><a class="link tap" href="/reference/button-battery-ingestion">If a button or coin battery is swallowed</a></p>}
         {b.category === 'li-ion' && (
           <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-base">
             <li><a class="link" href="/reference/lithium-ion-safety">Lithium-ion battery safety</a></li>
@@ -526,7 +528,9 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
         <h3 class="text-lg font-semibold mb-3">Dimensions</h3>
         <div class="grid gap-6 lg:grid-cols-[1.3fr_1fr] items-start">
           <figure class="card p-4 drawing min-w-0">
-            <div class="w-full max-h-[30rem] [&>svg]:w-full [&>svg]:h-auto [&>svg]:max-h-[28rem]" set:html={drawingSVG(b)} />
+            {/* Labels are a fixed share of the drawing's width (src/lib/drawing.ts):
+                full width on a phone, capped from sm up so they read at about 17 px. */}
+            <div class="w-full max-h-[30rem] [&>svg]:w-full [&>svg]:h-auto [&>svg]:max-h-[28rem] sm:[&>svg]:max-w-[17rem] sm:[&>svg]:mx-auto" set:html={drawingSVG(b)} />
             <figcaption class="mt-2 text-sm text-ink-2 flex flex-wrap gap-x-4">
               <span>Drawn to scale, in millimeters.</span>
               <a class="link" href={`/actual-size?ids=${b.id}`}>See it at actual size</a>
@@ -587,7 +591,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
             <span class="text-ink-2 tabular w-7 shrink-0 text-right">{i + 1}.</span>
             <span class="font-sans">
               <span class="text-ink-2">{s.publisher}.</span>{' '}
-              {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span class="text-ink">{s.title}</span>}
+              {s.url ? <a class="link tap" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span class="text-ink">{s.title}</span>}
               <span class="text-ink-2">. {s.kind[0].toUpperCase() + s.kind.slice(1)}, read {longDate(s.accessed)}.</span>
               {s.note && <span class="block text-xs text-ink-2 mt-0.5">{s.note}</span>}
             </span>
@@ -597,7 +601,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
       {b.form === 'disc' && (
         <p class="mt-3 text-sm text-ink-2 font-sans">Coin sizes in the summary are from the United States Mint's <a class="link" href="https://www.usmint.gov/learn/coin-and-medal-programs/coin-specifications" rel="nofollow noopener" target="_blank">coin specifications</a>.</p>
       )}
-      <p class="mt-3 text-sm"><a class="link" href={history} rel="noopener">Every change to this entry is public</a></p>
+      <p class="mt-3 text-sm"><a class="link tap" href={history} rel="noopener">Every change to this entry is public</a></p>
     </section>
 
     <section class="card p-5 grid gap-4 md:grid-cols-2 text-sm">

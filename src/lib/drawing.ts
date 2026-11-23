@@ -181,7 +181,7 @@ export function drawingSVG(b: Battery) {
     .ah{fill:var(--draw-dim,currentColor)}
     .tb{fill:var(--draw-bg,var(--surface,#fff))}
     text{fill:currentColor;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-    .cap{fill:var(--draw-cap,currentColor);opacity:0.6;font-family:system-ui,sans-serif}
+    .cap{font-family:system-ui,sans-serif}
   </style>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vbx.toFixed(2)} ${vby.toFixed(2)} ${vbw.toFixed(2)} ${vbh.toFixed(2)}" role="img" aria-label="Dimensioned drawing of the ${b.name}, in millimeters">${style}${out.els.join('')}</svg>`;
 }

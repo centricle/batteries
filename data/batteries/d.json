@@ -232,7 +232,7 @@
     {
       "id": "c",
       "relation": "does-not-fit",
-      "note": "C batteries share the 1.5 V alkaline chemistry but are smaller and have lower capacity."
+      "note": "C batteries are also 1.5 V alkaline but are smaller and hold less."
     },
     {
       "id": "er34615",

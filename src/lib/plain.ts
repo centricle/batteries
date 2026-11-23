@@ -353,7 +353,8 @@ export const nicknames = (b: { aliases?: string[] }) => (b.aliases ?? []).filter
 
 /** What a tile in a list of sizes shows under the name. */
 export function tileFacts(b: B & { aliases?: string[] }) {
-  const names = otherNames(b, 2);
+  // Two names fit on a tile, so the extra AG slot on button batteries is cut.
+  const names = otherNames(b, 2).slice(0, 2);
   for (const a of nicknames(b)) if (names.length < 2 && !names.includes(a)) names.push(a);
   return { size: plainSize(b, { inches: false }), volts: plainVoltsShort(b), names };
 }
@@ -377,41 +378,54 @@ export function plainWeight(b: B): string {
   return `${num(lo)} to ${num(hi)} g (${olo === ohi ? olo : `${olo.replace(' oz', '')} to ${ohi}`}), depending on the product`;
 }
 
-const STANDARDS = ['IEC', 'ANSI', 'JIS', 'NEDA', 'Military', 'Generic', 'Industry'];
-// The brands most US shoppers see on the rack, in this order.
-const BRANDS = ['Duracell', 'Energizer', 'Panasonic', 'Rayovac'];
-// Watchmakers list their own replacement numbers (Citizen 280-08, Seiko
-// SB-A9), which nobody finds on a battery pack.
-const WATCHMAKERS = ['Citizen', 'Seiko', 'Timex', 'Bulova', 'Orient', 'Omega'];
-/** Type numbers: a maker's catalog number ("Varta type number 6032"), a bare
- *  number such as 815, or a watchmaker's replacement number. */
-const isTypeNumber = (c: B['codes'][number]) => /type number/i.test(c.note ?? '') || WATCHMAKERS.includes(c.system);
+// Well-known makers whose names a shopper finds on a pack, in this order.
+// Other makers, watchmakers' replacement numbers (Citizen 280-08) and US or
+// Japanese standard numbers (5004LC, UM-3) stay in the full table.
+const MAKERS = ['Duracell', 'Energizer', 'Panasonic', 'Rayovac', 'Maxell', 'Renata', 'Sony', 'Varta'];
+/** A maker's catalog number rather than a name on the pack: one the data
+ *  calls a type number ("Varta type number 6032") or a bare Varta number.
+ *  Varta's lettered names (V13GA) count as names. A number a brand prints
+ *  large on its own pack (Energizer 357) counts as a name too. */
+const isTypeNumber = (c: B['codes'][number]) => /type number/i.test(c.note ?? '') || (c.system === 'Varta' && /^\d+$/.test(c.code));
 
-/** A few other names a shopper may see on the pack for the main kind (or for
- *  any kind), at most one per system: the big four brands' names first, then
- *  other brands, then standards names, and type numbers last. Names for other
- *  kinds (BR1632A on a CR1632), product model numbers and other-name
- *  variants (LIR2032) are left to the full table, so "Any battery sold as
- *  these is a CR2032" stays true. */
+/** A few other names a shopper sees on the pack for the main kind (or for
+ *  any kind), at most one per system. May be empty.
+ *  - First, the IEC name when it differs from the page's own name (LR6 on
+ *    the AA), even when it is also listed as an alias (PR41 on the 312).
+ *  - On a button battery, the AG size number of the same kind (AG13 on the
+ *    LR44). It comes on top of n, so that line may show n + 1 names.
+ *  - Then names from the well-known makers in MAKERS, in that order.
+ *  Names for other kinds (BR1632A on a CR1632, AG4 on the silver oxide
+ *  SR626SW), product model numbers and other-name variants (LIR2032) are left
+ *  to the full table, so "Any battery sold as these is a CR2032" stays true. */
 export function otherNames(b: B & { aliases?: string[] }, n = 3): string[] {
   const main = b.variants[0].chemistry;
   const labelTokens = new Set(b.variants.flatMap((v) => (v.label ?? '').split(/[\s(),]+/)).filter(Boolean).map((t) => t.toLowerCase()));
-  const taken = new Set([b.name, ...(b.aliases ?? [])].map((s) => s.toLowerCase()));
-  const rank = (c: B['codes'][number]) =>
-    isTypeNumber(c) ? 6 : BRANDS.includes(c.system) ? BRANDS.indexOf(c.system) : STANDARDS.includes(c.system) ? 5 : 4;
+  const self = b.name.toLowerCase();
+  const ofThisKind = (c: B['codes'][number]) => !labelTokens.has(c.code.toLowerCase()) && (!c.chemistry || c.chemistry === main);
   const out: string[] = [];
   const systems = new Set<string>();
+  const taken = new Set([self, ...(b.aliases ?? []).map((s) => s.toLowerCase())]);
+  const take = (c: B['codes'][number]) => {
+    out.push(c.code);
+    taken.add(c.code.toLowerCase());
+    systems.add(c.system);
+  };
+
+  const iec = b.codes.find((c) => c.system === 'IEC' && ofThisKind(c) && c.code.toLowerCase() !== self);
+  if (iec) take(iec);
+  const ag = b.category === 'button' ? b.codes.find((c) => c.system === 'Generic' && /^AG\d+$/i.test(c.code) && ofThisKind(c)) : undefined;
+  if (ag) take(ag);
+  const limit = n + (ag ? 1 : 0);
+
   const sorted = b.codes
     .map((c, i) => ({ c, i }))
-    .filter(({ c }) => !labelTokens.has(c.code.toLowerCase()) && (!c.chemistry || c.chemistry === main))
-    .sort((x, y) => rank(x.c) - rank(y.c) || x.i - y.i);
+    .filter(({ c }) => ofThisKind(c) && MAKERS.includes(c.system) && !isTypeNumber(c))
+    .sort((x, y) => MAKERS.indexOf(x.c.system) - MAKERS.indexOf(y.c.system) || x.i - y.i);
   for (const { c } of sorted) {
-    const k = c.code.toLowerCase();
-    if (taken.has(k) || systems.has(c.system)) continue;
-    taken.add(k);
-    systems.add(c.system);
-    out.push(c.code);
-    if (out.length === n) break;
+    if (out.length >= limit) break;
+    if (taken.has(c.code.toLowerCase()) || systems.has(c.system)) continue;
+    take(c);
   }
   return out;
 }
