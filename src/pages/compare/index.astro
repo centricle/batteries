@@ -47,7 +47,7 @@ const pairGroups = CATEGORY_META.map((c) => ({
 <BaseLayout title="Compare battery sizes in 3D, to scale | batteries.fyi" description="Line up any battery sizes side by side at true scale in 3D: AA vs AAA, 18650 vs 21700, CR2032 vs CR2025, with dimensions, voltages and capacities compared.">
   <section class="wrap pt-8">
     <p class="eyebrow">Tool</p>
-    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Compare battery sizes</h1>
+    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Compare battery sizes</h1>
     <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Add any sizes to line them up in 3D at true relative scale, on a 10 mm grid. Coin and button cells stand on edge so their diameter reads against the others' length. The link updates as you go, so a comparison can be shared.</p>
 
     <div class="mt-5 flex flex-wrap items-center gap-2" id="picked" aria-live="polite"></div>
@@ -87,7 +87,7 @@ const pairGroups = CATEGORY_META.map((c) => ({
             <span>{g.c.name}</span><span class="text-muted font-normal text-[0.62rem]">{g.list.length} pages <span class="inline-block transition-transform group-open:rotate-90" aria-hidden="true">›</span></span>
           </summary>
           <ul class="flex flex-wrap gap-1.5 mt-3">
-            {g.list.map((p) => <li><a href={`/compare/${p.slug}`} class="chip font-sans text-[0.65rem] hover:border-accent hover:text-accent-ink">{p.a.name} vs {p.b.name}</a></li>)}
+            {g.list.map((p) => <li><a href={`/compare/${p.slug}`} class="chip text-[0.65rem] hover:border-accent hover:text-accent-ink">{p.a.name} vs {p.b.name}</a></li>)}
           </ul>
         </details>
       ))}
@@ -126,7 +126,7 @@ const pairGroups = CATEGORY_META.map((c) => ({
   async function draw() {
     history.replaceState(null, '', ids.length ? `?ids=${ids.join(',')}` : location.pathname);
     picked.innerHTML = ids.length
-      ? ids.map((id) => `<span class="chip font-sans text-[0.7rem] py-1 pl-2.5 pr-1"><a href="/${id}" class="font-semibold">${esc(facts[id].name)}</a><button type="button" data-remove="${id}" class="w-5 h-5 rounded-full hover:bg-surface-2" aria-label="Remove ${esc(facts[id].name)}">×</button></span>`).join('')
+      ? ids.map((id) => `<span class="chip text-[0.7rem] py-1 pl-2.5 pr-1"><a href="/${id}" class="font-semibold">${esc(facts[id].name)}</a><button type="button" data-remove="${id}" class="w-5 h-5 hover:bg-surface-2" aria-label="Remove ${esc(facts[id].name)}">×</button></span>`).join('')
       : '<span class="text-[0.7rem] text-muted">Nothing selected. Add a battery or pick a preset.</span>';
     renderTable();
     if (!hasGL) return;

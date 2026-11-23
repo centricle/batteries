@@ -49,7 +49,7 @@ const examples = [
 <BaseLayout title="Identify a battery by measurement: diameter and height lookup | batteries.fyi" description="Measure a battery's diameter and height (or width, depth and height) and get the closest standard sizes, with the difference in millimeters and the published voltage." jsonld={jsonld}>
   <section class="wrap pt-8">
     <p class="eyebrow">Tool</p>
-    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Identify a battery by measurement</h1>
+    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Identify a battery by measurement</h1>
     <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Measure the battery with calipers or a ruler and enter the numbers. The page compares them with the published dimensions of all {s.batteries} sizes in batteries.fyi, within the same shape (cylinder, coin or button, rectangular), and lists the eight closest with the difference for each dimension. A voltage reading, if you have one, narrows the list further. The link updates as you type, so a result can be shared.</p>
   </section>
 
@@ -122,7 +122,7 @@ const examples = [
       <div id="id-empty" class="card p-5">
         <p class="text-[0.8rem] text-ink-2">Enter at least one measurement to see matches. Or try one of these:</p>
         <ul class="mt-3 flex flex-wrap gap-1.5">
-          {examples.map((e) => <li><a class="chip font-sans" href={`/identify?${e.q}`} data-example={e.q}>{e.label}</a></li>)}
+          {examples.map((e) => <li><a class="chip" href={`/identify?${e.q}`} data-example={e.q}>{e.label}</a></li>)}
         </ul>
       </div>
       <div id="id-results" hidden>
@@ -369,9 +369,9 @@ const examples = [
               <a href="/${r.it.id}" class="font-semibold text-[0.9rem] hover:text-accent-ink">${esc(r.it.n)}</a>
               <span class="text-[0.6rem] text-muted">${esc(r.it.c)} · ${esc(r.it.s)} · ${esc(volts)}</span>
             </div>
-            <p class="text-[0.68rem] text-ink-2">${esc(r.deltas.join(', '))}${r.inside ? ` <span class="chip font-sans ml-1">${r.tol ? 'within published tolerance' : 'matches nominal size'}</span>` : ''}${r.vNote ? ` <span class="chip font-sans ml-1 ${r.vMatch ? '' : 'text-muted'}">${r.vNote}</span>` : ''}</p>
+            <p class="text-[0.68rem] text-ink-2">${esc(r.deltas.join(', '))}${r.inside ? ` <span class="chip ml-1">${r.tol ? 'within published tolerance' : 'matches nominal size'}</span>` : ''}${r.vNote ? ` <span class="chip ml-1 ${r.vMatch ? '' : 'text-muted'}">${r.vNote}</span>` : ''}</p>
             <div class="mt-1 flex items-center gap-2">
-              <div class="h-1.5 flex-1 max-w-[12rem] rounded-full bg-surface-3 overflow-hidden" role="img" aria-label="Match quality ${q} percent"><div class="h-full rounded-full bg-accent" style="width:${q}%"></div></div>
+              <div class="h-1.5 flex-1 max-w-[12rem] bg-surface-3 overflow-hidden" role="img" aria-label="Match quality ${q} percent"><div class="h-full bg-accent" style="width:${q}%"></div></div>
               <span class="text-[0.58rem] text-muted tabular">${q}% · distance ${r.dist.toFixed(3)}</span>
             </div>
           </div>

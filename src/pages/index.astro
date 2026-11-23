@@ -38,7 +38,7 @@ const jsonld = [
     <div class="absolute inset-0 grid-paper opacity-70 pointer-events-none" aria-hidden="true"></div>
     <div class="wrap relative pt-10 sm:pt-14 pb-6">
       <p class="eyebrow">The consumer battery reference</p>
-      <h1 class="mt-2 text-[2.2rem] sm:text-[3.4rem] font-[760] tracking-[-0.04em] leading-[0.98] max-w-3xl">Every battery, measured and cited.</h1>
+      <h1 class="mt-2 text-[1.9rem] sm:text-[2.6rem] font-medium tracking-[-0.025em] leading-[1.05] max-w-3xl">Every battery, measured and cited.</h1>
       <p class="mt-4 text-[0.85rem] sm:text-[0.95rem] text-ink-2 max-w-2xl">Dimensions with tolerances, every chemistry, every brand and standard code, and a true-scale 3D model for {s.batteries} battery sizes. Each value traces to an IEC standard or a manufacturer datasheet.</p>
       <form action="/search" class="mt-6 max-w-xl relative" role="search" id="hero-search">
         <label for="hero-q" class="sr-only">Search batteries</label>
@@ -46,16 +46,16 @@ const jsonld = [
         <input id="hero-q" name="q" class="input h-14 pl-11 text-[0.95rem] shadow-sm" placeholder="377, CR2032, 18650, 20 x 3.2, AirTag, RAV4 key" autocomplete="off" />
       </form>
       <div class="mt-3 flex flex-wrap gap-1.5 max-w-3xl">
-        {common.map((b) => <a href={`/${b.id}`} class="chip font-sans font-medium text-[0.66rem] py-1 px-2.5 bg-surface/80">{b.name}</a>)}
+        {common.map((b) => <a href={`/${b.id}`} class="chip font-medium text-[0.66rem] py-1 px-2.5 bg-surface/80">{b.name}</a>)}
       </div>
     </div>
     <div class="wrap relative pb-8">
       <Viewer batteries={lineup} mode="lineup" height="min(26rem, 70vw)" controls={false} class="border-0 bg-transparent" />
-      <p class="text-[0.6rem] text-muted mt-1">To scale, from the D cell to the size 312 hearing aid cell. Drag to orbit. Labels link to each entry.</p>
+      <p class="text-[0.6rem] text-muted mt-1"><span class="font-mono text-ink-2 uppercase tracking-[0.08em] mr-2">Fig. 1</span>To scale, from the D cell to the size 312 hearing aid cell. Drag to orbit. Labels link to each entry.</p>
     </div>
   </section>
 
-  <section class="wrap mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
+  <section class="wrap mt-10 specs grid-cols-2 md:grid-cols-4">
     {[
       [s.batteries, 'battery sizes'],
       [s.codes, 'cross-reference codes'],
@@ -124,8 +124,8 @@ const jsonld = [
     <section class="wrap mt-12">
       <h2 class="section-title">Head to head</h2>
       <ul class="flex flex-wrap gap-2">
-        {popularPairs.map((p) => <li><a href={`/compare/${p!.slug}`} class="chip font-sans text-[0.72rem] py-1.5 px-3 hover:border-accent hover:text-accent-ink">{p!.a.name} vs {p!.b.name}</a></li>)}
-        <li><a href="/compare#all-pairs" class="chip font-sans text-[0.72rem] py-1.5 px-3 text-muted hover:text-ink">All {pairs().size} comparisons</a></li>
+        {popularPairs.map((p) => <li><a href={`/compare/${p!.slug}`} class="chip text-[0.72rem] py-1.5 px-3 hover:border-accent hover:text-accent-ink">{p!.a.name} vs {p!.b.name}</a></li>)}
+        <li><a href="/compare#all-pairs" class="chip text-[0.72rem] py-1.5 px-3 text-muted hover:text-ink">All {pairs().size} comparisons</a></li>
       </ul>
     </section>
   )}

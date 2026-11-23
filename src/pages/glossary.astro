@@ -21,9 +21,9 @@ const jsonld = {
 <BaseLayout title="Battery glossary: mAh, C-rate, cutoff voltage and more | batteries.fyi" description={`Plain definitions of ${terms.length} battery terms: capacity, C-rate, nominal and cutoff voltage, self-discharge, protection circuits, cell formats and standards.`} jsonld={jsonld}>
   <section class="wrap pt-8 max-w-3xl">
     <p class="eyebrow">Reference</p>
-    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Glossary</h1>
+    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Glossary</h1>
     <p class="mt-2 text-[0.8rem] text-ink-2">{terms.length} terms used across the specifications, defined plainly.</p>
-    <nav class="mt-4 flex flex-wrap gap-1 text-[0.65rem]" aria-label="Letters">{letters.map((l) => <a href={`#letter-${l}`} class="chip font-sans">{l}</a>)}</nav>
+    <nav class="mt-4 flex flex-wrap gap-1 text-[0.65rem]" aria-label="Letters">{letters.map((l) => <a href={`#letter-${l}`} class="chip">{l}</a>)}</nav>
   </section>
   <section class="wrap mt-6 max-w-3xl">
     <dl class="space-y-5">

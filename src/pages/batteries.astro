@@ -10,10 +10,10 @@ const groups = CATEGORY_META.map((c) => ({ c, list: batteries().filter((b) => b.
 <BaseLayout title={`All ${s.batteries} battery sizes | batteries.fyi`} description={`Every battery size in the database, ${s.batteries} in all, grouped by type: household, lithium-ion, coin, button and watch, hearing aid, photo and specialty cells.`}>
   <section class="wrap pt-8">
     <p class="eyebrow">Index</p>
-    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">All battery sizes</h1>
+    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">All battery sizes</h1>
     <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">{s.batteries} physical sizes, {s.variants} chemistry variants and {s.codes.toLocaleString('en-US')} codes. Pick a type, or jump to any size below.</p>
     <nav class="mt-4 flex flex-wrap gap-1.5 text-[0.65rem]" aria-label="Jump to type">
-      {groups.map(({ c, list }) => <a href={`#${c.slug}`} class="chip font-sans">{c.short} <span class="text-muted">{list.length}</span></a>)}
+      {groups.map(({ c, list }) => <a href={`#${c.slug}`} class="chip">{c.short} <span class="text-muted">{list.length}</span></a>)}
     </nav>
   </section>
   {groups.map(({ c, list }) => {

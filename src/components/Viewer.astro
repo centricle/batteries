@@ -33,17 +33,17 @@ const chems = specs[0]?.chemistries ?? [];
       {single && chems.length > 1 && (
         <div class="flex flex-wrap gap-1" role="group" aria-label="Chemistry">
           {chems.map((c, i) => (
-            <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-chem={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+            <button type="button" class="btn btn-sm" data-chem={i} aria-pressed={i === 0 ? 'true' : 'false'}>
               <span class="dot" style={`background:${c.color}`}></span>{c.short}
             </button>
           ))}
         </div>
       )}
       <div class="ml-auto flex gap-1">
-        <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-act="explode" aria-pressed="false" title="Separate the parts">Explode</button>
-        <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-act="rotate" aria-pressed="true" title="Auto-rotate">Rotate</button>
-        <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-act="reset" title="Reset view">Reset</button>
-        <button type="button" class="btn btn-sm bg-surface/90 backdrop-blur" data-act="full" title="Full screen" aria-label="Full screen">
+        <button type="button" class="btn btn-sm" data-act="explode" aria-pressed="false" title="Separate the parts">Explode</button>
+        <button type="button" class="btn btn-sm" data-act="rotate" aria-pressed="true" title="Auto-rotate">Rotate</button>
+        <button type="button" class="btn btn-sm" data-act="reset" title="Reset view">Reset</button>
+        <button type="button" class="btn btn-sm" data-act="full" title="Full screen" aria-label="Full screen">
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
         </button>
       </div>
@@ -51,8 +51,8 @@ const chems = specs[0]?.chemistries ?? [];
   )}
   {downloads && single && (
     <div class="absolute top-2 right-2 flex gap-1 no-print">
-      <a class="btn btn-sm bg-surface/90 backdrop-blur" href={`/models/${single.id}.glb`} download>GLB</a>
-      <a class="btn btn-sm bg-surface/90 backdrop-blur" href={`/models/${single.id}.stl`} download>STL</a>
+      <a class="btn btn-sm" href={`/models/${single.id}.glb`} download>GLB</a>
+      <a class="btn btn-sm" href={`/models/${single.id}.stl`} download>STL</a>
     </div>
   )}
   {single && (
@@ -76,9 +76,9 @@ const chems = specs[0]?.chemistries ?? [];
   battery-viewer:fullscreen { border-radius: 0; height: 100vh !important; }
   :global(.viewer-label) {
     position: absolute; transform: translate(-50%, 0);
-    font-size: 0.62rem; font-weight: 650; color: var(--ink);
+    font-size: 0.58rem; font-weight: 500; color: var(--ink);
     background: color-mix(in oklch, var(--surface) 85%, transparent);
-    border: 1px solid var(--line); border-radius: 0.3rem; padding: 0.05rem 0.35rem;
+    border: 1px solid var(--line-2); border-radius: 0; padding: 0.05rem 0.35rem;
     white-space: nowrap; pointer-events: auto; text-decoration: none;
   }
   :global(.viewer-label:hover) { border-color: var(--accent); color: var(--accent-ink); }

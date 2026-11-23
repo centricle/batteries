@@ -76,7 +76,7 @@ const jsonld = [
   <section class="wrap pt-4 grid gap-8 lg:grid-cols-[1fr_1fr] items-start">
     <div class="min-w-0">
       <p class="eyebrow">Head to head</p>
-      <h1 class="text-[2.2rem] font-[750] tracking-tight leading-tight mt-1"><a href={`/${a.id}`} class="hover:text-accent-ink">{a.name}</a> <span class="text-muted font-[450]">vs</span> <a href={`/${b.id}`} class="hover:text-accent-ink">{b.name}</a></h1>
+      <h1 class="text-[2.2rem] font-semibold tracking-tight leading-tight mt-1"><a href={`/${a.id}`} class="hover:text-accent-ink">{a.name}</a> <span class="text-muted font-[450]">vs</span> <a href={`/${b.id}`} class="hover:text-accent-ink">{b.name}</a></h1>
       <div class="mt-4 space-y-2 text-[0.82rem] text-ink-2 max-w-xl">{lines.map((l) => <p>{l}</p>)}</div>
       {p.relations.map((r) => (
         <div class:list={['callout mt-4', REL_META[r.relation].cls]}>

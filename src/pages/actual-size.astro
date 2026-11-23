@@ -37,7 +37,7 @@ const jsonld = {
   <div id="as-screen" class="print:hidden">
     <section class="wrap pt-8">
       <p class="eyebrow">Tool</p>
-      <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Batteries at actual size</h1>
+      <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Batteries at actual size</h1>
       <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">This page draws batteries at their real physical size, so you can hold one against the screen and compare. Screens differ in pixel density, so first match the outline below to a bank card, driver's license or any other ID-1 card (85.60 × 53.98 mm). The setting is saved in this browser. For a sheet you can measure with a ruler, print the page at 100% scale; print sizes are exact without calibration.</p>
     </section>
 
@@ -331,7 +331,7 @@ const jsonld = {
     history.replaceState(null, '', ids.join(',') === DEFAULT.join(',') ? location.pathname : `?ids=${ids.join(',')}`);
     picked.innerHTML = ids.length
       ? ids
-          .map((id) => `<span class="chip font-sans text-[0.7rem] py-1 pl-2.5 pr-1"><a href="/${id}" class="font-semibold">${esc(specs[id].name)}</a><button type="button" data-remove="${id}" class="w-5 h-5 rounded-full hover:bg-surface-2" aria-label="Remove ${esc(specs[id].name)}">×</button></span>`)
+          .map((id) => `<span class="chip text-[0.7rem] py-1 pl-2.5 pr-1"><a href="/${id}" class="font-semibold">${esc(specs[id].name)}</a><button type="button" data-remove="${id}" class="w-5 h-5 hover:bg-surface-2" aria-label="Remove ${esc(specs[id].name)}">×</button></span>`)
           .join('')
       : '<span class="text-[0.7rem] text-muted">Nothing selected.</span>';
     drawStage();

@@ -40,6 +40,7 @@ const sourced = devicesFor(b.id);
 // Provenance up front: a reader sent here by an answer engine came to check a
 // claim, so the page shows where its numbers come from before anything else.
 const KIND_ORDER = ['standard', 'datasheet', 'regulation', 'catalog', 'reference', 'retailer'];
+const publisherCount = new Set(b.sources.map((x) => x.publisher)).size;
 const leadPublishers = [...new Set([...b.sources].sort((x, y) => KIND_ORDER.indexOf(x.kind) - KIND_ORDER.indexOf(y.kind)).map((x) => x.publisher))].slice(0, 3);
 const history = `https://github.com/centricle/batteries/commits/main/data/batteries/${b.id}.json`;
 const tileCite = (ids: string[]) => cite(ids).slice(0, 2);
@@ -156,19 +157,22 @@ const delta = (mm: number, label: string) => {
         <span class="eyebrow">{shapeWord(b)}</span>
         {b.status !== 'current' && <span class="chip" style="border-color:var(--warn);color:var(--warn)">{b.status}</span>}
       </div>
-      <h1 class="text-[2.6rem] sm:text-[3.2rem] font-[750] tracking-[-0.035em] leading-none">{b.name}</h1>
-      <p class="mt-2 text-[0.85rem] text-ink-2 font-medium tabular">{sizeLabel(b)} · {vs.map((v) => volts(v)).join(' / ')}</p>
+      <h1 class="text-[2.6rem] sm:text-[3.2rem] font-semibold tracking-[-0.03em] leading-none">{b.name}</h1>
+      <p class="mt-2 text-[0.8rem] text-ink-2 font-medium font-mono">{sizeLabel(b)} · {vs.map((v) => volts(v)).join(' / ')}</p>
       <p class="mt-4 text-[0.8rem] leading-relaxed text-ink-2 max-w-xl" data-summary>{sum}</p>
-      <p class="mt-2 text-[0.62rem] text-muted max-w-xl" data-provenance>
-        Checked {b.updated} against <a class="link" href="#sources">{b.sources.length} cited sources</a>{leadPublishers.length > 0 && <>, including {leadPublishers.join(', ')}</>}. Every number links to its source, and <a class="link" href={history} rel="noopener">every change to this entry is public</a>.
-      </p>
 
-      <div class="mt-5 grid grid-cols-2 gap-2">
-        <div class="spec"><span class="eyebrow">Voltage</span><span class="v">{fmt(pv.voltage.nominal)}<span class="u">V</span></span><span class="s">{chem(pv.chemistry).name}{groups.length > 1 ? `, +${groups.length - 1} more` : ''}<span class="whitespace-nowrap ml-1">{tileCite(pv.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span></span></div>
-        <div class="spec"><span class="eyebrow">Capacity</span>{capacityLabel(pv) ? <span class="v">{capacityLabel(pv).replace(' mAh', '')}<span class="u">mAh</span></span> : <span class="v text-muted">—</span>}<span class="s">{pv.capacity_mah?.range && !pv.capacity_mah?.typical ? 'Range across listed products; see table' : pv.capacity_mah?.conditions ? (() => { const c = pv.capacity_mah!.conditions!.split(/[;(]/)[0].trim(); return 'Rated: ' + (c.length > 46 ? c.slice(0, 44).replace(/\s+\S*$/, '') + '…' : c); })() : 'Not published'}{pv.capacity_mah && <span class="whitespace-nowrap ml-1">{tileCite(pv.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span>}</span></div>
-        <div class="spec"><span class="eyebrow">{b.form === 'disc' ? 'Diameter × thickness' : b.form === 'cylinder' ? 'Diameter × length' : 'W × D × H'}</span><span class="v text-[1.05rem]">{sizeLabel(b, false)}<span class="u">mm</span></span><span class="s">{b.form === 'disc' || b.form === 'cylinder' ? `${inch(d.diameter!.nominal)} × ${inch(d.height.nominal)} in` : `${inch(d.width!.nominal)} × ${inch(d.depth!.nominal)} × ${inch(d.height.nominal)} in`}<span class="whitespace-nowrap ml-1">{tileCite(d.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span></span></div>
+      <div class="mt-5 specs grid-cols-2">
+        <div class="spec"><span class="eyebrow">Voltage</span><span class="v">{fmt(pv.voltage.nominal)}<span class="u">V</span></span><span class="s">{chem(pv.chemistry).name}{groups.length > 1 ? `, +${groups.length - 1} more` : ''}{' '}<span class="whitespace-nowrap">{tileCite(pv.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span></span></div>
+        <div class="spec"><span class="eyebrow">Capacity</span>{capacityLabel(pv) ? <span class="v">{capacityLabel(pv).replace(' mAh', '')}<span class="u">mAh</span></span> : <span class="v text-muted">—</span>}<span class="s">{pv.capacity_mah?.range && !pv.capacity_mah?.typical ? 'Range across listed products; see table' : pv.capacity_mah?.conditions ? (() => { const c = pv.capacity_mah!.conditions!.split(/[;(]/)[0].trim(); return 'Rated: ' + (c.length > 46 ? c.slice(0, 44).replace(/\s+\S*$/, '') + '…' : c); })() : 'Not published'}{pv.capacity_mah && <>{' '}<span class="whitespace-nowrap">{tileCite(pv.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span></>}</span></div>
+        <div class="spec"><span class="eyebrow">{b.form === 'disc' ? 'Diameter × thickness' : b.form === 'cylinder' ? 'Diameter × length' : 'W × D × H'}</span><span class="v text-[1.05rem]">{sizeLabel(b, false)}<span class="u">mm</span></span><span class="s">{b.form === 'disc' || b.form === 'cylinder' ? `${inch(d.diameter!.nominal)} × ${inch(d.height.nominal)} in` : `${inch(d.width!.nominal)} × ${inch(d.depth!.nominal)} × ${inch(d.height.nominal)} in`}{' '}<span class="whitespace-nowrap">{tileCite(d.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span></span></div>
         <div class="spec"><span class="eyebrow">Weight</span>{weightTile.v ? <span class="v">{weightTile.v}<span class="u">g</span></span> : <span class="v text-muted">—</span>}<span class="s">{weightTile.s}</span></div>
       </div>
+      <dl class="specs -mt-px grid-cols-2 sm:grid-cols-[auto_auto_1fr] text-[0.64rem]" data-provenance>
+        <div class="spec"><dt class="eyebrow">Checked</dt><dd>{b.updated}</dd></div>
+        <div class="spec"><dt class="eyebrow">Sources</dt><dd><a class="link" href="#sources">{b.sources.length} cited</a></dd></div>
+        <div class="spec col-span-2 sm:col-span-1"><dt class="eyebrow">Revision history</dt><dd><a class="link" href={history} rel="noopener">Every change is public</a></dd></div>
+        <div class="spec col-span-full"><dt class="eyebrow">Checked against</dt><dd class="text-ink-2">{leadPublishers.length > 0 ? <>{leadPublishers.join(', ')}{publisherCount > leadPublishers.length && ` and ${publisherCount - leadPublishers.length} more`}. </> : ''}Every figure above links to its source.</dd></div>
+      </dl>
 
       <div class="mt-5">
         <p class="eyebrow mb-2">Also known as</p>
@@ -190,18 +194,18 @@ const delta = (mm: number, label: string) => {
 
     <div class="min-w-0 lg:sticky lg:top-20">
       <Viewer batteries={[b]} downloads height="min(32rem, 78vw)" />
-      <p class="mt-2 text-[0.6rem] text-muted">Built from the published dimensions{model.assumed.length ? `; ${model.assumed.join(', ')} drawn to typical proportions` : ''}. Label artwork is generic. Drag to rotate.</p>
+      <p class="mt-2 text-[0.6rem] text-muted"><span class="font-mono text-ink-2 uppercase tracking-[0.08em] mr-2">Fig. 1</span>Built from the published dimensions{model.assumed.length ? `; ${model.assumed.join(', ')} drawn to typical proportions` : ''}. Label artwork is generic. Drag to rotate.</p>
     </div>
   </section>
 
-  <nav class="sticky top-14 z-30 bg-bg/90 backdrop-blur border-y border-line no-print" aria-label="On this page">
-    <div class="wrap flex gap-1 overflow-x-auto text-[0.65rem] font-medium py-1.5">
-      {nav.map(([id, label]) => <a href={`#${id}`} class="px-2.5 py-1 rounded-md text-ink-2 hover:text-ink hover:bg-surface-2 whitespace-nowrap">{label}</a>)}
-      <a href={`/compare?ids=${b.id}${sims[0] ? ',' + sims[0].battery.id : ''}`} class="ml-auto px-2.5 py-1 rounded-md text-accent-ink hover:bg-accent-soft whitespace-nowrap">Compare →</a>
+  <nav class="sticky top-14 z-30 bg-bg border-y border-line-2 no-print" aria-label="On this page">
+    <div class="wrap flex gap-0.5 overflow-x-auto text-[0.56rem] font-medium uppercase tracking-[0.08em] py-1.5">
+      {nav.map(([id, label]) => <a href={`#${id}`} class="px-2.5 py-1 text-ink-2 hover:text-ink hover:bg-surface-2 whitespace-nowrap">{label}</a>)}
+      <a href={`/compare?ids=${b.id}${sims[0] ? ',' + sims[0].battery.id : ''}`} class="ml-auto px-2.5 py-1 text-accent-ink hover:bg-accent-soft whitespace-nowrap">Compare →</a>
     </div>
   </nav>
 
-  <div class="wrap mt-10 space-y-14">
+  <div class="wrap mt-10 space-y-14 numbered">
     <section id="specs">
       <h2 class="section-title">Specifications by chemistry</h2>
       <p class="text-[0.7rem] text-muted mb-4 max-w-2xl">Capacity depends on load and cutoff voltage, so each figure carries the conditions its source rated it at. Blank cells were not published by the cited sources. Superscripts refer to <a class="link" href="#sources">sources</a>.</p>
@@ -351,7 +355,7 @@ const delta = (mm: number, label: string) => {
         <div class="mt-5">
           <h3 class="eyebrow mb-2">Head to head</h3>
           <ul class="flex flex-wrap gap-1.5">
-            {headToHead.map((h) => <li><a href={`/compare/${h.slug}`} class="chip font-sans text-[0.68rem] py-1 px-2.5 hover:border-accent hover:text-accent-ink">{b.name} vs {h.other.name}</a></li>)}
+            {headToHead.map((h) => <li><a href={`/compare/${h.slug}`} class="chip text-[0.68rem] py-1 px-2.5 hover:border-accent hover:text-accent-ink">{b.name} vs {h.other.name}</a></li>)}
           </ul>
         </div>
       )}
@@ -380,7 +384,7 @@ const delta = (mm: number, label: string) => {
           <>
             {sourced.length > 0 && <p class="eyebrow mt-5 mb-2">Also common in</p>}
             <ul class="flex flex-wrap gap-2">
-              {b.devices.map((x) => <li class="chip font-sans text-[0.68rem] py-1 px-2.5">{x}</li>)}
+              {b.devices.map((x) => <li class="chip text-[0.68rem] py-1 px-2.5">{x}</li>)}
             </ul>
           </>
         )}

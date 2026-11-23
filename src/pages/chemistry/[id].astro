@@ -47,7 +47,7 @@ const jsonld = c && {
   <section class="wrap pt-4 grid gap-8 lg:grid-cols-[1fr_20rem]">
     <div class="min-w-0">
       <p class="eyebrow flex items-center gap-2"><span class="dot" style={`background:${meta.color}`}></span>{c?.rechargeable ? 'Rechargeable' : 'Primary'} chemistry{c?.status && c.status !== 'current' ? ` · ${c.status}` : ''}</p>
-      <h1 class="text-[2.2rem] font-[750] tracking-tight mt-1 leading-tight">{meta.name}</h1>
+      <h1 class="text-[2.2rem] font-semibold tracking-tight mt-1 leading-tight">{meta.name}</h1>
       {c && <p class="mt-3 text-[0.85rem] text-ink-2 max-w-2xl">{c.summary}</p>}
       {c && <div class="prose mt-6" set:html={body} />}
       {c && (c.strengths.length > 0 || c.limitations.length > 0) && (

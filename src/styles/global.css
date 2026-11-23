@@ -1,83 +1,98 @@
 @import "tailwindcss";
 
-/* The Lookup palette: light, clinical, teal accent, with an
-   oklch dark theme. Every color is a token so @centricle/tuner can find it. */
+/* IBM Plex Mono, IBM's own Latin1 and Pi builds, copied unmodified by
+   scripts/fonts.mjs. The unicode-range values come from IBM's CSS in the same
+   release, so a glyph outside them falls back instead of rendering as tofu. */
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/ibm-plex-mono-400.woff2") format("woff2"); unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/ibm-plex-mono-500.woff2") format("woff2"); unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/ibm-plex-mono-600.woff2") format("woff2"); unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/ibm-plex-mono-400-pi.woff2") format("woff2"); unicode-range: U+03C0, U+0E3F, U+2000-200D, U+2010-2012, U+2015, U+2028-2029, U+202F, U+2032-2033, U+203E, U+205F, U+2070, U+2074-2079, U+2080-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+2215, U+2219-221A, U+221E, U+222B, U+2236, U+2248, U+2260, U+2264-2265, U+2400-2421, U+2500-259F, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+3000, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500 600; font-display: swap; src: url("/fonts/ibm-plex-mono-600-pi.woff2") format("woff2"); unicode-range: U+03C0, U+0E3F, U+2000-200D, U+2010-2012, U+2015, U+2028-2029, U+202F, U+2032-2033, U+203E, U+205F, U+2070, U+2074-2079, U+2080-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+2215, U+2219-221A, U+221E, U+222B, U+2236, U+2248, U+2260, U+2264-2265, U+2400-2421, U+2500-259F, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+3000, U+FEFF, U+FFFD; }
+
+/* The engineering-document look: drafting paper, black ink, ruled cells and
+   square corners, one signal color (International Orange) used the way a
+   checker uses a red pencil. Plex Mono carries labels, data, headings and
+   controls; running text is Helvetica, the face of NASA's 1975 graphics
+   standard. Every color is a token so @centricle/tuner can find it. */
 :root {
-  --bg: oklch(0.985 0.004 230);
-  --surface: oklch(1 0 0);
-  --surface-2: oklch(0.967 0.006 230);
-  --surface-3: oklch(0.94 0.008 232);
-  --ink: oklch(0.21 0.02 248);
-  --ink-2: oklch(0.38 0.02 248);
-  --muted: oklch(0.53 0.018 248);
-  --line: oklch(0.91 0.007 240);
-  --line-2: oklch(0.85 0.01 240);
-  --accent: oklch(0.58 0.115 186);
-  --accent-ink: oklch(0.46 0.095 190);
-  --accent-soft: oklch(0.955 0.03 185);
-  --warn: oklch(0.66 0.15 62);
-  --warn-soft: oklch(0.96 0.04 75);
-  --danger: oklch(0.55 0.19 27);
-  --danger-soft: oklch(0.96 0.03 25);
-  --ok: oklch(0.58 0.12 155);
-  --ok-soft: oklch(0.96 0.03 155);
-  --stage: oklch(0.955 0.007 235);
-  --stage-2: oklch(0.915 0.01 235);
-  --grid: oklch(0.6 0.03 230 / 0.09);
-  --shadow: 0 1px 2px oklch(0.2 0.02 248 / 0.05), 0 4px 16px oklch(0.2 0.02 248 / 0.05);
+  --bg: oklch(0.975 0.006 90);
+  --surface: oklch(0.992 0.004 90);
+  --surface-2: oklch(0.948 0.008 88);
+  --surface-3: oklch(0.918 0.01 88);
+  --ink: oklch(0.21 0.012 262);
+  --ink-2: oklch(0.37 0.012 262);
+  --muted: oklch(0.5 0.012 262);
+  --line: oklch(0.86 0.008 88);
+  --line-2: oklch(0.68 0.01 88);
+  --accent: oklch(0.64 0.19 42);
+  --accent-ink: oklch(0.5 0.16 38);
+  --accent-soft: oklch(0.94 0.04 55);
+  --warn: oklch(0.72 0.14 78);
+  --warn-soft: oklch(0.955 0.04 85);
+  --danger: oklch(0.52 0.19 27);
+  --danger-soft: oklch(0.95 0.03 25);
+  --ok: oklch(0.52 0.1 150);
+  --ok-soft: oklch(0.95 0.03 150);
+  --stage: oklch(0.965 0.008 88);
+  --stage-2: oklch(0.93 0.01 88);
+  --grid: oklch(0.55 0.05 230 / 0.11);
+  --grid-major: oklch(0.55 0.05 230 / 0.24);
+  --shadow: none;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --bg: oklch(0.165 0.012 248);
-  --surface: oklch(0.2 0.014 248);
-  --surface-2: oklch(0.228 0.015 248);
-  --surface-3: oklch(0.262 0.016 248);
-  --ink: oklch(0.955 0.005 240);
-  --ink-2: oklch(0.83 0.01 240);
-  --muted: oklch(0.67 0.014 240);
-  --line: oklch(0.29 0.014 248);
-  --line-2: oklch(0.36 0.016 248);
-  --accent: oklch(0.76 0.115 186);
-  --accent-ink: oklch(0.82 0.1 186);
-  --accent-soft: oklch(0.27 0.04 192);
-  --warn: oklch(0.8 0.13 75);
-  --warn-soft: oklch(0.28 0.05 70);
-  --danger: oklch(0.72 0.16 27);
+  --bg: oklch(0.175 0.006 250);
+  --surface: oklch(0.2 0.007 250);
+  --surface-2: oklch(0.225 0.008 250);
+  --surface-3: oklch(0.255 0.009 250);
+  --ink: oklch(0.93 0.008 88);
+  --ink-2: oklch(0.8 0.008 88);
+  --muted: oklch(0.64 0.01 250);
+  --line: oklch(0.31 0.008 250);
+  --line-2: oklch(0.45 0.01 250);
+  --accent: oklch(0.72 0.17 48);
+  --accent-ink: oklch(0.78 0.14 52);
+  --accent-soft: oklch(0.28 0.05 45);
+  --warn: oklch(0.8 0.13 78);
+  --warn-soft: oklch(0.28 0.05 75);
+  --danger: oklch(0.7 0.16 27);
   --danger-soft: oklch(0.27 0.05 25);
-  --ok: oklch(0.76 0.12 155);
-  --ok-soft: oklch(0.26 0.04 155);
-  --stage: oklch(0.205 0.014 248);
-  --stage-2: oklch(0.15 0.012 248);
-  --grid: oklch(0.8 0.03 230 / 0.07);
-  --shadow: 0 1px 2px oklch(0 0 0 / 0.3), 0 6px 24px oklch(0 0 0 / 0.25);
+  --ok: oklch(0.74 0.11 150);
+  --ok-soft: oklch(0.26 0.04 150);
+  --stage: oklch(0.195 0.007 250);
+  --stage-2: oklch(0.15 0.006 250);
+  --grid: oklch(0.75 0.04 230 / 0.08);
+  --grid-major: oklch(0.75 0.04 230 / 0.17);
+  --shadow: none;
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: oklch(0.165 0.012 248);
-    --surface: oklch(0.2 0.014 248);
-    --surface-2: oklch(0.228 0.015 248);
-    --surface-3: oklch(0.262 0.016 248);
-    --ink: oklch(0.955 0.005 240);
-    --ink-2: oklch(0.83 0.01 240);
-    --muted: oklch(0.67 0.014 240);
-    --line: oklch(0.29 0.014 248);
-    --line-2: oklch(0.36 0.016 248);
-    --accent: oklch(0.76 0.115 186);
-    --accent-ink: oklch(0.82 0.1 186);
-    --accent-soft: oklch(0.27 0.04 192);
-    --warn: oklch(0.8 0.13 75);
-    --warn-soft: oklch(0.28 0.05 70);
-    --danger: oklch(0.72 0.16 27);
+    --bg: oklch(0.175 0.006 250);
+    --surface: oklch(0.2 0.007 250);
+    --surface-2: oklch(0.225 0.008 250);
+    --surface-3: oklch(0.255 0.009 250);
+    --ink: oklch(0.93 0.008 88);
+    --ink-2: oklch(0.8 0.008 88);
+    --muted: oklch(0.64 0.01 250);
+    --line: oklch(0.31 0.008 250);
+    --line-2: oklch(0.45 0.01 250);
+    --accent: oklch(0.72 0.17 48);
+    --accent-ink: oklch(0.78 0.14 52);
+    --accent-soft: oklch(0.28 0.05 45);
+    --warn: oklch(0.8 0.13 78);
+    --warn-soft: oklch(0.28 0.05 75);
+    --danger: oklch(0.7 0.16 27);
     --danger-soft: oklch(0.27 0.05 25);
-    --ok: oklch(0.76 0.12 155);
-    --ok-soft: oklch(0.26 0.04 155);
-    --stage: oklch(0.205 0.014 248);
-    --stage-2: oklch(0.15 0.012 248);
-    --grid: oklch(0.8 0.03 230 / 0.07);
-    --shadow: 0 1px 2px oklch(0 0 0 / 0.3), 0 6px 24px oklch(0 0 0 / 0.25);
+    --ok: oklch(0.74 0.11 150);
+    --ok-soft: oklch(0.26 0.04 150);
+    --stage: oklch(0.195 0.007 250);
+    --stage-2: oklch(0.15 0.006 250);
+    --grid: oklch(0.75 0.04 230 / 0.08);
+    --grid-major: oklch(0.75 0.04 230 / 0.17);
+    --shadow: none;
     color-scheme: dark;
   }
 }
@@ -102,8 +117,25 @@
   --color-ok: var(--ok);
   --color-ok-soft: var(--ok-soft);
   --color-stage: var(--stage);
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Square corners and no negative tracking anywhere, including utilities
+   written into pages before this design. */
+@theme {
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-4xl: 0;
+  --tracking-tighter: -0.01em;
+  --tracking-tight: 0;
+  --shadow-sm: none;
+  --shadow-md: none;
 }
 
 html {
@@ -116,19 +148,21 @@ html {
   body {
     background: var(--bg);
     color: var(--ink);
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    line-height: 1.6;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
   }
-  h1, h2, h3, h4 { color: var(--ink); letter-spacing: -0.015em; line-height: 1.15; text-wrap: balance; }
+  /* Running text reads in Helvetica; everything structural stays in Plex Mono. */
+  p, blockquote, .sans { font-family: var(--font-sans); line-height: 1.6; }
+  p.tabular, p.num { font-family: var(--font-mono); }
+  h1, h2, h3, h4 { font-family: var(--font-mono); color: var(--ink); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; }
   p { text-wrap: pretty; }
   a { color: inherit; }
   ::selection { background: var(--accent-soft); color: var(--ink); }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 0; }
   .num, td, .tabular { font-variant-numeric: tabular-nums; }
-  code, kbd, .mono { font-family: var(--font-mono); font-size: 0.92em; }
+  code, kbd, .mono { font-family: var(--font-mono); font-size: 0.95em; }
   [hidden] { display: none !important; }
 }
 
@@ -136,84 +170,90 @@ html {
   .wrap { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1rem; }
   @media (min-width: 640px) { .wrap { padding-inline: 1.5rem; } }
 
+  /* Field label, as on a drawing's title block. */
   .eyebrow {
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.09em;
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--muted);
   }
-  .link { color: var(--accent-ink); text-decoration: underline; text-decoration-color: color-mix(in oklch, var(--accent) 35%, transparent); text-underline-offset: 0.18em; }
+  .link { color: var(--accent-ink); text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: color-mix(in oklch, var(--accent) 45%, transparent); text-underline-offset: 0.2em; }
   .link:hover { text-decoration-color: var(--accent); }
 
   .card {
     background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 0.6rem;
-    box-shadow: var(--shadow);
+    border: 1px solid var(--line-2);
   }
   .hairline { border-color: var(--line); }
 
   .chip {
     display: inline-flex; align-items: center; gap: 0.3em;
-    padding: 0.12rem 0.45rem;
+    padding: 0.1rem 0.4rem;
     border: 1px solid var(--line-2);
-    border-radius: 999px;
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     color: var(--ink-2);
     background: var(--surface);
     white-space: nowrap;
   }
-  a.chip:hover { border-color: var(--accent); color: var(--accent-ink); }
+  a.chip:hover { border-color: var(--ink); color: var(--ink); background: var(--surface-2); }
   .dot { width: 0.55rem; height: 0.55rem; border-radius: 999px; display: inline-block; flex: none; }
 
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
-    padding: 0.4rem 0.8rem;
-    border: 1px solid var(--line-2);
-    border-radius: 0.5rem;
+    padding: 0.42rem 0.75rem;
+    border: 1px solid var(--ink-2);
     background: var(--surface);
     color: var(--ink);
-    font-size: 0.7rem; font-weight: 550;
+    font-family: var(--font-mono);
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     line-height: 1.2;
     cursor: pointer;
-    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
   }
-  .btn:hover { border-color: var(--accent); color: var(--accent-ink); }
-  .btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); }
+  .btn:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .btn[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
   .btn-primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   .btn-primary:hover { background: var(--accent-ink); border-color: var(--accent-ink); color: var(--bg); }
-  .btn-sm { padding: 0.25rem 0.55rem; font-size: 0.62rem; }
+  .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.56rem; }
 
   .input {
     width: 100%;
     padding: 0.5rem 0.7rem;
-    border: 1px solid var(--line-2);
-    border-radius: 0.5rem;
+    border: 1px solid var(--ink-2);
     background: var(--surface);
     color: var(--ink);
     font: inherit;
-    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
   }
-  .input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 20%, transparent); }
+  .input::placeholder { color: var(--muted); }
+  .input:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: var(--ink); }
 
+  /* Spec cells are ruled boxes. Inside a .specs grid their 1px rings overlap
+     across the 1px gap, so neighbors share one rule, and an empty grid slot
+     stays blank. Stack two grids with -mt-px to share the seam. */
+  .specs { display: grid; gap: 1px; padding: 1px; }
   .spec {
-    display: flex; flex-direction: column; gap: 0.1rem;
-    padding: 0.75rem 0.9rem;
-    border: 1px solid var(--line);
-    border-radius: 0.55rem;
+    display: flex; flex-direction: column; gap: 0.15rem;
+    padding: 0.6rem 0.75rem 0.65rem;
     background: var(--surface);
+    box-shadow: 0 0 0 1px var(--line-2);
   }
-  .spec .v { font-size: 1.25rem; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
-  .spec .u { font-size: 0.65rem; font-weight: 500; color: var(--muted); margin-left: 0.15rem; }
-  .spec .s { font-size: 0.62rem; color: var(--muted); }
+  .spec .v { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; margin-top: 0.15rem; }
+  .spec .u { font-size: 0.62rem; font-weight: 400; color: var(--muted); margin-left: 0.2rem; }
+  .spec .s { font-size: 0.58rem; color: var(--muted); line-height: 1.45; }
 
-  .table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
-  .table th { text-align: left; font-weight: 600; color: var(--muted); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--line-2); white-space: nowrap; }
-  .table td { padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .table { width: 100%; border-collapse: collapse; font-size: 0.64rem; }
+  .table th { text-align: left; font-weight: 600; color: var(--ink-2); font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.6rem; background: var(--surface-2); border-bottom: 1px solid var(--ink-2); white-space: nowrap; }
+  .table td { padding: 0.42rem 0.6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .table th + th, .table td + td { border-left: 1px solid var(--line); }
   .table tr:last-child td { border-bottom: 0; }
-  .table td.n, .table th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .table td.n, .table th.n { text-align: right; }
   /* Scroll shadows: an edge shadow appears only on the side with more to scroll.
      The two "local" covers move with the content and hide the "scroll" shadows
      at each end. */
@@ -230,39 +270,47 @@ html {
       var(--ts-bg);
   }
 
-  .section-title { font-size: 1.05rem; font-weight: 650; margin-bottom: 0.75rem; scroll-margin-top: 5rem; }
+  /* Section heads sit on a full-width rule. Inside .numbered they also carry
+     a section number, the way a technical report does. */
+  .section-title { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; letter-spacing: -0.005em; padding-top: 0.5rem; border-top: 2px solid var(--ink); margin-bottom: 0.85rem; scroll-margin-top: 5rem; }
+  .numbered { counter-reset: sec; }
+  .numbered .section-title::before { counter-increment: sec; content: counter(sec) ".0"; display: inline-block; min-width: 2.6em; color: var(--accent-ink); font-weight: 500; }
 
-  .callout { border: 1px solid var(--line-2); border-left-width: 3px; border-radius: 0.45rem; padding: 0.6rem 0.8rem; background: var(--surface); font-size: 0.72rem; }
-  .callout.danger { border-left-color: var(--danger); background: var(--danger-soft); }
-  .callout.warn { border-left-color: var(--warn); background: var(--warn-soft); }
-  .callout.ok { border-left-color: var(--ok); background: var(--ok-soft); }
-  .callout.info { border-left-color: var(--accent); background: var(--accent-soft); }
+  .callout { border: 1px solid var(--line-2); border-left-width: 4px; padding: 0.6rem 0.8rem; background: var(--surface); font-size: 0.72rem; }
+  .callout.danger { border-color: var(--danger); background: var(--danger-soft); }
+  .callout.warn { border-color: var(--warn); background: var(--warn-soft); }
+  .callout.ok { border-color: var(--ok); background: var(--ok-soft); }
+  .callout.info { border-color: var(--accent); background: var(--accent-soft); }
 
+  /* Engineering graph paper: minor rule every 24px, major every fifth. */
   .grid-paper {
     background-color: var(--stage);
     background-image:
+      linear-gradient(var(--grid-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
       linear-gradient(var(--grid) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
   }
 
-  .kbd { font-family: var(--font-mono); font-size: 0.58rem; padding: 0.05rem 0.3rem; border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 0.3rem; color: var(--muted); background: var(--surface); }
+  .kbd { font-family: var(--font-mono); font-size: 0.56rem; padding: 0.05rem 0.3rem; border: 1px solid var(--line-2); color: var(--muted); background: var(--surface); }
 
   /* Long-form reference text (Markdown). */
-  .prose { font-size: 0.8rem; line-height: 1.7; color: var(--ink-2); max-width: 40rem; }
+  .prose { font-family: var(--font-sans); font-size: 0.8rem; line-height: 1.7; color: var(--ink-2); max-width: 40rem; }
   .prose > * + * { margin-top: 0.85em; }
-  .prose h2 { font-size: 1.05rem; font-weight: 650; margin-top: 2em; color: var(--ink); scroll-margin-top: 5rem; }
-  .prose h3 { font-size: 0.88rem; font-weight: 650; margin-top: 1.6em; color: var(--ink); }
-  .prose a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 0.18em; text-decoration-color: color-mix(in oklch, var(--accent) 40%, transparent); }
-  .prose ul { list-style: disc; padding-left: 1.2rem; }
-  .prose ol { list-style: decimal; padding-left: 1.2rem; }
+  .prose h2 { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; margin-top: 2em; padding-top: 0.5rem; border-top: 2px solid var(--ink); color: var(--ink); scroll-margin-top: 5rem; }
+  .prose h3 { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-top: 1.6em; color: var(--ink); }
+  .prose a { color: var(--accent-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: color-mix(in oklch, var(--accent) 45%, transparent); }
+  .prose ul { list-style: square; padding-left: 1.2rem; }
+  .prose ol { list-style: decimal; padding-left: 1.4rem; }
   .prose li + li { margin-top: 0.3em; }
   .prose strong { color: var(--ink); font-weight: 650; }
-  .prose table { width: 100%; border-collapse: collapse; font-size: 0.7rem; display: block; overflow-x: auto; }
-  .prose th { text-align: left; font-weight: 600; color: var(--muted); font-size: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--line-2); }
+  .prose table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.64rem; display: block; overflow-x: auto; border: 1px solid var(--line-2); }
+  .prose th { text-align: left; font-weight: 600; color: var(--ink-2); font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.6rem; background: var(--surface-2); border-bottom: 1px solid var(--ink-2); }
   .prose td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-  .prose code { background: var(--surface-2); padding: 0.05rem 0.3rem; border-radius: 0.25rem; }
-  .prose blockquote { border-left: 3px solid var(--line-2); padding-left: 0.8rem; color: var(--muted); }
+  .prose th + th, .prose td + td { border-left: 1px solid var(--line); }
+  .prose code { background: var(--surface-2); padding: 0.05rem 0.3rem; }
+  .prose blockquote { border-left: 4px solid var(--line-2); padding-left: 0.8rem; color: var(--muted); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -273,5 +321,6 @@ html {
 @media print {
   header, footer, .no-print { display: none !important; }
   body { background: white; color: black; font-size: 10pt; }
-  .card { box-shadow: none; }
+  .card { border-color: #999; }
+  .spec { box-shadow: 0 0 0 1px #999; }
 }

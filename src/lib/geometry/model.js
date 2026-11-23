@@ -335,7 +335,7 @@ export function byMaterial(model) {
 
 /** Base materials (PBR). `wrap` is overridden by chemistry color. */
 export const MATERIALS = {
-  wrap: { color: '#3B6FD8', metalness: 0.05, roughness: 0.38 },
+  wrap: { color: '#4B6AA7', metalness: 0.0, roughness: 0.6 },
   steel: { color: '#c9ccd1', metalness: 1.0, roughness: 0.22 },
   can: { color: '#d4d6da', metalness: 1.0, roughness: 0.18 },
   insulator: { color: '#1b1d21', metalness: 0.0, roughness: 0.6 },

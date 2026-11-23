@@ -49,7 +49,7 @@ const jsonld = {
 <BaseLayout title="Decode a battery code: LR6, CR2032, SR626SW, INR18650 explained | batteries.fyi" description="Enter any battery code to see what each letter and number means: cell count, chemistry, shape and size under IEC 60086, IEC 61960 and ANSI C18, plus the matching entry for manufacturer numbers." jsonld={jsonld}>
   <section class="wrap pt-8">
     <p class="eyebrow">Tool</p>
-    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Decode a battery code</h1>
+    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Decode a battery code</h1>
     <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">A systematic battery code is built from parts: the number of cells in series, a chemistry letter, a shape letter and a size. In CR2032, C is lithium manganese dioxide, R is round, 20 is the diameter in millimeters and 32 is the thickness in tenths of a millimeter. Enter a code to see each part explained, the standard it comes from, and the batteries.fyi entry that lists it. Manufacturer numbers such as 377 encode neither size nor chemistry; for those the page looks the number up in the cross-reference of {s.codes.toLocaleString('en-US')} codes.</p>
   </section>
 
@@ -67,8 +67,8 @@ const jsonld = {
 
       <div id="dc-out" class="mt-6" aria-live="polite">
         <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h2 class="font-mono text-[1.5rem] font-[750] tracking-tight" id="dc-title">{initial.input}</h2>
-          <span class="chip font-sans" id="dc-system">{initial.system}</span>
+          <h2 class="font-mono text-[1.5rem] font-semibold tracking-tight" id="dc-title">{initial.input}</h2>
+          <span class="chip" id="dc-system">{initial.system}</span>
         </div>
         <p class="mt-2 text-[0.85rem] text-ink max-w-3xl" id="dc-summary">{initial.summary}</p>
         <div class="mt-4" id="dc-tiles" set:html={tilesHTML(initial)} />
