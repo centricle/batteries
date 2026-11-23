@@ -1,0 +1,751 @@
+[
+  {
+    "term": "Nominal voltage",
+    "slug": "nominal-voltage",
+    "definition": "The voltage assigned to a cell or chemistry for identification, such as 1.5 V for alkaline, 1.2 V for NiMH and 3.6 to 3.7 V for lithium-ion. The actual terminal voltage varies with state of charge, load and temperature.",
+    "see_also": [
+      "open-circuit-voltage",
+      "closed-circuit-voltage",
+      "discharge-curve"
+    ]
+  },
+  {
+    "term": "Open-circuit voltage (OCV)",
+    "slug": "open-circuit-voltage",
+    "definition": "The voltage across a cell's terminals with no load connected. It is usually higher than the voltage under load, and for chemistries with a flat discharge curve it says little about remaining charge.",
+    "see_also": [
+      "closed-circuit-voltage",
+      "nominal-voltage",
+      "state-of-charge"
+    ]
+  },
+  {
+    "term": "Closed-circuit voltage (CCV)",
+    "slug": "closed-circuit-voltage",
+    "definition": "The voltage of a cell under a specified discharge load and time interval. The gap between open-circuit and closed-circuit voltage reflects the cell's internal resistance.",
+    "see_also": [
+      "open-circuit-voltage",
+      "internal-resistance"
+    ]
+  },
+  {
+    "term": "Cutoff voltage",
+    "slug": "cutoff-voltage",
+    "definition": "The voltage at which a discharge is considered finished, either by a test standard, a datasheet or the device itself. Rated capacity is always quoted to a stated cutoff, and a device with a high cutoff leaves capacity unused.",
+    "see_also": [
+      "capacity",
+      "over-discharge",
+      "discharge-curve"
+    ]
+  },
+  {
+    "term": "Milliampere-hour (mAh)",
+    "slug": "mah",
+    "definition": "A unit of electric charge: a current of 1 mA flowing for one hour, equal to 3.6 coulombs. A capacity in mAh depends on the discharge current and cutoff voltage, and does not compare energy between cells of different voltage.",
+    "see_also": [
+      "capacity",
+      "watt-hour",
+      "c-rate"
+    ]
+  },
+  {
+    "term": "Watt-hour (Wh)",
+    "slug": "watt-hour",
+    "definition": "A unit of energy: capacity in ampere-hours multiplied by the average discharge voltage. Watt-hours compare cells of different voltages, and air transport rules for lithium-ion batteries are set in watt-hours.",
+    "see_also": [
+      "mah",
+      "energy-density",
+      "specific-energy"
+    ]
+  },
+  {
+    "term": "C-rate",
+    "slug": "c-rate",
+    "definition": "A charge or discharge current expressed relative to capacity. For a 2,000 mAh cell, 1C is 2,000 mA and 0.5C is 1,000 mA; a 1C discharge nominally empties the cell in about one hour.",
+    "see_also": [
+      "capacity",
+      "mah",
+      "peukerts-law"
+    ]
+  },
+  {
+    "term": "Internal resistance",
+    "slug": "internal-resistance",
+    "definition": "The opposition to current flow inside a cell, the sum of electronic and ionic resistance. It causes the terminal voltage to drop under load and generally rises at low temperature; it is often measured with a short current pulse.",
+    "see_also": [
+      "closed-circuit-voltage",
+      "high-drain",
+      "flash-amperage"
+    ]
+  },
+  {
+    "term": "Self-discharge",
+    "slug": "self-discharge",
+    "definition": "The gradual loss of stored charge in a cell that is not connected to a load, caused by internal side reactions. Rates range from under 1% per year for lithium thionyl chloride to about 10% per month for nickel-cadmium at 20 °C, and rise with temperature.",
+    "see_also": [
+      "shelf-life",
+      "low-self-discharge",
+      "passivation"
+    ]
+  },
+  {
+    "term": "Peukert's law",
+    "slug": "peukerts-law",
+    "definition": "An empirical relationship, published by Wilhelm Peukert in 1897 for lead-acid batteries, describing how available capacity falls as the discharge rate rises. It is applied loosely to other chemistries.",
+    "see_also": [
+      "capacity",
+      "c-rate"
+    ]
+  },
+  {
+    "term": "Capacity fade",
+    "slug": "capacity-fade",
+    "definition": "The permanent loss of capacity in a rechargeable cell as it is cycled and ages. Heat, high states of charge, deep discharges and fast charging generally speed it up.",
+    "see_also": [
+      "cycle-life",
+      "sei",
+      "lithium-plating"
+    ]
+  },
+  {
+    "term": "Cycle life",
+    "slug": "cycle-life",
+    "definition": "The number of charge and discharge cycles a rechargeable cell delivers before its capacity falls to a stated fraction of rated capacity, under stated conditions. Results depend heavily on depth of discharge, current and temperature.",
+    "see_also": [
+      "capacity-fade",
+      "depth-of-discharge",
+      "secondary-cell"
+    ]
+  },
+  {
+    "term": "Depth of discharge (DoD)",
+    "slug": "depth-of-discharge",
+    "definition": "The fraction of a battery's capacity removed relative to its fully charged state. For a fully charged battery, DoD equals one minus state of charge, and shallower cycling generally extends cycle life.",
+    "see_also": [
+      "state-of-charge",
+      "cycle-life"
+    ]
+  },
+  {
+    "term": "State of charge (SoC)",
+    "slug": "state-of-charge",
+    "definition": "The charge remaining in a cell as a percentage of its full capacity. It is the complement of depth of discharge.",
+    "see_also": [
+      "depth-of-discharge",
+      "open-circuit-voltage",
+      "bms"
+    ]
+  },
+  {
+    "term": "Capacity",
+    "slug": "capacity",
+    "definition": "The charge a cell delivers under stated conditions, expressed in ampere-hours or milliampere-hours. It is not fixed: it varies with discharge current, duty cycle, cutoff voltage and temperature.",
+    "see_also": [
+      "mah",
+      "cutoff-voltage",
+      "c-rate"
+    ]
+  },
+  {
+    "term": "Energy density",
+    "slug": "energy-density",
+    "definition": "The energy a cell stores per unit volume, usually in watt-hours per liter (Wh/L). The term is also used loosely for energy per unit mass, which is more precisely called specific energy.",
+    "see_also": [
+      "specific-energy",
+      "watt-hour"
+    ]
+  },
+  {
+    "term": "Specific energy",
+    "slug": "specific-energy",
+    "definition": "The energy a cell stores per unit mass, in watt-hours per kilogram (Wh/kg). Primary lithium chemistries and lithium-ion rank highest among common types.",
+    "see_also": [
+      "energy-density",
+      "watt-hour"
+    ]
+  },
+  {
+    "term": "Discharge curve",
+    "slug": "discharge-curve",
+    "definition": "A plot of cell voltage against time or capacity delivered. Alkaline and zinc-carbon cells have sloping curves, while NiMH, silver oxide, lithium iron disulfide and lithium iron phosphate cells hold a flatter voltage until near the end.",
+    "see_also": [
+      "nominal-voltage",
+      "mid-point-voltage",
+      "cutoff-voltage"
+    ]
+  },
+  {
+    "term": "Mid-point voltage (MPV)",
+    "slug": "mid-point-voltage",
+    "definition": "The voltage of a cell when 50% of its available capacity has been discharged. For a flat discharge curve it approximates the average voltage over the whole discharge.",
+    "see_also": [
+      "discharge-curve",
+      "nominal-voltage"
+    ]
+  },
+  {
+    "term": "Flash amperage",
+    "slug": "flash-amperage",
+    "definition": "The maximum short-circuit current of a fresh cell, measured briefly with an ammeter. It is quoted mainly for carbon zinc cells; Energizer lists about 5 A for its zinc chloride AA.",
+    "see_also": [
+      "internal-resistance",
+      "high-drain"
+    ]
+  },
+  {
+    "term": "High drain",
+    "slug": "high-drain",
+    "definition": "A load that draws a large current relative to a cell's capacity, such as a camera flash or a motor. Chemistries with high internal resistance, such as zinc-carbon and alkaline, deliver much less of their capacity at high drain.",
+    "see_also": [
+      "internal-resistance",
+      "c-rate",
+      "capacity"
+    ]
+  },
+  {
+    "term": "Shelf life",
+    "slug": "shelf-life",
+    "definition": "How long a cell can be stored before its capacity falls below a stated level. Energizer gives 10 to 12 years for lithium coin cells at room temperature and about 95% capacity after 20 years for its lithium AA.",
+    "see_also": [
+      "self-discharge",
+      "passivation"
+    ]
+  },
+  {
+    "term": "Anode",
+    "slug": "anode",
+    "definition": "The negative electrode of a cell during discharge, where oxidation (loss of electrons) occurs. Examples are zinc in alkaline cells, lithium metal in primary lithium cells and graphite in most lithium-ion cells.",
+    "see_also": [
+      "cathode",
+      "electrolyte",
+      "separator"
+    ]
+  },
+  {
+    "term": "Cathode",
+    "slug": "cathode",
+    "definition": "The positive electrode of a cell during discharge, where reduction (gain of electrons) occurs. Examples are manganese dioxide in alkaline and lithium manganese dioxide cells and a lithium metal oxide in lithium-ion cells.",
+    "see_also": [
+      "anode",
+      "electrolyte"
+    ]
+  },
+  {
+    "term": "Electrolyte",
+    "slug": "electrolyte",
+    "definition": "The ion-conducting medium between a cell's electrodes. It may be aqueous, such as potassium hydroxide or zinc chloride solution, or non-aqueous, such as a lithium salt dissolved in organic solvents.",
+    "see_also": [
+      "anode",
+      "cathode",
+      "separator"
+    ]
+  },
+  {
+    "term": "Separator",
+    "slug": "separator",
+    "definition": "A porous, electrically insulating layer that keeps the anode and cathode apart while letting ions pass. Lithium cells commonly use polyolefin films; zinc-carbon cells use paper.",
+    "see_also": [
+      "anode",
+      "cathode",
+      "dendrite"
+    ]
+  },
+  {
+    "term": "Can",
+    "slug": "can",
+    "definition": "The metal container of a cell. In an alkaline cell the steel can is the cathode current collector and positive terminal; in a zinc-carbon cell the zinc can is the anode.",
+    "see_also": [
+      "wrap",
+      "gasket",
+      "bobbin"
+    ]
+  },
+  {
+    "term": "Gasket",
+    "slug": "gasket",
+    "definition": "An insulating seal, often molded nylon, between a cell's can and its cap or opposite terminal. It keeps the terminals apart and holds in the electrolyte.",
+    "see_also": [
+      "can",
+      "vent",
+      "leakage"
+    ]
+  },
+  {
+    "term": "Vent",
+    "slug": "vent",
+    "definition": "A pressure-relief feature that opens to release gas when pressure inside a cell rises too far. Some vents reseal, as in NiMH cells; others open once.",
+    "see_also": [
+      "venting",
+      "gasket",
+      "thermal-runaway"
+    ]
+  },
+  {
+    "term": "PTC device",
+    "slug": "ptc",
+    "definition": "A positive temperature coefficient component whose resistance rises sharply as it heats, limiting current during a short circuit or overload. Energizer's lithium AA uses one that limits current above about 85 °C, and similar devices are built into the caps of many cylindrical lithium cells.",
+    "see_also": [
+      "protection-circuit",
+      "thermal-runaway"
+    ]
+  },
+  {
+    "term": "Protection circuit",
+    "slug": "protection-circuit",
+    "definition": "A small circuit attached to a lithium-ion cell or pack that disconnects it on overcharge, over-discharge, overcurrent or short circuit. It is what makes a protected cell, and it is part of every regulated 1.5 V lithium-ion cell.",
+    "see_also": [
+      "protected-cell",
+      "bms",
+      "ptc"
+    ]
+  },
+  {
+    "term": "Wrap",
+    "slug": "wrap",
+    "definition": "The thin plastic sleeve that insulates a cell's can and carries its label. A torn wrap can expose the can, which in many cylindrical lithium-ion cells is the negative terminal, and allow a short circuit.",
+    "see_also": [
+      "can",
+      "protected-cell"
+    ]
+  },
+  {
+    "term": "Jellyroll",
+    "slug": "jellyroll",
+    "definition": "A construction in which long electrode strips and a separator are wound into a spiral inside the can. It gives a large electrode area, so jellyroll cells such as lithium-ion, NiCd and lithium iron disulfide deliver higher currents than bobbin cells.",
+    "see_also": [
+      "bobbin",
+      "separator"
+    ]
+  },
+  {
+    "term": "Bobbin construction",
+    "slug": "bobbin",
+    "definition": "A cylindrical cell construction with one electrode packed as a solid core and the other around it, as in alkaline cells and bobbin-type lithium thionyl chloride cells. It favors capacity over current.",
+    "see_also": [
+      "jellyroll",
+      "can"
+    ]
+  },
+  {
+    "term": "Cell",
+    "slug": "cell",
+    "definition": "The basic electrochemical unit: a positive electrode, a negative electrode, an electrolyte and a separator in a container.",
+    "see_also": [
+      "battery",
+      "series-and-parallel"
+    ]
+  },
+  {
+    "term": "Battery",
+    "slug": "battery",
+    "definition": "Strictly, two or more cells connected in series or parallel, such as a 9 V battery of six cells. In common use, a single cell is also called a battery.",
+    "see_also": [
+      "cell",
+      "series-and-parallel"
+    ]
+  },
+  {
+    "term": "Series and parallel",
+    "slug": "series-and-parallel",
+    "definition": "Cells in series add their voltages; cells in parallel add their capacities at the same voltage. IEC codes show the series count as a prefix and parallel strings as a suffix, as in 4LR25-2.",
+    "see_also": [
+      "battery",
+      "cell",
+      "cell-balancing"
+    ]
+  },
+  {
+    "term": "Primary cell",
+    "slug": "primary-cell",
+    "definition": "A cell designed to be discharged once and discarded, such as alkaline, zinc-carbon, silver oxide or primary lithium. Attempting to recharge one can cause leakage or rupture.",
+    "see_also": [
+      "secondary-cell",
+      "lithium-metal-battery"
+    ]
+  },
+  {
+    "term": "Secondary cell",
+    "slug": "secondary-cell",
+    "definition": "A rechargeable cell, such as NiMH, NiCd or lithium-ion, designed to be charged and discharged repeatedly.",
+    "see_also": [
+      "primary-cell",
+      "cycle-life"
+    ]
+  },
+  {
+    "term": "Button top",
+    "slug": "button-top",
+    "definition": "A cylindrical cell with a raised nub on its positive terminal. Some devices need the nub to make contact; protected lithium-ion cells are commonly button top.",
+    "see_also": [
+      "flat-top",
+      "protected-cell"
+    ]
+  },
+  {
+    "term": "Flat top",
+    "slug": "flat-top",
+    "definition": "A cylindrical cell whose positive terminal is flat rather than raised. Flat-top lithium-ion cells are commonly used in packs, where tabs are welded to the ends.",
+    "see_also": [
+      "button-top"
+    ]
+  },
+  {
+    "term": "Protected cell",
+    "slug": "protected-cell",
+    "definition": "A lithium-ion cell with a protection circuit board added to one end under the wrap. The circuit makes the cell slightly longer than the bare cell of the same size code.",
+    "see_also": [
+      "protection-circuit",
+      "button-top",
+      "wrap"
+    ]
+  },
+  {
+    "term": "Coin cell",
+    "slug": "coin-cell",
+    "definition": "A flat round cell whose diameter is much larger than its height, usually a 3 V lithium cell such as the CR2032. Coin cells of 20 mm or more cause the most serious injuries when swallowed.",
+    "see_also": [
+      "button-cell",
+      "ingestion-hazard"
+    ]
+  },
+  {
+    "term": "Button cell",
+    "slug": "button-cell",
+    "definition": "A small round cell, typically thicker for its diameter than a coin cell, such as the LR44 alkaline, SR626SW silver oxide or zinc-air hearing aid cell. The terms button cell and coin cell are often used interchangeably.",
+    "see_also": [
+      "coin-cell",
+      "ingestion-hazard"
+    ]
+  },
+  {
+    "term": "Low self-discharge (LSD)",
+    "slug": "low-self-discharge",
+    "definition": "A NiMH design that keeps more charge in storage than standard NiMH. Sanyo introduced it in 2005 as Eneloop, and manufacturers claim 70 to 85% of capacity retained after one year at 20 °C.",
+    "see_also": [
+      "self-discharge",
+      "shelf-life"
+    ]
+  },
+  {
+    "term": "Lithium metal battery",
+    "slug": "lithium-metal-battery",
+    "definition": "A primary battery with a metallic lithium anode, such as lithium manganese dioxide, lithium iron disulfide, lithium carbon monofluoride or lithium thionyl chloride. It is distinct from lithium-ion, which contains no metallic lithium, and ships under separate rules.",
+    "see_also": [
+      "primary-cell",
+      "iata-pi-965-970",
+      "un-38-3"
+    ]
+  },
+  {
+    "term": "IEC 60086",
+    "slug": "iec-60086",
+    "definition": "The International Electrotechnical Commission series for primary batteries. Part 1 defines chemistry letters, shape letters and size codes such as LR6, Part 3 covers watch batteries, and Parts 4 and 5 cover safety.",
+    "see_also": [
+      "iec-61960",
+      "iec-61951",
+      "ansi-c18"
+    ]
+  },
+  {
+    "term": "IEC 61960",
+    "slug": "iec-61960",
+    "definition": "The IEC standard for secondary lithium cells and batteries for portable applications. Part 3 defines designations such as ICR19/66: negative and positive electrode letters, a shape letter and maximum dimensions in millimeters.",
+    "see_also": [
+      "iec-60086",
+      "icr",
+      "inr"
+    ]
+  },
+  {
+    "term": "IEC 61951",
+    "slug": "iec-61951",
+    "definition": "The IEC standards for portable sealed nickel-cadmium (Part 1) and nickel-metal hydride (Part 2) cells. Cells that match primary sizes reuse the primary code with K or H, as in HR6.",
+    "see_also": [
+      "iec-60086",
+      "secondary-cell"
+    ]
+  },
+  {
+    "term": "ANSI C18",
+    "slug": "ansi-c18",
+    "definition": "The American National Standards Institute series for portable cells and batteries; its predecessor, the American Standards Association, issued the first C18 standard in 1928. It uses size numbers with chemistry suffixes, such as 15A for an alkaline AA and 5004LC for a CR2032.",
+    "see_also": [
+      "iec-60086"
+    ]
+  },
+  {
+    "term": "UN 38.3",
+    "slug": "un-38-3",
+    "definition": "Section 38.3 of the UN Manual of Tests and Criteria, which lithium cells and batteries must pass before they can be transported. Its tests T1 to T8 cover altitude, thermal cycling, vibration, shock, external short circuit, impact or crush, overcharge and forced discharge.",
+    "see_also": [
+      "iata-pi-965-970",
+      "lithium-metal-battery"
+    ]
+  },
+  {
+    "term": "IATA PI 965 to 970",
+    "slug": "iata-pi-965-970",
+    "definition": "The International Air Transport Association packing instructions for lithium batteries by air. PI 965, 966 and 967 cover lithium-ion batteries alone, packed with equipment and contained in equipment; PI 968, 969 and 970 cover lithium metal batteries in the same three cases.",
+    "see_also": [
+      "un-38-3",
+      "lithium-metal-battery",
+      "watt-hour"
+    ]
+  },
+  {
+    "term": "Thermal runaway",
+    "slug": "thermal-runaway",
+    "definition": "A self-accelerating failure in which heat inside a cell drives reactions that release more heat. In lithium cells it can lead to venting, fire or explosion, and the onset temperature depends on the cathode chemistry.",
+    "see_also": [
+      "venting",
+      "lco",
+      "lfp"
+    ]
+  },
+  {
+    "term": "Venting",
+    "slug": "venting",
+    "definition": "The release of gas, and sometimes electrolyte, through a cell's vent when internal pressure rises. In lithium-ion cells the vented gas can be flammable.",
+    "see_also": [
+      "vent",
+      "thermal-runaway",
+      "leakage"
+    ]
+  },
+  {
+    "term": "Leakage",
+    "slug": "leakage",
+    "definition": "The escape of electrolyte from a cell, which corrodes device contacts. Alkaline cells leak potassium hydroxide, which leaves white crystals as it reacts with carbon dioxide in air; zinc-carbon cells leak zinc chloride paste.",
+    "see_also": [
+      "electrolyte",
+      "gasket",
+      "venting"
+    ]
+  },
+  {
+    "term": "Ingestion hazard",
+    "slug": "ingestion-hazard",
+    "definition": "A swallowed button or coin cell can react with body fluids and cause severe internal burns, damaging the esophagus within two hours. Lithium coin cells of 20 mm diameter or more cause the most serious injuries, even when spent.",
+    "see_also": [
+      "coin-cell",
+      "button-cell"
+    ]
+  },
+  {
+    "term": "Cell reversal",
+    "slug": "cell-reversal",
+    "definition": "The reversing of a cell's terminal polarity by over-discharge, which happens when stronger cells in a series string drive a weaker one past zero volts. It can permanently damage rechargeable cells.",
+    "see_also": [
+      "over-discharge",
+      "series-and-parallel",
+      "cell-balancing"
+    ]
+  },
+  {
+    "term": "Over-discharge",
+    "slug": "over-discharge",
+    "definition": "Discharging a cell below its recommended cutoff voltage. It can cause cell reversal in series strings and permanent damage in lithium-ion cells; Wikipedia gives 2.5 V per cell as the limit for most lithium iron phosphate cells.",
+    "see_also": [
+      "cutoff-voltage",
+      "cell-reversal",
+      "protection-circuit"
+    ]
+  },
+  {
+    "term": "Dendrite",
+    "slug": "dendrite",
+    "definition": "A needle- or tree-shaped metal growth that forms on an electrode during charging, such as zinc in nickel-zinc cells or lithium in lithium-ion cells charged too fast or too cold. Dendrites can pierce the separator and short-circuit the cell.",
+    "see_also": [
+      "lithium-plating",
+      "separator"
+    ]
+  },
+  {
+    "term": "Trickle charge",
+    "slug": "trickle-charge",
+    "definition": "A small continuous charging current that offsets self-discharge to keep a cell full. Energizer recommends below C/40 for NiMH, while nickel-zinc cells and Panasonic ML and VL coin cells must not be trickle charged.",
+    "see_also": [
+      "cc-cv",
+      "self-discharge"
+    ]
+  },
+  {
+    "term": "CC-CV charging",
+    "slug": "cc-cv",
+    "definition": "Constant current, constant voltage charging: the charger supplies a fixed current until the cell reaches a set voltage, then holds that voltage while the current tapers off. Lithium-ion cells are typically charged this way to 4.2 V.",
+    "see_also": [
+      "trickle-charge",
+      "protection-circuit"
+    ]
+  },
+  {
+    "term": "Memory effect",
+    "slug": "memory-effect",
+    "definition": "A loss of usable capacity in nickel-cadmium cells that are repeatedly recharged after only partial discharge; the cell appears to remember the shorter cycle. Energizer reports a voltage depression of about 150 mV and describes the effect as no longer a concern for NiMH.",
+    "see_also": [
+      "capacity-fade",
+      "secondary-cell"
+    ]
+  },
+  {
+    "term": "Passivation",
+    "slug": "passivation",
+    "definition": "The formation of a thin film on a lithium anode during storage, lithium chloride in thionyl chloride cells. The film limits self-discharge but can cause a temporary voltage delay when a load is first applied.",
+    "see_also": [
+      "voltage-delay",
+      "self-discharge"
+    ]
+  },
+  {
+    "term": "Voltage delay",
+    "slug": "voltage-delay",
+    "definition": "A temporary low voltage when a stored lithium cell, especially lithium thionyl chloride, is first put under load, caused by the passivation film on the anode. The voltage recovers as the film dissipates.",
+    "see_also": [
+      "passivation"
+    ]
+  },
+  {
+    "term": "Intercalation",
+    "slug": "intercalation",
+    "definition": "The insertion of ions into the crystal structure of a host material without breaking it down. Lithium-ion cells work by intercalating lithium ions into the anode and cathode in turn.",
+    "see_also": [
+      "lithium-plating",
+      "sei"
+    ]
+  },
+  {
+    "term": "Solid electrolyte interphase (SEI)",
+    "slug": "sei",
+    "definition": "A thin layer formed on a lithium-ion cell's graphite anode as the electrolyte decomposes, mostly in the first cycles. It protects the anode, but its growth consumes lithium and contributes to capacity fade; lithium titanate anodes do not form one.",
+    "see_also": [
+      "capacity-fade",
+      "intercalation",
+      "lto"
+    ]
+  },
+  {
+    "term": "Lithium plating",
+    "slug": "lithium-plating",
+    "definition": "The deposit of metallic lithium on a lithium-ion anode instead of intercalation, caused by charging too fast or at too low a temperature. It reduces capacity and can grow dendrites that short the cell.",
+    "see_also": [
+      "dendrite",
+      "intercalation",
+      "capacity-fade"
+    ]
+  },
+  {
+    "term": "Battery management system (BMS)",
+    "slug": "bms",
+    "definition": "The electronics in a multi-cell pack that monitor cell voltages, current and temperature, protect the cells and usually estimate state of charge. Many also balance the cells.",
+    "see_also": [
+      "protection-circuit",
+      "cell-balancing",
+      "state-of-charge"
+    ]
+  },
+  {
+    "term": "Cell balancing",
+    "slug": "cell-balancing",
+    "definition": "Equalizing the state of charge of cells connected in series so that none is overcharged or over-discharged. Lithium iron phosphate packs, for example, need balanced cells and a protection system.",
+    "see_also": [
+      "bms",
+      "series-and-parallel",
+      "over-discharge"
+    ]
+  },
+  {
+    "term": "LCO",
+    "slug": "lco",
+    "definition": "Lithium cobalt oxide (LiCoO2), the cathode of the first commercial lithium-ion cells sold by Sony in 1991. Battery University lists 3.6 V nominal, 150 to 200 Wh/kg and a thermal runaway onset near 150 °C.",
+    "see_also": [
+      "icr",
+      "nmc",
+      "thermal-runaway"
+    ]
+  },
+  {
+    "term": "LMO",
+    "slug": "lmo",
+    "definition": "Lithium manganese oxide (LiMn2O4), a lithium-ion cathode with high power and lower capacity, often blended with NMC. Battery University lists 3.7 V nominal and 100 to 150 Wh/kg.",
+    "see_also": [
+      "imr",
+      "nmc"
+    ]
+  },
+  {
+    "term": "NMC",
+    "slug": "nmc",
+    "definition": "Lithium nickel manganese cobalt oxide (LiNiMnCoO2), also written NCM, a lithium-ion cathode used in e-bikes, power tools and electric vehicles. Battery University lists 3.6 to 3.7 V nominal and 150 to 220 Wh/kg.",
+    "see_also": [
+      "nca",
+      "inr",
+      "lco"
+    ]
+  },
+  {
+    "term": "NCA",
+    "slug": "nca",
+    "definition": "Lithium nickel cobalt aluminum oxide (LiNiCoAlO2), a high-capacity lithium-ion cathode. Battery University lists 3.6 V nominal and 200 to 260 Wh/kg.",
+    "see_also": [
+      "nmc",
+      "inr"
+    ]
+  },
+  {
+    "term": "LFP",
+    "slug": "lfp",
+    "definition": "Lithium iron phosphate (LiFePO4), a lithium-ion cathode with 3.2 V nominal voltage, long cycle life and high thermal stability, and no nickel or cobalt. Its specific energy is lower than NMC or NCA.",
+    "see_also": [
+      "ifr",
+      "nmc",
+      "thermal-runaway"
+    ]
+  },
+  {
+    "term": "LTO",
+    "slug": "lto",
+    "definition": "Lithium titanate (Li4Ti5O12), used in place of graphite as a lithium-ion anode. LTO cells run at about 2.4 V and accept very fast and cold charging over thousands of cycles, with low energy density.",
+    "see_also": [
+      "sei",
+      "lfp"
+    ]
+  },
+  {
+    "term": "ICR",
+    "slug": "icr",
+    "definition": "A cylindrical lithium-ion cell with a cobalt-based (LCO) positive electrode, from the IEC 61960 letters I (carbon negative), C (cobalt) and R (cylindrical). Trade names such as ICR18650 add a five-digit size; IEC 61960-3 itself writes ICR19/66.",
+    "see_also": [
+      "lco",
+      "inr",
+      "iec-61960"
+    ]
+  },
+  {
+    "term": "INR",
+    "slug": "inr",
+    "definition": "A cylindrical lithium-ion cell with a nickel-based positive electrode, usually NMC or NCA, from the IEC 61960 letters I, N (nickel) and R. INR18650 and INR21700 are common trade names.",
+    "see_also": [
+      "nmc",
+      "nca",
+      "icr"
+    ]
+  },
+  {
+    "term": "IMR",
+    "slug": "imr",
+    "definition": "A cylindrical lithium-ion cell with a manganese-based positive electrode, usually LMO or a manganese blend, from the IEC 61960 letters I, M (manganese) and R.",
+    "see_also": [
+      "lmo",
+      "inr"
+    ]
+  },
+  {
+    "term": "IFR",
+    "slug": "ifr",
+    "definition": "A trade prefix for cylindrical lithium iron phosphate cells, as in IFR18650. In IEC 61960-3, F alone means iron and Fp means iron phosphate, so the strict designation begins IFpR.",
+    "see_also": [
+      "lfp",
+      "iec-61960"
+    ]
+  }
+]

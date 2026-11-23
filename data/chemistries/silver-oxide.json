@@ -1,0 +1,126 @@
+{
+  "id": "silver-oxide",
+  "name": "Silver oxide",
+  "short": "Silver oxide",
+  "iec_letter": "S",
+  "rechargeable": false,
+  "anode": "Zinc powder (gelled)",
+  "cathode": "Silver(I) oxide with graphite",
+  "electrolyte": "Sodium hydroxide or potassium hydroxide (aqueous)",
+  "voltage": {
+    "nominal": 1.55,
+    "open_circuit": [
+      1.6,
+      1.63
+    ]
+  },
+  "self_discharge": "Over 90% of service retained after 5 years at 21 °C (Energizer)",
+  "temperature_c": {
+    "operating": [
+      -10,
+      55
+    ]
+  },
+  "color": "#8C96A3",
+  "summary": "Silver oxide button cells pair a zinc anode with a silver oxide cathode in an alkaline electrolyte and hold a nearly constant 1.55 V until depleted. They are the SR cells used in quartz watches and precision miniature electronics.",
+  "body": "## How it works\n\nA silver oxide cell, IEC system S, uses silver(I) oxide as the cathode and powdered zinc as the anode, in an alkaline electrolyte of sodium hydroxide or potassium hydroxide. In the common button form, Wikipedia describes a graphite-infused silver oxide cathode at the bottom of the cell, separated by a plastic membrane from the zinc anode. Energizer's construction notes list molded nylon gaskets and nickel exterior surfaces, which resist corrosion and give good electrical contact. The silver is reduced from Ag(I) to Ag and the zinc oxidized from Zn to Zn(II). Silver is expensive, which is why the chemistry is sold almost entirely in small button sizes.\n\n## Discharge behavior\n\nOpen-circuit voltage is 1.6 V and the operating voltage at typical drains is 1.55 V or more. The discharge curve is flatter than alkaline manganese dioxide, and internal resistance is low and essentially constant. Energizer reports over 90% service maintenance after five years at 21 °C.\n\nThe electrolyte sets the drain rating. Energizer recommends potassium hydroxide cells for heavier drains, such as LCD watches with backlights and alarms, where they last about one to two years, and sodium hydroxide cells for low drains, such as analog watches, for up to five years. Cells can be used up to 55 °C; potassium hydroxide cells operate down to −28 °C and sodium hydroxide cells down to −10 °C, with reduced service in both.\n\n## Uses\n\nWatches, calculators, cameras and other precision miniature electronics. IEC 60086-3 defines a coding system for watch batteries; Wikipedia's summary lists the suffixes P (potassium hydroxide electrolyte), S (sodium hydroxide electrolyte), SW (low-drain type for quartz watches without light, alarm or chronograph) and W (high-drain type that meets all of IEC 60086-3), as in SR626SW. Wikipedia reports that silver oxide cells were 30% of primary battery sales in Japan in February 2020.\n\n## History\n\nLarge silver oxide batteries flew on early ICBMs and satellites, including the Corona reconnaissance satellites, and later in the Apollo Lunar Module and lunar rover. Until 2004, all silver oxide batteries contained up to 0.2% mercury in the zinc anode to inhibit corrosion; Sony began producing the first mercury-free silver oxide cells in 2004. The EU exemption that allowed button cells up to 2% mercury by weight ended on October 1, 2015.\n\n## Status\n\nCurrent. IEC 60086-1 lists system S at 1.55 V nominal with a 1.63 V maximum open-circuit voltage.",
+  "strengths": [
+    "Nearly constant voltage until depleted",
+    "Low, essentially constant internal resistance",
+    "Over 90% service retained after 5 years (Energizer)",
+    "Higher voltage than comparable mercury cells (Energizer)"
+  ],
+  "limitations": [
+    "Silver makes it costly, so it is sold almost only in button sizes",
+    "Low-drain (SW) cells are not rated for backlights or alarms",
+    "Not rechargeable"
+  ],
+  "safety": [
+    "Button cell ingestion hazard: swallowed cells can cause severe internal burns",
+    "Leakage can occur at temperatures of 100 °C or more (Wikipedia)"
+  ],
+  "status": "current",
+  "sources": [
+    {
+      "id": "energizer-silver-oxide-manual",
+      "title": "Silver Oxide (Zn/Ag2O) Application Manual",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/silveroxide_appman.pdf",
+      "kind": "datasheet",
+      "accessed": "2026-11-22",
+      "covers": [
+        "construction",
+        "open-circuit and operating voltage",
+        "discharge curve",
+        "service maintenance",
+        "electrolyte selection",
+        "temperature"
+      ]
+    },
+    {
+      "id": "energizer-typical-characteristics",
+      "title": "Energizer Battery Systems: Typical Characteristics (version 2.0)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/wp-content/uploads/2026/10/typical-characteristics-2.0.pdf",
+      "kind": "datasheet",
+      "accessed": "2026-11-22",
+      "covers": [
+        "operating temperature",
+        "typical applications"
+      ]
+    },
+    {
+      "id": "wikipedia-silver-oxide-battery",
+      "title": "Silver oxide battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Silver_oxide_battery",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "construction",
+        "reaction",
+        "Japan sales",
+        "aerospace history",
+        "mercury content",
+        "Sony mercury-free 2004",
+        "leakage temperature"
+      ]
+    },
+    {
+      "id": "wikipedia-button-cell",
+      "title": "Button cell (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Button_cell",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "IEC 60086-3 suffixes",
+        "ingestion hazard"
+      ]
+    },
+    {
+      "id": "wikipedia-battery-nomenclature",
+      "title": "Battery nomenclature (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Battery_nomenclature",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "IEC letter S",
+        "maximum open-circuit voltage"
+      ]
+    },
+    {
+      "id": "eu-directive-2013-56",
+      "title": "Directive 2013/56/EU amending Directive 2006/66/EC on batteries and accumulators",
+      "publisher": "European Union (EUR-Lex)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32013L0056",
+      "kind": "regulation",
+      "accessed": "2026-11-22",
+      "covers": [
+        "button cell mercury exemption end date"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

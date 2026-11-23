@@ -1,0 +1,883 @@
+{
+  "updated": "2026-11-22",
+  "chemistry_letters": [
+    {
+      "letter": "",
+      "name": "Zinc-carbon",
+      "chemistry": "zinc-carbon",
+      "negative": "Zinc",
+      "electrolyte": "Ammonium chloride, zinc chloride",
+      "positive": "Manganese dioxide",
+      "nominal_voltage": 1.5,
+      "max_open_circuit_voltage": 1.725,
+      "status": "current",
+      "standard": "IEC 60086-1",
+      "note": "No letter. Covers both the Leclanché (ammonium chloride) and zinc chloride (heavy duty) cells, which this site lists separately as zinc-carbon and zinc-chloride. Example: R6."
+    },
+    {
+      "letter": "A",
+      "name": "Zinc-air, chloride electrolyte",
+      "chemistry": null,
+      "negative": "Zinc",
+      "electrolyte": "Ammonium chloride, zinc chloride",
+      "positive": "Oxygen",
+      "nominal_voltage": 1.4,
+      "max_open_circuit_voltage": 1.55,
+      "status": "rare",
+      "standard": "IEC 60086-1",
+      "note": "Unlikely to be found in consumer or general-purpose batteries. Consumer zinc-air cells use P (alkaline electrolyte)."
+    },
+    {
+      "letter": "B",
+      "name": "Lithium carbon monofluoride",
+      "chemistry": "lithium-carbon-monofluoride",
+      "negative": "Lithium",
+      "electrolyte": "Organic electrolyte",
+      "positive": "Carbon monofluoride",
+      "nominal_voltage": 3,
+      "max_open_circuit_voltage": 3.7,
+      "status": "current",
+      "standard": "IEC 60086-1"
+    },
+    {
+      "letter": "C",
+      "name": "Lithium manganese dioxide",
+      "chemistry": "lithium-manganese-dioxide",
+      "negative": "Lithium",
+      "electrolyte": "Organic electrolyte",
+      "positive": "Manganese dioxide",
+      "nominal_voltage": 3,
+      "max_open_circuit_voltage": 3.7,
+      "status": "current",
+      "standard": "IEC 60086-1",
+      "note": "Example: CR2032, CR17345 (CR123A)."
+    },
+    {
+      "letter": "E",
+      "name": "Lithium thionyl chloride",
+      "chemistry": "lithium-thionyl-chloride",
+      "negative": "Lithium",
+      "electrolyte": "Non-aqueous inorganic electrolyte",
+      "positive": "Thionyl chloride",
+      "nominal_voltage": 3.6,
+      "max_open_circuit_voltage": 3.9,
+      "status": "rare",
+      "standard": "IEC 60086-1",
+      "note": "Unlikely to be found in consumer or general-purpose batteries."
+    },
+    {
+      "letter": "F",
+      "name": "Lithium iron disulfide",
+      "chemistry": "lithium-iron-disulfide",
+      "negative": "Lithium",
+      "electrolyte": "Organic electrolyte",
+      "positive": "Iron disulfide",
+      "nominal_voltage": 1.5,
+      "max_open_circuit_voltage": 1.9,
+      "status": "current",
+      "standard": "IEC 60086-1",
+      "note": "Edition 14 (2026) raised the maximum open-circuit voltage from 1.83 V to 1.90 V. Example: FR6."
+    },
+    {
+      "letter": "G",
+      "name": "Lithium copper oxide",
+      "chemistry": null,
+      "negative": "Lithium",
+      "electrolyte": "Organic electrolyte",
+      "positive": "Copper(II) oxide",
+      "nominal_voltage": 1.5,
+      "max_open_circuit_voltage": 2.3,
+      "status": "rare",
+      "standard": "IEC 60086-1",
+      "note": "Unlikely to be found in consumer or general-purpose batteries. Wikipedia states that lithium iron disulfide replaced it by the mid-1990s."
+    },
+    {
+      "letter": "L",
+      "name": "Alkaline",
+      "chemistry": "alkaline",
+      "negative": "Zinc",
+      "electrolyte": "Alkali metal hydroxide",
+      "positive": "Manganese dioxide",
+      "nominal_voltage": 1.5,
+      "max_open_circuit_voltage": 1.65,
+      "status": "current",
+      "standard": "IEC 60086-1",
+      "note": "Example: LR6, LR44."
+    },
+    {
+      "letter": "M",
+      "name": "Mercuric oxide",
+      "chemistry": "mercury-oxide",
+      "negative": "Zinc",
+      "electrolyte": "Alkali metal hydroxide",
+      "positive": "Mercuric oxide",
+      "nominal_voltage": 1.35,
+      "max_open_circuit_voltage": null,
+      "status": "withdrawn",
+      "standard": "IEC 60086-1",
+      "note": "Withdrawn from the standard."
+    },
+    {
+      "letter": "N",
+      "name": "Mercuric oxide and manganese dioxide",
+      "chemistry": "mercury-oxide",
+      "negative": "Zinc",
+      "electrolyte": "Alkali metal hydroxide",
+      "positive": "Mercuric oxide, manganese dioxide",
+      "nominal_voltage": 1.4,
+      "max_open_circuit_voltage": null,
+      "status": "withdrawn",
+      "standard": "IEC 60086-1",
+      "note": "Withdrawn from the standard."
+    },
+    {
+      "letter": "P",
+      "name": "Zinc-air",
+      "chemistry": "zinc-air",
+      "negative": "Zinc",
+      "electrolyte": "Alkali metal hydroxide",
+      "positive": "Oxygen",
+      "nominal_voltage": 1.4,
+      "max_open_circuit_voltage": 1.68,
+      "status": "current",
+      "standard": "IEC 60086-1",
+      "note": "Edition 13 (2021) lists the nominal voltage as 1.4 V or 1.45 V. The hearing aid chemistry."
+    },
+    {
+      "letter": "S",
+      "name": "Silver oxide",
+      "chemistry": "silver-oxide",
+      "negative": "Zinc",
+      "electrolyte": "Alkali metal hydroxide",
+      "positive": "Silver oxide",
+      "nominal_voltage": 1.55,
+      "max_open_circuit_voltage": 1.63,
+      "status": "current",
+      "standard": "IEC 60086-1",
+      "note": "Example: SR626SW."
+    },
+    {
+      "letter": "T",
+      "name": "Letter added in edition 14 (2026)",
+      "chemistry": null,
+      "negative": null,
+      "electrolyte": null,
+      "positive": null,
+      "nominal_voltage": null,
+      "max_open_circuit_voltage": null,
+      "status": "new",
+      "standard": "IEC 60086-1",
+      "note": "IEC 60086-1:2026 added the letter T to its table of standardized electrochemical systems. The public preview and abstract do not state which system it denotes."
+    },
+    {
+      "letter": "Z",
+      "name": "Nickel oxyhydroxide",
+      "chemistry": "nickel-oxyhydroxide",
+      "negative": "Zinc",
+      "electrolyte": "Alkali metal hydroxide",
+      "positive": "Manganese dioxide, nickel oxyhydroxide",
+      "nominal_voltage": 1.5,
+      "max_open_circuit_voltage": 1.78,
+      "status": "current",
+      "standard": "IEC 60086-1",
+      "note": "Example: ZR6."
+    },
+    {
+      "letter": "H",
+      "name": "Nickel-metal hydride",
+      "chemistry": "nimh",
+      "negative": "Metal hydride",
+      "electrolyte": "Alkaline",
+      "positive": "Nickel oxyhydroxide",
+      "nominal_voltage": 1.2,
+      "max_open_circuit_voltage": null,
+      "status": "current",
+      "standard": "IEC 61951-2",
+      "note": "Rechargeable. Cells interchangeable with primary sizes reuse the primary designation, as in HR6."
+    },
+    {
+      "letter": "K",
+      "name": "Nickel-cadmium",
+      "chemistry": "nicd",
+      "negative": "Cadmium",
+      "electrolyte": "Alkaline",
+      "positive": "Nickel oxyhydroxide",
+      "nominal_voltage": 1.2,
+      "max_open_circuit_voltage": null,
+      "status": "current",
+      "standard": "IEC 61951-1",
+      "note": "Rechargeable. Cells interchangeable with primary sizes reuse the primary designation, as in KR6."
+    }
+  ],
+  "li_ion_letters": [
+    {
+      "position": "A1",
+      "role": "Negative electrode basis",
+      "letter": "I",
+      "meaning": "Carbon"
+    },
+    {
+      "position": "A1",
+      "role": "Negative electrode basis",
+      "letter": "L",
+      "meaning": "Lithium metal or lithium alloy"
+    },
+    {
+      "position": "A1",
+      "role": "Negative electrode basis",
+      "letter": "T",
+      "meaning": "Titanium"
+    },
+    {
+      "position": "A1",
+      "role": "Negative electrode basis",
+      "letter": "X",
+      "meaning": "Others"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "C",
+      "meaning": "Cobalt"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "F",
+      "meaning": "Iron"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "Fp",
+      "meaning": "Iron phosphate"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "N",
+      "meaning": "Nickel"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "M",
+      "meaning": "Manganese"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "Mp",
+      "meaning": "Manganese phosphate"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "T",
+      "meaning": "Titanium"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "V",
+      "meaning": "Vanadium"
+    },
+    {
+      "position": "A2",
+      "role": "Positive electrode basis",
+      "letter": "X",
+      "meaning": "Others"
+    },
+    {
+      "position": "A3",
+      "role": "Shape",
+      "letter": "R",
+      "meaning": "Cylindrical"
+    },
+    {
+      "position": "A3",
+      "role": "Shape",
+      "letter": "P",
+      "meaning": "Prismatic"
+    }
+  ],
+  "shape_letters": [
+    {
+      "letter": "R",
+      "name": "Round",
+      "note": "Coin, button or cylindrical."
+    },
+    {
+      "letter": "P",
+      "name": "Prismatic",
+      "note": "In IEC 61960-3 lithium-ion designations, P also means prismatic."
+    },
+    {
+      "letter": "F",
+      "name": "Flat (layer built)",
+      "note": "Still in use, but not used for new battery definitions. Example: 6F22."
+    },
+    {
+      "letter": "S",
+      "name": "Square (or rectangular or prismatic)",
+      "note": "Still in use, but not used for new battery definitions."
+    }
+  ],
+  "suffixes": [
+    {
+      "suffix": "X",
+      "meaning": "Terminal style or variant of the same battery",
+      "applies_to": "IEC 60086-1",
+      "example": "4R25X"
+    },
+    {
+      "suffix": "Y",
+      "meaning": "Terminal style or variant of the same battery",
+      "applies_to": "IEC 60086-1",
+      "example": "4LR25Y"
+    },
+    {
+      "suffix": "C",
+      "meaning": "Performance level",
+      "applies_to": "IEC 60086-1"
+    },
+    {
+      "suffix": "P",
+      "meaning": "Performance level",
+      "applies_to": "IEC 60086-1"
+    },
+    {
+      "suffix": "S",
+      "meaning": "Performance level",
+      "applies_to": "IEC 60086-1"
+    },
+    {
+      "suffix": "CF",
+      "meaning": "Performance level",
+      "applies_to": "IEC 60086-1"
+    },
+    {
+      "suffix": "HH",
+      "meaning": "Performance level",
+      "applies_to": "IEC 60086-1"
+    },
+    {
+      "suffix": "HB",
+      "meaning": "Performance level",
+      "applies_to": "IEC 60086-1"
+    },
+    {
+      "suffix": "W",
+      "meaning": "Complies with all requirements of IEC 60086-3 for watch batteries, including dimensional tolerance, leakage and test methods",
+      "applies_to": "IEC 60086-1 and IEC 60086-3"
+    },
+    {
+      "suffix": "-n",
+      "meaning": "Number of parallel strings in the assembled battery",
+      "applies_to": "IEC 60086-1",
+      "example": "4LR25-2"
+    },
+    {
+      "suffix": "A to L (not F or I)",
+      "meaning": "Size modifier added to a size code: 0.0 to 0.9 mm, or 0.00 to 0.09 mm, depending on the largest dimension (A is 0.0, L is 0.9)",
+      "applies_to": "IEC 60086-1 size codes",
+      "example": "LR8D425, LR2616J"
+    },
+    {
+      "suffix": "P",
+      "meaning": "Potassium hydroxide electrolyte",
+      "applies_to": "IEC 60086-3 watch batteries"
+    },
+    {
+      "suffix": "S",
+      "meaning": "Sodium hydroxide electrolyte",
+      "applies_to": "IEC 60086-3 watch batteries"
+    },
+    {
+      "suffix": "SW",
+      "meaning": "Low-drain type for quartz watches (analog or digital) without light, alarm or chronograph functions",
+      "applies_to": "IEC 60086-3 watch batteries",
+      "example": "SR626SW"
+    },
+    {
+      "suffix": "W",
+      "meaning": "High-drain type for all quartz watches, calculators and cameras; complies with IEC 60086-3",
+      "applies_to": "IEC 60086-3 watch batteries"
+    },
+    {
+      "suffix": "L, M, H, X",
+      "meaning": "Discharge rate: low, medium, high and very high",
+      "applies_to": "IEC 61951-1 and IEC 61951-2 cylindrical NiCd and NiMH cells (letter after KR or HR)",
+      "example": "KRL 33/62"
+    },
+    {
+      "suffix": "T, U",
+      "meaning": "Use at elevated temperatures",
+      "applies_to": "IEC 61951-1 and IEC 61951-2 cylindrical NiCd and NiMH cells"
+    },
+    {
+      "suffix": "R",
+      "meaning": "Rapid charge",
+      "applies_to": "IEC 61951-1 and IEC 61951-2 cylindrical NiCd and NiMH cells",
+      "example": "HRHR 23/43"
+    },
+    {
+      "suffix": "(none)",
+      "meaning": "Carbon-zinc (IEC: no letter)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "A",
+      "meaning": "Alkaline (IEC L)",
+      "applies_to": "ANSI C18",
+      "example": "15A"
+    },
+    {
+      "suffix": "AC",
+      "meaning": "Alkaline, industrial (IEC L)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "AP",
+      "meaning": "Alkaline, photographic (IEC L)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "C",
+      "meaning": "Carbon-zinc, industrial (IEC: no letter)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "CD",
+      "meaning": "Carbon-zinc, industrial, heavy duty (IEC: no letter)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "D",
+      "meaning": "Carbon-zinc, heavy duty (IEC: no letter)",
+      "applies_to": "ANSI C18",
+      "example": "14D"
+    },
+    {
+      "suffix": "F",
+      "meaning": "Carbon-zinc, general purpose (IEC: no letter)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "H",
+      "meaning": "Nickel-metal hydride, rechargeable (IEC H)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "K",
+      "meaning": "Nickel-cadmium, rechargeable (IEC K)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "LB",
+      "meaning": "Lithium carbon monofluoride (IEC B)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "LC",
+      "meaning": "Lithium manganese dioxide (IEC C)",
+      "applies_to": "ANSI C18",
+      "example": "5004LC"
+    },
+    {
+      "suffix": "LF",
+      "meaning": "Lithium iron disulfide (IEC F)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "M",
+      "meaning": "Mercuric oxide, withdrawn (IEC M, withdrawn)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "SO",
+      "meaning": "Silver oxide (IEC S)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "SOP",
+      "meaning": "Silver oxide, photographic (IEC S)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "Z",
+      "meaning": "Zinc-air (IEC P)",
+      "applies_to": "ANSI C18"
+    },
+    {
+      "suffix": "ZD",
+      "meaning": "Zinc-air, heavy duty (IEC P)",
+      "applies_to": "ANSI C18"
+    }
+  ],
+  "rules": [
+    "An IEC 60086 primary battery code reads left to right: the number of cells in series (omitted for a single cell), the electrochemical system letter, the shape letter, the size code, then optional modifier letters and a hyphen with the number of parallel strings. 4LR25-2 is an alkaline lantern battery of two parallel strings of four round size-25 cells.",
+    "The system letter identifies the chemistry and implies a nominal voltage. A code with no system letter, such as R6, is a zinc-carbon cell (zinc, manganese dioxide, ammonium chloride or zinc chloride electrolyte).",
+    "Shape letters: R round (coin, button or cylindrical), P prismatic, F flat (layer built), S square. F and S are still in use but are not used for new battery definitions.",
+    "One- or two-digit size numbers are legacy codes kept from earlier editions. Before October 1990, round cells were given sequential size numbers from R06 to R70; R20 is the D size.",
+    "Since October 1990, new round cells are identified by dimensions: the truncated diameter in millimeters followed by the height in tenths of a millimeter. CR2032 is 20 mm in diameter and 3.2 mm high; CR17345 is 17 mm by 34.5 mm.",
+    "When a single dimension is 100 mm or more, the code gives the diameter in millimeters, a slash, and the height in millimeters, as in 6P222/162.",
+    "Ten size modifier letters, A to L without F and I, can follow a size code to add 0.0 to 0.9 mm (or 0.00 to 0.09 mm) to a maximum dimension. Wikipedia gives LR2616J as 26.2 mm by 1.67 mm and LR8D425 (AAAA) as 8.8 mm by 42.5 mm.",
+    "IEC 60086 has defined this coding system since 1992. The first IEC battery size standards were issued in 1957.",
+    "IEC 60086-3 watch batteries add electrolyte and drain suffixes: P for potassium hydroxide, S for sodium hydroxide, SW for low drain and W for high drain, as in SR626SW.",
+    "NiCd (K) and NiMH (H) cylindrical cells that are dimensionally interchangeable with primary cells use the primary designation with K or H as the system letter, as in HR6 (IEC 61951-1 and 61951-2). Other cylindrical cells use KR or HR, a discharge rate letter (L, M, H or X), optional T, U or R, then maximum diameter and height in millimeters, as in KRL 33/62.",
+    "IEC 61960-3 designates lithium-ion cells as A1 A2 A3 N2/N3/N4: negative electrode letter, positive electrode letter, shape letter (R cylindrical, P prismatic), then maximum diameter or thickness, width (prismatic only) and maximum height, each in millimeters rounded up to the next whole number. A dimension under 1 mm is written in tenths of a millimeter as tN.",
+    "For lithium-ion batteries, IEC 61960-3 adds the number of series cells in front and, when greater than one, a hyphen and the number of parallel cells at the end: 1ICR20/70, 2ICP20/34/70, 1ICP20/68/70-2.",
+    "IEC 61960-3 examples: ICR19/66 is a cylindrical cell with a carbon negative and a cobalt-based positive, at most 19 mm in diameter and 66 mm high. ICPt9/35/48 is a prismatic cell 0.9 mm thick.",
+    "Five-digit lithium-ion size names such as 18650 and 21700 are not IEC 61960 designations. They follow the IEC 60086 round-cell pattern of diameter in millimeters and height in tenths of a millimeter (18650 is 18 mm by 65.0 mm), and are often paired with IEC 61960 letters as in INR18650.",
+    "In IEC 61960-3, iron phosphate is Fp and F alone is iron, so a strict designation for a cylindrical lithium iron phosphate cell with a carbon negative begins IFpR.",
+    "ANSI C18 uses a size number plus a chemistry suffix: 13 is D, 14 is C, 15 is AA, 24 is AAA and 25 is AAAA, so 15A is an alkaline AA. Coin cells were assigned size codes in the 5000 range, as in 5004LC (CR2032). ANSI and IEC sizes are harmonized, so an R20 cell has the same dimensions as an ANSI 13 cell."
+  ],
+  "legacy_size_codes": [
+    {
+      "code": "R03",
+      "size": "AAA",
+      "diameter_mm": 10.5,
+      "height_mm": 44.5,
+      "battery_id": "aaa"
+    },
+    {
+      "code": "R1",
+      "size": "N",
+      "diameter_mm": 12,
+      "height_mm": 30.2,
+      "battery_id": "n"
+    },
+    {
+      "code": "R6",
+      "size": "AA",
+      "diameter_mm": 14.5,
+      "height_mm": 50.5,
+      "battery_id": "aa"
+    },
+    {
+      "code": "R14",
+      "size": "C",
+      "diameter_mm": 26.2,
+      "height_mm": 50,
+      "battery_id": "c"
+    },
+    {
+      "code": "R20",
+      "size": "D",
+      "diameter_mm": 34.2,
+      "height_mm": 61.5,
+      "battery_id": "d"
+    },
+    {
+      "code": "R25",
+      "size": "F",
+      "diameter_mm": 32,
+      "height_mm": 91,
+      "note": "Battery nomenclature lists 32 mm diameter; List of battery sizes lists 33 mm. Four F cells are often found in 6 V lantern batteries."
+    },
+    {
+      "code": "R12",
+      "size": "B",
+      "diameter_mm": 21.5,
+      "height_mm": 60,
+      "note": "Most commonly found inside the European 4.5 V lantern battery (3R12)."
+    },
+    {
+      "code": "R23",
+      "size": "A",
+      "diameter_mm": 17,
+      "height_mm": 50
+    },
+    {
+      "code": "R40",
+      "size": "No. 6",
+      "diameter_mm": 67,
+      "height_mm": 172
+    },
+    {
+      "code": "R10",
+      "size": "Cell of the 2R10 (Duplex) battery",
+      "note": "Dimensions not given in the sources consulted."
+    },
+    {
+      "code": "R61",
+      "size": "Inner cell of a 6LR61 9 V battery",
+      "note": "Six R61 cells in series form most alkaline 9 V batteries. Slightly smaller than an LR8D425 (AAAA) cell."
+    },
+    {
+      "code": "F22",
+      "size": "Flat cell of a 6F22 9 V battery",
+      "note": "Six flat cells stacked in series form the zinc-carbon 9 V battery."
+    },
+    {
+      "code": "R8D425",
+      "size": "AAAA",
+      "diameter_mm": 8.8,
+      "height_mm": 42.5,
+      "battery_id": "aaaa",
+      "note": "A dimensional code, not a legacy number; listed for the AAAA cross-reference (ANSI 25)."
+    },
+    {
+      "code": "R9",
+      "size": "Button, 625 size",
+      "diameter_mm": 15.5,
+      "height_mm": 6,
+      "note": "LR9; also sold as 625."
+    },
+    {
+      "code": "R41",
+      "size": "Button (LR736, SR736; AG3, 392)",
+      "diameter_mm": 7.9,
+      "height_mm": 3.6,
+      "battery_id": "lr41"
+    },
+    {
+      "code": "R42",
+      "size": "Button (SR1136; 344, 350)",
+      "diameter_mm": 11.6,
+      "height_mm": 3.6
+    },
+    {
+      "code": "R43",
+      "size": "Button (LR1142, SR1142; AG12, 386)",
+      "diameter_mm": 11.6,
+      "height_mm": 4.2,
+      "battery_id": "lr43"
+    },
+    {
+      "code": "R44",
+      "size": "Button (LR1154, SR1154; AG13, 357)",
+      "diameter_mm": 11.6,
+      "height_mm": 5.4,
+      "battery_id": "lr44"
+    },
+    {
+      "code": "R45",
+      "size": "Button (LR936, SR936; AG9, 394)",
+      "diameter_mm": 9.5,
+      "height_mm": 3.6
+    },
+    {
+      "code": "R48",
+      "size": "Button (LR754, SR754; AG5, 393)",
+      "diameter_mm": 7.9,
+      "height_mm": 5.4
+    },
+    {
+      "code": "R52",
+      "size": "Button (LR52; mercury version MR52; PX640)",
+      "diameter_mm": 15.8,
+      "height_mm": 11.1
+    },
+    {
+      "code": "R54",
+      "size": "Button (LR1131, SR1131; AG10, 389)",
+      "diameter_mm": 11.6,
+      "height_mm": 3.1,
+      "battery_id": "lr54"
+    },
+    {
+      "code": "R55",
+      "size": "Button (LR1121, SR1121; AG8, 391)",
+      "diameter_mm": 11.6,
+      "height_mm": 2.1,
+      "battery_id": "lr55"
+    },
+    {
+      "code": "R56",
+      "size": "Button (SR1126)",
+      "diameter_mm": 11.6,
+      "height_mm": 2.6,
+      "note": "Listed in IEC 60086-2:2001; Wikipedia notes it is apparently no longer made by any major company."
+    },
+    {
+      "code": "R57",
+      "size": "Button (LR926, SR926; AG7, 395, 399)",
+      "diameter_mm": 9.5,
+      "height_mm": 2.6,
+      "battery_id": "lr57"
+    },
+    {
+      "code": "R58",
+      "size": "Button (LR721, SR721; AG11, 362)",
+      "diameter_mm": 7.9,
+      "height_mm": 2.1
+    },
+    {
+      "code": "R59",
+      "size": "Button (LR726, SR726; AG2, 397)",
+      "diameter_mm": 7.9,
+      "height_mm": 2.6,
+      "battery_id": "lr59"
+    },
+    {
+      "code": "R60",
+      "size": "Button (LR621, SR621; AG1, 364)",
+      "diameter_mm": 6.8,
+      "height_mm": 2.1,
+      "battery_id": "sr621sw"
+    },
+    {
+      "code": "R62",
+      "size": "Button (SR516; 317)",
+      "diameter_mm": 5.8,
+      "height_mm": 1.6
+    },
+    {
+      "code": "R63",
+      "size": "Button (LR521, SR521; AG0, 379)",
+      "diameter_mm": 5.8,
+      "height_mm": 2.1
+    },
+    {
+      "code": "R64",
+      "size": "Button (LR527, SR527; 319)",
+      "diameter_mm": 5.8,
+      "height_mm": 2.7
+    },
+    {
+      "code": "R65",
+      "size": "Button (SR616; 321)",
+      "diameter_mm": 6.8,
+      "height_mm": 1.65
+    },
+    {
+      "code": "R66",
+      "size": "Button (LR626, SR626; AG4, 377)",
+      "diameter_mm": 6.8,
+      "height_mm": 2.6,
+      "battery_id": "sr626sw"
+    },
+    {
+      "code": "R67",
+      "size": "Button (SR716; 315)",
+      "diameter_mm": 7.9,
+      "height_mm": 1.65
+    },
+    {
+      "code": "R68",
+      "size": "Button (SR916; 373)",
+      "diameter_mm": 9.5,
+      "height_mm": 1.6
+    },
+    {
+      "code": "R69",
+      "size": "Button (LR921, SR921; AG6, 371)",
+      "diameter_mm": 9.5,
+      "height_mm": 2.1
+    }
+  ],
+  "notes": [
+    "Chemistry letters follow Wikipedia's summary of IEC 60086-1 edition 10, updated with the published change lists for editions 13 (2021) and 14 (2026). The standards themselves are not freely published.",
+    "Some secondary sources list further letters, for example W (lithium sulfur dioxide) and Y (lithium sulfuryl chloride). They do not appear in the IEC 60086-1 table as summarized by the sources here and are left out.",
+    "Edition 14 of IEC 60086-1 (2026) cites IEC 60086-2-1:2026 (batteries with aqueous electrolyte) and IEC 60086-2-2:2026 (lithium batteries) as normative references, and moves the common designation annex of IEC 60086-2:2021 into IEC 60086-1 as Annex H.",
+    "Legacy button dimensions are nominal diameter by height in millimeters from Wikipedia's List of battery sizes. Cylindrical dimensions are nominal values from Wikipedia's Battery nomenclature.",
+    "ANSI standardization began in 1919, when the US National Bureau of Standards published recommended test procedures and cell dimensions. The first American Standards Association C18 standard appeared in 1928; rechargeable batteries were added in 1984, lithium types in 1991, and the standards were extensively revised in 1999."
+  ],
+  "sources": [
+    {
+      "id": "wikipedia-battery-nomenclature",
+      "title": "Battery nomenclature (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Battery_nomenclature",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "IEC 60086-1 system letters (edition 10)",
+        "shape letters",
+        "size codes",
+        "modifiers",
+        "IEC 61951",
+        "ANSI sizes, suffixes and history",
+        "legacy cylindrical dimensions"
+      ]
+    },
+    {
+      "id": "wikipedia-list-of-battery-sizes",
+      "title": "List of battery sizes (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "legacy button codes and dimensions",
+        "cross-reference names",
+        "F and B sizes",
+        "five-digit lithium-ion names"
+      ]
+    },
+    {
+      "id": "wikipedia-button-cell",
+      "title": "Button cell (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Button_cell",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "IEC 60086-3 watch battery suffixes"
+      ]
+    },
+    {
+      "id": "wikipedia-nine-volt-battery",
+      "title": "Nine-volt battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Nine-volt_battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "R61 and F22 component cells"
+      ]
+    },
+    {
+      "id": "wikipedia-lithium-metal-battery",
+      "title": "Lithium metal battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Lithium_metal_battery",
+      "accessed": "2026-11-22",
+      "kind": "reference",
+      "covers": [
+        "letter G replaced by F",
+        "unconfirmed letters W and Y"
+      ]
+    },
+    {
+      "id": "iec-60086-1-ed13-preview",
+      "title": "IEC 60086-1:2021 Primary batteries, Part 1: General (edition 13.0 preview)",
+      "publisher": "IEC (preview via VDE Verlag)",
+      "url": "https://www.vde-verlag.de/iec-normen/preview-pdf/info_iec60086-1%7Bed13.0%7Db.pdf",
+      "accessed": "2026-11-22",
+      "kind": "standard",
+      "covers": [
+        "zinc-air nominal voltage 1.4 V or 1.45 V"
+      ]
+    },
+    {
+      "id": "iec-60086-1-ed14-preview",
+      "title": "IEC 60086-1:2026 Primary batteries, Part 1: General (edition 14.0 preview)",
+      "publisher": "IEC (preview via VDE Verlag)",
+      "url": "https://www.vde-verlag.de/iec-normen/preview-pdf/info_iec60086-1%7Bed14.0%7Den.pdf",
+      "accessed": "2026-11-22",
+      "kind": "standard",
+      "covers": [
+        "new letter T",
+        "letter F maximum open-circuit voltage",
+        "IEC 60086-2-1 and 60086-2-2",
+        "Annex H"
+      ]
+    },
+    {
+      "id": "iec-61960-3-2017-sample",
+      "title": "IEC 61960-3:2017 Secondary lithium cells and batteries for portable applications, Part 3 (sample pages)",
+      "publisher": "IEC (sample via iTeh Standards)",
+      "url": "https://cdn.standards.iteh.ai/samples/20911/429bf23396c04c3a9bc91bee8310686a/IEC-61960-3-2017.pdf",
+      "accessed": "2026-11-22",
+      "kind": "standard",
+      "covers": [
+        "clause 5.1 designation",
+        "electrode and shape letters",
+        "examples"
+      ]
+    }
+  ]
+}

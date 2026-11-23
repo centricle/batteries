@@ -128,15 +128,23 @@ export const BUILTIN: Tables = {
     HH: 'Performance level (manufacturer-defined).',
     HB: 'Performance level (manufacturer-defined).',
   },
-  // IEC 61960 lithium-ion letters.
-  liAnode: { I: 'Lithium-ion (intercalation) negative electrode', L: 'Lithium metal or lithium alloy negative electrode' },
+  // IEC 61960-3 letters (checked against its 2017 sample pages).
+  liAnode: {
+    I: 'Carbon negative electrode (lithium-ion)',
+    L: 'Lithium metal or lithium alloy negative electrode',
+    T: 'Titanium-based negative electrode (lithium titanate)',
+    X: 'Other negative electrode',
+  },
   liCathode: {
     C: { name: 'Cobalt-based positive electrode', note: 'Lithium cobalt oxide (LCO) in common usage.' },
     N: { name: 'Nickel-based positive electrode', note: 'Nickel manganese cobalt (NMC) or nickel cobalt aluminum (NCA) in common usage.' },
     M: { name: 'Manganese-based positive electrode', note: 'Lithium manganese oxide (LMO) in common usage.' },
+    Mp: { name: 'Manganese phosphate positive electrode' },
     V: { name: 'Vanadium-based positive electrode' },
     T: { name: 'Titanium-based positive electrode' },
-    F: { name: 'Iron phosphate positive electrode', note: 'LiFePO4. Manufacturer usage; F is not among the IEC 61960 positive electrode letters.' },
+    F: { name: 'Iron-based positive electrode', note: 'In IEC 61960 F means iron and Fp means iron phosphate. Makers print IFR for LiFePO4 cells; the strict IEC form is IFpR.' },
+    Fp: { name: 'Iron phosphate positive electrode', note: 'LiFePO4 (LFP).' },
+    X: { name: 'Other positive electrode' },
   },
   ansiSize: { '13': 'D', '14': 'C', '15': 'AA', '24': 'AAA', '25': 'AAAA' },
   ansiSuffix: {
@@ -378,16 +386,18 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
   }
 
   // 3. IEC 61960 lithium-ion: [cells] I/L, cathode, R/P, then dimensions.
-  const li = raw.match(/^(\d{1,2})?([IL])([CNMVTF])([RP])-?(\d{2})\/(\d{1,3})(?:\/(\d{1,3}))?(?:-(\d+))?$/);
-  const li5 = raw.match(/^(\d{1,2})?([IL])([CNMVTF])([RP])-?(\d{4,5})(?:-?([A-Z0-9][A-Z0-9-]*))?$/);
+  // Input is upper-cased, so the two-letter positives (Fp, Mp) arrive as FP, MP.
+  const li = raw.match(/^(\d{1,2})?([ILTX])(FP|MP|[CNMVTFX])([RP])-?(\d{2})\/(\d{1,3})(?:\/(\d{1,3}))?(?:-(\d+))?$/);
+  const li5 = raw.match(/^(\d{1,2})?([ILTX])(FP|MP|[CNMVTFX])([RP])-?(\d{4,5})(?:-?([A-Z0-9][A-Z0-9-]*))?$/);
   if (li || li5) {
     const m = (li ?? li5)!;
     const segs: Segment[] = [];
     const cells = m[1] ? parseInt(m[1], 10) : 1;
     if (m[1]) segs.push({ text: m[1], role: 'series', title: `${m[1]} cells in series`, meaning: 'Number of cells connected in series (batteries only).' });
-    segs.push({ text: m[2], role: 'chem', title: t.liAnode[m[2]] ?? m[2], meaning: m[2] === 'I' ? 'First letter: the negative electrode. I = lithium-ion.' : 'First letter: the negative electrode. L = lithium metal or alloy.' });
-    const cat = t.liCathode[m[3]];
-    segs.push({ text: m[3], role: 'chem', title: cat?.name ?? `Positive electrode ${m[3]}`, meaning: ['Second letter: the positive electrode.', cat?.note ?? ''].filter(Boolean).join(' ') });
+    segs.push({ text: m[2], role: 'chem', title: t.liAnode[m[2]] ?? m[2], meaning: 'First letter: the negative electrode. I = carbon (ordinary lithium-ion), L = lithium metal or alloy, T = titanium, X = other.' });
+    const pos = m[3].length === 2 ? m[3][0] + 'p' : m[3];
+    const cat = t.liCathode[pos];
+    segs.push({ text: pos, role: 'chem', title: cat?.name ?? `Positive electrode ${m[3]}`, meaning: ['Second letter: the positive electrode.', cat?.note ?? ''].filter(Boolean).join(' ') });
     segs.push({ text: m[4], role: 'shape', title: m[4] === 'R' ? 'Round (cylindrical)' : 'Prismatic', meaning: 'Third letter: the shape.' });
     let dims: Decoded['dims'];
     const notes: string[] = [];
@@ -409,10 +419,10 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       segs.push({ text: s.slice(0, 2), role: 'size', title: `Diameter ${mm(d)}`, meaning: 'Diameter in whole millimeters.' });
       segs.push({ text: s.slice(2), role: 'size', title: `Length ${mm(h)}`, meaning: s.length === 5 ? `Length in tenths of a millimeter: ${s.slice(2)} = ${mm(h)}.` : `Length in whole millimeters: ${s.slice(2)} mm.` });
       if (li5![6]) segs.push({ text: li5![6], role: 'model', title: 'Manufacturer model', meaning: "The maker's model code for this specific cell. It sets capacity and current ratings, not size." });
-      notes.push('The five-digit size (18650) is the form makers print. IEC 61960 itself writes maximum dimensions with slashes, for example ICR19/66.');
+      notes.push('The five-digit size (18650) is the form makers print, following the IEC 60086 round-cell pattern of diameter then length. IEC 61960 itself writes maximum dimensions with slashes, for example ICR19/66.');
     }
     const kind = m[4] === 'R' ? 'cylindrical' : 'prismatic';
-    const chemTxt = m[3] === 'F' ? 'lithium iron phosphate' : `lithium-ion (${(cat?.name ?? '').toLowerCase().replace(' positive electrode', '')})`;
+    const chemTxt = pos === 'F' || pos === 'Fp' ? 'lithium iron phosphate' : `lithium-ion (${(cat?.name ?? '').toLowerCase().replace(' positive electrode', '')})`;
     const dimTxt = dims ? `, ${mm(dims.d!)} in diameter and ${mm(dims.h!)} long` : '';
     return {
       input: raw,
@@ -670,15 +680,30 @@ export function mergeTables(ext: unknown): Tables {
     const name = pick(row, 'name', 'meaning', 'shape', 'label');
     if (/^[A-Z]$/.test(k) && typeof name === 'string') { t.shape[k] = { name, note: pick(row, 'note', 'notes') ?? t.shape[k]?.note }; used++; }
   }
-  const sizes = keyed(find(e, 'legacy_sizes', 'sizes', 'size_codes', 'legacy', 'size_numbers'));
+  const sizes = keyed(find(e, 'legacy_size_codes', 'legacy_sizes', 'sizes', 'size_codes', 'legacy', 'size_numbers'));
   for (const [k, row] of Object.entries(sizes)) {
     const id = /^[RFSP]/.test(k) ? k : `R${k}`;
-    const name = pick(row, 'name', 'common', 'common_name', 'label');
+    const name = pick(row, 'name', 'common', 'common_name', 'label', 'size');
     const d = num(pick(row, 'diameter', 'd', 'diameter_mm'));
     const h = num(pick(row, 'height', 'h', 'height_mm'));
     if (typeof name !== 'string' && d === undefined) continue;
     t.legacy[id] = { ...t.legacy[id], ...(typeof name === 'string' ? { name } : {}), ...(d ? { d } : {}), ...(h ? { h } : {}) };
     used++;
+  }
+  const li = find(e, 'li_ion_letters');
+  if (Array.isArray(li)) {
+    for (const row of li) {
+      const letter = String(row?.letter ?? '');
+      const meaning = row?.meaning;
+      if (!letter || typeof meaning !== 'string' || meaning === 'Others') continue;
+      if (/negative/i.test(row.role ?? '')) {
+        t.liAnode[letter] = `${meaning} negative electrode${letter === 'I' ? ' (lithium-ion)' : ''}`;
+        used++;
+      } else if (/positive/i.test(row.role ?? '')) {
+        t.liCathode[letter] = { ...t.liCathode[letter], name: `${meaning}${/phosphate/.test(meaning) ? '' : '-based'} positive electrode` };
+        used++;
+      }
+    }
   }
   if (used) t.source = 'data/iec-system.json';
   return t;

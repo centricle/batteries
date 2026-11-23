@@ -1,0 +1,127 @@
+{
+  "id": "lithium-thionyl-chloride",
+  "name": "Lithium thionyl chloride",
+  "short": "Li-SOCl₂",
+  "iec_letter": "E",
+  "rechargeable": false,
+  "anode": "Lithium metal",
+  "cathode": "Thionyl chloride (liquid cathode)",
+  "electrolyte": "Lithium tetrachloroaluminate in thionyl chloride",
+  "voltage": {
+    "nominal": 3.6,
+    "open_circuit": [
+      3.65,
+      3.67
+    ],
+    "cutoff": 2
+  },
+  "energy_density_wh_kg": [
+    500,
+    700
+  ],
+  "self_discharge": "Under 1% per year at 20 °C (Saft LS 14500); Tadiran cites as little as 0.7% per year for the highest-quality bobbin cells",
+  "temperature_c": {
+    "operating": [
+      -60,
+      85
+    ]
+  },
+  "color": "#2E7D6B",
+  "summary": "Lithium thionyl chloride cells use a lithium metal anode and a liquid thionyl chloride cathode for 3.6 V nominal and the highest energy density of the common primary chemistries. They power meters, sensors and industrial equipment for a decade or more, but are not sold as consumer batteries.",
+  "body": "## How it works\n\nA lithium thionyl chloride cell, IEC system E, has a lithium metal anode and a liquid cathode: thionyl chloride serves as both the active cathode material and the solvent, with lithium tetrachloroaluminate dissolved in it as the electrolyte. Cells come in two constructions. Tadiran describes bobbin cells as having the highest capacity and energy density, a wide temperature range (−80 to 125 °C) and very low self-discharge, while spiral-wound cells are specified where higher current is needed. Saft's LS 14500, an AA-size bobbin cell that Saft cross-references to the R6 size, uses a hermetic glass-to-metal seal and contains about 0.7 g of lithium.\n\n## Discharge behavior\n\nNominal voltage is 3.6 V and the open-circuit voltage is about 3.65 to 3.67 V. Saft rates the LS 14500 at 2.6 Ah to a 2.0 V cutoff, with a maximum continuous current of 70 mA, and for operation from −60 to 85 °C. Wikipedia lists 500 to 700 Wh/kg and about 1,200 Wh/L, operation down to −55 °C with over 50% of rated capacity, relatively high internal impedance and limited short-circuit current.\n\nDuring storage a thin film of lithium chloride forms on the anode. Tadiran explains that this passivation layer is what limits self-discharge, and that it dissipates under load. The tradeoff is voltage delay: a cell stored for a long time can show a temporary low voltage when first put into service. Saft gives under 1% self-discharge after one year at 20 °C. Tadiran states that the highest-quality bobbin cells self-discharge as little as 0.7% per year, retaining 70% of capacity after 40 years, while lower-quality bobbin cells can lose up to 3% per year.\n\n## Uses\n\nWikipedia describes low-current cells for memory backup and portable electronics and high-current cells for military applications, and notes that the chemistry is not used for consumer or general-purpose batteries. Tadiran's white paper discusses bobbin cells for long-life wireless devices.\n\n## History\n\nA dated introduction for the chemistry was not found in the sources consulted.\n\n## Status\n\nCurrent, in industrial and specialist use. IEC 60086-1 lists system E at 3.6 V nominal with a 3.9 V maximum open-circuit voltage, and the letter is rarely seen on retail cells.",
+  "strengths": [
+    "Highest energy density of common primary chemistries: 500 to 700 Wh/kg (Wikipedia)",
+    "Very low self-discharge, under 1% per year at 20 °C (Saft)",
+    "Wide temperature range: −60 to 85 °C for the Saft LS 14500",
+    "Flat 3.6 V discharge"
+  ],
+  "limitations": [
+    "Low current capability in bobbin cells (70 mA maximum continuous for the Saft LS 14500)",
+    "Voltage delay after storage caused by anode passivation",
+    "Not interchangeable with 1.5 V AA cells despite sharing the size",
+    "Not rechargeable"
+  ],
+  "safety": [
+    "Thionyl chloride is toxic and reacts with water",
+    "Can explode when shorted (Wikipedia)",
+    "Contains lithium metal; it ships under the lithium metal battery rules (IATA PI 968 to 970)"
+  ],
+  "status": "current",
+  "sources": [
+    {
+      "id": "saft-ls14500",
+      "title": "LS 14500 Primary lithium-thionyl chloride (Li-SOCl2) datasheet",
+      "publisher": "Saft",
+      "url": "https://media.elv.com/file/111947_ls14500_data.pdf",
+      "kind": "datasheet",
+      "note": "April 2008 edition, copy hosted by ELV.",
+      "accessed": "2026-11-22",
+      "covers": [
+        "construction",
+        "voltages",
+        "capacity",
+        "current limit",
+        "temperature",
+        "self-discharge",
+        "lithium content"
+      ]
+    },
+    {
+      "id": "tadiran-self-discharge-white-paper",
+      "title": "Understanding battery self-discharge",
+      "publisher": "Tadiran Batteries",
+      "url": "https://tadiranbat.com/wp-content/uploads/2022/03/Tadiran-White-paper-Understanding-Battery-self-dis-runnerslr.pdf",
+      "kind": "reference",
+      "note": "Manufacturer white paper.",
+      "accessed": "2026-11-22",
+      "covers": [
+        "bobbin versus spiral construction",
+        "passivation",
+        "self-discharge",
+        "40-year retention"
+      ]
+    },
+    {
+      "id": "wikipedia-lithium-metal-battery",
+      "title": "Lithium metal battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Lithium_metal_battery",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "electrolyte",
+        "voltages",
+        "energy density",
+        "low-temperature capacity",
+        "uses",
+        "hazards",
+        "IEC code E"
+      ]
+    },
+    {
+      "id": "wikipedia-battery-nomenclature",
+      "title": "Battery nomenclature (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Battery_nomenclature",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "IEC letter E",
+        "maximum open-circuit voltage",
+        "rarity"
+      ]
+    },
+    {
+      "id": "energizer-lithium-transportation-2023",
+      "title": "Lithium Battery Transportation (2023)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/wp-content/uploads/2023/05/Lithium-Battery-Transportation_2023.pdf",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "lithium metal shipping instructions"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

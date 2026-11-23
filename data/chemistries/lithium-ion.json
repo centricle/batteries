@@ -1,0 +1,136 @@
+{
+  "id": "lithium-ion",
+  "name": "Lithium-ion",
+  "short": "Li-ion",
+  "rechargeable": true,
+  "anode": "Graphite (carbon), sometimes with silicon",
+  "cathode": "Lithium metal oxide: cobalt (LCO), nickel manganese cobalt (NMC), nickel cobalt aluminum (NCA) or manganese (LMO)",
+  "electrolyte": "Lithium hexafluorophosphate in a mixture of organic carbonates",
+  "voltage": {
+    "nominal": 3.6,
+    "cutoff": 2.5,
+    "charge_max": 4.2
+  },
+  "energy_density_wh_kg": [
+    100,
+    260
+  ],
+  "self_discharge": "1.5 to 2% per month as typically stated by manufacturers (Wikipedia)",
+  "temperature_c": {
+    "operating": [
+      -20,
+      60
+    ],
+    "storage": [
+      -20,
+      50
+    ]
+  },
+  "color": "#D23F5B",
+  "summary": "Lithium-ion cells shuttle lithium ions between a graphite anode and a lithium metal oxide cathode, giving 3.6 to 3.7 V nominal and a 4.2 V full charge. The family includes LCO, NMC, NCA and LMO cathodes and the 18650 and 21700 cells used in laptops, tools and vehicles.",
+  "body": "## How it works\n\nEvery commercial lithium-ion cell uses intercalation compounds: lithium ions move into and out of the crystal structure of both electrodes rather than plating as metal. The negative electrode is usually graphite, sometimes with silicon added for capacity. The electrolyte is usually lithium hexafluorophosphate dissolved in a mixture of organic carbonates. Energizer notes that lithium-ion batteries do not contain metallic lithium, which separates them from primary lithium cells. The positive electrode defines the subtype. Battery University's summary lists lithium cobalt oxide (LCO) at 3.60 V nominal and 150 to 200 Wh/kg, lithium manganese oxide (LMO) at 3.70 V and 100 to 150 Wh/kg, nickel manganese cobalt (NMC) at 3.60 to 3.70 V and 150 to 220 Wh/kg, and nickel cobalt aluminum (NCA) at 3.60 V and 200 to 260 Wh/kg. Lithium iron phosphate and lithium titanate cells, also lithium-ion, have separate entries here.\n\n## Discharge behavior\n\nVoltage slopes from 4.2 V at full charge through a nominal 3.6 to 3.7 V. Panasonic's NCR18650B, an 18650 cell, is specified at 3.6 V nominal, charged by constant current then constant voltage to 4.20 V, and discharged to 2.50 V; it is rated for discharge from −20 to 60 °C, charge from 0 to 45 °C and storage from −20 to 50 °C, at 243 Wh/kg and 676 Wh/L. Battery University gives 3.00 V as the full-discharge point for LCO, LMO, NMC and NCA and 2.50 V as the minimum. Wikipedia notes that charging above 45 °C degrades performance and that charging between 0 and 5 °C needs reduced current. Self-discharge is typically 1.5 to 2% per month. Battery University lists ideal cycle life from 300 to 700 cycles for LMO up to 1,000 to 2,000 for NMC.\n\n## Uses\n\nPhones, laptops, cameras, power tools, e-bikes, medical devices and electric vehicles, according to Battery University's application list. IEC 61960-3 designates cells by negative electrode (I for carbon), positive electrode (C cobalt, N nickel, M manganese) and shape (R cylindrical, P prismatic), followed by diameter and height in millimeters, as in ICR19/66. The five-digit names in common use, such as 18650 (18 mm by 65.0 mm), follow the IEC 60086 round-cell size pattern instead.\n\n## History\n\nStanley Whittingham conceived intercalation electrodes in the 1970s and built a rechargeable cell with a titanium disulfide cathode. John Goodenough added the lithium cobalt oxide cathode in 1980. Akira Yoshino developed the first prototype of the modern cell, with a carbonaceous anode, in 1985, and a Sony and Asahi Kasei team commercialized it in 1991. Whittingham, Goodenough and Yoshino shared the 2019 Nobel Prize in Chemistry. From 1991 to 2018, energy density more than tripled.\n\n## Status\n\nCurrent.",
+  "strengths": [
+    "High specific energy: 100 to 260 Wh/kg across common subtypes (Battery University)",
+    "3.6 to 3.7 V nominal from one cell",
+    "Low self-discharge for a rechargeable: 1.5 to 2% per month"
+  ],
+  "limitations": [
+    "Needs charge control to 4.2 V and discharge protection below about 2.5 V",
+    "Charging limited to about 0 to 45 °C",
+    "Degradation increases with storage or use at high or low temperature (Wikipedia)",
+    "Not voltage-compatible with 1.5 V devices"
+  ],
+  "safety": [
+    "Thermal runaway can begin near 150 °C for LCO and NCA cells (Battery University)",
+    "Charging too fast or too cold can plate lithium metal on the anode; the dendrites can pierce the separator and short the cell internally (Wikipedia)",
+    "A short circuit can lead to overheating, explosion and fire (Wikipedia)"
+  ],
+  "status": "current",
+  "sources": [
+    {
+      "id": "wikipedia-lithium-ion-battery",
+      "title": "Lithium-ion battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Lithium-ion_battery",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "intercalation",
+        "electrolyte",
+        "anode materials",
+        "charging temperature",
+        "self-discharge",
+        "degradation",
+        "lithium plating and short circuits",
+        "history",
+        "2019 Nobel Prize",
+        "energy density trend"
+      ]
+    },
+    {
+      "id": "bu-216-lithium-summary",
+      "title": "BU-216: Summary Table of Lithium-based Batteries",
+      "publisher": "Battery University",
+      "url": "https://batteryuniversity.com/article/bu-216-summary-table-of-lithium-based-batteries",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "subtype voltages",
+        "specific energy",
+        "cutoff voltages",
+        "cycle life",
+        "thermal runaway",
+        "applications"
+      ]
+    },
+    {
+      "id": "panasonic-ncr18650b",
+      "title": "NCR18650B Lithium Ion specification sheet",
+      "publisher": "Panasonic",
+      "url": "https://www.batteryspace.com/prod-specs/NCR18650B.pdf",
+      "kind": "datasheet",
+      "note": "Copy hosted by BatterySpace.",
+      "accessed": "2026-11-22",
+      "covers": [
+        "example cell voltages",
+        "charge method",
+        "temperature",
+        "energy density"
+      ]
+    },
+    {
+      "id": "energizer-lithium-handbook",
+      "title": "Cylindrical Primary Lithium Handbook and Application Manual (Li/FeS2)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/lithiuml91l92_appman.pdf",
+      "kind": "datasheet",
+      "accessed": "2026-11-22",
+      "covers": [
+        "no metallic lithium in lithium-ion"
+      ]
+    },
+    {
+      "id": "iec-61960-3-2017-sample",
+      "title": "IEC 61960-3:2017 Secondary lithium cells and batteries for portable applications, Part 3 (sample pages)",
+      "publisher": "IEC (sample via iTeh Standards)",
+      "url": "https://cdn.standards.iteh.ai/samples/20911/429bf23396c04c3a9bc91bee8310686a/IEC-61960-3-2017.pdf",
+      "kind": "standard",
+      "accessed": "2026-11-22",
+      "covers": [
+        "designation system"
+      ]
+    },
+    {
+      "id": "wikipedia-list-of-battery-sizes",
+      "title": "List of battery sizes (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_battery_sizes",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "five-digit cell size names"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

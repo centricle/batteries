@@ -1,0 +1,122 @@
+{
+  "id": "nimh",
+  "name": "Nickel-metal hydride",
+  "short": "NiMH",
+  "iec_letter": "H",
+  "rechargeable": true,
+  "anode": "Hydrogen-absorbing metal alloy",
+  "cathode": "Nickel oxyhydroxide",
+  "electrolyte": "Potassium hydroxide-based alkaline solution (20 to 40% by weight)",
+  "voltage": {
+    "nominal": 1.2,
+    "cutoff": 0.9
+  },
+  "self_discharge": "Standard cells retain about 50 to 80% of capacity after 12 months (Energizer); low self-discharge cells about 70 to 85% after one year at 20 °C (Wikipedia)",
+  "temperature_c": {
+    "operating": [
+      0,
+      50
+    ],
+    "storage": [
+      -20,
+      30
+    ]
+  },
+  "color": "#D9822B",
+  "summary": "Nickel-metal hydride cells pair a nickel oxyhydroxide positive electrode with a hydrogen-absorbing alloy negative in an alkaline electrolyte, giving 1.2 V on a flat discharge curve. They are the common rechargeable AA and AAA cell and replaced nickel-cadmium in most consumer uses.",
+  "body": "## How it works\n\nEnergizer describes nickel-metal hydride as an extension of sealed nickel-cadmium technology with the cadmium negative electrode replaced by a hydrogen-absorbing metal alloy. On charge, the alloy takes up hydrogen from the water in the electrolyte (Alloy + H2O + e⁻ → Alloy(H) + OH⁻) and nickel hydroxide at the positive electrode is oxidized; on discharge, the alloy releases the hydrogen and nickel oxyhydroxide is reduced back to nickel hydroxide. The electrolyte is a 20 to 40% by weight alkaline hydroxide solution, the separator is usually a non-woven polyolefin, and each cell has a resealable safety vent. Energizer states that the metal hydride electrode has a theoretical capacity more than 40% higher than a cadmium electrode, giving energy densities more than 20% higher than an equivalent nickel-cadmium cell.\n\n## Discharge behavior\n\nAfter charge the open-circuit voltage is about 1.4 V; under load it drops quickly to a flat plateau near 1.2 V. Energizer rates its cells at 1.25 V, while IEC and Energizer's characteristics table use 1.2 V. The usual discharge cutoff is 0.9 V per cell, 75% of the 1.2 V midpoint, though at high drain rates (1 to 4 C) that cutoff can leave capacity unused. Driving cells in a series pack into reverse can shorten their life, so Energizer recommends removing the load before total discharge. Charge and discharge are rated from 0 to 50 °C, and storage from −20 to 30 °C.\n\nEnergizer recommends a standard charge of 0.1 C for 12 to 14 hours and a maintenance (trickle) charge below 0.025 C (C/40). It gives cycle life as several hundred cycles and a typical service life of 2 to 5 years. Standard cells retain about 50 to 80% of capacity after 12 months of storage. Memory effect, the voltage depression of about 150 mV seen in routinely part-discharged nickel-cadmium cells, is described by Energizer as no longer a concern with NiMH.\n\n## Uses\n\nNiMH is sold in the common round sizes as rechargeable replacements for primary cells, designated HR in IEC 61951-2 (HR6 for AA). Energizer positions it for devices that would otherwise need frequent battery replacement. Battery University also lists medical instruments, hybrid cars and industrial applications.\n\n## History\n\nWork on NiMH began at the Battelle-Geneva Research Center following the technology's invention in 1967. Research at Philips Laboratories and France's CNRS developed rare-earth hydride alloys for the negative electrode, and in 1987 Willems and Buschow demonstrated a successful cell based on them. The first consumer NiMH cells went on sale in 1989. In 2005, Sanyo introduced low self-discharge cells under the Eneloop name; manufacturers claim they retain 70 to 85% of capacity after a year at 20 °C, compared with about half for standard NiMH.\n\n## Status\n\nCurrent. IEC uses the letter H for nickel-metal hydride.",
+  "strengths": [
+    "Flat 1.2 V discharge",
+    "More than 20% higher energy density than nickel-cadmium (Energizer)",
+    "No cadmium; memory effect not a concern (Energizer)",
+    "Can outperform alkaline in high-drain devices"
+  ],
+  "limitations": [
+    "1.2 V, lower than the 1.5 V of primary cells",
+    "Standard cells lose a large share of charge in storage",
+    "Cycle life of several hundred cycles (Energizer)",
+    "Charge and discharge limited to 0 to 50 °C"
+  ],
+  "safety": [
+    "Over-discharge of a series pack can drive cells into reverse polarity",
+    "Gases formed in overcharge are normally recombined inside the cell; a resealable safety vent relieves excess pressure"
+  ],
+  "status": "current",
+  "sources": [
+    {
+      "id": "energizer-nimh-handbook",
+      "title": "Nickel Metal Hydride (NiMH) Handbook and Application Manual",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/wp-content/uploads/2020/11/nimhhandbook_ver2-2.pdf",
+      "kind": "datasheet",
+      "accessed": "2026-11-22",
+      "covers": [
+        "construction",
+        "reactions",
+        "electrolyte",
+        "separator",
+        "vent",
+        "voltages",
+        "cutoff",
+        "charging",
+        "cycle life",
+        "self-discharge",
+        "temperature",
+        "memory effect",
+        "polarity reversal"
+      ]
+    },
+    {
+      "id": "energizer-typical-characteristics",
+      "title": "Energizer Battery Systems: Typical Characteristics (version 2.0)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/wp-content/uploads/2026/10/typical-characteristics-2.0.pdf",
+      "kind": "datasheet",
+      "accessed": "2026-11-22",
+      "covers": [
+        "1.2 V nominal",
+        "typical applications"
+      ]
+    },
+    {
+      "id": "wikipedia-nimh-battery",
+      "title": "Nickel-metal hydride battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "1967 Battelle",
+        "Philips and CNRS alloys",
+        "1987 Willems and Buschow",
+        "1989 consumer cells",
+        "2005 Eneloop",
+        "low self-discharge retention"
+      ]
+    },
+    {
+      "id": "bu-107-secondary-comparison",
+      "title": "BU-107: Comparison Table of Secondary Batteries",
+      "publisher": "Battery University",
+      "url": "https://batteryuniversity.com/article/bu-107-comparison-table-of-secondary-batteries",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "applications"
+      ]
+    },
+    {
+      "id": "wikipedia-battery-nomenclature",
+      "title": "Battery nomenclature (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Battery_nomenclature",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "IEC letter H",
+        "IEC 61951 designations follow primary sizes"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

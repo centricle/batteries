@@ -1,0 +1,120 @@
+{
+  "id": "zinc-air",
+  "name": "Zinc-air",
+  "short": "Zinc-air",
+  "iec_letter": "P",
+  "rechargeable": false,
+  "anode": "Zinc powder (gelled)",
+  "cathode": "Oxygen from ambient air, on a catalyzed carbon electrode",
+  "electrolyte": "Potassium hydroxide (aqueous)",
+  "voltage": {
+    "nominal": 1.4
+  },
+  "self_discharge": "Sealed: 95% of service after 1 year. Activated: about 50% of capacity left after 3 to 12 weeks at 20 °C (Energizer)",
+  "temperature_c": {
+    "operating": [
+      -10,
+      50
+    ]
+  },
+  "color": "#C9A227",
+  "summary": "Zinc-air cells oxidize a zinc anode with oxygen drawn from the air through holes in the case, giving about 1.4 V and the highest capacity per volume of any miniature battery. They are the common hearing aid battery and lose about half their capacity within 3 to 12 weeks once the seal tab is removed.",
+  "body": "## How it works\n\nA zinc-air cell, IEC system P, draws its cathode reactant from the air. The anode is gelled zinc powder in potassium hydroxide electrolyte; the cathode is a thin catalyzed carbon electrode that reduces oxygen taken from the surrounding air. Air enters through a hole in the case, which an adhesive tab seals until use, and a Teflon layer on the cathode lets oxygen in while limiting water loss. Energizer gives the reactions as Zn + 2OH⁻ → ZnO + H2O + 2e⁻ at the anode, O2 + 2H2O + 4e⁻ → 4OH⁻ at the cathode, and 2Zn + O2 → 2ZnO overall.\n\n## Discharge behavior\n\nThe reaction has a theoretical voltage of 1.65 V, reduced to about 1.35 to 1.4 V in available cells. Energizer gives a typical operating voltage of 1.4 V that varies with current and depth of discharge, a relatively flat discharge curve and essentially constant internal resistance; its 2026 characteristics table lists 1.45 V nominal. IEC 60086-1 edition 13 lists the system at 1.4 V or 1.45 V nominal. Energizer recommends letting a cell take in air for 30 seconds after removing the tab, and rates continuous use from −10 to 55 °C in its zinc-air manual and −10 to 50 °C in its current characteristics table.\n\nShelf life depends on the seal. With the tab in place, Energizer reports 95% of initial service after one year and 90% after two. Once activated, a cell retains about 50% of its capacity after 3 to 12 weeks at 20 °C, depending on size, and 0 to 10% beyond 20 weeks. The environment matters: low humidity and high temperature dry the electrolyte, very high humidity floods the cathode, and potassium hydroxide reacts with carbon dioxide in the air.\n\n## Uses\n\nEnergizer describes zinc-air as most effective in applications that use up the cell's capacity within a few weeks, with hearing aids as the typical device. Wikipedia also lists pagers and medical devices, and notes zinc-air as a shorter-lived substitute for discontinued 1.35 V mercury cells.\n\n## History\n\nWikipedia dates commercial zinc-air products to 1932, with George W. Heise and Erwin A. Schumacher of the National Carbon Company. Thin electrodes developed from fuel-cell research in the 1970s made small button and prismatic cells practical for hearing aids.\n\n## Status\n\nCurrent. Energizer states that its zinc-air cells contain no added mercury. IEC 60086-1 lists a maximum open-circuit voltage of 1.68 V for system P.",
+  "strengths": [
+    "Highest capacity-to-volume ratio of the miniature systems (Energizer)",
+    "Relatively flat discharge and constant internal resistance",
+    "Long sealed shelf life: 90% of service after two years with the tab on"
+  ],
+  "limitations": [
+    "Short life after activation: about 50% capacity left after 3 to 12 weeks",
+    "Sensitive to humidity, temperature and carbon dioxide",
+    "Needs an air path through the device",
+    "Not rechargeable"
+  ],
+  "safety": [
+    "Button cell ingestion hazard: swallowed cells can cause severe internal burns"
+  ],
+  "status": "current",
+  "sources": [
+    {
+      "id": "energizer-zinc-air-manual",
+      "title": "Zinc Air (Zn/O2) Application Manual",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/pdfs/zincair_appman.pdf",
+      "kind": "datasheet",
+      "accessed": "2026-11-22",
+      "covers": [
+        "construction",
+        "reactions",
+        "operating voltage",
+        "discharge curve",
+        "shelf life sealed and activated",
+        "temperature",
+        "uses",
+        "no added mercury"
+      ]
+    },
+    {
+      "id": "energizer-typical-characteristics",
+      "title": "Energizer Battery Systems: Typical Characteristics (version 2.0)",
+      "publisher": "Energizer",
+      "url": "https://data.energizer.com/wp-content/uploads/2026/10/typical-characteristics-2.0.pdf",
+      "kind": "datasheet",
+      "accessed": "2026-11-22",
+      "covers": [
+        "1.45 V nominal",
+        "operating temperature"
+      ]
+    },
+    {
+      "id": "iec-60086-1-ed13-preview",
+      "title": "IEC 60086-1:2021 Primary batteries, Part 1: General (edition 13.0 preview)",
+      "publisher": "IEC (preview via VDE Verlag)",
+      "url": "https://www.vde-verlag.de/iec-normen/preview-pdf/info_iec60086-1%7Bed13.0%7Db.pdf",
+      "kind": "standard",
+      "accessed": "2026-11-22",
+      "covers": [
+        "1.4 V or 1.45 V nominal"
+      ]
+    },
+    {
+      "id": "wikipedia-zinc-air-battery",
+      "title": "Zinc-air battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Zinc-air_battery",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "theoretical voltage",
+        "environmental effects",
+        "1932 commercialization",
+        "1970s button cells",
+        "uses"
+      ]
+    },
+    {
+      "id": "wikipedia-battery-nomenclature",
+      "title": "Battery nomenclature (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Battery_nomenclature",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "IEC letter P",
+        "maximum open-circuit voltage"
+      ]
+    },
+    {
+      "id": "wikipedia-button-cell",
+      "title": "Button cell (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Button_cell",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "ingestion hazard"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "lithium-titanate",
+  "name": "Lithium titanate",
+  "short": "LTO",
+  "rechargeable": true,
+  "anode": "Lithium titanate (Li4Ti5O12)",
+  "cathode": "Lithium manganese oxide or nickel manganese cobalt oxide",
+  "electrolyte": "Non-aqueous solution with lithium salt",
+  "voltage": {
+    "nominal": 2.4,
+    "cutoff": 1.8,
+    "charge_max": 2.85
+  },
+  "energy_density_wh_kg": [
+    50,
+    80
+  ],
+  "color": "#6B4FA0",
+  "summary": "Lithium titanate (LTO) cells are lithium-ion cells that replace the graphite anode with lithium titanate, giving about 2.4 V nominal. They accept very fast charging and cold-weather charging and last thousands of cycles, at the cost of low energy density.",
+  "body": "## How it works\n\nA lithium titanate cell is a lithium-ion cell whose negative electrode uses lithium titanate, commonly Li4Ti5O12, in place of graphite. Battery University lists lithium manganese oxide or NMC as typical positive electrodes. Compared with graphite, lithium titanate has a lower theoretical specific capacity, 175 against 372 mAh/g, but its volume changes only about 0.2% during lithium insertion and removal, against about 10% for graphite. Battery University describes the anode as zero-strain, with no SEI film formation and no lithium plating during fast charging or charging at low temperature.\n\n## Discharge behavior\n\nThe higher anode potential lowers cell voltage: Battery University gives 2.40 V nominal, a full charge of 2.85 V (2.80 V in its overview article) and a full discharge of 1.80 V; Toshiba's SCiB cells are listed at 2.3 V. IEC 61960-3 gives 2.2 to 2.5 V as the nominal range for titanium oxide negative electrodes. Battery University gives a specific energy of 50 to 80 Wh/kg in one article and 70 to 80 Wh/kg in its summary table, and reports 80% of capacity at −30 °C. Cycle life is the main advantage. Battery University lists 3,000 to 7,000 cycles under ideal conditions, and Wikipedia reports that in 2024 Toshiba specified 45,000 cycles at 10C for its 2.9 Ah high-power SCiB cell and 20,000 cycles at 3C for its 23 Ah high-energy cell. The same cells can be charged from 0 to 80% in about 1 minute and 6 minutes respectively, with some loss of cycle life.\n\n## Uses\n\nBattery University lists UPS systems, electric vehicles and solar street lighting. Wikipedia lists electric buses, including an ultrafast-charging fleet launched in Chongqing in 2011, the Japan-only versions of Mitsubishi's i-MiEV and Minicab MiEV, the Honda Fit EV and JR Central's N700S Shinkansen.\n\n## History\n\nToshiba released its lithium titanate SCiB (Super Charge Ion Battery) in 2007, designed to reach 90% charge in ten minutes. Battery University dates the chemistry's availability to about 2008.\n\n## Status\n\nCurrent. In IEC 61960-3 designations, the negative-electrode letter T denotes titanium.",
+  "strengths": [
+    "Very long cycle life: 3,000 to 7,000 cycles (Battery University), tens of thousands in some Toshiba cells",
+    "Fast charging without lithium plating",
+    "Charges at low temperature; 80% capacity at −30 °C (Battery University)",
+    "Described by Battery University as one of the safest lithium-ion types"
+  ],
+  "limitations": [
+    "Low specific energy: 50 to 80 Wh/kg",
+    "Low cell voltage, about 2.4 V",
+    "Expensive (Battery University)"
+  ],
+  "safety": [
+    "Battery University rates LTO among the safest lithium-ion chemistries"
+  ],
+  "status": "current",
+  "sources": [
+    {
+      "id": "bu-205-types-of-lithium-ion",
+      "title": "BU-205: Types of Lithium-ion",
+      "publisher": "Battery University",
+      "url": "https://batteryuniversity.com/article/bu-205-types-of-lithium-ion",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "anode material",
+        "positive electrodes",
+        "zero strain and no plating",
+        "charge voltage 2.80 V",
+        "specific energy 50 to 80 Wh/kg",
+        "low-temperature capacity",
+        "availability since about 2008"
+      ]
+    },
+    {
+      "id": "bu-216-lithium-summary",
+      "title": "BU-216: Summary Table of Lithium-based Batteries",
+      "publisher": "Battery University",
+      "url": "https://batteryuniversity.com/article/bu-216-summary-table-of-lithium-based-batteries",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "voltages",
+        "specific energy 70 to 80 Wh/kg",
+        "cycle life",
+        "safety",
+        "applications",
+        "cost"
+      ]
+    },
+    {
+      "id": "wikipedia-lithium-titanate-battery",
+      "title": "Lithium-titanate battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Lithium-titanate_battery",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "specific capacity and volume change",
+        "Toshiba voltage",
+        "Toshiba cycle life and charge time",
+        "uses",
+        "2007 SCiB"
+      ]
+    },
+    {
+      "id": "iec-61960-3-2017-sample",
+      "title": "IEC 61960-3:2017 Secondary lithium cells and batteries for portable applications, Part 3 (sample pages)",
+      "publisher": "IEC (sample via iTeh Standards)",
+      "url": "https://cdn.standards.iteh.ai/samples/20911/429bf23396c04c3a9bc91bee8310686a/IEC-61960-3-2017.pdf",
+      "kind": "standard",
+      "accessed": "2026-11-22",
+      "covers": [
+        "titanium oxide nominal voltage",
+        "electrolyte",
+        "negative-electrode letter T"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}

@@ -1,0 +1,93 @@
+{
+  "id": "nickel-oxyhydroxide",
+  "name": "Nickel oxyhydroxide",
+  "short": "NiOx",
+  "iec_letter": "Z",
+  "rechargeable": false,
+  "anode": "Zinc",
+  "cathode": "Nickel oxyhydroxide with manganese dioxide and graphite",
+  "electrolyte": "Alkali metal hydroxide (aqueous)",
+  "voltage": {
+    "nominal": 1.5,
+    "open_circuit": [
+      1.7,
+      1.78
+    ]
+  },
+  "color": "#6C5BD4",
+  "summary": "Nickel oxyhydroxide (NiOOH, abbreviated NiOx) primary cells add nickel oxyhydroxide to an alkaline cell's manganese dioxide cathode, raising the unloaded voltage to about 1.7 V. They were sold for high-drain devices such as digital cameras under names including Panasonic Oxyride.",
+  "body": "## How it works\n\nA nickel oxyhydroxide primary cell is a modified alkaline cell. The anode is zinc and the electrolyte is alkaline, as in an LR cell, but the cathode adds nickel oxyhydroxide to the manganese dioxide and graphite. Wikipedia notes two manufacturing differences: finer-grained graphite in the cathode, and a vacuum pouring process that puts more electrolyte into the cell. EE Power's 2005 report on Panasonic's Oxyride line describes the same cathode recipe and the vacuum electrolyte process.\n\n## Discharge behavior\n\nThe unloaded voltage is about 1.7 V, against 1.5 V for alkaline, and the cell holds a higher average voltage during discharge. IEC 60086-1 lists the system at 1.5 V nominal with a maximum open-circuit voltage of 1.78 V. The higher voltage is the main compatibility issue. Wikipedia notes that it can cause problems in equipment with incandescent bulbs, such as flashlights, and in devices without a voltage regulator. It can also give a false reading in equipment that estimates remaining runtime from battery voltage. In low-drain use, life is reported to be similar to alkaline.\n\n## Uses\n\nThe chemistry was aimed at high-drain consumer electronics. DV Hardware's report of Panasonic's announcement describes Oxyride as suited to digital still cameras, handheld games and portable audio products, and quotes Panasonic's statement that in independent lab testing AA Oxyride cells lasted twice as long as alkaline cells in digital cameras.\n\n## History\n\nDV Hardware reported Panasonic's Oxyride announcement on July 29, 2005. EE Power reported in December 2005 that Oxyride went on sale to US consumers in July 2005 and, four months later, was available in over 14,000 retail outlets covering about 95% of the United States.\n\n## Status\n\nLegacy. Wikipedia abbreviates the system NiOx. It keeps its own IEC system letter, Z, so a nickel oxyhydroxide AA is designated ZR6, but the sources consulted here do not give a current consumer product line.",
+  "strengths": [
+    "Higher voltage under load than alkaline",
+    "Aimed at high-drain devices such as digital cameras",
+    "Same sizes as alkaline cells"
+  ],
+  "limitations": [
+    "About 1.7 V unloaded can be too high for incandescent flashlights and unregulated devices",
+    "Can mislead voltage-based battery gauges",
+    "Life similar to alkaline in low-drain use",
+    "Not rechargeable"
+  ],
+  "safety": [
+    "Not designed for recharging"
+  ],
+  "status": "legacy",
+  "sources": [
+    {
+      "id": "wikipedia-nickel-oxyhydroxide-battery",
+      "title": "Nickel oxyhydroxide battery (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Nickel_oxyhydroxide_battery",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "construction",
+        "unloaded voltage",
+        "compatibility",
+        "IEC code Z"
+      ]
+    },
+    {
+      "id": "wikipedia-battery-nomenclature",
+      "title": "Battery nomenclature (Wikipedia)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Battery_nomenclature",
+      "kind": "reference",
+      "accessed": "2026-11-22",
+      "covers": [
+        "nominal and maximum open-circuit voltage",
+        "electrolyte"
+      ]
+    },
+    {
+      "id": "eepower-oxyride-2005",
+      "title": "Panasonic's New Oxyride Batteries Hit Retail for the Holidays",
+      "publisher": "EE Power",
+      "url": "https://eepower.com/news/panasonics-new-oxyride-batteries-hit-retail-for-the-holidays/",
+      "kind": "reference",
+      "note": "News report dated December 15, 2005.",
+      "accessed": "2026-11-22",
+      "covers": [
+        "US launch July 2005",
+        "retail reach",
+        "cathode materials",
+        "vacuum electrolyte process"
+      ]
+    },
+    {
+      "id": "dvhardware-oxyride-2005",
+      "title": "Panasonic Oxyride batteries deliver two times longer battery life than Alkaline",
+      "publisher": "DV Hardware",
+      "url": "https://www.dvhardware.net/article6091.html",
+      "kind": "reference",
+      "note": "News report dated July 29, 2005.",
+      "accessed": "2026-11-22",
+      "covers": [
+        "announcement",
+        "target devices",
+        "digital camera claim"
+      ]
+    }
+  ],
+  "updated": "2026-11-22"
+}
