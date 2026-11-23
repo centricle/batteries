@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Search from '../components/Search.astro';
+import Mark from '../components/Mark.astro';
 import { paid } from '../lib/buy';
 
 export interface Props {
@@ -41,6 +42,7 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={noindex ? 'noindex' : 'index, follow'} />
     <meta name="theme-color" content="#f8f7f2" media="(prefers-color-scheme: light)" />
@@ -89,15 +91,8 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 z-50 btn">Skip to content</a>
     <header class="sticky top-0 z-40 border-b border-line-2 bg-bg">
       <div class="wrap flex items-center gap-4 h-14">
-        <a href="/" class="flex items-center gap-2 shrink-0" aria-label="batteries.fyi home">
-          <span class="w-8 h-8 border border-ink flex items-center justify-center">
-            <svg class="w-5 h-5 text-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
-              <rect x="7" y="4" width="10" height="18" />
-              <path d="M10 2h4" />
-              <path d="M12 9v6" stroke="var(--accent)" />
-              <path d="M9 12h6" stroke="var(--accent)" />
-            </svg>
-          </span>
+        <a href="/" class="flex items-center gap-2.5 shrink-0" aria-label="batteries.fyi home">
+          <Mark class="w-[32px] h-[32px]" />
           <span class="text-[0.8rem]"><span class="font-normal">batteries</span><span class="font-semibold">.fyi</span></span>
         </a>
 
@@ -140,7 +135,7 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
     <footer class="border-t border-line mt-16 bg-surface-2/50">
       <div class="wrap py-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 text-[0.68rem]">
         <div class="lg:col-span-2 max-w-sm">
-          <p class="font-semibold text-ink mb-2">batteries.fyi</p>
+          <a href="/" class="inline-flex items-center gap-2 font-semibold text-ink mb-2"><Mark class="w-[16px] h-[16px]" />batteries.fyi</a>
           <p class="text-muted leading-relaxed">Specifications, dimensions, cross-reference codes and 3D models for consumer batteries, sourced from IEC standards and manufacturer datasheets. Open data, MIT licensed.</p>
         </div>
         <div>

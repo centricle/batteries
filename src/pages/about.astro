@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { stats, devices } from '../lib/data';
 import { paid } from '../lib/buy';
+import Mark from '../components/Mark.astro';
 const s = stats();
 const nDevices = devices().length;
 ---
@@ -39,6 +40,12 @@ const nDevices = devices().length;
         <li><strong>No store link for loose lithium-ion cells.</strong> Marketplace listings for 18650, 21700 and similar cells often claim capacities no cell maker publishes, so those pages state the highest capacity in their sources instead.</li>
       </ul>
       <p>No display ads. No sponsored content.</p>
+
+      <h2 id="mark">The mark</h2>
+      <div class="flex items-start gap-4">
+        <Mark class="w-12 h-12 mt-1" />
+        <p class="text-[0.8rem] leading-[1.7] text-ink-2">The logo is the circuit symbol for a cell. The long thin line marks the positive terminal and the short heavy line the negative. Draw the two lines the same length and the symbol means a capacitor instead.</p>
+      </div>
 
       <h2>Built by</h2>
       <p>Built by <a href="https://centricle.com">Centricle</a>. Part of a family of reference sites with <a href="https://cables.fyi">cables.fyi</a> and <a href="https://fasteners.fyi">fasteners.fyi</a>.</p>

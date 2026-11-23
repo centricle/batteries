@@ -223,7 +223,7 @@ const jsonld = {
         x0: -R,
         svg: (x, gid) => {
           const cx = x + R, cy = -R;
-          let o = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${fillFor(s, 'can')}" /><circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#${gid}-r)" />`;
+          let o = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${fillFor(s, 'can')}" />`;
           o += `<circle cx="${cx}" cy="${cy}" r="${R * 0.9}" fill="none" stroke="#000" stroke-opacity="0.15" stroke-width="${R * 0.02}" />`;
           if (s.category === 'hearing-aid') o += `<circle cx="${cx}" cy="${cy}" r="${R * 0.93}" fill="${fillFor(s, 'tab')}" />`;
           return o;
@@ -299,8 +299,7 @@ const jsonld = {
     const outerW = unit === 'px' ? `${(totalW / px).toFixed(2)}` : `${totalW}mm`;
     const outerH = unit === 'px' ? `${(totalH / px).toFixed(2)}` : `${totalH}mm`;
     const defs = `<defs>
-      <linearGradient id="${gid}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.22" /><stop offset="0.35" stop-color="#fff" stop-opacity="0.18" /><stop offset="0.6" stop-color="#fff" stop-opacity="0" /><stop offset="1" stop-color="#000" stop-opacity="0.28" /></linearGradient>
-      <radialGradient id="${gid}-r" cx="0.38" cy="0.35" r="0.75"><stop offset="0" stop-color="#fff" stop-opacity="0.35" /><stop offset="1" stop-color="#000" stop-opacity="0.2" /></radialGradient>
+      <linearGradient id="${gid}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.1" /><stop offset="0.06" stop-color="#000" stop-opacity="0.1" /><stop offset="0.06" stop-color="#fff" stop-opacity="0" /><stop offset="0.2" stop-color="#fff" stop-opacity="0" /><stop offset="0.2" stop-color="#fff" stop-opacity="0.2" /><stop offset="0.3" stop-color="#fff" stop-opacity="0.2" /><stop offset="0.3" stop-color="#fff" stop-opacity="0" /><stop offset="0.74" stop-color="#000" stop-opacity="0" /><stop offset="0.74" stop-color="#000" stop-opacity="0.14" /><stop offset="1" stop-color="#000" stop-opacity="0.14" /></linearGradient>
     </defs>`;
     const names = row.map((g) => g.name).join(', ');
     return `<svg width="${outerW}" height="${outerH}" viewBox="0 ${-top} ${totalW} ${totalH}" role="img" aria-label="${esc(names)} at actual size on a millimeter ruler" style="display:block;overflow:visible">${defs}${body}${ruler}</svg>`;

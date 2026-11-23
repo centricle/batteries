@@ -5,6 +5,7 @@
 // reference length so a row of them stays true to scale.
 import { describe, MATERIALS } from '../lib/geometry/model.js';
 import { chem, primaryVariant, type Battery } from '../lib/data';
+import { uid } from '../lib/uid';
 
 interface Props {
   battery: Battery;
@@ -43,33 +44,39 @@ if (face) {
 }
 const realH = face ? b.dimensions.diameter!.nominal : m.bounds.size[1];
 const style = scaleTo ? `height:${((realH / scaleTo) * 100).toFixed(2)}%` : '';
-const gid = `g-${b.id}`;
+// Shaded the way an illustrator shades a cylinder: flat local color, one
+// hard-edged highlight and one core shadow, not a smooth airbrushed ramp.
+// People see a can as one color with a shine on it; the eye discounts the
+// falloff a renderer insists on. actual-size.astro repeats these stops.
+const gid = uid(`g-${b.id}`);
 ---
 
 <svg viewBox={vb.join(' ')} class:list={['silhouette', cls]} style={style} preserveAspectRatio="xMidYMax meet" role={title ? 'img' : undefined} aria-hidden={title ? undefined : 'true'} aria-label={title ? `${b.name} silhouette` : undefined}>
   <defs>
     <linearGradient id={gid} x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0" stop-color="#000" stop-opacity="0.22" />
-      <stop offset="0.35" stop-color="#fff" stop-opacity="0.18" />
-      <stop offset="0.6" stop-color="#fff" stop-opacity="0" />
-      <stop offset="1" stop-color="#000" stop-opacity="0.28" />
+      <stop offset="0" stop-color="#000" stop-opacity="0.1" />
+      <stop offset="0.06" stop-color="#000" stop-opacity="0.1" />
+      <stop offset="0.06" stop-color="#fff" stop-opacity="0" />
+      <stop offset="0.2" stop-color="#fff" stop-opacity="0" />
+      <stop offset="0.2" stop-color="#fff" stop-opacity="0.2" />
+      <stop offset="0.3" stop-color="#fff" stop-opacity="0.2" />
+      <stop offset="0.3" stop-color="#fff" stop-opacity="0" />
+      <stop offset="0.74" stop-color="#000" stop-opacity="0" />
+      <stop offset="0.74" stop-color="#000" stop-opacity="0.14" />
+      <stop offset="1" stop-color="#000" stop-opacity="0.14" />
     </linearGradient>
-    <radialGradient id={`${gid}-r`} cx="0.38" cy="0.35" r="0.75">
-      <stop offset="0" stop-color="#fff" stop-opacity="0.35" />
-      <stop offset="1" stop-color="#000" stop-opacity="0.2" />
-    </radialGradient>
   </defs>
   {shapes.map((s) =>
     s.d ? (
       <g>
         <path d={s.d} fill={s.fill} />
         {s.mat !== 'tab' && <path d={s.d} fill={`url(#${gid})`} />}
+        <path d={s.d} fill="none" class="part-line" vector-effect="non-scaling-stroke" />
       </g>
     ) : (
       <g>
         <circle cx={s.cx} cy={s.cy} r={s.r} fill={s.fill} />
-        <circle cx={s.cx} cy={s.cy} r={s.r} fill={`url(#${gid}-r)`} />
-        {s.mat === 'can-inner' && <circle cx={s.cx} cy={s.cy} r={s.r} fill="none" stroke="#000" stroke-opacity="0.12" stroke-width={s.r! * 0.02} />}
+        <circle cx={s.cx} cy={s.cy} r={s.r} fill="none" class="part-line" vector-effect="non-scaling-stroke" />
       </g>
     ),
   )}
@@ -77,4 +84,6 @@ const gid = `g-${b.id}`;
 
 <style>
   .silhouette { display: block; overflow: visible; }
+  /* Part lines, as on an assembly drawing: where the cap meets the wrap. */
+  .part-line { stroke: oklch(0.2 0.01 262 / 0.4); stroke-width: 1; stroke-linejoin: round; }
 </style>

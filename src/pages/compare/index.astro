@@ -96,7 +96,7 @@ const pairGroups = CATEGORY_META.map((c) => ({
 </BaseLayout>
 
 <style>
-  .viewer-stage { background: radial-gradient(120% 90% at 50% 20%, var(--stage) 0%, var(--stage-2) 100%); }
+  .viewer-stage { background: var(--stage); }
   :global(.viewer-label) { position: absolute; transform: translate(-50%, 0); font-size: 0.62rem; font-weight: 650; color: var(--ink); background: color-mix(in oklch, var(--surface) 85%, transparent); border: 1px solid var(--line); border-radius: 0.3rem; padding: 0.05rem 0.35rem; white-space: nowrap; pointer-events: auto; text-decoration: none; }
   :global(#cmp-list li[aria-selected="true"]) { background: var(--accent-soft); }
 </style>

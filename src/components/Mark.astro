@@ -1,0 +1,47 @@
+---
+// The mark is the circuit symbol for a cell. The long thin line is the
+// positive plate and the short heavy line the negative; draw the two lines
+// the same length and it becomes a capacitor, so the difference is what says
+// "battery". The leads run off both edges of the tile, as if the cell sits in
+// a circuit that continues past it.
+//
+// Coordinates sit on a 32-unit grid that lands on whole pixels at 16 px, the
+// size a browser tab draws it. public/favicon.svg is the same drawing;
+// scripts/icons.mjs renders the PNG icons from that file.
+//
+// Hovering the link shows current in the leads. Outside the cell it runs from
+// the positive terminal round to the negative, which on this drawing is
+// right to left in both leads.
+interface Props {
+  class?: string;
+}
+const { class: cls = '' } = Astro.props;
+---
+
+<svg viewBox="0 0 32 32" class:list={['mark', cls]} aria-hidden="true" focusable="false">
+  <rect class="tile" width="32" height="32" />
+  <path class="lead" d="M0 15H10.5" />
+  <path class="lead" d="M19.5 15H32" />
+  <rect class="plate" x="10" y="4" width="2" height="22" />
+  <rect class="plate" x="16" y="10" width="4" height="10" />
+  <path class="plus" d="M2 6h6v2H2zM4 4h2v6H4z" />
+</svg>
+
+<style>
+  .mark { display: block; flex: none; shape-rendering: crispEdges; }
+  /* The tile follows the accent; the drawing on it stays dark in both themes. */
+  .tile { fill: var(--accent); }
+  .plate { fill: oklch(0.21 0.012 262); }
+  .lead { stroke: oklch(0.21 0.012 262); stroke-width: 2; fill: none; }
+  .plus { fill: oklch(0.992 0.004 90); }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(a:hover) .lead,
+    :global(a:focus-visible) .lead {
+      stroke-dasharray: 2.5 1.5;
+      animation: current 0.45s linear infinite;
+    }
+  }
+  @keyframes current {
+    to { stroke-dashoffset: 4; }
+  }
+</style>

@@ -2,15 +2,18 @@
 // the GLB/STL export uses (geometry/model.js), so the on-screen model, the
 // download and the spec table share one set of numbers. Units are mm.
 import {
-  ACESFilmicToneMapping,
+  BackSide,
+  BoxGeometry,
   BufferAttribute,
   BufferGeometry,
   CanvasTexture,
   Color,
   Group,
   Mesh,
+  MeshBasicMaterial,
   MeshPhysicalMaterial,
   MeshStandardMaterial,
+  NeutralToneMapping,
   PerspectiveCamera,
   PlaneGeometry,
   PMREMGenerator,
@@ -23,7 +26,6 @@ import {
   type Material,
 } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { describe, MATERIALS } from './geometry/model.js';
 
 export interface ModelSpec {
@@ -180,14 +182,40 @@ function faceTexture(spec: ModelSpec, chemIdx: number) {
   return t;
 }
 
+/**
+ * The light the cells are seen in: a plain gray room with one tall softbox
+ * front-left, a narrow strip behind on the right and a dim panel overhead.
+ * The strips run floor to ceiling, so a cylinder shades across its width and
+ * not down its length. three's RoomEnvironment hangs its lights near the
+ * ceiling, which gave every cell a top-to-bottom fade that reads as rendered
+ * rather than seen.
+ */
+function studioScene() {
+  const s = new Scene();
+  const box = new BoxGeometry();
+  const room = new Mesh(box, new MeshBasicMaterial({ color: new Color().setScalar(0.7), side: BackSide }));
+  room.scale.setScalar(40);
+  s.add(room);
+  const panel = (intensity: number, pos: [number, number, number], scale: [number, number, number]) => {
+    const m = new Mesh(box, new MeshBasicMaterial({ color: new Color().setScalar(intensity) }));
+    m.position.set(...pos);
+    m.scale.set(...scale);
+    s.add(m);
+  };
+  panel(4.5, [-14, 0, 9], [0.2, 32, 7]);
+  panel(1.6, [14, 0, -5], [0.2, 32, 2.5]);
+  panel(1.4, [0, 18, 0], [9, 0.2, 9]);
+  return s;
+}
+
 function shadowTexture() {
   const S = 128;
   const cv = document.createElement('canvas');
   cv.width = cv.height = S;
   const x = cv.getContext('2d')!;
   const g = x.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
-  g.addColorStop(0, 'rgba(0,0,0,0.55)');
-  g.addColorStop(0.45, 'rgba(0,0,0,0.22)');
+  g.addColorStop(0, 'rgba(0,0,0,0.6)');
+  g.addColorStop(0.5, 'rgba(0,0,0,0.32)');
   g.addColorStop(1, 'rgba(0,0,0,0)');
   x.fillStyle = g;
   x.fillRect(0, 0, S, S);
@@ -226,7 +254,9 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const renderer = new WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.toneMapping = ACESFilmicToneMapping;
+  // Neutral keeps a label's base color what the data file says; ACES
+  // shifted hues and pushed saturation.
+  renderer.toneMapping = NeutralToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.domElement.style.display = 'block';
@@ -237,7 +267,7 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
 
   const scene = new Scene();
   const pmrem = new PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.03).texture;
+  scene.environment = pmrem.fromScene(studioScene(), 0.035).texture;
   scene.environmentIntensity = 1.0;
 
   const camera = new PerspectiveCamera(28, 1, 0.5, 5000);
@@ -271,7 +301,7 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
       const base = (MATERIALS as any)[p.material] ?? MATERIALS.steel;
       let mat: MeshPhysicalMaterial;
       if (p.material === 'wrap') {
-        mat = new MeshPhysicalMaterial({ color: '#ffffff', roughness: 0.32, metalness: 0.0, clearcoat: 0.6, clearcoatRoughness: 0.25 });
+        mat = new MeshPhysicalMaterial({ color: '#ffffff', roughness: 0.42, metalness: 0.0 });
         if (model.label && (p.name === 'wrap' || p.name === 'wrap-2')) {
           mat.map = wrapTexture(spec, 0, model.label);
           wrapMats.push(mat);
@@ -282,7 +312,10 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
         }
       } else {
         const color = p.material === 'tab' && spec.geometry?.tab_color ? spec.geometry.tab_color : base.color;
-        mat = new MeshPhysicalMaterial({ color, roughness: base.roughness, metalness: base.metalness, clearcoat: p.material === 'tab' ? 0.3 : 0 });
+        // Bare metal a touch less mirror-like than the export, so caps read as
+        // brushed steel under one softbox instead of a hall of reflections.
+        const roughness = base.metalness > 0.5 ? Math.max(base.roughness, 0.3) : base.roughness;
+        mat = new MeshPhysicalMaterial({ color, roughness, metalness: base.metalness });
       }
       mats.push(mat);
       const mesh = new Mesh(toGeometry(p.mesh), mat);
@@ -314,8 +347,8 @@ export function mountViewer(el: HTMLElement, specs: ModelSpec[], opts: ViewerOpt
     const shadow = new Mesh(new PlaneGeometry(1, 1), new MeshStandardMaterial({ map: shadowTex, transparent: true, depthWrite: false, color: '#000', opacity: isDark() ? 0.9 : 0.55 }));
     shadow.rotation.x = -Math.PI / 2;
     shadow.position.y = 0.01;
-    const sx = (isDisc && mode === 'lineup' ? size[0] : size[0]) * 1.7;
-    const sz = (isDisc && mode === 'lineup' ? size[1] : size[2]) * 1.7;
+    const sx = (isDisc && mode === 'lineup' ? size[0] : size[0]) * 1.4;
+    const sz = (isDisc && mode === 'lineup' ? size[1] : size[2]) * 1.4;
     shadow.scale.set(sx, Math.max(sz, 4), 1);
     const holder = new Group();
     holder.add(group, shadow);
