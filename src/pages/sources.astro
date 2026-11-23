@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { allSources, batteryById } from '../lib/data';
+import { allSources, batteryById, chemistryById } from '../lib/data';
 const list = allSources();
 const byPublisher = new Map<string, typeof list>();
 for (const s of list) {
@@ -9,30 +9,45 @@ for (const s of list) {
 }
 const groups = [...byPublisher].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
 const kinds = list.reduce((m, s) => m.set(s.kind, (m.get(s.kind) ?? 0) + 1), new Map<string, number>());
+const KIND: Record<string, [string, string]> = {
+  datasheet: ['datasheet', 'datasheets'],
+  standard: ['standard', 'standards'],
+  catalog: ['catalog', 'catalogs'],
+  reference: ['reference work', 'reference works'],
+  retailer: ['store listing', 'store listings'],
+  regulation: ['regulation', 'regulations'],
+};
+const kindWord = (k: string, n: number) => (KIND[k] ? KIND[k][n === 1 ? 0 : 1] : k);
+const kindList = [...kinds].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${n.toLocaleString('en-US')} ${kindWord(k, n)}`);
+const joined = kindList.length > 1 ? `${kindList.slice(0, -1).join(', ')} and ${kindList[kindList.length - 1]}` : kindList.join('');
+const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1);
+const longDate = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const usedName = (id: string) => {
+  if (!id.startsWith('chemistry/')) return batteryById(id)?.name ?? id;
+  const c = chemistryById(id.replace('chemistry/', '')) as ({ name: string; plain_name?: string } | undefined);
+  return c?.plain_name ?? c?.name ?? id.replace('chemistry/', '');
+};
 ---
 
-<BaseLayout title="Sources: every datasheet and standard cited | batteries.fyi" description={`The ${list.length} sources behind batteries.fyi: IEC and ANSI standards, manufacturer datasheets, catalogs and references, with the entries each one supports.`}>
+<BaseLayout title="Sources: every datasheet and standard cited | batteries.fyi" description={`The ${list.length} sources behind batteries.fyi: battery makers' datasheets, IEC and ANSI standards, catalogs and references, with the batteries each one was used for.`}>
   <section class="wrap pt-8 max-w-5xl">
-    <p class="eyebrow">Bibliography</p>
-    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Sources</h1>
-    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">{list.length} distinct sources from {byPublisher.size} publishers, each with the date it was read and the entries it supports. Manufacturer datasheets are preferred; where a manufacturer's own link was dead, the copy that was read is linked and the entry says so.</p>
-    <p class="mt-3 flex flex-wrap gap-1.5">{[...kinds].map(([k, n]) => <span class="chip">{k} <span class="text-muted">{n}</span></span>)}</p>
+    <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight">Sources</h1>
+    <p class="lede measure mt-3">These are the {list.length} documents the numbers on this site come from, from {byPublisher.size} publishers. Each one shows the date it was read and the batteries it was used for.</p>
+    <p class="mt-3 text-base measure">Makers' own datasheets come first. Where a maker's own link no longer worked, the copy that was read is linked instead, and the battery's page says so. In all: {joined}.</p>
   </section>
   <section class="wrap mt-8 max-w-5xl space-y-8">
     {groups.map(([pub, items]) => (
       <div>
-        <h2 class="text-[0.85rem] font-semibold mb-2">{pub} <span class="text-muted font-normal text-[0.65rem]">{items.length}</span></h2>
+        <h2 class="text-lg font-semibold mb-2">{pub} <span class="text-muted font-normal text-sm">{items.length === 1 ? '1 source' : `${items.length} sources`}</span></h2>
         <ul class="card divide-y divide-[var(--line)]">
           {items.map((s) => (
-            <li class="p-3 text-[0.68rem]">
-              {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span>{s.title}</span>}
-              <span class="text-muted"> · {s.kind} · accessed {s.accessed}</span>
-              <span class="block mt-1 text-[0.6rem] text-muted">
-                Supports:{' '}
-                {s.usedBy.slice(0, 24).map((id, i) => {
-                  const b = id.startsWith('chemistry/') ? null : batteryById(id);
-                  return <><a class="hover:text-ink underline decoration-dotted" href={`/${id}`}>{b?.name ?? id.replace('chemistry/', '')}</a>{i < Math.min(s.usedBy.length, 24) - 1 ? ', ' : ''}</>;
-                })}
+            <li class="p-3 font-sans text-sm">
+              {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span>{s.title}</span>}<span class="text-muted">. {cap(kindWord(s.kind, 1))}, accessed {longDate(s.accessed)}.</span>
+              <span class="block mt-1 text-xs text-ink-2">
+                Used for:{' '}
+                {s.usedBy.slice(0, 24).map((id, i) => (
+                  <><a class="link" href={`/${id}`}>{usedName(id)}</a>{i < Math.min(s.usedBy.length, 24) - 1 ? ', ' : ''}</>
+                ))}
                 {s.usedBy.length > 24 && ` and ${s.usedBy.length - 24} more`}
               </span>
             </li>

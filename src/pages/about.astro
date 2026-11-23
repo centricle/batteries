@@ -7,29 +7,28 @@ const s = stats();
 const nDevices = devices().length;
 ---
 
-<BaseLayout title="About batteries.fyi" description="batteries.fyi is an open, source-cited reference for consumer battery specifications: dimensions, chemistries, codes and 3D models. No rankings, no recommendations, no ads.">
+<BaseLayout title="About batteries.fyi" description="What batteries.fyi is for, where its numbers come from and how it is paid for. Nothing is ranked or recommended, and there are no display ads.">
   <article class="wrap pt-10 max-w-3xl">
-    <p class="eyebrow">About</p>
-    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">About batteries.fyi</h1>
-    <div class="prose mt-5 max-w-none">
-      <p>batteries.fyi is a battery specification reference. Dimensions, voltages, capacities, chemistries and standard designations for consumer battery types, sourced from manufacturer datasheets and IEC and ANSI standards.</p>
-      <p>No rankings. No recommendations. The data is here. What you do with it is your call.</p>
+    <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight">About batteries.fyi</h1>
+    <p class="lede measure mt-3">batteries.fyi helps you find the battery you need. Look one up by the name printed on it or by the device it goes in, and see its size, the other names it is sold under, what else fits and what to be careful about.</p>
+    <div class="prose text-base mt-6 max-w-none">
+      <p>The sizes, voltages and capacities come from battery makers' datasheets and from the IEC and ANSI standards. Nothing here is ranked or recommended.</p>
 
-      <h2>What it does</h2>
-      <p>It covers {s.batteries} physical battery sizes with {s.variants} chemistry variants and {s.codes.toLocaleString('en-US')} cross-reference codes. Each size has a dimensioned drawing, a true-scale 3D model you can rotate or download, every code that names it, and the sources behind every number. {nDevices} device pages say which battery a product takes, each quoting the device maker. Tools compare sizes in 3D, identify a battery from its measurements, decode designations, and do the arithmetic of runtime, energy and packs.</p>
+      <h2>What is here</h2>
+      <p>The site covers {s.batteries} battery sizes, sold in {s.variants} combinations of size and kind, under {s.codes.toLocaleString('en-US')} other names. Each size has a drawing marked with its measurements, a 3D model at true scale that you can turn or download, every name it is sold under, and the sources behind every number. {nDevices} device pages say which battery a product takes, each quoting the device maker. Other pages compare sizes side by side in 3D, identify a battery from its measurements, explain the letters and numbers in a battery name, and work out run time, energy and battery packs.</p>
 
-      <h2>How the data is kept honest</h2>
+      <h2>Where the numbers come from</h2>
       <ul>
-        <li><strong>No number without a source.</strong> Every value lists the datasheet, standard or catalog it came from and the date it was read. If no source publishes a value, the field stays blank rather than estimated.</li>
-        <li><strong>Primary sources first.</strong> IEC 60086 and ANSI C18 for designations and dimensions, manufacturer datasheets for electrical values, distributor listings and references only where a datasheet is unavailable, and labeled as such.</li>
-        <li><strong>Capacity with its conditions.</strong> A primary cell’s capacity depends on the load and the cutoff voltage, so every capacity carries the conditions it was rated at.</li>
-        <li><strong>Validated at build.</strong> The data is a folder of JSON files checked against a schema every time the site is built. Invalid data stops the build.</li>
-        <li><strong>Public history.</strong> Every entry is one file in a <a href="https://github.com/centricle/batteries">public repository</a>. Each page links to that file's history, so any change to any value, and when it was made, can be checked.</li>
-        <li><strong>Models from measurements.</strong> 3D models, drawings and silhouettes are generated from the same dimensions the tables show, so they cannot disagree.</li>
+        <li><strong>Every number has a source.</strong> Each value lists the datasheet, standard or catalog it came from and the date it was read. If no source publishes a value, the space is left blank rather than estimated.</li>
+        <li><strong>Makers' own documents come first.</strong> The IEC 60086 and ANSI C18 standards for names and sizes, makers' datasheets for voltage and capacity, and parts distributors' listings and reference works only where no datasheet is available, labeled as such.</li>
+        <li><strong>Capacity comes with its test conditions.</strong> How much a single-use battery delivers depends on how hard the device works it and the voltage at which the device stops, so every capacity shows the conditions it was rated at.</li>
+        <li><strong>The data is checked every time the site is built.</strong> It is a folder of files, each checked against a fixed format whenever the site is built. A file that fails the check stops the build.</li>
+        <li><strong>Every change is public.</strong> Every battery is one file in a <a href="https://github.com/centricle/batteries">public repository</a>. Each page links to that file's history, so any change to any value, and when it was made, can be checked.</li>
+        <li><strong>The pictures come from the same numbers.</strong> 3D models, drawings and outlines are made from the same measurements the tables show, so they cannot disagree.</li>
       </ul>
 
-      <h2>Open</h2>
-      <p>The dataset, the models and the code are published under the MIT license: <a href="/data">download them</a>, or read and correct them on <a href="https://github.com/centricle/batteries">GitHub</a>.</p>
+      <h2>Free to use</h2>
+      <p>The data, the 3D models and the code are published under the MIT license. You can <a href="/data">download them</a>, or read and correct them on <a href="https://github.com/centricle/batteries">GitHub</a>.</p>
 
       <h2 id="funding">How it is paid for</h2>
       <p>The information is free and stays free. Every page, the full dataset, the 3D models and the API are open to anyone, with nothing to sign up for.</p>
@@ -37,18 +36,18 @@ const nDevices = devices().length;
       <ul>
         <li><strong>A link goes to a search for the size,</strong> never to a chosen brand or product.</li>
         <li><strong>Nothing depends on it.</strong> No entry, value, sort order or device listing changes with whether a link exists or pays.</li>
-        <li><strong>No store link for loose lithium-ion cells.</strong> Marketplace listings for 18650, 21700 and similar cells often claim capacities no cell maker publishes, so those pages state the highest capacity in their sources instead.</li>
+        <li><strong>No store link for loose lithium-ion batteries.</strong> Marketplace listings for 18650, 21700 and similar batteries often claim capacities no battery maker publishes, so those pages state the highest capacity in their sources instead.</li>
       </ul>
-      <p>No display ads. No sponsored content.</p>
+      <p>There are no display ads and no sponsored content.</p>
 
-      <h2 id="mark">The mark</h2>
+      <h2 id="mark">The logo</h2>
       <div class="flex items-start gap-4">
-        <Mark class="w-12 h-12 mt-1" />
-        <p class="text-[0.8rem] leading-[1.7] text-ink-2">The logo is the circuit symbol for a cell. The long thin line marks the positive terminal and the short heavy line the negative. Draw the two lines the same length and the symbol means a capacitor instead.</p>
+        <Mark class="w-12 h-12 mt-1 shrink-0" />
+        <p class="mt-0">The mark is two batteries side by side, head to tail, the way they sit in a remote. It is the picture most people have seen inside a battery door.</p>
       </div>
 
-      <h2>Built by</h2>
-      <p>Built by <a href="https://centricle.com">Centricle</a>. Part of a family of reference sites with <a href="https://cables.fyi">cables.fyi</a> and <a href="https://fasteners.fyi">fasteners.fyi</a>.</p>
+      <h2>Who makes it</h2>
+      <p>batteries.fyi is made by <a href="https://centricle.com">Centricle</a>. Its sister sites are <a href="https://cables.fyi">cables.fyi</a> and <a href="https://fasteners.fyi">fasteners.fyi</a>.</p>
     </div>
   </article>
 </BaseLayout>

@@ -1,33 +1,62 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { batteries, chemistries, chem, CHEM_FALLBACK, fmt } from '../../lib/data';
+
+// plain_name and plain are optional fields on a chemistry; read them defensively
+// so this page builds before and after they exist.
+type Plain = { plain_name?: string; plain?: string };
 const counts = new Map<string, number>();
 for (const b of batteries()) for (const id of new Set(b.variants.map((v) => v.chemistry))) counts.set(id, (counts.get(id) ?? 0) + 1);
 const list = chemistries().length ? chemistries() : [];
 const rows = Object.keys(CHEM_FALLBACK)
-  .map((id) => ({ id, c: list.find((x) => x.id === id), meta: chem(id), n: counts.get(id) ?? 0 }))
+  .map((id) => {
+    const c = list.find((x) => x.id === id);
+    const meta = chem(id);
+    const p = (c ?? {}) as Plain;
+    return { id, c, meta, n: counts.get(id) ?? 0, name: p.plain_name ?? meta.name, line: p.plain };
+  })
   .filter((r) => r.c || r.n)
   .sort((a, b) => b.n - a.n);
+const volts = (v: number) => `${fmt(v)} V`;
+const voltWords = (v: number) => `${fmt(v)} ${v === 1 ? 'volt' : 'volts'}`;
+const sizesLine = (n: number) => (n === 0 ? 'No sizes listed here yet.' : n === 1 ? 'One size on this site.' : `${n} sizes on this site.`);
+const STATUS: Record<string, string> = { legacy: 'Older kind, still sold', obsolete: 'No longer made' };
 ---
 
-<BaseLayout title="Battery chemistries compared: alkaline, lithium, NiMH, Li-ion | batteries.fyi" description="Every consumer battery chemistry: alkaline, zinc-carbon, lithium primaries, silver oxide, zinc-air, NiMH, NiCd, lithium-ion and LiFePO4, with voltages, energy density and the sizes each is made in.">
+<BaseLayout title="Kinds of battery: alkaline, lithium, rechargeable and more | batteries.fyi" description="Every kind of battery on this site, from alkaline and heavy duty to lithium, silver oxide, zinc-air and rechargeable NiMH and lithium-ion, with the voltage of each and the sizes it comes in.">
   <section class="wrap pt-8">
-    <p class="eyebrow">Reference</p>
-    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Battery chemistries</h1>
-    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">The chemistry sets a cell's voltage, how that voltage falls as it discharges, how it handles cold and heavy loads, and whether it can be recharged. The IEC letter is the one that opens a designation: the L in LR6, the S in SR44, the C in CR2032.</p>
+    <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight">Kinds of battery</h1>
+    <p class="lede measure mt-3">Batteries of the same size are made in different kinds. The kind decides the voltage, how the voltage falls as the battery runs down, how it copes with cold and with power-hungry devices, and whether it can be recharged.</p>
+    <p class="mt-3 text-base measure">The first letter of many battery names tells you the kind: the L in LR6 is alkaline, the S in SR44 is silver oxide, and the C in CR2032 is lithium.</p>
   </section>
-  <section class="wrap mt-6">
+
+  <section class="wrap mt-8">
+    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {rows.map(({ id, c, meta, n, name, line }) => (
+        <li><a href={`/chemistry/${id}`} class="tile block h-full">
+          <span class="flex items-center gap-2 font-semibold text-lg"><span class="dot" style={`background:${meta.color}`} aria-hidden="true"></span>{name}</span>
+          {name !== meta.name && <span class="block text-sm text-muted mt-0.5">{meta.name}</span>}
+          {c && <span class="block font-sans text-base text-ink-2 mt-2">{voltWords(c.voltage.nominal)}, {c.rechargeable ? 'rechargeable' : 'single-use'}. {sizesLine(n)}{STATUS[c.status] ? ` ${STATUS[c.status]}.` : ''}</span>}
+          {line && <span class="block font-sans text-sm text-ink-2 mt-2">{line}</span>}
+        </a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="wrap mt-12">
+    <h2 class="section-title">All kinds side by side</h2>
+    <p class="text-base measure mb-4">For anyone who needs the exact numbers. The letter is the one the international (IEC) standard uses at the start of a battery name.</p>
     <div class="card table-scroll">
       <table class="table min-w-[32rem]">
-        <thead><tr><th>Chemistry</th><th>IEC letter</th><th class="n">Nominal</th><th>Rechargeable</th><th class="n">Wh/kg</th><th class="n">Sizes here</th></tr></thead>
+        <thead><tr><th>Kind</th><th>Letter in the name (IEC)</th><th class="n">Voltage (nominal)</th><th>Rechargeable</th><th class="n">Energy per kg (Wh/kg)</th><th class="n">Sizes here</th></tr></thead>
         <tbody>
-          {rows.map(({ id, c, meta, n }) => (
+          {rows.map(({ id, c, meta, n, name }) => (
             <tr>
-              <td><a href={`/chemistry/${id}`} class="flex items-center gap-2 font-semibold hover:text-accent-ink"><span class="dot" style={`background:${meta.color}`}></span>{meta.name}</a>{c?.summary && <span class="hidden md:block text-[0.6rem] text-muted mt-0.5 max-w-md">{c.summary}</span>}</td>
+              <td><a href={`/chemistry/${id}`} class="link font-semibold">{name}</a>{name !== meta.name && <span class="block text-muted">{meta.name}</span>}</td>
               <td class="mono">{c?.iec_letter ?? '—'}</td>
-              <td class="n">{c ? `${fmt(c.voltage.nominal)} V` : '—'}</td>
+              <td class="n">{c ? volts(c.voltage.nominal) : '—'}</td>
               <td>{c ? (c.rechargeable ? 'Yes' : 'No') : '—'}</td>
-              <td class="n">{c?.energy_density_wh_kg ? `${c.energy_density_wh_kg[0]}–${c.energy_density_wh_kg[1]}` : '—'}</td>
+              <td class="n">{c?.energy_density_wh_kg ? `${c.energy_density_wh_kg[0]} to ${c.energy_density_wh_kg[1]}` : '—'}</td>
               <td class="n">{n}</td>
             </tr>
           ))}

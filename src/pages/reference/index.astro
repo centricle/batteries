@@ -1,23 +1,33 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+
+// The URL stays /reference; a visitor reads "Guides".
 const items = (await getCollection('reference')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99) || a.data.title.localeCompare(b.data.title));
+const SAFETY = new Set(['button-battery-ingestion', 'leakage', 'air-travel', 'recycling-and-disposal', 'shelf-life-and-storage', 'lithium-ion-safety']);
+const groups = [
+  { id: 'safety', title: 'Safety and care', items: items.filter((e) => SAFETY.has(e.id)) },
+  { id: 'reading', title: 'Reading and comparing batteries', items: items.filter((e) => !SAFETY.has(e.id)) },
+].filter((g) => g.items.length);
 ---
 
-<BaseLayout title="Battery reference: naming, safety, shipping, capacity | batteries.fyi" description="Source-cited reference articles on how battery codes work, flying with lithium batteries, button cell ingestion, capacity, storage, leakage, recycling and standards.">
+<BaseLayout title="Battery guides: swallowed batteries, leaks, flying, disposal and names | batteries.fyi" description="What to do if a battery is swallowed or leaks, how to fly with batteries and throw them away, how to store them, and what the letters and numbers on a battery mean. Each guide lists its sources.">
   <section class="wrap pt-8 max-w-4xl">
-    <p class="eyebrow">Reference</p>
-    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Reference</h1>
-    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Plain answers to the questions the specifications raise, each with the primary sources it rests on. See also the <a class="link" href="/chemistry">chemistry pages</a> and the <a class="link" href="/glossary">glossary</a>.</p>
+    <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight">Guides</h1>
+    <p class="lede measure mt-3">What to do when a battery is swallowed, leaks or has to fly with you, and how to read what is printed on one. Each guide lists the sources it is based on.</p>
+    <p class="mt-3 text-base measure">Words you do not know are explained in the <a class="link" href="/glossary">glossary</a>. Each <a class="link" href="/chemistry">kind of battery</a> has its own page.</p>
   </section>
-  <section class="wrap mt-6 max-w-4xl">
-    <ul class="grid gap-3 sm:grid-cols-2">
-      {items.map((e) => (
-        <li><a href={`/reference/${e.id}`} class="card group block p-4 h-full hover:border-accent transition-colors">
-          <span class="font-semibold text-[0.85rem] group-hover:text-accent-ink">{e.data.title}</span>
-          <p class="text-[0.68rem] text-muted mt-1">{e.data.description}</p>
-        </a></li>
-      ))}
-    </ul>
-  </section>
+  {groups.map((g) => (
+    <section class="wrap mt-10 max-w-4xl" aria-labelledby={`group-${g.id}`}>
+      <h2 id={`group-${g.id}`} class="section-title">{g.title}</h2>
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {g.items.map((e) => (
+          <li><a href={`/reference/${e.id}`} class="tile block h-full">
+            <span class="block font-semibold text-lg">{e.data.title}</span>
+            <span class="block font-sans text-base text-ink-2 mt-1">{e.data.description}</span>
+          </a></li>
+        ))}
+      </ul>
+    </section>
+  ))}
 </BaseLayout>

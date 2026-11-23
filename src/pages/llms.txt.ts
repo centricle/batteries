@@ -9,7 +9,7 @@ export const GET: APIRoute = () => {
   const out: string[] = [
     '# batteries.fyi',
     '',
-    `> Open, source-cited specifications for ${s.batteries} consumer battery sizes: dimensions, chemistries, voltages, capacities, ${s.codes.toLocaleString('en-US')} cross-reference codes, and a 3D model of each. Every value cites a datasheet or standard. MIT licensed.`,
+    `> Look up any of ${s.batteries} consumer battery sizes by the name printed on it or the device it goes in: its size, kinds, voltages, capacities, ${s.codes.toLocaleString('en-US')} other names in all, what else fits, and a 3D model of each. Every value cites a maker's datasheet or a published standard. MIT licensed.`,
     '',
     'Each battery has one page at a flat address named for its common designation (/aa, /cr2032, /18650). Any other code for the same size (/lr6, /mn1500, /377) redirects to that page.',
     '',
@@ -24,9 +24,9 @@ export const GET: APIRoute = () => {
     '',
     '## Reference',
     '',
-    `- [Equivalents table](${site}/equivalents): all codes for all sizes`,
-    `- [Chemistries](${site}/chemistry)`,
-    `- [Reference articles](${site}/reference)`,
+    `- [Other names for every battery](${site}/equivalents): every name for every size`,
+    `- [Kinds of battery](${site}/chemistry)`,
+    `- [Guides](${site}/reference): swallowed batteries, leaks, flying, disposal, storage, battery names`,
     `- [Glossary](${site}/glossary)`,
     '',
   ];

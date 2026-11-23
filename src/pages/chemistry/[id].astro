@@ -11,82 +11,113 @@ export function getStaticPaths() {
 const { id } = Astro.params as { id: string };
 const c = chemistries().find((x) => x.id === id);
 const meta = chem(id);
+// plain_name and plain are optional; this page builds with or without them.
+const p = (c ?? {}) as { plain_name?: string; plain?: string };
+const name = p.plain_name ?? meta.name;
+const techName = name !== meta.name ? meta.name : '';
+const lede = p.plain ?? c?.summary;
+const STATUS: Record<string, string> = { legacy: 'Older kind, still sold', obsolete: 'No longer made' };
+const status = c ? STATUS[c.status] : undefined;
 const using = batteries().filter((b) => b.variants.some((v) => v.chemistry === id));
 const scale = (list: Battery[]) => Math.max(...list.map((b) => (b.form === 'disc' ? b.dimensions.diameter!.nominal : b.dimensions.height.nominal)));
-const body = c ? await marked.parse(c.body) : '';
+// The body is the technical write-up. It sits under its own h2 here, so its
+// own h2s step down to h3.
+const body = c ? (await marked.parse(c.body)).replace(/<(\/?)h2\b/g, '<$1h3') : '';
+const range = (r: [number, number], unit: string) => `${fmt(r[0])} to ${fmt(r[1])} ${unit}`;
+const longDate = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 const facts: [string, string][] = c
   ? ([
-      ['Nominal voltage', `${fmt(c.voltage.nominal)} V`],
-      ['Open-circuit voltage', c.voltage.open_circuit ? `${fmt(c.voltage.open_circuit[0])}–${fmt(c.voltage.open_circuit[1])} V` : ''],
-      ['Cutoff voltage', c.voltage.cutoff ? `${fmt(c.voltage.cutoff)} V` : ''],
-      ['Charge voltage', c.voltage.charge_max ? `${fmt(c.voltage.charge_max)} V` : ''],
-      ['Energy density', c.energy_density_wh_kg ? `${c.energy_density_wh_kg[0]}–${c.energy_density_wh_kg[1]} Wh/kg` : ''],
-      ['Volumetric', c.energy_density_wh_l ? `${c.energy_density_wh_l[0]}–${c.energy_density_wh_l[1]} Wh/L` : ''],
+      ['Voltage (nominal)', `${fmt(c.voltage.nominal)} V`],
+      ['Voltage with nothing connected (open-circuit)', c.voltage.open_circuit ? range(c.voltage.open_circuit, 'V') : ''],
+      ['Voltage when used up (cutoff)', c.voltage.cutoff ? `${fmt(c.voltage.cutoff)} V` : ''],
+      ['Charging voltage (maximum)', c.voltage.charge_max ? `${fmt(c.voltage.charge_max)} V` : ''],
+      ['Energy per kilogram (Wh/kg)', c.energy_density_wh_kg ? range(c.energy_density_wh_kg, 'Wh/kg') : ''],
+      ['Energy per liter (Wh/L)', c.energy_density_wh_l ? range(c.energy_density_wh_l, 'Wh/L') : ''],
       ['Rechargeable', c.rechargeable ? 'Yes' : 'No'],
-      ['IEC letter', c.iec_letter ?? 'None'],
-      ['Anode', c.anode ?? ''],
-      ['Cathode', c.cathode ?? ''],
-      ['Electrolyte', c.electrolyte ?? ''],
-      ['Self-discharge', c.self_discharge ?? ''],
-      ['Operating temperature', c.temperature_c?.operating ? `${c.temperature_c.operating[0]} to ${c.temperature_c.operating[1]} °C` : ''],
+      ['Letter in battery names (IEC)', c.iec_letter ?? 'None'],
+      ['Negative side (anode)', c.anode ?? ''],
+      ['Positive side (cathode)', c.cathode ?? ''],
+      ['Paste or liquid inside (electrolyte)', c.electrolyte ?? ''],
+      ['Charge lost in storage (self-discharge)', c.self_discharge ?? ''],
+      ['Working temperature', c.temperature_c?.operating ? `${c.temperature_c.operating[0]} to ${c.temperature_c.operating[1]} °C` : ''],
     ] as [string, string][]).filter(([, v]) => v)
   : [];
 const jsonld = c && {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
-  headline: `${c.name} batteries`,
-  description: c.summary,
+  headline: `${name} batteries`,
+  ...(techName ? { alternativeHeadline: `${techName} batteries` } : {}),
+  description: lede,
   dateModified: c.updated,
   url: `https://batteries.fyi/chemistry/${id}`,
   citation: c.sources.map((s) => ({ '@type': 'CreativeWork', name: s.title, publisher: s.publisher, url: s.url })),
 };
 ---
 
-<BaseLayout title={`${meta.name} batteries: voltage, characteristics and sizes | batteries.fyi`} description={c?.summary ?? `${meta.name} batteries in the batteries.fyi database.`} jsonld={jsonld || undefined}>
-  <div class="wrap pt-5"><nav class="text-[0.65rem] text-muted" aria-label="Breadcrumb"><a href="/chemistry" class="hover:text-ink">Chemistries</a> / <span class="text-ink-2">{meta.name}</span></nav></div>
-  <section class="wrap pt-4 grid gap-8 lg:grid-cols-[1fr_20rem]">
+<BaseLayout title={`${name} batteries: voltage, strengths and sizes | batteries.fyi`} description={lede ?? `${name} batteries in the batteries.fyi database.`} jsonld={jsonld || undefined}>
+  <div class="wrap pt-5"><nav class="text-sm text-ink-2" aria-label="Breadcrumb"><a href="/chemistry" class="link">Kinds of battery</a> / <span>{name}</span></nav></div>
+  <section class="wrap pt-4 grid gap-8 lg:grid-cols-[1fr_22rem]">
     <div class="min-w-0">
-      <p class="eyebrow flex items-center gap-2"><span class="dot" style={`background:${meta.color}`}></span>{c?.rechargeable ? 'Rechargeable' : 'Primary'} chemistry{c?.status && c.status !== 'current' ? ` · ${c.status}` : ''}</p>
-      <h1 class="text-[2.2rem] font-semibold tracking-tight mt-1 leading-tight">{meta.name}</h1>
-      {c && <p class="mt-3 text-[0.85rem] text-ink-2 max-w-2xl">{c.summary}</p>}
-      {c && <div class="prose mt-6" set:html={body} />}
+      <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight leading-tight flex items-center gap-3"><span class="dot" style={`background:${meta.color}`} aria-hidden="true"></span>{name}</h1>
+      {techName && <p class="mt-2 text-base text-ink-2">Technical name: {techName}</p>}
+      {status && <p class="mt-2 text-base font-semibold">{status}</p>}
+      {lede && <p class="lede measure mt-3">{lede}</p>}
+      {c && (
+        <p class="mt-3 text-base measure">{c.rechargeable ? 'Rechargeable' : 'Single-use'}, {fmt(c.voltage.nominal)} volts. {using.length === 0 ? 'No size on this site is listed in this kind yet.' : <><a class="link" href="#sizes">{using.length === 1 ? 'One size' : `${using.length} sizes`} on this site</a> {using.length === 1 ? 'comes' : 'come'} in this kind.</>}</p>
+      )}
       {c && (c.strengths.length > 0 || c.limitations.length > 0) && (
         <div class="grid gap-4 sm:grid-cols-2 mt-8 max-w-[40rem]">
-          {c.strengths.length > 0 && <div class="callout ok"><p class="eyebrow mb-1">Characteristics</p><ul class="list-disc pl-4 space-y-1">{c.strengths.map((x) => <li>{x}</li>)}</ul></div>}
-          {c.limitations.length > 0 && <div class="callout warn"><p class="eyebrow mb-1">Limitations</p><ul class="list-disc pl-4 space-y-1">{c.limitations.map((x) => <li>{x}</li>)}</ul></div>}
+          {c.strengths.length > 0 && <div class="callout ok"><p class="label mb-1">Strengths</p><ul class="list-disc pl-5 space-y-1 font-sans text-base">{c.strengths.map((x) => <li>{x}</li>)}</ul></div>}
+          {c.limitations.length > 0 && <div class="callout warn"><p class="label mb-1">Limitations</p><ul class="list-disc pl-5 space-y-1 font-sans text-base">{c.limitations.map((x) => <li>{x}</li>)}</ul></div>}
         </div>
       )}
       {c && c.safety.length > 0 && (
-        <div class="mt-6 max-w-[40rem]"><h2 class="section-title">Safety</h2><ul class="list-disc pl-5 text-[0.75rem] text-ink-2 space-y-1">{c.safety.map((x) => <li>{x}</li>)}</ul></div>
+        <div class="mt-8 max-w-[40rem]"><h2 class="section-title">Safety</h2><ul class="list-disc pl-5 font-sans text-base text-ink-2 space-y-1">{c.safety.map((x) => <li>{x}</li>)}</ul></div>
       )}
     </div>
     <aside class="min-w-0">
       {facts.length > 0 && (
-        <div class="card overflow-hidden lg:sticky lg:top-20">
-          <table class="table"><tbody>{facts.map(([k, v]) => <tr><td class="text-ink-2 font-medium w-1/2">{k}</td><td class="tabular">{v}</td></tr>)}</tbody></table>
+        <div class="lg:sticky lg:top-20">
+          <h2 class="section-title">Specifications</h2>
+          <div class="card overflow-hidden">
+            <table class="table"><tbody>{facts.map(([k, v]) => <tr><td class="font-sans font-semibold text-ink-2 w-1/2">{k}</td><td class="tabular">{v}</td></tr>)}</tbody></table>
+          </div>
         </div>
       )}
     </aside>
   </section>
-  <section class="wrap mt-12">
-    <h2 class="section-title">Sizes made in {meta.name.toLowerCase()} <span class="text-muted font-normal text-[0.7rem]">{using.length}</span></h2>
-    <ul class="grid gap-2 grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8">
+
+  <section id="sizes" class="wrap mt-12 scroll-mt-20">
+    <h2 class="section-title">Sizes that come in this kind <span class="text-muted font-normal text-sm">{using.length}</span></h2>
+    <ul class="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
       {using.map((b) => {
         const v = b.variants.find((x) => x.chemistry === id)!;
         return (
-          <li><a href={`/${b.id}`} class="card group flex flex-col items-center p-2 h-full hover:border-accent">
+          <li><a href={`/${b.id}`} class="tile flex flex-col items-center p-2 h-full">
             <div class="h-14 w-full flex items-end justify-center mb-1"><Silhouette battery={b} scaleTo={scale(using)} class="max-w-full" /></div>
-            <span class="text-[0.68rem] font-semibold group-hover:text-accent-ink">{b.name}</span>
-            <span class="text-[0.52rem] text-muted tabular">{fmt(v.voltage.nominal)} V · {sizeLabel(b, false)}</span>
+            <span class="text-sm font-semibold">{b.name}</span>
+            <span class="text-sm text-ink-2 tabular">{fmt(v.voltage.nominal)} V</span>
+            <span class="text-sm text-muted tabular">{sizeLabel(b, false)}</span>
           </a></li>
         );
       })}
     </ul>
   </section>
+
+  {c && (
+    <section class="wrap mt-12" aria-labelledby="detail-title">
+      <h2 id="detail-title" class="section-title">Technical details</h2>
+      <div class="prose text-base">
+        {p.plain && <p>{c.summary}</p>}
+        <Fragment set:html={body} />
+      </div>
+    </section>
+  )}
+
   {c && (
     <section class="wrap mt-12 max-w-4xl">
       <h2 class="section-title">Sources</h2>
-      <ol class="space-y-2 text-[0.68rem]">{c.sources.map((s, i) => <li class="flex gap-3"><span class="text-muted w-5 text-right shrink-0">{i + 1}.</span><span><span class="text-ink-2">{s.publisher}.</span> {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : s.title}<span class="text-muted">. Accessed {s.accessed}.</span></span></li>)}</ol>
+      <ol class="space-y-2 text-sm font-sans">{c.sources.map((s, i) => <li class="flex gap-3"><span class="text-muted w-6 text-right shrink-0">{i + 1}.</span><span><span class="text-ink-2">{s.publisher}.</span> {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : s.title}<span class="text-xs text-muted">. Accessed {longDate(s.accessed)}.</span></span></li>)}</ol>
     </section>
   )}
 </BaseLayout>

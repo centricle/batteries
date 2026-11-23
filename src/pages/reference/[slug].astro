@@ -13,6 +13,8 @@ const { Content, headings } = await render(entry);
 const d = entry.data;
 const related = (d.related ?? []).map((id) => batteryById(id)).filter(Boolean);
 const iso = (x?: Date) => (x ? x.toISOString().slice(0, 10) : '');
+const long = (x?: Date) => (x ? x.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }) : '');
+const h2s = headings.filter((h) => h.depth === 2);
 const url = `https://batteries.fyi/reference/${entry.id}`;
 const jsonld = {
   '@context': 'https://schema.org',
@@ -27,39 +29,39 @@ const jsonld = {
 ---
 
 <BaseLayout title={`${d.title} | batteries.fyi`} description={d.description} jsonld={jsonld}>
-  <div class="wrap pt-5"><nav class="text-[0.65rem] text-muted" aria-label="Breadcrumb"><a href="/reference" class="hover:text-ink">Reference</a> / <span class="text-ink-2">{d.title}</span></nav></div>
+  <div class="wrap pt-5"><nav class="text-sm text-ink-2" aria-label="Breadcrumb"><a href="/reference" class="link">Guides</a> / <span>{d.title}</span></nav></div>
   <div class="wrap pt-4 grid gap-10 lg:grid-cols-[1fr_15rem]">
     <article class="min-w-0">
-      <h1 class="text-[2rem] font-semibold tracking-tight leading-tight max-w-3xl">{d.title}</h1>
-      <p class="mt-2 text-[0.65rem] text-muted">Updated {iso(d.updated)} · {d.sources.length} sources</p>
-      <div class="prose mt-6"><Content /></div>
-      <section class="mt-12 max-w-[40rem]">
-        <h2 class="section-title">Sources</h2>
-        <ol class="space-y-2 text-[0.68rem]">
+      <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight leading-tight max-w-3xl">{d.title}</h1>
+      <p class="mt-2 text-sm text-muted">Updated {long(d.updated)}. Based on <a class="link" href="#sources">{d.sources.length} sources</a>.</p>
+      <div class="prose text-base mt-6"><Content /></div>
+      <section id="sources" class="mt-12 max-w-[40rem] scroll-mt-20" aria-labelledby="sources-title">
+        <h2 id="sources-title" class="section-title">Sources</h2>
+        <ol class="space-y-2 text-sm font-sans">
           {d.sources.map((s, i) => (
-            <li class="flex gap-3"><span class="text-muted tabular w-5 text-right shrink-0">{i + 1}.</span><span><span class="text-ink-2">{s.publisher}.</span> {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : s.title}{s.accessed && <span class="text-muted">. Accessed {iso(s.accessed)}.</span>}</span></li>
+            <li class="flex gap-3"><span class="text-muted tabular w-6 text-right shrink-0">{i + 1}.</span><span><span class="text-ink-2">{s.publisher}.</span> {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : s.title}{s.accessed && <span class="text-xs text-muted">. Accessed {long(s.accessed)}.</span>}</span></li>
           ))}
         </ol>
       </section>
     </article>
-    <aside class="hidden lg:block">
-      <div class="sticky top-20 space-y-6">
-        {headings.filter((h) => h.depth === 2).length > 2 && (
-          <nav aria-label="On this page">
-            <p class="eyebrow mb-2">On this page</p>
-            <ul class="space-y-1.5 text-[0.65rem]">
-              {headings.filter((h) => h.depth === 2).map((h) => <li><a href={`#${h.slug}`} class="text-ink-2 hover:text-accent-ink">{h.text}</a></li>)}
+    <aside class="min-w-0">
+      <div class="lg:sticky lg:top-20 space-y-6">
+        {h2s.length > 2 && (
+          <nav aria-label="On this page" class="hidden lg:block">
+            <p class="label mb-2">On this page</p>
+            <ul class="space-y-1 text-sm">
+              {h2s.map((h) => <li><a href={`#${h.slug}`} class="link inline-flex min-h-8 items-center">{h.text}</a></li>)}
             </ul>
           </nav>
         )}
         {related.length > 0 && (
           <div>
-            <p class="eyebrow mb-2">Related sizes</p>
-            <ul class="grid grid-cols-3 gap-2">
+            <p class="label mb-2">Sizes in this guide</p>
+            <ul class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-3 gap-2">
               {related.map((b) => (
-                <li><a href={`/${b!.id}`} class="card flex flex-col items-center p-2 hover:border-accent">
+                <li><a href={`/${b!.id}`} class="tile flex flex-col items-center p-2 h-full">
                   <div class="h-12 w-full flex items-end justify-center"><Silhouette battery={b!} class="max-h-full max-w-full" /></div>
-                  <span class="text-[0.58rem] font-semibold mt-1">{b!.name}</span>
+                  <span class="text-sm font-semibold mt-1">{b!.name}</span>
                 </a></li>
               ))}
             </ul>

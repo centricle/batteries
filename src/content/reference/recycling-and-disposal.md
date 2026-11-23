@@ -1,8 +1,8 @@
 ---
-title: "Battery recycling and disposal"
+title: "Throwing away and recycling batteries"
 description: "The EPA says lithium, button and rechargeable batteries should never go in household trash; tape or bag terminals and take them to a battery drop-off."
 updated: 2026-11-22
-order: 80
+order: 40
 related: [aa, 9v, cr2032, cr123a, 18650, lr44]
 sources:
   - title: "Used Household Batteries"
@@ -43,16 +43,16 @@ sources:
     accessed: 2026-11-22
 ---
 
-In the United States, the EPA advises that lithium batteries (single-use and rechargeable), button and coin cells, and all rechargeable batteries should not go in household trash or curbside recycling bins, because they can spark and start fires when crushed or when their terminals touch. The EPA says that in most communities alkaline and zinc-carbon batteries can safely go in household trash, but recommends sending them to battery recyclers as well. In the European Union, Regulation (EU) 2023/1542 requires producers to collect waste portable batteries and lets anyone return them free of charge, without buying a new battery.
+In the United States, the EPA advises that lithium batteries (single-use and rechargeable), button and coin batteries, and all rechargeable batteries should not go in household trash or curbside recycling bins, because they can spark and start fires when crushed or when their terminals (the metal contacts) touch. Put each one in its own plastic bag, or cover the terminals with non-conductive tape such as electrical tape, and take them to a battery recycler, a participating store or a household hazardous waste program. The EPA says that in most communities alkaline and zinc-carbon batteries can safely go in household trash, but recommends sending them to battery recyclers as well. In the European Union, Regulation (EU) 2023/1542 requires producers to collect waste portable batteries and lets anyone return them free of charge, without buying a new battery.
 
-## What the EPA says, by battery type
+## Which batteries can go in the trash?
 
 The EPA's guidance on used household batteries, summarized:
 
 | Battery type | Household trash? | EPA recommendation |
 |---|---|---|
-| [Alkaline](/chemistry/alkaline) and [zinc-carbon](/chemistry/zinc-carbon) (AA, AAA, C, D, 9-volt, some button cells) | Can go in household trash in most communities | Send to battery recyclers, or check with the local or state solid waste authority |
-| Button and coin cells | No | Battery recyclers, participating retailers or household hazardous waste programs; management depends on chemistry |
+| [Alkaline](/chemistry/alkaline) and [zinc-carbon](/chemistry/zinc-carbon) (AA, AAA, C, D, 9-volt, some button batteries) | Can go in household trash in most communities | Send to battery recyclers, or check with the local or state solid waste authority |
+| Button and coin batteries | No | Battery recyclers, participating retailers or household hazardous waste programs; how they are handled depends on the kind |
 | Lithium single-use (cameras, watches, remotes, smoke detectors) | No | Check for the word "lithium" on the battery; do not put in trash or municipal recycling |
 | Rechargeable: [NiCd](/chemistry/nicd), [NiMH](/chemistry/nimh), [lithium-ion](/chemistry/lithium-ion), nickel-zinc, small sealed lead-acid | No | Battery recyclers, participating retailers or household hazardous waste programs |
 | Devices with non-removable batteries | No | Certified electronics recyclers or electronics take-back programs |
@@ -64,22 +64,22 @@ The EPA states that battery types are identified "by marking and labeling, not b
 
 The EPA explains that a lithium-ion battery or device placed in the trash or a curbside recycling bin "may become damaged or crushed in transport or from processing and sorting equipment, creating a fire hazard." It also notes that batteries "can have enough energy to injure or start fires even when used and when they appear to be discharged."
 
-## Preparing batteries for drop-off
+## Getting batteries ready for drop-off
 
-The EPA's handling precautions for lithium, button and rechargeable batteries are to place each battery in a separate plastic bag, or to cover the terminals with non-conductive tape such as electrical tape. For button and coin cells, the EPA also allows tape around the entire button.
+The EPA's handling precautions for lithium, button and rechargeable batteries are to place each battery in a separate plastic bag, or to cover the terminals with non-conductive tape such as electrical tape. For button and coin batteries, the EPA also allows tape around the entire button.
 
 The Battery Network (formerly Call2Recycle), a U.S. battery collection program, publishes these steps:
 
-1. **Identify the chemistry.** Lithium-ion, NiCd, NiMH and small sealed lead-acid batteries must be bagged or have their terminals taped. Single-use alkaline batteries need no terminal protection unless the battery says "Lithium."
-2. **Protect the terminals.** Bagging each battery in a clear bag is the preferred option. Taping the positive terminal with clear packing, electrical or duct tape is the alternative; The Battery Network says to avoid masking, painter's or Scotch tape, which can fall off, and to keep the brand and chemistry visible if the tape is not clear.
-3. **Find a drop-off location** with The Battery Network's locator. Primary (single-use) batteries are accepted only by select collection partners.
+1. **Find out the kind.** Lithium-ion, NiCd, NiMH and small sealed lead-acid batteries must be bagged or have their terminals taped. Single-use alkaline batteries need no terminal protection unless the battery says "Lithium."
+2. **Protect the terminals.** Bagging each battery in a clear bag is the preferred option. Taping the positive terminal with clear packing, electrical or duct tape is the alternative; The Battery Network says to avoid masking, painter's or Scotch tape, which can fall off, and to keep the brand and kind visible if the tape is not clear.
+3. **Find a drop-off location** with The Battery Network's locator. Single-use batteries are accepted only by select collection partners.
 4. **Drop them off** in a collection box or with store staff.
 
 For used batteries collected at home before a trip to a drop-off site, Duracell advises a non-metal container in a well-ventilated area, not mixed with other items.
 
 ### Damaged and recalled batteries
 
-The Battery Network defines a damaged or defective battery as any lithium-ion battery that is swollen, leaking, overheating or punctured; these cannot go in its regular collection boxes. Recalled batteries are not accepted at its collection sites. It directs owners to the manufacturer for both. Corroded or leaking alkaline batteries are not considered damaged. Handling steps for a damaged lithium-ion cell are on the [lithium-ion cell safety](/reference/lithium-ion-safety) page.
+The Battery Network defines a damaged or defective battery as any lithium-ion battery that is swollen, leaking, overheating or punctured; these cannot go in its regular collection boxes. Recalled batteries are not accepted at its collection sites. It directs owners to the maker for both. Corroded or leaking alkaline batteries are not considered damaged. Handling steps for a damaged lithium-ion battery are in the [lithium-ion battery safety](/reference/lithium-ion-safety) guide.
 
 ## U.S. federal rules
 
@@ -89,7 +89,7 @@ The Battery Network defines a damaged or defective battery as any lithium-ion ba
 
 **Federal battery law.** The EPA cites Public Law 104-142, the Mercury-Containing and Rechargeable Battery Management Act, which phased out mercury-containing batteries and provided for the recycling of NiCd, small sealed lead-acid and certain other rechargeable batteries. The EPA notes that some states have their own battery recycling laws.
 
-**Button cell packaging.** Under 16 CFR 1263.4, button and coin battery packages manufactured or imported after September 21, 2024 must state: "Immediately dispose of used batteries and keep away from children. Do NOT dispose of batteries in household trash."
+**Button battery packaging.** Under 16 CFR 1263.4, button and coin battery packages manufactured or imported after September 21, 2024 must state: "Immediately dispose of used batteries and keep away from children. Do NOT dispose of batteries in household trash."
 
 ## European Union: Regulation (EU) 2023/1542
 
