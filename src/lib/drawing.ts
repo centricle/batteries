@@ -23,12 +23,13 @@ export function drawingSVG(b: Battery) {
   const sw = span * 0.0035; // outline stroke
   const dw = sw * 0.6; // dimension stroke
 
-  // Text must read at 14 px on a phone. At 390 px wide the drawing is about
-  // 304 px across, so text needs at least MIN_TEXT of the viewBox width. The
+  // Text must read at the site's floor (text-xs, 16.8 px) on a phone. At 390 px
+  // wide the drawing is about 304 px across, so text needs at least MIN_TEXT
+  // (16.8 / 304, rounded up) of the viewBox width. The
   // gaps and margins are in text units, so a larger text size also widens the
   // viewBox; step toward the size that satisfies both (it converges, since
   // the width grows by well under 1/MIN_TEXT per unit of text).
-  const MIN_TEXT = 0.048;
+  const MIN_TEXT = 0.0555;
   let ts = Math.max(span * 0.042, 0.55);
   let out = layout(ts);
   for (let i = 0; i < 60 && ts < MIN_TEXT * out.vbw * 0.9995; i++) {

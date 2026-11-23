@@ -326,6 +326,13 @@ html {
   .spec .v { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; margin-top: 0.15rem; }
   .spec .u { font-size: 0.9rem; font-weight: 400; color: var(--ink-2); margin-left: 0.2rem; }
   .spec .s { font-size: 0.9rem; color: var(--muted); line-height: 1.45; }
+  /* A value with its unit (.vu wraps .v and .u). In a narrow box the unit drops
+     under the number, and a very long number breaks, so neither leaves the box. */
+  .spec { min-width: 0; }
+  .spec .vu { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.2rem; min-width: 0; }
+  .spec .vu .v { min-width: 0; overflow-wrap: anywhere; }
+  .spec .vu .v.long { font-size: 1.1rem; line-height: 1.5; }
+  .spec .vu .u { margin-left: 0; }
 
   .table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
   .table th { text-align: left; font-family: var(--font-sans); font-weight: 600; color: var(--ink-2); font-size: 0.9rem; line-height: 1.35; padding: 0.5rem 0.7rem; background: var(--surface-2); border-bottom: 1px solid var(--ink-2); white-space: nowrap; }

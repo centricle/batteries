@@ -69,7 +69,8 @@ const arBadge = `<svg xmlns="http://www.w3.org/2000/svg" width="290" height="44"
         <div class="flex flex-wrap gap-1.5" role="group" aria-label="Kind">
           {chems.map((c, i) => (
             <button type="button" class="btn btn-sm" data-chem={i} aria-pressed={i === 0 ? 'true' : 'false'}>
-              <span class="dot" style={`background:${c.color}`}></span>{kindName(c)}
+              {/* Each word stays whole, so a narrow button breaks between words and never at the hyphen in "lithium-ion". */}
+              <span class="dot" style={`background:${c.color}`}></span>{kindName(c).split(' ').map((w, j) => <>{j > 0 && ' '}<span class="whitespace-nowrap">{w}</span></>)}
             </button>
           ))}
         </div>

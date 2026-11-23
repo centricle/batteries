@@ -60,8 +60,8 @@ const jsonld = {
         </div>
       </div>
       <div class="mt-4 specs grid-cols-2" aria-live="polite">
-        <div class="spec"><span><output class="v" id="e-wh" for="e-v e-mah"></output><span class="u">Wh</span></span><span class="s">watt-hours</span></div>
-        <div class="spec"><span><output class="v" id="e-mwh" for="e-v e-mah"></output><span class="u">mWh</span></span><span class="s">milliwatt-hours</span></div>
+        <div class="spec"><span class="vu"><output class="v" id="e-wh" for="e-v e-mah"></output><span class="u">Wh</span></span><span class="s">watt-hours</span></div>
+        <div class="spec"><span class="vu"><output class="v" id="e-mwh" for="e-v e-mah"></output><span class="u">mWh</span></span><span class="s">milliwatt-hours</span></div>
       </div>
       <p class="mt-3 mono text-sm text-ink-2" id="e-f"></p>
       <p class="mt-1 text-sm text-ink-2">Wh = V × mAh ÷ 1,000. mWh = V × mAh. Use the voltage printed on the battery, not its full-charge voltage.</p>
@@ -81,7 +81,7 @@ const jsonld = {
         </div>
       </div>
       <div class="mt-4 specs grid-cols-2" aria-live="polite">
-        <div class="spec"><span><output class="v" id="r-h" for="r-mah r-ma"></output><span class="u">h</span></span><span class="s">hours</span></div>
+        <div class="spec"><span class="vu"><output class="v" id="r-h" for="r-mah r-ma"></output><span class="u">h</span></span><span class="s">hours</span></div>
         <div class="spec"><span class="v text-base!" id="r-hm"></span><span class="s" id="r-days">hours and minutes</span></div>
       </div>
       <p class="mt-3 mono text-sm text-ink-2" id="r-f"></p>
@@ -239,7 +239,7 @@ const jsonld = {
   }
 
   function spec(v: string, u: string, s: string) {
-    return `<div class="spec"><span><span class="v">${v}</span>${u ? `<span class="u">${u}</span>` : ''}</span><span class="s">${s}</span></div>`;
+    return `<div class="spec"><span class="vu"><span class="v">${v}</span>${u ? `<span class="u">${u}</span>` : ''}</span><span class="s">${s}</span></div>`;
   }
 
   function pack() {
@@ -340,6 +340,9 @@ const jsonld = {
     runtime();
     pack();
     air();
+    // A long figure (925,000) is set smaller so it stays on one line in a
+    // phone-width box; .spec .v.long in global.css.
+    document.querySelectorAll('.spec .vu .v').forEach((el) => el.classList.toggle('long', (el.textContent ?? '').length > 6));
     write();
   }
 

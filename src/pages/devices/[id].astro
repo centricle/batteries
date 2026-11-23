@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Silhouette from '../../components/Silhouette.astro';
 import Buy from '../../components/Buy.astro';
 import { REL_META } from '../../lib/pairs';
-import { art, longDate, plainSize } from '../../lib/plain';
+import { art, longDate, otherNames, plainSize } from '../../lib/plain';
 import {
   batteries, batteryById, deviceTitle, devices, devicesFor, DEVICE_CATEGORY_META, fmt,
   type Battery, type Device,
@@ -39,7 +39,11 @@ const yearsWords = d.years ? (d.years.endsWith('-') ? `from ${d.years.slice(0, -
 const answer = `The ${title} takes ${countWord(d.count)} ${code} ${d.count === 1 ? 'battery' : 'batteries'}.`;
 // The device's note, when there is one, already explains a maker name that differs from the page name.
 const sameNote = code !== b.name && !d.note ? `${code} is one of the names for the ${b.name} size.` : '';
-const names = [...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name && c !== code).slice(0, 10);
+// Only names for the same battery that a shopper finds on a pack (plain.ts
+// otherNames). The full code list also holds names for other kinds in the same
+// case (LIR2032 is 3.6 V and does not work where a CR2032 does), so it is not
+// what "Also sold as" may show.
+const names = otherNames(b).filter((c) => c !== code);
 
 // What else fits: entries declared on this battery, plus reverse entries only
 // where the relation reads the same both ways (equivalent, same size). A
