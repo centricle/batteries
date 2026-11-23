@@ -106,12 +106,12 @@
     {
       "id": "cr1616",
       "relation": "fits-with-caveat",
-      "note": "Same 16 mm diameter and 1.6 mm thinner; much lower capacity and usually loose in a CR1632 holder."
+      "note": "Same 16 mm width and 1.6 mm thinner; much lower capacity and usually loose in a CR1632 holder."
     },
     {
       "id": "cr1620",
       "relation": "fits-with-caveat",
-      "note": "Same 16 mm diameter and 1.2 mm thinner; lower capacity and may make poor contact in a CR1632 holder."
+      "note": "Same 16 mm width and 1.2 mm thinner; lower capacity and may make poor contact in a CR1632 holder."
     }
   ],
   "notes": "Panasonic also lists BR1632A, a carbon-monofluoride cell of the same size rated -40 to +125 °C operating.",

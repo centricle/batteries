@@ -80,12 +80,12 @@
     {
       "id": "cr1220",
       "relation": "fits-with-caveat",
-      "note": "Same diameter and 0.5 mm thinner; lower capacity and may make poor contact in a CR1225 holder."
+      "note": "Same width and 0.5 mm thinner; lower capacity and may make poor contact in a CR1225 holder."
     },
     {
       "id": "cr1216",
       "relation": "fits-with-caveat",
-      "note": "Same diameter and 0.9 mm thinner; lower capacity and may make poor contact in a CR1225 holder."
+      "note": "Same width and 0.9 mm thinner; lower capacity and may make poor contact in a CR1225 holder."
     }
   ],
   "sources": [

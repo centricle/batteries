@@ -155,7 +155,7 @@
     {
       "id": "aa",
       "relation": "do-not-substitute",
-      "note": "A 14500 lithium-ion battery has the same diameter and length as an AA battery but delivers 3.7 V nominal and up to 4.2 V, which damages most devices built for 1.5 V batteries."
+      "note": "A 14500 lithium-ion battery is the same width and length as an AA battery but delivers 3.7 V and up to 4.2 V, which damages most devices built for 1.5 V batteries."
     },
     {
       "id": "er14505",

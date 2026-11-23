@@ -177,8 +177,9 @@
     }
   ],
   "devices": [
-    "Computer motherboards (BIOS and RTC backup)",
     "Vehicle key fobs",
+    "Item trackers",
+    "Computer motherboards (BIOS and RTC backup)",
     "Remote controls",
     "Digital thermometers",
     "Glucose meters",
@@ -191,12 +192,12 @@
     {
       "id": "cr2025",
       "relation": "fits-with-caveat",
-      "note": "Same 20 mm diameter and 0.7 mm thinner; lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
+      "note": "Same 20 mm width and 0.7 mm thinner; lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
     },
     {
       "id": "cr2016",
       "relation": "fits-with-caveat",
-      "note": "Same 20 mm diameter and 1.6 mm thinner; much lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
+      "note": "Same 20 mm width and 1.6 mm thinner; much lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
     }
   ],
   "notes": "The most widely used lithium coin cell. BR2032 has the same dimensions and a nominal 3 V but lower rated drain and a wider temperature range; ML2032 and VL2032 are rechargeable cells in the same case per Wikipedia, and fit the same holder only where the device is designed to charge them.",

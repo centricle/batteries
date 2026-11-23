@@ -146,12 +146,12 @@
     {
       "id": "cr1216",
       "relation": "fits-with-caveat",
-      "note": "Same diameter and 0.4 mm thinner; lower capacity and may make poor contact in a CR1220 holder."
+      "note": "Same width and 0.4 mm thinner; lower capacity and may make poor contact in a CR1220 holder."
     },
     {
       "id": "cr1225",
       "relation": "fits-with-caveat",
-      "note": "Same diameter and 0.5 mm thicker; fits only where the holder has the clearance."
+      "note": "Same width and 0.5 mm thicker; fits only where the holder has the clearance."
     }
   ],
   "notes": "Wikipedia also lists an ML1220 manganese rechargeable cell in this size. Panasonic's VL1220 uses constant-voltage charging at 3.25 to 3.55 V.",

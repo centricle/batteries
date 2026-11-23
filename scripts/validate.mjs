@@ -4,9 +4,10 @@
 //   node scripts/validate.mjs a.json ... only these battery files
 // Exits 1 on any error. Also checks cross-file rules: unique ids, unique
 // codes per battery, interchange targets that exist, no slug collisions
-// between ids and alias redirects.
+// between ids and alias redirects. A full run also runs scripts/plain-check.mjs.
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { batterySchema, chemistrySchema, deviceSchema } from '../src/lib/schema.mjs';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -104,6 +105,14 @@ for (const file of readDir(dDir)) {
   if (r.data.id + '.json' !== file) fail(`devices/${file}`, `id "${r.data.id}" does not match filename`);
   if (!ids.has(r.data.battery)) fail(`devices/${file}`, `battery "${r.data.battery}" has no entry`);
   deviceIds.add(r.data.id);
+}
+
+// Plain-language helpers (src/lib/plain.ts): asserts on the sentences at the
+// top of every battery page. A child process, so the TypeScript file loads
+// with Node's type stripping on any Node 22.
+if (!only && !errors) {
+  const r = spawnSync(process.execPath, ['--experimental-strip-types', '--no-warnings', path.join(root, 'scripts/plain-check.mjs')], { stdio: 'inherit' });
+  if (r.status !== 0) errors++;
 }
 
 const n = only ? only.size : batteries.length;

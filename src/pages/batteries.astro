@@ -1,40 +1,48 @@
 ---
+// Every size, grouped by type, the most common first in each group.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Silhouette from '../components/Silhouette.astro';
-import { batteries, CATEGORY_META, sizeLabel, voltages, volts, stats } from '../lib/data';
+import { batteries, CATEGORY_META } from '../lib/data';
+import { byCommon, list as listWords, tileFacts } from '../lib/plain';
 
-const s = stats();
-const groups = CATEGORY_META.map((c) => ({ c, list: batteries().filter((b) => b.category === c.id) })).filter((g) => g.list.length);
+const all = batteries();
+const groups = CATEGORY_META.map((c) => ({ c, list: all.filter((b) => b.category === c.id).sort(byCommon) })).filter((g) => g.list.length);
+const typeNames = CATEGORY_META.map((c) => c.name.toLowerCase());
 ---
 
-<BaseLayout title={`All ${s.batteries} battery sizes | batteries.fyi`} description={`Every battery size in the database, ${s.batteries} in all, grouped by type: household, lithium-ion, coin, button and watch, hearing aid, photo and specialty cells.`}>
+<BaseLayout title={`All ${all.length} battery sizes | batteries.fyi`} description={`Every battery size on batteries.fyi, ${all.length} in all, grouped by type: ${listWords(typeNames)}.`}>
   <section class="wrap pt-8">
-    <p class="eyebrow">Index</p>
-    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">All battery sizes</h1>
-    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">{s.batteries} physical sizes, {s.variants} chemistry variants and {s.codes.toLocaleString('en-US')} codes. Pick a type, or jump to any size below.</p>
-    <nav class="mt-4 flex flex-wrap gap-1.5 text-[0.65rem]" aria-label="Jump to type">
-      {groups.map(({ c, list }) => <a href={`#${c.slug}`} class="chip">{c.short} <span class="text-muted">{list.length}</span></a>)}
+    <h1 class="text-2xl sm:text-3xl font-semibold">All battery sizes</h1>
+    <p class="lede measure mt-3">Every size on the site is here, {all.length} in all, grouped by type with the most common first. Choose one to see its size, other names and what else fits.</p>
+    <nav class="mt-5" aria-label="Jump to a type">
+      <ul class="flex flex-wrap gap-2">
+        {groups.map(({ c, list }) => <li><a href={`#${c.slug}`} class="chip link">{c.name} ({list.length})</a></li>)}
+      </ul>
     </nav>
   </section>
   {groups.map(({ c, list }) => {
     const scale = Math.max(...list.map((b) => (b.form === 'disc' ? b.dimensions.diameter!.nominal : b.dimensions.height.nominal)));
     return (
-      <section class="wrap mt-10" id={c.slug}>
-        <div class="flex items-baseline justify-between gap-4 mb-3">
-          <h2 class="section-title mb-0"><a href={`/${c.slug}`} class="hover:text-accent-ink">{c.name}</a></h2>
-          <a href={`/${c.slug}`} class="link text-[0.65rem] whitespace-nowrap">Category page</a>
-        </div>
-        <ul class="grid gap-2 grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8">
-          {list.map((b) => (
-            <li>
-              <a href={`/${b.id}`} class="card group flex flex-col items-center p-2 h-full hover:border-accent transition-colors">
-                <div class="h-16 w-full flex items-end justify-center mb-1.5"><Silhouette battery={b} scaleTo={scale} class="max-w-full" /></div>
-                <span class="text-[0.7rem] font-semibold group-hover:text-accent-ink text-center leading-tight">{b.name}</span>
-                <span class="text-[0.52rem] text-muted tabular text-center">{voltages(b).map(volts).join(' / ')}</span>
-              </a>
-            </li>
-          ))}
+      <section class="wrap mt-12 scroll-mt-20" id={c.slug}>
+        <h2 class="section-title">{c.name}</h2>
+        <p class="lede measure mb-4">{c.description}</p>
+        <ul class="grid gap-3 grid-cols-1 min-[26rem]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {list.map((b) => {
+            const f = tileFacts(b);
+            return (
+              <li>
+                <a href={`/${b.id}`} class="tile card group flex flex-col h-full p-4">
+                  <span class="h-20 w-full flex items-end justify-center mb-2"><Silhouette battery={b} scaleTo={scale} class="max-w-full" /></span>
+                  <span class="font-mono font-semibold text-lg text-ink group-hover:underline">{b.name}</span>
+                  <span class="mt-1 font-sans text-sm text-ink-2">{f.size}</span>
+                  <span class="font-sans text-sm text-ink-2">{f.volts}</span>
+                  {f.names.length > 0 && <span class="mt-1 font-sans text-sm text-ink-2">Also called {listWords(f.names)}</span>}
+                </a>
+              </li>
+            );
+          })}
         </ul>
+        <p class="mt-3 text-base"><a href={`/${c.slug}`} class="link">See all {list.length} side by side</a></p>
       </section>
     );
   })}

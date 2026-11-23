@@ -124,12 +124,12 @@
     {
       "id": "2cr1-3n",
       "relation": "same-size",
-      "note": "The 2CR1/3N pack stacks two of these batteries for 6 V and has the same diameter class but a longer body."
+      "note": "The 2CR1/3N pack stacks two of these batteries for 6 V and is about as wide but longer."
     },
     {
       "id": "lr44",
       "relation": "fits-with-caveat",
-      "note": "Two stacked 1.5 V LR44 or SR44 batteries have the same 11.6 mm diameter and replace a CR11108 in some devices; check the device's voltage tolerance first."
+      "note": "Two stacked 1.5 V LR44 or SR44 batteries are the same 11.6 mm across and replace a CR11108 in some devices; check the device's voltage tolerance first."
     }
   ],
   "safety": [

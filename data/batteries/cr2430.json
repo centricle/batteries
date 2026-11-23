@@ -88,12 +88,12 @@
     {
       "id": "cr2450",
       "relation": "fits-with-caveat",
-      "note": "Same 24.5 mm diameter and 2.0 mm thicker; usually does not fit a CR2430 holder."
+      "note": "Same 24.5 mm width and 2.0 mm thicker; usually does not fit a CR2430 holder."
     },
     {
       "id": "cr2412",
       "relation": "fits-with-caveat",
-      "note": "Same 24.5 mm diameter and 1.8 mm thinner; much lower capacity and loose in a CR2430 holder."
+      "note": "Same 24.5 mm width and 1.8 mm thinner; much lower capacity and loose in a CR2430 holder."
     }
   ],
   "sources": [

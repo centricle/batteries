@@ -122,12 +122,12 @@
     {
       "id": "cr2320",
       "relation": "fits-with-caveat",
-      "note": "Same 23 mm diameter and 1.0 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
+      "note": "Same 23 mm width and 1.0 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
     },
     {
       "id": "cr2325",
       "relation": "fits-with-caveat",
-      "note": "Same 23 mm diameter and 0.5 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
+      "note": "Same 23 mm width and 0.5 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
     }
   ],
   "notes": "BR2330 is rated -40 to +85 °C operating per Panasonic, a wider range than the CR type. VL2330 is a rechargeable cell for devices designed to charge it.",

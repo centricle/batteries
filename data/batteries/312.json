@@ -132,7 +132,7 @@
     {
       "id": "13",
       "relation": "do-not-substitute",
-      "note": "A size 13 has the same 7.9 mm diameter but is 5.4 mm tall, so it generally does not fit a 312 compartment."
+      "note": "A size 13 is the same 7.9 mm across but 5.4 mm tall, so it generally does not fit a 312 compartment."
     }
   ],
   "safety": [

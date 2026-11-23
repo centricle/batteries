@@ -93,7 +93,7 @@
     {
       "id": "cr2032",
       "relation": "same-size",
-      "note": "Same 3.2 mm height with a 30 mm instead of 20 mm diameter; does not fit a CR2032 holder."
+      "note": "Same 3.2 mm thickness, but 30 mm across instead of 20 mm; does not fit a CR2032 holder."
     }
   ],
   "notes": "VL3032 is a rechargeable cell for devices designed to charge it.",

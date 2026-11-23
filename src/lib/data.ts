@@ -30,14 +30,16 @@ export interface CategoryMeta {
   legacy?: string[];
 }
 
+// Names and descriptions are what a visitor reads; slugs and ids are URLs and
+// data keys and stay as they are. Order is the order pages list them in.
 export const CATEGORY_META: CategoryMeta[] = [
-  { id: 'household', slug: 'household', name: 'Household cells', short: 'Household', description: 'AA, AAA, C, D, 9V and the other standard sizes sold in alkaline, lithium and rechargeable chemistries.', legacy: ['/traditional'] },
-  { id: 'li-ion', slug: 'lithium-ion', name: 'Lithium-ion cells', short: 'Lithium-ion', description: 'Rechargeable cylindrical cells named by size: 18650, 21700, 14500 and the rest, including LiFePO4.' },
-  { id: 'coin', slug: 'coin-cells', name: 'Coin cells', short: 'Coin', description: 'Flat 3 V lithium cells named by diameter and thickness: CR2032, CR2025, CR1220 and their rechargeable counterparts.' },
-  { id: 'button', slug: 'button-cells', name: 'Button and watch cells', short: 'Button', description: 'Alkaline and silver oxide button cells, with the full cross-reference of LR, SR, AG and manufacturer numbers.' },
-  { id: 'hearing-aid', slug: 'hearing-aid', name: 'Hearing aid cells', short: 'Hearing aid', description: 'Zinc-air cells in sizes 5, 10, 312, 13 and 675, identified by a standard color tab.' },
-  { id: 'photo', slug: 'photo', name: 'Photo lithium cells', short: 'Photo', description: 'CR123A, CR2 and the multi-cell camera packs: CR-P2, 2CR5 and CR-V3.', legacy: ['/camera'] },
-  { id: 'specialty', slug: 'specialty', name: 'Specialty cells', short: 'Specialty', description: 'High-voltage stacks, lantern and flat packs, fractional sizes and industrial lithium cells.' },
+  { id: 'household', slug: 'household', name: 'Household batteries', short: 'Household', description: 'AA, AAA, C, D and 9V. The ones in remotes, flashlights and toys.', legacy: ['/traditional'] },
+  { id: 'coin', slug: 'coin-cells', name: 'Coin batteries', short: 'Coin', description: 'Flat 3-volt lithium batteries about the size of a coin. Key fobs, trackers and watches.' },
+  { id: 'button', slug: 'button-cells', name: 'Button batteries', short: 'Button', description: 'Small, thick, round 1.5-volt batteries. Watches, calculators, toys and thermometers.' },
+  { id: 'hearing-aid', slug: 'hearing-aid', name: 'Hearing aid batteries', short: 'Hearing aid', description: 'Sizes 5, 10, 312, 13 and 675, each with its own tab color.' },
+  { id: 'li-ion', slug: 'lithium-ion', name: 'Rechargeable lithium-ion', short: 'Lithium-ion', description: '18650, 21700 and similar. Flashlights, power tools and battery packs.' },
+  { id: 'photo', slug: 'photo', name: 'Camera batteries', short: 'Camera', description: 'CR123A, CR2 and other lithium batteries for cameras, sensors and alarms.', legacy: ['/camera'] },
+  { id: 'specialty', slug: 'specialty', name: 'Everything else', short: 'Other', description: 'Lantern batteries, 12-volt remote batteries and other less common sizes.' },
 ];
 export const categoryById = Object.fromEntries(CATEGORY_META.map((c) => [c.id, c])) as Record<string, CategoryMeta>;
 
@@ -168,7 +170,9 @@ export const CHEM_FALLBACK: Record<string, { name: string; short: string; color:
 export function chem(id: string) {
   const c = chemistryById(id);
   const f = CHEM_FALLBACK[id] ?? { name: id, short: id, color: '#8B96A5' };
-  return { id, name: c?.name ?? f.name, short: c?.short ?? f.short, color: c?.color ?? f.color, exists: !!c };
+  const name = c?.name ?? f.name;
+  // plainName and plain are what visitors read; name and short are technical.
+  return { id, name, short: c?.short ?? f.short, color: c?.color ?? f.color, plainName: c?.plain_name ?? name, plain: c?.plain ?? '', status: c?.status ?? 'current', rechargeable: c?.rechargeable, exists: !!c };
 }
 
 export const fmt = (n: number | undefined, max = 2) =>
@@ -185,12 +189,12 @@ export function sizeLabel(b: Battery, unit = true) {
 }
 
 export function shapeWord(b: Battery) {
-  if (b.form === 'disc') return b.category === 'coin' ? 'coin cell' : b.category === 'hearing-aid' ? 'hearing aid cell' : 'button cell';
-  if (b.form === 'cylinder') return b.category === 'li-ion' ? 'cylindrical lithium-ion cell' : 'cylindrical cell';
+  if (b.form === 'disc') return b.category === 'coin' ? 'coin battery' : b.category === 'hearing-aid' ? 'hearing aid battery' : 'button battery';
+  if (b.form === 'cylinder') return b.category === 'li-ion' ? 'round lithium-ion battery' : 'round battery';
   if (b.form === 'prismatic') return 'rectangular battery';
   if (b.form === 'lantern') return 'lantern battery';
   if (b.form === 'flatpack') return 'flat pack battery';
-  return 'two-cell pack';
+  return 'twin battery pack';
 }
 
 /** Distinct nominal voltages across variants, primary first. */

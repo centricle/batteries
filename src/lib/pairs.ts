@@ -3,11 +3,12 @@
 // with the two battery pages it links.
 import { batteries, batteryById, similar, interchangeFor, fmt, primaryVariant, capacityLabel, chem, shapeWord, type Battery } from './data';
 
+// The verdict a visitor reads, the same on battery pages and pair pages.
 export const REL_META: Record<string, { label: string; cls: string }> = {
-  equivalent: { label: 'Equivalent', cls: 'ok' },
-  'same-size': { label: 'Same size, different behavior', cls: 'info' },
-  'fits-with-caveat': { label: 'Fits, with a caveat', cls: 'warn' },
-  'do-not-substitute': { label: 'Do not substitute', cls: 'danger' },
+  equivalent: { label: 'Works the same', cls: 'ok' },
+  'same-size': { label: 'Looks alike, not a swap', cls: 'info' },
+  'fits-with-caveat': { label: 'Fits, with a catch', cls: 'warn' },
+  'do-not-substitute': { label: 'Do not use', cls: 'danger' },
 };
 
 export interface Pair {
@@ -58,7 +59,7 @@ const hWord = (b: Battery) => (b.form === 'disc' ? 'thick' : b.form === 'cylinde
 function dimsSentence(b: Battery) {
   const d = b.dimensions;
   if (d.diameter && (b.form === 'cylinder' || b.form === 'disc')) return `${mm(d.diameter.nominal)} across and ${mm(d.height.nominal)} ${hWord(b)}`;
-  return `${mm(d.width!.nominal)} × ${mm(d.depth!.nominal)} and ${mm(d.height.nominal)} tall`;
+  return `${mm(d.width!.nominal)} wide, ${mm(d.depth!.nominal)} thick and ${mm(d.height.nominal)} tall`;
 }
 
 /** The answer paragraph at the top of a pair page. */
@@ -71,15 +72,15 @@ export function verdict(p: Pair): string[] {
   const dd = da.diameter && db.diameter ? db.diameter.nominal - da.diameter.nominal : null;
   const dh = db.height.nominal - da.height.nominal;
   if (sameShape && dd !== null && Math.abs(dd) < 0.05 && Math.abs(dh) < 0.05) {
-    out.push(`The ${a.name} and ${b.name} share the same nominal size: ${dimsSentence(a)}.`);
+    out.push(`The ${a.name} and ${b.name} are the same size: ${dimsSentence(a)}.`);
   } else if (sameShape && dd !== null && Math.abs(dd) < 0.05) {
-    out.push(`The ${a.name} and ${b.name} have the same ${mm(da.diameter!.nominal)} diameter. The ${a.name} is ${mm(da.height.nominal)} ${hWord(a)} and the ${b.name} is ${mm(db.height.nominal)}, a difference of ${mm(Math.abs(dh))}.`);
+    out.push(`The ${a.name} and ${b.name} are both ${mm(da.diameter!.nominal)} across. The ${a.name} is ${mm(da.height.nominal)} ${hWord(a)} and the ${b.name} is ${mm(db.height.nominal)}, a difference of ${mm(Math.abs(dh))}.`);
   } else {
     out.push(`The ${a.name} is a ${shapeWord(a)} ${dimsSentence(a)}. The ${b.name} is a ${shapeWord(b)} ${dimsSentence(b)}.`);
   }
   const ca = chem(va.chemistry), cb = chem(vb.chemistry);
   if (va.voltage.nominal === vb.voltage.nominal && va.chemistry === vb.chemistry) {
-    out.push(`Both are most often made as ${ca.name.toLowerCase()} cells at ${fmt(va.voltage.nominal)} V.`);
+    out.push(`Both are most often made as ${ca.name.toLowerCase()} batteries at ${fmt(va.voltage.nominal)} V.`);
   } else {
     out.push(`The ${a.name} is most often ${ca.name.toLowerCase()} at ${fmt(va.voltage.nominal)} V; the ${b.name} is most often ${cb.name.toLowerCase()} at ${fmt(vb.voltage.nominal)} V.`);
   }

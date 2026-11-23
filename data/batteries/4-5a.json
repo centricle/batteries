@@ -89,7 +89,7 @@
     {
       "id": "a",
       "relation": "same-size",
-      "note": "A 4/5A battery has the A battery's 17 mm diameter but is 43 mm long instead of 50 mm, so it fits in packs built for it only."
+      "note": "A 4/5A battery is as wide as an A battery (17 mm) but 43 mm long instead of 50 mm, so it fits in packs built for it only."
     }
   ],
   "safety": [

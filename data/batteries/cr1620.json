@@ -92,12 +92,12 @@
     {
       "id": "cr1616",
       "relation": "fits-with-caveat",
-      "note": "Same diameter and 0.4 mm thinner; lower capacity and may make poor contact in a CR1620 holder."
+      "note": "Same width and 0.4 mm thinner; lower capacity and may make poor contact in a CR1620 holder."
     },
     {
       "id": "cr1632",
       "relation": "fits-with-caveat",
-      "note": "Same diameter and 1.2 mm thicker; fits only where the holder has the clearance."
+      "note": "Same width and 1.2 mm thicker; fits only where the holder has the clearance."
     }
   ],
   "sources": [

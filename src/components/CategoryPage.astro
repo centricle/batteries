@@ -1,18 +1,23 @@
 ---
+// One type of battery (household, coin, button...): every size in it, the
+// common ones first, then the same sizes in one table.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Silhouette from './Silhouette.astro';
 import Viewer from './Viewer.astro';
-import { batteries, CATEGORY_META, categoryById, chem, primaryVariant, sizeLabel, voltages, volts, capacityLabel, chemistryGroups } from '../lib/data';
+import { batteries, CATEGORY_META, categoryById, chem, primaryVariant, sizeLabel, voltages, fmt, capacityLabel, chemistryGroups } from '../lib/data';
+import { byCommon, list as listWords, tileFacts } from '../lib/plain';
 
 interface Props { id: string }
 const { id } = Astro.props;
 const cat = categoryById[id];
-const list = batteries().filter((b) => b.category === id);
+const bySize = batteries().filter((b) => b.category === id);
+const list = [...bySize].sort(byCommon);
 const ref = (b: (typeof list)[number]) => (b.form === 'disc' ? b.dimensions.diameter!.nominal : b.dimensions.height.nominal);
 const scale = Math.max(...list.map(ref));
-// A representative lineup for the hero: up to 9 entries spread across sizes.
-const step = Math.max(1, Math.ceil(list.length / 9));
-const lineup = list.filter((_, i) => i % step === 0).slice(0, 9);
+// A lineup for the top of the page: up to 9 sizes spread from smallest to largest.
+const step = Math.max(1, Math.ceil(bySize.length / 9));
+const lineup = bySize.filter((_, i) => i % step === 0).slice(0, 9);
+const voltsCell = (b: (typeof list)[number]) => `${listWords([...new Set(voltages(b))].sort((x, y) => x - y).map((v) => fmt(v, 2)))} V`;
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -23,18 +28,22 @@ const jsonld = {
 };
 ---
 
-<BaseLayout title={`${cat.name}: sizes, voltages and equivalents | batteries.fyi`} description={`${cat.description} ${list.length} sizes with dimensions, chemistries, cross-reference codes and 3D models.`} jsonld={jsonld}>
+<BaseLayout title={`${cat.name}: sizes, other names and what fits | batteries.fyi`} description={`${cat.description} ${list.length} sizes, each with its size, other names and what else fits.`} jsonld={jsonld}>
   <section class="wrap pt-8 pb-6">
-    <nav class="flex flex-wrap gap-1.5 mb-6 text-[0.65rem]" aria-label="Categories">
-      {CATEGORY_META.map((c) => (
-        <a href={`/${c.slug}`} class:list={['px-2.5 py-1 border', c.id === id ? 'border-accent bg-accent-soft text-accent-ink' : 'border-line-2 text-ink-2 hover:border-accent']} aria-current={c.id === id ? 'page' : undefined}>
-          {c.short} <span class="text-muted">{batteries().filter((b) => b.category === c.id).length}</span>
-        </a>
-      ))}
+    <nav aria-label="Types of battery">
+      <ul class="flex flex-wrap gap-2 mb-6">
+        {CATEGORY_META.map((c) => (
+          <li>
+            <a href={`/${c.slug}`} class:list={['chip link', c.id === id && 'font-semibold']} aria-current={c.id === id ? 'page' : undefined}>
+              {c.name}
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
-    <p class="eyebrow">{list.length} sizes</p>
-    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">{cat.name}</h1>
-    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">{cat.description}</p>
+    <h1 class="text-2xl sm:text-3xl font-semibold">{cat.name}</h1>
+    <p class="lede measure mt-3">{cat.description}</p>
+    <p class="mt-2 text-base text-ink-2 measure">There are {list.length} sizes on this page, the most common first.</p>
   </section>
 
   {lineup.length > 1 && (
@@ -44,38 +53,33 @@ const jsonld = {
   )}
 
   <section class="wrap mt-8">
-    <ul class="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <ul class="grid gap-3 grid-cols-1 min-[26rem]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
       {list.map((b) => {
-        const pv = primaryVariant(b);
+        const f = tileFacts(b);
         return (
           <li>
-            <a href={`/${b.id}`} class="card group flex flex-col h-full p-3 hover:border-accent transition-colors">
-              <div class="h-28 flex items-end justify-center mb-3 grid-paper rounded-md p-2">
+            <a href={`/${b.id}`} class="tile card group flex flex-col h-full p-4">
+              <span class="h-28 flex items-end justify-center mb-3">
                 <Silhouette battery={b} scaleTo={scale} class="max-w-full" />
-              </div>
-              <span class="flex items-baseline justify-between gap-2">
-                <span class="font-semibold text-[0.85rem] group-hover:text-accent-ink">{b.name}</span>
-                <span class="text-[0.62rem] text-muted tabular">{voltages(b).map(volts).join(' / ')}</span>
               </span>
-              <span class="text-[0.62rem] text-muted tabular">{sizeLabel(b)}{capacityLabel(pv) ? ` · ${capacityLabel(pv)}` : ''}</span>
-              <span class="mt-2 flex flex-wrap gap-1">
-                {chemistryGroups(b).slice(0, 4).map((g) => <span class="dot" style={`background:${g.chem.color}`} title={g.chem.name}></span>)}
-                <span class="text-[0.55rem] text-muted ml-1 truncate">{b.codes.slice(0, 3).map((c) => c.code).filter((c) => c !== b.name).join(' · ')}</span>
-              </span>
+              <span class="font-mono font-semibold text-lg text-ink group-hover:underline">{b.name}</span>
+              <span class="mt-1 font-sans text-sm text-ink-2">{f.size}</span>
+              <span class="font-sans text-sm text-ink-2">{f.volts}</span>
+              {f.names.length > 0 && <span class="mt-1 font-sans text-sm text-ink-2">Also called {listWords(f.names)}</span>}
             </a>
           </li>
         );
       })}
     </ul>
-    <p class="mt-3 text-[0.6rem] text-muted">Silhouettes are drawn to one scale within this page{list.some((b) => b.form === 'disc') ? '; coin and button cells are shown face-on' : ''}.</p>
+    <p class="mt-3 text-sm text-ink-2">The drawings share one scale on this page{list.some((b) => b.form === 'disc') ? '. Flat round batteries are shown face on' : ''}.</p>
   </section>
 
   <section class="wrap mt-10">
-    <h2 class="section-title">All {cat.short.toLowerCase()} sizes at a glance</h2>
+    <h2 class="section-title">All {cat.name.toLowerCase()} at a glance</h2>
     <div class="card table-scroll">
-      <table class="table min-w-[40rem]" data-sortable>
+      <table class="table min-w-[44rem]" data-sortable>
         <thead>
-          <tr><th>Name</th><th class="n">Size (mm)</th><th class="n">Voltage</th><th class="n">Capacity</th><th>Chemistries</th><th>Other codes</th></tr>
+          <tr><th>Name</th><th class="n">Size (mm)</th><th class="n">Voltage</th><th class="n">Capacity</th><th>Kinds</th><th>Other names</th></tr>
         </thead>
         <tbody>
           {list.map((b) => {
@@ -84,10 +88,10 @@ const jsonld = {
               <tr>
                 <td class="font-semibold"><a href={`/${b.id}`} class="link">{b.name}</a></td>
                 <td class="n">{sizeLabel(b, false)}</td>
-                <td class="n">{voltages(b).map(volts).join(' / ')}</td>
-                <td class="n">{capacityLabel(pv) || '—'}</td>
-                <td class="text-[0.62rem]">{chemistryGroups(b).map((g) => g.chem.short).join(', ')}</td>
-                <td class="text-[0.6rem] text-muted mono">{[...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name).slice(0, 6).join(' · ')}</td>
+                <td class="n">{voltsCell(b)}</td>
+                <td class="n">{capacityLabel(pv).replace('–', ' to ') || '—'}</td>
+                <td class="font-sans">{chemistryGroups(b).map((g) => chem(g.chem.id).plainName).join(', ')}</td>
+                <td>{[...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name).slice(0, 6).join(', ')}</td>
               </tr>
             );
           })}

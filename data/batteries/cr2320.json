@@ -68,12 +68,12 @@
     {
       "id": "cr2325",
       "relation": "fits-with-caveat",
-      "note": "Same 23 mm diameter and 0.5 mm thicker; fits only where the holder has the clearance."
+      "note": "Same 23 mm width and 0.5 mm thicker; fits only where the holder has the clearance."
     },
     {
       "id": "cr2330",
       "relation": "fits-with-caveat",
-      "note": "Same 23 mm diameter and 1.0 mm thicker; usually does not fit a CR2320 holder."
+      "note": "Same 23 mm width and 1.0 mm thicker; usually does not fit a CR2320 holder."
     }
   ],
   "sources": [

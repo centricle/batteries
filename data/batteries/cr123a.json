@@ -124,7 +124,7 @@
     {
       "id": "16340",
       "relation": "fits-with-caveat",
-      "note": "A 16340 (RCR123A) lithium-ion battery has nearly the same size but charges to 4.2 V and runs at a nominal 3.6 to 3.7 V, so some devices designed for a 3.0 V single-use battery can be damaged or give wrong readings."
+      "note": "A 16340 (RCR123A) lithium-ion battery has nearly the same size but charges to 4.2 V and runs at 3.6 to 3.7 V, so some devices designed for a 3.0 V single-use battery can be damaged or give wrong readings."
     }
   ],
   "safety": [

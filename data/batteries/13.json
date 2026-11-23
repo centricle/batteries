@@ -129,7 +129,7 @@
     {
       "id": "312",
       "relation": "do-not-substitute",
-      "note": "A 312 has the same 7.9 mm diameter but is 3.6 mm tall instead of 5.4 mm, so it can fit a size 13 compartment but gives less capacity, and a 13 does not fit a 312 compartment."
+      "note": "A 312 is the same 7.9 mm across but 3.6 mm tall instead of 5.4 mm, so it can fit a size 13 compartment but gives less capacity, and a 13 does not fit a 312 compartment."
     }
   ],
   "safety": [

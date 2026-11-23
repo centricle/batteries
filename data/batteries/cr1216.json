@@ -85,12 +85,12 @@
     {
       "id": "cr1220",
       "relation": "fits-with-caveat",
-      "note": "Same 12.5 mm diameter and 0.4 mm thicker; fits only where the holder has the clearance."
+      "note": "Same 12.5 mm width and 0.4 mm thicker; fits only where the holder has the clearance."
     },
     {
       "id": "cr1225",
       "relation": "fits-with-caveat",
-      "note": "Same 12.5 mm diameter and 0.9 mm thicker; fits only where the holder has the clearance."
+      "note": "Same 12.5 mm width and 0.9 mm thicker; fits only where the holder has the clearance."
     }
   ],
   "sources": [

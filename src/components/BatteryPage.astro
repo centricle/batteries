@@ -1,91 +1,169 @@
 ---
+// One battery. Most visitors arrive with one question ("what is a CR2032
+// equivalent", "which battery does my remote take"), so the page answers it
+// first in plain words and keeps the full tables, drawing and downloads for
+// the end. Every number on it comes from the entry; src/lib/plain.ts only
+// retells them.
 import { REL_META, pairsFor } from '../lib/pairs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Viewer from './Viewer.astro';
 import Silhouette from './Silhouette.astro';
 import Buy from './Buy.astro';
-import { sellable } from '../lib/buy';
 import { drawingSVG } from '../lib/drawing';
 import { describe } from '../lib/geometry/model.js';
 import {
-  type Battery, categoryById, chem, chemistryGroups, codesBySystem, fmt, inch, interchangeFor, primaryVariant,
-  similar, sizeLabel, shapeWord, summary, volts, capacityLabel, batteryById, voltages, devicesFor, deviceTitle, DEVICE_CATEGORY_META,
+  type Battery, categoryById, chem, chemistryGroups, fmt, inch, interchangeFor, similar, volts, voltages, batteryById, devicesFor, deviceTitle,
+  DEVICE_CATEGORY_META,
 } from '../lib/data';
+import {
+  art, withArt, list, plainSummary, plainSize, plainWeight, plainRechargeable, voltageLines, otherNames, longDate, voltPhrase, soldAsOther, plainUse, nicknames,
+} from '../lib/plain';
 
 interface Props { battery: Battery }
 const { battery: b } = Astro.props;
 const cat = categoryById[b.category];
-const pv = primaryVariant(b);
-// Weight tile: the primary variant's weight, else the range across variants that publish one.
-const weightTile = (() => {
-  if (pv.weight_g) return { v: fmt(pv.weight_g), s: `${(pv.weight_g / 28.3495).toFixed(2)} oz, ${chem(pv.chemistry).short}` };
-  const ws = b.variants.map((v) => v.weight_g).filter((w): w is number => !!w);
-  if (!ws.length) return { v: '', s: 'Not published' };
-  const lo = Math.min(...ws), hi = Math.max(...ws);
-  return { v: lo === hi ? fmt(lo) : `${fmt(lo)}–${fmt(hi)}`, s: `Across ${ws.length} listed product${ws.length > 1 ? 's' : ''}` };
-})();
-const groups = chemistryGroups(b);
-const sum = summary(b);
+const a = art(b.name);
 const d = b.dimensions;
+const url = `https://batteries.fyi/${b.id}`;
+const summary = plainSummary(b);
+const groups = chemistryGroups(b);
 const model = describe(b as any);
 const sims = similar(b, 6);
 const inter = interchangeFor(b);
 const danger = inter.filter((r) => r.relation === 'do-not-substitute');
-const codeGroups = codesBySystem(b);
-const srcIndex = new Map(b.sources.map((s, i) => [s.id, i + 1]));
-const cite = (ids: string[]) => ids.map((id) => srcIndex.get(id)).filter(Boolean).sort((a, c) => a! - c!);
-const url = `https://batteries.fyi/${b.id}`;
-const vs = voltages(b);
 const sourced = devicesFor(b.id);
-// Provenance up front: a reader sent here by an answer engine came to check a
-// claim, so the page shows where its numbers come from before anything else.
+const headToHead = pairsFor(b).map((p) => ({ slug: p.slug, other: p.a.id === b.id ? p.b : p.a }));
+const isSmallRound = b.category === 'coin' || b.category === 'button' || b.category === 'hearing-aid';
+const capFirst = (s: string) => s[0].toUpperCase() + s.slice(1);
+/** "It is 50.5 mm long and 14.5 mm across; most are 1.5 volts." */
+const sizeAndVolts = (o: Battery) => {
+  const vs = voltages(o);
+  const main = fmt(o.variants[0].voltage.nominal);
+  return `It is ${plainSize(o, { inches: false })}${vs.length === 1 ? `, at ${main} volts` : `; most are ${main} volts`}.`;
+};
+
+// Sources: a number each for the citations in the full tables; publishers named up top.
+const srcIndex = new Map(b.sources.map((s, i) => [s.id, i + 1]));
+const cite = (ids: string[]) => ids.map((id) => srcIndex.get(id)).filter((n): n is number => !!n).sort((x, y) => x - y);
 const KIND_ORDER = ['standard', 'datasheet', 'regulation', 'catalog', 'reference', 'retailer'];
-const publisherCount = new Set(b.sources.map((x) => x.publisher)).size;
-const leadPublishers = [...new Set([...b.sources].sort((x, y) => KIND_ORDER.indexOf(x.kind) - KIND_ORDER.indexOf(y.kind)).map((x) => x.publisher))].slice(0, 3);
+const leadPublishers = [...new Set([...b.sources].sort((x, y) => KIND_ORDER.indexOf(x.kind) - KIND_ORDER.indexOf(y.kind)).map((x) => x.publisher))].filter((p) => !/^unattributed/i.test(p)).slice(0, 3);
 const history = `https://github.com/centricle/batteries/commits/main/data/batteries/${b.id}.json`;
-const tileCite = (ids: string[]) => cite(ids).slice(0, 2);
 
-const dimRows = (
-  [
-    ['Diameter', d.diameter],
-    [b.form === 'disc' ? 'Thickness' : 'Height', d.height],
-    ['Width', d.width],
-    ['Depth', d.depth],
-  ] as const
-).filter(([, v]) => v);
+// At a glance.
+const voltLines = voltageLines(b, (c) => chem(c).status === 'current');
+const alsoCalled = [...nicknames(b).slice(0, 3), ...otherNames(b)];
+const allNames = [...new Set([...b.codes.map((c) => c.code), ...b.aliases])].filter((n) => n !== b.name);
 
+// The answer to "what is a CR2032 equivalent", right under the summary: the
+// same battery under other names, then what else fits, from the swap data.
+const orList = (xs: string[]) => (xs.length < 3 ? xs.join(' or ') : `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}`);
+// A swap is written on the page of the battery being replaced ("a CR2016 in
+// place of a CR2012" lives on the CR2012 entry), so entries that only appear
+// here because another page declared them read the other way round.
+const swapNames = (rel: string) => inter.filter((r) => r.relation === rel && !r.reverse).map((r) => withArt(batteryById(r.id)!.name));
+const reverseLead = (o: Battery) => `Using ${withArt(b.name)} in place of ${withArt(o.name)}:`;
+const sameAs = otherNames(b);
+const equiv = swapNames('equivalent');
+const caveat = swapNames('fits-with-caveat');
+const swapLine = [
+  sameAs.length ? `Any battery sold as ${orList(sameAs)} is ${withArt(b.name)}.` : '',
+  equiv.length ? `${capFirst(orList(equiv))} works the same.` : '',
+  caveat.length ? `${capFirst(orList(caveat))} also fits, with a catch.` : '',
+].filter(Boolean).join(' ');
+
+// Other names, one row per kind. Several makers sharing one name collapse to one chip.
+const OWNER: Record<string, string> = {
+  IEC: 'standard name', ANSI: 'US standard', JIS: 'Japan standard', NEDA: 'US trade standard', Military: 'US military',
+  Industry: 'industry name', Generic: 'generic name',
+};
+const kindOrder = groups.map((g) => g.chem.id);
+const nameRows = (() => {
+  const rows = new Map<string, Map<string, { owners: string[]; notes: string[] }>>();
+  for (const c of b.codes) {
+    const k = c.chemistry ?? 'any';
+    if (!rows.has(k)) rows.set(k, new Map());
+    const row = rows.get(k)!;
+    if (!row.has(c.code)) row.set(c.code, { owners: [], notes: [] });
+    const e = row.get(c.code)!;
+    const owner = OWNER[c.system] ?? c.system;
+    if (!e.owners.includes(owner)) e.owners.push(owner);
+    if (c.note && !e.notes.includes(c.note)) e.notes.push(c.note);
+  }
+  const rank = (k: string) => (k === 'any' ? 1000 : kindOrder.includes(k) ? kindOrder.indexOf(k) : 500);
+  return [...rows].sort(([x], [y]) => rank(x) - rank(y)).map(([k, names]) => ({ label: k === 'any' ? 'Any kind' : chem(k).plainName, names: [...names] }));
+})();
+
+// Kinds of this size.
+const kindRows = groups.map((g) => ({
+  id: g.chem.id,
+  name: g.chem.plainName,
+  volts: `${voltPhrase([...new Set(g.variants.map((v) => v.voltage.nominal))])} V`,
+  use: g.variants[0].rechargeable ? 'rechargeable' : 'single-use',
+  soldAs: [...new Set(g.variants.filter((v) => soldAsOther(b, v)).map((v) => v.label!))],
+  plain: g.chem.plain,
+}));
+
+// Close in size, with the differences in words.
+const scaleRef = Math.max(...[b, ...sims.map((s) => s.battery)].map((x) => (x.form === 'disc' ? x.dimensions.diameter!.nominal : x.dimensions.height.nominal)));
+const delta = (mm: number, label: string) => {
+  if (Math.abs(mm) < 0.05) return `same ${label === 'diameter' ? 'width' : label}`;
+  const words: Record<string, [string, string]> = { diameter: ['wider', 'narrower'], length: ['longer', 'shorter'], thickness: ['thicker', 'thinner'], height: ['taller', 'shorter'], width: ['wider', 'narrower'], depth: ['thicker', 'thinner'] };
+  const [up, down] = words[label] ?? ['larger', 'smaller'];
+  return `${fmt(Math.abs(mm), 2)} mm ${mm > 0 ? up : down}`;
+};
+
+// Full specifications: plain label first, the technical term after.
+const heightLabel = b.form === 'disc' ? 'Thick (height)' : b.form === 'cylinder' ? 'Long (height)' : 'Tall (height)';
+const depthLabel = d.width && d.depth && d.depth.nominal / d.width.nominal >= 0.75 ? 'Deep (depth)' : 'Thick (depth)';
+const dimRows = ([
+  ['Across (diameter)', d.diameter],
+  [heightLabel, d.height],
+  ['Wide (width)', d.width],
+  [depthLabel, d.depth],
+] as const).filter(([, v]) => v);
+const current = (ma: number) => (ma >= 1000 ? `${fmt(ma / 1000, 1)} A` : `${fmt(ma, 0)} mA`);
 const props: { key: string; label: string; get: (v: Battery['variants'][number]) => string }[] = [
-  { key: 'nominal', label: 'Nominal voltage', get: (v) => volts(v.voltage.nominal) },
-  { key: 'oc', label: 'Open-circuit voltage', get: (v) => (v.voltage.open_circuit ? volts(v.voltage.open_circuit) : '') },
-  { key: 'cutoff', label: 'Cutoff voltage', get: (v) => (v.voltage.cutoff ? volts(v.voltage.cutoff) : '') },
-  { key: 'charge', label: 'Charge voltage', get: (v) => (v.voltage.charge_max ? volts(v.voltage.charge_max) : '') },
-  { key: 'cap', label: 'Capacity', get: (v) => { const c = v.capacity_mah; if (!c) return ''; const t = c.typical ? `${fmt(c.typical, 0)} mAh` : ''; const r = c.range ? `${fmt(c.range[0], 0)}–${fmt(c.range[1], 0)} mAh` : ''; return [t, r && t ? `(${r})` : r].filter(Boolean).join(' '); } },
-  { key: 'cond', label: 'Capacity rated at', get: (v) => v.capacity_mah?.conditions ?? '' },
-  { key: 'wh', label: 'Energy (typical)', get: (v) => (v.capacity_mah?.typical ? `${fmt((v.capacity_mah.typical / 1000) * v.voltage.nominal, 2)} Wh` : '') },
-  { key: 'weight', label: 'Weight', get: (v) => (v.weight_g ? `${fmt(v.weight_g)} g` : '') },
-  { key: 'cont', label: 'Max continuous current', get: (v) => (v.max_continuous_ma ? (v.max_continuous_ma >= 1000 ? `${fmt(v.max_continuous_ma / 1000, 1)} A` : `${fmt(v.max_continuous_ma, 0)} mA`) : '') },
-  { key: 'pulse', label: 'Max pulse current', get: (v) => (v.max_pulse_ma ? (v.max_pulse_ma >= 1000 ? `${fmt(v.max_pulse_ma / 1000, 1)} A` : `${fmt(v.max_pulse_ma, 0)} mA`) : '') },
-  { key: 'ir', label: 'Internal resistance', get: (v) => (v.internal_resistance_mohm ? `${fmt(v.internal_resistance_mohm)} mΩ` : '') },
-  { key: 'cycles', label: 'Cycle life', get: (v) => (v.cycle_life ? `${fmt(v.cycle_life, 0)} cycles` : '') },
+  { key: 'type', label: 'Type (chemistry)', get: (v) => `${chem(v.chemistry).name}${v.subtype ? `, ${v.subtype}` : ''}` },
+  { key: 'nominal', label: 'Voltage (nominal)', get: (v) => volts(v.voltage.nominal) },
+  { key: 'oc', label: 'Voltage when new (open circuit)', get: (v) => (v.voltage.open_circuit ? volts(v.voltage.open_circuit) : '') },
+  { key: 'cutoff', label: 'Voltage when spent (cutoff)', get: (v) => (v.voltage.cutoff ? volts(v.voltage.cutoff) : '') },
+  { key: 'charge', label: 'Charging voltage (maximum)', get: (v) => (v.voltage.charge_max ? volts(v.voltage.charge_max) : '') },
+  { key: 'cap', label: 'Capacity (mAh)', get: (v) => { const c = v.capacity_mah; if (!c) return ''; const t = c.typical ? `${fmt(c.typical, 0)} mAh` : ''; const r = c.range ? `${fmt(c.range[0], 0)} to ${fmt(c.range[1], 0)} mAh` : ''; return [t, r && t ? `(${r})` : r].filter(Boolean).join(' '); } },
+  { key: 'cond', label: 'Capacity measured at (rating conditions)', get: (v) => v.capacity_mah?.conditions ?? '' },
+  { key: 'wh', label: 'Energy (Wh, typical)', get: (v) => (v.capacity_mah?.typical ? `${fmt((v.capacity_mah.typical / 1000) * v.voltage.nominal, 2)} Wh` : '') },
+  { key: 'weight', label: 'Weight (g)', get: (v) => (v.weight_g ? `${fmt(v.weight_g)} g` : '') },
+  { key: 'cont', label: 'Steady current (maximum continuous)', get: (v) => (v.max_continuous_ma ? current(v.max_continuous_ma) : '') },
+  { key: 'pulse', label: 'Short bursts (maximum pulse current)', get: (v) => (v.max_pulse_ma ? current(v.max_pulse_ma) : '') },
+  { key: 'ir', label: 'Internal resistance (mΩ)', get: (v) => (v.internal_resistance_mohm ? `${fmt(v.internal_resistance_mohm)} mΩ` : '') },
+  { key: 'cycles', label: 'Recharges (cycle life)', get: (v) => (v.cycle_life ? `${fmt(v.cycle_life, 0)} cycles` : '') },
   { key: 'shelf', label: 'Shelf life', get: (v) => (v.shelf_life_years ? `${fmt(v.shelf_life_years)} years` : '') },
-  { key: 'sd', label: 'Self-discharge', get: (v) => v.self_discharge ?? '' },
-  { key: 'li', label: 'Lithium content', get: (v) => (v.lithium_content_g ? `${fmt(v.lithium_content_g, 3)} g` : '') },
-  { key: 'op', label: 'Operating temperature', get: (v) => { const t = v.temperature_c?.operating ?? v.temperature_c?.discharge; return t ? `${t[0]} to ${t[1]} °C` : ''; } },
-  { key: 'ch', label: 'Charge temperature', get: (v) => (v.temperature_c?.charge ? `${v.temperature_c.charge[0]} to ${v.temperature_c.charge[1]} °C` : '') },
-  { key: 'st', label: 'Storage temperature', get: (v) => (v.temperature_c?.storage ? `${v.temperature_c.storage[0]} to ${v.temperature_c.storage[1]} °C` : '') },
+  { key: 'sd', label: 'Charge lost in storage (self-discharge)', get: (v) => v.self_discharge ?? '' },
+  { key: 'li', label: 'Lithium content (g)', get: (v) => (v.lithium_content_g ? `${fmt(v.lithium_content_g, 3)} g` : '') },
+  { key: 'op', label: 'Use between (operating temperature)', get: (v) => { const t = v.temperature_c?.operating ?? v.temperature_c?.discharge; return t ? `${t[0]} to ${t[1]} °C` : ''; } },
+  { key: 'ch', label: 'Charge between (charge temperature)', get: (v) => (v.temperature_c?.charge ? `${v.temperature_c.charge[0]} to ${v.temperature_c.charge[1]} °C` : '') },
+  { key: 'st', label: 'Store between (storage temperature)', get: (v) => (v.temperature_c?.storage ? `${v.temperature_c.storage[0]} to ${v.temperature_c.storage[1]} °C` : '') },
   { key: 'rech', label: 'Rechargeable', get: (v) => (v.rechargeable ? 'Yes' : 'No') },
 ];
 const shownProps = props.filter((p) => b.variants.some((v) => p.get(v)));
 
-const relMeta = REL_META;
-const headToHead = pairsFor(b).map((p) => ({ slug: p.slug, other: p.a.id === b.id ? p.b : p.a }));
-
+// Answers for search and AI assistants, built from the same strings the page shows.
+const DEVICES_NOTE = "Each entry quotes the device maker's manual or support page.";
+const devicesAnswer = [
+  sourced.length ? `${list(sourced.map((x) => deviceTitle(x)))}. ${DEVICES_NOTE}` : '',
+  b.devices.length ? `${sourced.length ? `Also common in ${list(b.devices.map(plainUse))}` : capFirst(list(b.devices.map(plainUse)))}.` : '',
+].filter(Boolean).join(' ');
 const faqs = [
-  { q: `What size is a ${b.name} battery?`, a: `${sizeLabel(b)} (${b.form === 'disc' || b.form === 'cylinder' ? `${inch(d.diameter!.nominal)} × ${inch(d.height.nominal)} in` : `${inch(d.width!.nominal)} × ${inch(d.depth!.nominal)} × ${inch(d.height.nominal)} in`}). ${d.note ?? ''}`.trim() },
-  { q: `What voltage is a ${b.name} battery?`, a: groups.map((g) => `${g.chem.name}: ${volts(g.variants[0].voltage.nominal)} nominal`).join('. ') + '.' },
-  { q: `What are other names for the ${b.name}?`, a: `${[...new Set(b.codes.map((c) => c.code))].join(', ')}${b.aliases.length ? `. Also called ${b.aliases.join(', ')}` : ''}.` },
-  ...inter.slice(0, 6).map((r) => ({ q: `Can a ${batteryById(r.id)!.name} replace a ${b.name}?`, a: `${relMeta[r.relation].label}. ${r.note}` })),
-  ...(sourced.length ? [{ q: `What uses a ${b.name} battery?`, a: `${sourced.slice(0, 8).map((x) => deviceTitle(x)).join(', ')}${sourced.length > 8 ? `, and ${sourced.length - 8} more listed here` : ''}, according to each maker's manual or support page.` }] : []),
+  { q: `What is ${withArt(b.name)} battery?`, a: summary },
+  { q: `What size is ${withArt(b.name)} battery?`, a: `${capFirst(plainSize(b))}.` },
+  { q: `What voltage is ${withArt(b.name)} battery?`, a: `${voltLines.join('; ')}.` },
+  { q: `What are other names for ${withArt(b.name)} battery?`, a: `${list(allNames)}.` },
+  ...(swapLine ? [{ q: `What can I use instead of ${withArt(b.name)} battery?`, a: swapLine }] : []),
+  ...inter.map((r) => {
+    const o = withArt(batteryById(r.id)!.name);
+    const [x, y] = r.reverse ? [withArt(b.name), o] : [o, withArt(b.name)];
+    return { q: `Will ${x} work instead of ${y}?`, a: `${REL_META[r.relation].label}. ${r.note}` };
+  }),
+  ...(devicesAnswer ? [{ q: `What uses ${withArt(b.name)} battery?`, a: devicesAnswer }] : []),
 ];
 
 const jsonld = [
@@ -93,14 +171,14 @@ const jsonld = [
     '@context': 'https://schema.org',
     '@type': 'ProductModel',
     name: `${b.name} battery`,
-    alternateName: [...new Set(b.codes.map((c) => c.code))].slice(0, 30),
-    description: sum,
+    alternateName: allNames.slice(0, 30),
+    description: summary,
     url,
     category: cat.name,
     image: 'https://batteries.fyi/og-image.webp',
     additionalProperty: [
       ...dimRows.map(([label, v]) => ({ '@type': 'PropertyValue', name: label, value: v!.nominal, unitCode: 'MMT', unitText: 'mm' })),
-      ...groups.map((g) => ({ '@type': 'PropertyValue', name: `Nominal voltage (${g.chem.name})`, value: g.variants[0].voltage.nominal, unitCode: 'VLT', unitText: 'V' })),
+      ...groups.map((g) => ({ '@type': 'PropertyValue', name: `Voltage (${g.chem.plainName})`, value: g.variants[0].voltage.nominal, unitCode: 'VLT', unitText: 'V' })),
     ],
     subjectOf: { '@type': '3DModel', name: `${b.name} 3D model`, encodingFormat: 'model/gltf-binary', contentUrl: `https://batteries.fyi/models/${b.id}.glb`, license: 'https://opensource.org/licenses/MIT' },
   },
@@ -117,7 +195,7 @@ const jsonld = [
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     url,
-    name: `${b.name} battery specifications`,
+    name: `${b.name} battery`,
     dateModified: b.updated,
     license: 'https://opensource.org/licenses/MIT',
     isPartOf: { '@type': 'Dataset', name: 'batteries.fyi open battery data', url: 'https://batteries.fyi/data' },
@@ -126,265 +204,212 @@ const jsonld = [
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
 ];
 
-const title = `${b.name} battery: size, voltage, equivalents and 3D model | batteries.fyi`;
-const desc = `${sum} ${b.codes.length} cross-reference codes, chemistries, dimensions with tolerances, and a downloadable 3D model.`.slice(0, 300);
-const nav = [
-  ['specs', 'Specs'], ['dimensions', 'Dimensions'], ['codes', 'Codes'],
-  ...(inter.length ? [['interchange', 'Interchange']] : []), ['similar', 'Similar'],
-  ...(b.devices.length || sourced.length ? [['devices', 'Devices']] : []), ...(b.safety.length ? [['safety', 'Safety']] : []), ['answers', 'Answers'], ['sources', 'Sources'],
+const title = `${b.name} battery: size, other names and what else fits | batteries.fyi`;
+const jump = [
+  ['codes', 'Other names'],
+  ...(inter.length ? [['interchange', 'What else works']] : [['similar', 'Close in size']]),
+  ...(kindRows.length > 1 ? [['kinds', 'Kinds']] : []),
+  ...(sourced.length || b.devices.length ? [['devices', 'What uses it']] : []),
+  ...(b.safety.length ? [['safety', 'Safety']] : []),
+  ['specs', 'Full specifications'],
+  ['sources', 'Sources'],
 ];
-const scaleRef = Math.max(...[b, ...sims.map((s) => s.battery)].map((x) => (x.form === 'disc' ? x.dimensions.diameter!.nominal : x.dimensions.height.nominal)));
-const delta = (mm: number, label: string) => {
-  if (Math.abs(mm) < 0.05) return `same ${label}`;
-  const words: Record<string, [string, string]> = { diameter: ['wider', 'narrower'], length: ['longer', 'shorter'], thickness: ['thicker', 'thinner'], height: ['taller', 'shorter'], width: ['wider', 'narrower'], depth: ['deeper', 'shallower'] };
-  const [up, down] = words[label] ?? ['larger', 'smaller'];
-  return `${fmt(Math.abs(mm), 2)} mm ${mm > 0 ? up : down}`;
-};
+const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status === 'obsolete' ? 'No longer made' : '';
 ---
 
-<BaseLayout title={title} description={desc} jsonld={jsonld}>
+<BaseLayout title={title} description={summary} jsonld={jsonld}>
   <div class="wrap pt-5">
-    <nav aria-label="Breadcrumb" class="text-[0.65rem] text-muted flex items-center gap-1.5">
-      <a href="/batteries" class="hover:text-ink">Batteries</a><span aria-hidden="true">/</span>
-      <a href={`/${cat.slug}`} class="hover:text-ink">{cat.name}</a><span aria-hidden="true">/</span>
-      <span class="text-ink-2" aria-current="page">{b.name}</span>
+    <nav aria-label="Breadcrumb" class="text-sm text-ink-2 flex flex-wrap items-center gap-2">
+      <a href="/batteries" class="link">Batteries</a><span aria-hidden="true">/</span>
+      <a href={`/${cat.slug}`} class="link">{cat.name}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{b.name}</span>
     </nav>
   </div>
 
-  <section class="wrap pt-4 pb-8 grid gap-8 lg:grid-cols-[1fr_1.1fr] items-start">
+  <section class="wrap pt-4 pb-8 grid gap-8 lg:grid-cols-[1fr_1fr] items-start">
     <div class="min-w-0">
-      <div class="flex flex-wrap items-center gap-2 mb-2">
-        <span class="eyebrow">{shapeWord(b)}</span>
-        {b.status !== 'current' && <span class="chip" style="border-color:var(--warn);color:var(--warn)">{b.status}</span>}
-      </div>
-      <h1 class="text-[2.6rem] sm:text-[3.2rem] font-semibold tracking-[-0.03em] leading-none">{b.name}</h1>
-      <p class="mt-2 text-[0.8rem] text-ink-2 font-medium font-mono">{sizeLabel(b)} · {vs.map((v) => volts(v)).join(' / ')}</p>
-      <p class="mt-4 text-[0.8rem] leading-relaxed text-ink-2 max-w-xl" data-summary>{sum}</p>
+      <h1 class="text-2xl sm:text-4xl font-semibold leading-tight">{b.name} battery</h1>
+      <p class="lede measure mt-3" data-summary>{summary}</p>
+      {swapLine && (
+        <p class="measure mt-3 text-base" data-swap>
+          {swapLine}{inter.length > 0 && <>{' '}<a class="link" href="#interchange">What else works</a></>}
+        </p>
+      )}
+      {statusText && <p class="mt-3 chip">{statusText}</p>}
 
-      <div class="mt-5 specs grid-cols-2">
-        <div class="spec"><span class="eyebrow">Voltage</span><span class="v">{fmt(pv.voltage.nominal)}<span class="u">V</span></span><span class="s">{chem(pv.chemistry).name}{groups.length > 1 ? `, +${groups.length - 1} more` : ''}{' '}<span class="whitespace-nowrap">{tileCite(pv.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span></span></div>
-        <div class="spec"><span class="eyebrow">Capacity</span>{capacityLabel(pv) ? <span class="v">{capacityLabel(pv).replace(' mAh', '')}<span class="u">mAh</span></span> : <span class="v text-muted">—</span>}<span class="s">{pv.capacity_mah?.range && !pv.capacity_mah?.typical ? 'Range across listed products; see table' : pv.capacity_mah?.conditions ? (() => { const c = pv.capacity_mah!.conditions!.split(/[;(]/)[0].trim(); return 'Rated: ' + (c.length > 46 ? c.slice(0, 44).replace(/\s+\S*$/, '') + '…' : c); })() : 'Not published'}{pv.capacity_mah && <>{' '}<span class="whitespace-nowrap">{tileCite(pv.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span></>}</span></div>
-        <div class="spec"><span class="eyebrow">{b.form === 'disc' ? 'Diameter × thickness' : b.form === 'cylinder' ? 'Diameter × length' : 'W × D × H'}</span><span class="v text-[1.05rem]">{sizeLabel(b, false)}<span class="u">mm</span></span><span class="s">{b.form === 'disc' || b.form === 'cylinder' ? `${inch(d.diameter!.nominal)} × ${inch(d.height.nominal)} in` : `${inch(d.width!.nominal)} × ${inch(d.depth!.nominal)} × ${inch(d.height.nominal)} in`}{' '}<span class="whitespace-nowrap">{tileCite(d.sources).map((n, i) => <a href={`#src-${n}`} class={`link inline-block py-1${i ? ' ml-1' : ''}`}>[{n}]</a>)}</span></span></div>
-        <div class="spec"><span class="eyebrow">Weight</span>{weightTile.v ? <span class="v">{weightTile.v}<span class="u">g</span></span> : <span class="v text-muted">—</span>}<span class="s">{weightTile.s}</span></div>
-      </div>
-      <dl class="specs -mt-px grid-cols-2 sm:grid-cols-[auto_auto_1fr] text-[0.64rem]" data-provenance>
-        <div class="spec"><dt class="eyebrow">Checked</dt><dd>{b.updated}</dd></div>
-        <div class="spec"><dt class="eyebrow">Sources</dt><dd><a class="link" href="#sources">{b.sources.length} cited</a></dd></div>
-        <div class="spec col-span-2 sm:col-span-1"><dt class="eyebrow">Revision history</dt><dd><a class="link" href={history} rel="noopener">Every change is public</a></dd></div>
-        <div class="spec col-span-full"><dt class="eyebrow">Checked against</dt><dd class="text-ink-2">{leadPublishers.length > 0 ? <>{leadPublishers.join(', ')}{publisherCount > leadPublishers.length && ` and ${publisherCount - leadPublishers.length} more`}. </> : ''}Every figure above links to its source.</dd></div>
+      <dl class="specs mt-5 grid-cols-1 sm:grid-cols-2" data-glance>
+        <div class="spec"><dt class="label">Size</dt><dd class="text-base font-sans">{capFirst(plainSize(b))}</dd></div>
+        <div class="spec">
+          <dt class="label">Voltage</dt>
+          <dd class="text-base font-sans">
+            {voltLines.length === 1 ? voltLines[0] : <ul class="space-y-0.5">{voltLines.map((l) => <li>{l}</li>)}</ul>}
+          </dd>
+        </div>
+        <div class="spec"><dt class="label">Weight</dt><dd class="text-base font-sans">{plainWeight(b)}</dd></div>
+        <div class="spec"><dt class="label">Rechargeable</dt><dd class="text-base font-sans">{plainRechargeable(b)}</dd></div>
+        <div class="spec sm:col-span-2">
+          <dt class="label">Also called</dt>
+          <dd class="text-base">
+            {alsoCalled.length > 0 && <span>{alsoCalled.join(', ')}. </span>}
+            <a class="link font-sans" href="#codes">All {allNames.length + 1} names</a>
+          </dd>
+        </div>
       </dl>
 
-      <div class="mt-5">
-        <p class="eyebrow mb-2">Also known as</p>
-        <div class="flex flex-wrap gap-1.5">
-          {[...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name).slice(0, 14).map((c) => <span class="chip">{c}</span>)}
-          {b.codes.length > 14 && <a href="#codes" class="chip">+{b.codes.length - 14} more</a>}
-        </div>
-      </div>
+      <p class="mt-3 text-sm text-ink-2" data-provenance>
+        Checked {longDate(b.updated)} against <a class="link" href="#sources">{b.sources.length} {b.sources.length === 1 ? 'source' : 'sources'}</a>{leadPublishers.length > 0 && <>, including {list(leadPublishers)}</>}.
+      </p>
 
       {danger.length > 0 && (
-        <div class="callout danger mt-5">
-          <strong class="text-ink">Lookalike warning.</strong>{' '}
-          {danger.map((r) => <span>Same size as the <a class="link" href={`/${r.id}`}>{batteryById(r.id)!.name}</a>: {r.note} </span>)}
+        <div class="callout danger mt-5" role="note">
+          <h2 class="text-base font-semibold">Do not mix these up</h2>
+          {danger.map((r) => <p class="mt-1"><a class="link font-mono font-semibold" href={`/${r.id}`}>{batteryById(r.id)!.name}</a>: {r.note}</p>)}
         </div>
       )}
 
-      {!sellable(b) && <Buy battery={b} context="battery" class="mt-5" />}
+      {isSmallRound && (
+        <p class="callout warn mt-5">
+          A swallowed coin or button battery can cause severe burns in as little as 2 hours. If anyone swallows one, call the National Battery Ingestion Hotline at <a class="link whitespace-nowrap" href="tel:+18004988666">1-800-498-8666</a> right away, without waiting for symptoms.{' '}
+          <a class="link" href="/reference/button-battery-ingestion">If a battery is swallowed</a>
+        </p>
+      )}
+
+      <Buy battery={b} context="battery" class="mt-5" />
     </div>
 
     <div class="min-w-0 lg:sticky lg:top-20">
-      <Viewer batteries={[b]} downloads height="min(32rem, 78vw)" />
-      <p class="mt-2 text-[0.6rem] text-muted"><span class="font-mono text-ink-2 uppercase tracking-[0.08em] mr-2">Fig. 1</span>Built from the published dimensions{model.assumed.length ? `; ${model.assumed.join(', ')} drawn to typical proportions` : ''}. Label artwork is generic. Drag to rotate.</p>
+      <Viewer batteries={[b]} height="min(32rem, 78vw)" />
+      <p class="mt-2 text-sm text-ink-2">Drawn from the published dimensions. The label is generic. Drag to turn it.</p>
     </div>
   </section>
 
-  <nav class="sticky top-14 z-30 bg-bg border-y border-line-2 no-print" aria-label="On this page">
-    <div class="wrap flex gap-0.5 overflow-x-auto text-[0.56rem] font-medium uppercase tracking-[0.08em] py-1.5">
-      {nav.map(([id, label]) => <a href={`#${id}`} class="px-2.5 py-1 text-ink-2 hover:text-ink hover:bg-surface-2 whitespace-nowrap">{label}</a>)}
-      <a href={`/compare?ids=${b.id}${sims[0] ? ',' + sims[0].battery.id : ''}`} class="ml-auto px-2.5 py-1 text-accent-ink hover:bg-accent-soft whitespace-nowrap">Compare →</a>
-    </div>
+  <nav class="wrap no-print" aria-label="On this page">
+    <ul class="flex flex-wrap gap-x-5 gap-y-1 text-sm border-y border-line-2 py-2">
+      {jump.map(([id, label]) => <li><a href={`#${id}`} class="link inline-block py-1">{label}</a></li>)}
+    </ul>
   </nav>
 
-  <div class="wrap mt-10 space-y-14 numbered">
-    <section id="specs">
-      <h2 class="section-title">Specifications by chemistry</h2>
-      <p class="text-[0.7rem] text-muted mb-4 max-w-2xl">Capacity depends on load and cutoff voltage, so each figure carries the conditions its source rated it at. Blank cells were not published by the cited sources. Superscripts refer to <a class="link" href="#sources">sources</a>.</p>
-      <div class="card table-scroll">
-        <table class="table min-w-[36rem]">
-          <thead>
-            <tr>
-              <th class="sticky left-0 bg-surface z-10 min-w-[9rem]">Property</th>
-              {b.variants.map((v) => (
-                <th class="min-w-[9rem] normal-case tracking-normal">
-                  <span class="flex items-center gap-1.5 text-ink text-[0.68rem]"><span class="dot" style={`background:${chem(v.chemistry).color}`}></span><a href={`/chemistry/${v.chemistry}`} class="hover:underline">{v.label ?? chem(v.chemistry).name}</a></span>
-                  {v.label && <span class="block text-[0.58rem] text-muted font-normal mt-0.5">{chem(v.chemistry).name}{v.subtype ? ` · ${v.subtype}` : ''}</span>}
-                  {!v.label && v.subtype && <span class="block text-[0.58rem] text-muted font-normal mt-0.5">{v.subtype}</span>}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {shownProps.map((p) => (
-              <tr>
-                <td class="sticky left-0 bg-surface z-10 text-ink-2 font-medium">{p.label}</td>
-                {b.variants.map((v) => <td class:list={[p.key === 'cond' || p.key === 'sd' ? 'text-[0.62rem] text-muted' : 'tabular']}>{p.get(v) || <span class="text-line-2">—</span>}</td>)}
-              </tr>
-            ))}
-            <tr>
-              <td class="sticky left-0 bg-surface z-10 text-ink-2 font-medium">Sources</td>
-              {b.variants.map((v) => <td class="text-[0.6rem]">{cite(v.sources).map((n) => <a href={`#src-${n}`} class="link mr-1">[{n}]</a>)}</td>)}
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      {b.variants.some((v) => v.notes) && (
-        <ul class="mt-4 space-y-1.5 text-[0.7rem] text-ink-2 max-w-3xl">
-          {b.variants.filter((v) => v.notes).map((v) => <li><strong class="text-ink">{v.label ?? chem(v.chemistry).name}:</strong> {v.notes}</li>)}
-        </ul>
-      )}
-    </section>
-
-    <section id="dimensions">
-      <h2 class="section-title">Dimensions</h2>
-      <div class="grid gap-6 lg:grid-cols-[1.3fr_1fr] items-start">
-        <figure class="card p-4 drawing min-w-0">
-          <div class="w-full max-h-[30rem] [&>svg]:w-full [&>svg]:h-auto [&>svg]:max-h-[28rem]" set:html={drawingSVG(b)} />
-          <figcaption class="mt-2 text-[0.6rem] text-muted flex flex-wrap gap-x-4">
-            <span>Nominal dimensions in millimeters, drawn to scale.</span>
-            <a class="link" href={`/actual-size?ids=${b.id}`}>View at actual size</a>
-          </figcaption>
-        </figure>
-        <div class="min-w-0">
-          <div class="card table-scroll">
-            <table class="table">
-              <thead><tr><th></th><th class="n">Nominal</th><th class="n">Min</th><th class="n">Max</th><th class="n">Inches</th></tr></thead>
-              <tbody>
-                {dimRows.map(([label, v]) => (
-                  <tr>
-                    <td class="font-medium text-ink-2">{label}</td>
-                    <td class="n font-semibold">{fmt(v!.nominal)} mm</td>
-                    <td class="n">{v!.min ? `${fmt(v!.min)}` : '—'}</td>
-                    <td class="n">{v!.max ? `${fmt(v!.max)}` : '—'}</td>
-                    <td class="n text-muted">{inch(v!.nominal)}</td>
-                  </tr>
-                ))}
-                {b.geometry?.positive?.diameter && <tr><td class="font-medium text-ink-2">Positive terminal Ø</td><td class="n">{fmt(b.geometry.positive.diameter)} mm</td><td class="n">—</td><td class="n">—</td><td class="n text-muted">{inch(b.geometry.positive.diameter)}</td></tr>}
-                {b.geometry?.positive?.height && <tr><td class="font-medium text-ink-2">Positive terminal height</td><td class="n">{fmt(b.geometry.positive.height)} mm</td><td class="n">—</td><td class="n">—</td><td class="n text-muted">{inch(b.geometry.positive.height)}</td></tr>}
-              </tbody>
-            </table>
-          </div>
-          {d.note && <p class="mt-3 text-[0.7rem] text-ink-2">{d.note}</p>}
-          {b.geometry?.note && <p class="mt-2 text-[0.7rem] text-ink-2">{b.geometry.note}</p>}
-          <p class="mt-3 text-[0.62rem] text-muted">Sources: {cite(d.sources).map((n) => <a href={`#src-${n}`} class="link mr-1">[{n}]</a>)}</p>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <a class="btn btn-sm" href={`/models/${b.id}.stl`} download>Download STL (mm)</a>
-            <a class="btn btn-sm" href={`/models/${b.id}.glb`} download>Download GLB</a>
-            <a class="btn btn-sm" href={`/api/batteries/${b.id}.json`}>JSON</a>
-          </div>
-          <p class="mt-2 text-[0.6rem] text-muted">Models are generated from the nominal dimensions above, are free to use under the MIT license, and suit enclosure and holder design. Check tolerances before you print a tight fit.</p>
-        </div>
-      </div>
-    </section>
-
+  <div class="wrap mt-10 space-y-14">
     <section id="codes">
-      <h2 class="section-title">Equivalent codes and names</h2>
-      <p class="text-[0.7rem] text-muted mb-4 max-w-2xl">Every designation below refers to the same physical size. A chemistry dot marks codes that also specify a chemistry; a code for one chemistry is not interchangeable with another in every device.</p>
-      <div class="card overflow-hidden">
+      <h2 class="section-title">Other names for {a} {b.name} battery</h2>
+      <p class="lede measure mb-4">Makers and standards use different names for the same size. Anything below is {withArt(b.name)}.{groups.length > 1 && ' The name also tells you the kind.'}</p>
+      <div class="card table-scroll">
         <table class="table">
           <tbody>
-            {codeGroups.map(([sys, codes]) => (
+            {nameRows.map((row) => (
               <tr>
-                <td class="w-36 font-medium text-ink-2 align-middle">{sys}</td>
+                <th scope="row" class="w-48 font-sans text-sm font-semibold text-ink-2 align-top">{row.label}</th>
                 <td>
-                  <div class="flex flex-wrap gap-1.5">
-                    {codes.map((c) => (
-                      <span class="chip" title={c.chemistry ? chem(c.chemistry).name + (c.note ? ` · ${c.note}` : '') : c.note}>
-                        {c.chemistry && <span class="dot" style={`background:${chem(c.chemistry).color}`}></span>}{c.code}{c.note && <span class="text-muted font-sans">· {c.note}</span>}
-                      </span>
+                  <ul class="flex flex-wrap gap-x-5 gap-y-2">
+                    {row.names.map(([code, e]) => (
+                      <li class="flex flex-wrap items-baseline gap-x-2">
+                        <span class="chip">{code}</span>
+                        <span class="font-sans text-sm text-ink-2">{e.owners.join(', ')}{e.notes.length > 0 && <span class="text-muted">. {e.notes.join('; ')}</span>}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </td>
               </tr>
             ))}
             {b.aliases.length > 0 && (
-              <tr><td class="font-medium text-ink-2">Common names</td><td>{b.aliases.join(', ')}</td></tr>
+              <tr><th scope="row" class="font-sans text-sm font-semibold text-ink-2 align-top">Common names</th><td class="font-sans text-base">{b.aliases.join(', ')}</td></tr>
             )}
           </tbody>
         </table>
       </div>
-      {sellable(b) && <Buy battery={b} context="battery" class="mt-4" />}
     </section>
 
     {inter.length > 0 && (
       <section id="interchange">
-        <h2 class="section-title">Interchangeability</h2>
-        <div class="grid gap-3 sm:grid-cols-2">
+        <h2 class="section-title">Will another battery work instead?</h2>
+        <ul class="grid gap-3 sm:grid-cols-2">
           {inter.map((r) => {
             const o = batteryById(r.id)!;
             return (
-              <a href={`/${o.id}`} class:list={['callout block hover:border-accent transition-colors', relMeta[r.relation].cls]}>
-                <span class="flex items-center justify-between gap-2">
-                  <strong class="text-ink text-[0.85rem]">{o.name}</strong>
-                  <span class="eyebrow">{relMeta[r.relation].label}</span>
-                </span>
-                <span class="block mt-1 text-ink-2">{r.note}</span>
-                <span class="block mt-1 text-[0.6rem] text-muted tabular">{sizeLabel(o)} · {voltages(o).map(volts).join(' / ')}</span>
-              </a>
+              <li class:list={['callout', REL_META[r.relation].cls]}>
+                <p class="flex flex-wrap items-baseline justify-between gap-x-3">
+                  <a href={`/${o.id}`} class="link font-mono font-semibold text-lg">{o.name}</a>
+                  <strong class="text-base">{REL_META[r.relation].label}</strong>
+                </p>
+                <p class="mt-1 text-base text-ink-2">{r.reverse && <strong class="text-ink font-semibold">{reverseLead(o)}</strong>}{r.reverse && ' '}{r.note}</p>
+                <p class="mt-1 text-sm text-ink-2">{sizeAndVolts(o)}</p>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </section>
     )}
 
-    <section id="similar">
-      <h2 class="section-title">Similar sizes</h2>
-      <p class="text-[0.7rem] text-muted mb-4">The closest physical sizes in the database, drawn to the same scale.</p>
+    <section id="similar" aria-labelledby="similar-title">
+      {inter.length > 0
+        ? <h3 id="similar-title" class="text-lg font-semibold mb-3">Close in size</h3>
+        : <h2 id="similar-title" class="section-title">Close in size</h2>}
+      <p class="text-base text-ink-2 mb-4 measure">The nearest sizes, drawn to the same scale.</p>
       <div class="card p-4 overflow-x-auto">
-        <div class="flex items-end gap-6 min-w-max h-44">
+        <ul class="flex items-end gap-6 min-w-max">
           {[{ battery: b, deltas: [] as { label: string; mm: number }[] }, ...sims].map((s, i) => (
-            <a href={`/${s.battery.id}`} class="group flex flex-col items-center gap-2 h-full justify-end w-20">
-              <div class="h-28 w-full flex items-end justify-center"><Silhouette battery={s.battery} scaleTo={scaleRef} class="max-w-full" /></div>
-              <span class:list={['text-[0.7rem] font-semibold group-hover:text-accent-ink', i === 0 && 'text-accent-ink']}>{s.battery.name}</span>
-              <span class="text-[0.55rem] text-muted text-center leading-tight min-h-[1.6rem]">{i === 0 ? 'This page' : s.deltas.slice(0, 2).map((x) => delta(x.mm, x.label)).join(', ')}</span>
-            </a>
+            <li class="w-28">
+              <a href={`/${s.battery.id}`} class="group flex flex-col items-center gap-2 min-h-[2rem]" aria-current={i === 0 ? 'page' : undefined}>
+                <span class="h-28 w-full flex items-end justify-center"><Silhouette battery={s.battery} scaleTo={scaleRef} class="max-w-full" /></span>
+                <span class="font-mono font-semibold text-base group-hover:underline">{s.battery.name}</span>
+                <span class="font-sans text-sm text-ink-2 text-center leading-snug">{i === 0 ? 'This battery' : s.deltas.slice(0, 2).map((x) => delta(x.mm, x.label)).join(', ')}</span>
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-      <a class="link text-[0.7rem] mt-2 inline-block" href={`/compare?ids=${[b.id, ...sims.slice(0, 4).map((s) => s.battery.id)].join(',')}`}>Compare these in 3D</a>
+      <p class="mt-3 text-base"><a class="link" href={`/compare?ids=${[b.id, ...sims.slice(0, 4).map((s) => s.battery.id)].join(',')}`}>See these sizes side by side in 3D</a></p>
       {headToHead.length > 0 && (
-        <div class="mt-5">
-          <h3 class="eyebrow mb-2">Head to head</h3>
-          <ul class="flex flex-wrap gap-1.5">
-            {headToHead.map((h) => <li><a href={`/compare/${h.slug}`} class="chip text-[0.68rem] py-1 px-2.5 hover:border-accent hover:text-accent-ink">{b.name} vs {h.other.name}</a></li>)}
+        <div class="mt-4">
+          <p class="text-base font-semibold">Compare side by side:</p>
+          <ul class="mt-2 flex flex-wrap gap-2">
+            {headToHead.map((h) => <li><a href={`/compare/${h.slug}`} class="chip link">{b.name} vs {h.other.name}</a></li>)}
           </ul>
         </div>
       )}
     </section>
 
+    {kindRows.length > 1 && (
+      <section id="kinds">
+        <h2 class="section-title">Kinds of {b.name} battery</h2>
+        <ul class="card divide-y divide-[var(--line)]">
+          {kindRows.map((k) => (
+            <li class="p-4 grid gap-1 sm:grid-cols-[14rem_1fr] sm:gap-4">
+              <div>
+                <a class="link font-mono font-semibold text-base" href={`/chemistry/${k.id}`}>{k.name}</a>
+                <p class="text-sm text-ink-2">{k.volts}, {k.use}{k.soldAs.length > 0 && `. Sold as ${list(k.soldAs)}`}</p>
+              </div>
+              {k.plain && <p class="text-base text-ink-2 measure">{k.plain}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
     {(sourced.length > 0 || b.devices.length > 0) && (
       <section id="devices">
-        <h2 class="section-title">Devices that take a {b.name}</h2>
+        <h2 class="section-title">What uses {a} {b.name} battery?</h2>
         {sourced.length > 0 && (
           <>
             <ul class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {sourced.map((x) => (
-                <li class="min-w-0"><a href={`/devices/${x.id}`} class="card flex items-center gap-3 p-3 hover:border-accent transition-colors h-full min-w-0">
+                <li class="min-w-0"><a href={`/devices/${x.id}`} class="card flex items-center gap-3 p-3 h-full min-w-0 hover:border-ink">
                   <span class="min-w-0">
-                    <span class="block text-[0.75rem] font-semibold text-ink truncate">{deviceTitle(x)}</span>
-                    <span class="block text-[0.6rem] text-muted">{DEVICE_CATEGORY_META[x.category].one}{x.years ? ` · ${x.years.endsWith('-') ? `${x.years.slice(0, -1)} on` : x.years.replace('-', '–')}` : ''}</span>
+                    <span class="block text-base font-semibold text-ink">{deviceTitle(x)}</span>
+                    <span class="block font-sans text-sm text-ink-2">{capFirst(DEVICE_CATEGORY_META[x.category].one)}{x.years ? `, ${x.years.endsWith('-') ? `${x.years.slice(0, -1)} on` : x.years.replace('-', ' to ')}` : ''}</span>
                   </span>
-                  <span class="chip ml-auto shrink-0">{x.count > 1 ? `${x.count} ×` : '1 ×'}</span>
+                  <span class="chip ml-auto shrink-0">Takes {x.count}</span>
                 </a></li>
               ))}
             </ul>
-            <p class="mt-2 text-[0.62rem] text-muted">Each entry cites the device maker's manual or support page. <a class="link" href="/devices">All devices</a></p>
+            <p class="mt-2 text-sm text-ink-2">{DEVICES_NOTE} <a class="link" href="/devices">All devices</a></p>
           </>
         )}
         {b.devices.length > 0 && (
           <>
-            {sourced.length > 0 && <p class="eyebrow mt-5 mb-2">Also common in</p>}
+            {sourced.length > 0 && <p class="label mt-5 mb-2">Also common in</p>}
             <ul class="flex flex-wrap gap-2">
-              {b.devices.map((x) => <li class="chip text-[0.68rem] py-1 px-2.5">{x}</li>)}
+              {b.devices.map((x) => <li class="chip font-sans">{x}</li>)}
             </ul>
           </>
         )}
@@ -394,66 +419,149 @@ const delta = (mm: number, label: string) => {
     {b.safety.length > 0 && (
       <section id="safety">
         <h2 class="section-title">Safety</h2>
-        <ul class="space-y-2 max-w-3xl">
+        <ul class="space-y-2 measure">
           {b.safety.map((s) => (
-            <li class="flex gap-2.5 text-[0.75rem] text-ink-2">
-              <svg class="w-4 h-4 text-warn shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+            <li class="flex gap-2.5 text-base text-ink-2 font-sans">
+              <svg class="w-5 h-5 text-warn shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
               <span>{s}</span>
             </li>
           ))}
         </ul>
-        {(b.category === 'coin' || b.category === 'button' || b.category === 'hearing-aid') && <p class="mt-3 text-[0.7rem]"><a class="link" href="/reference/button-battery-ingestion">What to do if a button or coin cell is swallowed</a></p>}
-        {b.category === 'li-ion' && <p class="mt-3 text-[0.7rem]"><a class="link" href="/reference/lithium-ion-safety">Lithium-ion safety reference</a> · <a class="link" href="/reference/air-travel">Flying with lithium batteries</a></p>}
+        {isSmallRound && <p class="mt-3 text-base"><a class="link" href="/reference/button-battery-ingestion">If a battery is swallowed</a></p>}
+        {b.category === 'li-ion' && (
+          <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-base">
+            <li><a class="link" href="/reference/lithium-ion-safety">Lithium-ion safety</a></li>
+            <li><a class="link" href="/reference/air-travel">Flying with batteries</a></li>
+          </ul>
+        )}
       </section>
     )}
 
-    {(b.history || b.notes) && (
-      <section>
-        <h2 class="section-title">Notes</h2>
-        <div class="prose">
-          {b.notes && <p>{b.notes}</p>}
-          {b.history && <p>{b.history}</p>}
-        </div>
-      </section>
-    )}
+    <section id="specs">
+      <h2 class="section-title">Full specifications</h2>
+      <p class="lede measure mb-4">For anyone who needs the exact numbers.</p>
 
-    <section id="answers">
-      <h2 class="section-title">Quick answers</h2>
-      <dl class="grid gap-x-8 gap-y-4 md:grid-cols-2 max-w-5xl">
-        {faqs.map((f) => (
-          <div>
-            <dt class="text-[0.75rem] font-semibold text-ink">{f.q}</dt>
-            <dd class="mt-1 text-[0.72rem] text-ink-2 leading-relaxed">{f.a}</dd>
+      <h3 class="text-lg font-semibold mb-2">By kind</h3>
+      <p class="text-sm text-ink-2 mb-3 measure">Capacity depends on how hard a device draws on the battery, so each figure carries the conditions its source rated it at. A dash means the cited sources did not publish that value. Numbers in brackets refer to the <a class="link" href="#sources">sources</a>.</p>
+      <div class="card table-scroll">
+        <table class="table min-w-[36rem]">
+          <thead>
+            <tr>
+              <th class="sticky left-0 bg-surface z-10 min-w-[12rem]">Property</th>
+              {b.variants.map((v) => (
+                <th class="min-w-[10rem]">
+                  <span class="flex items-center gap-1.5 text-ink"><span class="dot" style={`background:${chem(v.chemistry).color}`}></span><a href={`/chemistry/${v.chemistry}`} class="link">{v.label ?? chem(v.chemistry).plainName}</a></span>
+                  {v.label && <span class="block font-normal text-ink-2 mt-0.5">{chem(v.chemistry).plainName}</span>}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {shownProps.map((p) => (
+              <tr>
+                <td class="sticky left-0 bg-surface z-10 text-ink-2 font-sans font-semibold">{p.label}</td>
+                {b.variants.map((v) => <td class:list={[p.key === 'cond' || p.key === 'sd' || p.key === 'type' ? 'font-sans text-ink-2' : 'tabular']}>{p.get(v) || <span class="text-muted">—</span>}</td>)}
+              </tr>
+            ))}
+            <tr>
+              <td class="sticky left-0 bg-surface z-10 text-ink-2 font-sans font-semibold">Sources</td>
+              {b.variants.map((v) => <td>{cite(v.sources).map((n) => <a href={`#src-${n}`} class="link mr-1.5 inline-block py-1">[{n}]</a>)}</td>)}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      {b.variants.some((v) => v.notes) && (
+        <ul class="mt-4 space-y-1.5 text-base text-ink-2 font-sans measure">
+          {b.variants.filter((v) => v.notes).map((v) => <li><strong class="text-ink">{v.label ?? chem(v.chemistry).plainName}:</strong> {v.notes}</li>)}
+        </ul>
+      )}
+
+      <div id="dimensions" class="mt-10 scroll-mt-20">
+        <h3 class="text-lg font-semibold mb-3">Dimensions</h3>
+        <div class="grid gap-6 lg:grid-cols-[1.3fr_1fr] items-start">
+          <figure class="card p-4 drawing min-w-0">
+            <div class="w-full max-h-[30rem] [&>svg]:w-full [&>svg]:h-auto [&>svg]:max-h-[28rem]" set:html={drawingSVG(b)} />
+            <figcaption class="mt-2 text-sm text-ink-2 flex flex-wrap gap-x-4">
+              <span>Drawn to scale, in millimeters.</span>
+              <a class="link" href={`/actual-size?ids=${b.id}`}>See it at actual size</a>
+            </figcaption>
+          </figure>
+          <div class="min-w-0">
+            <div class="card table-scroll">
+              <table class="table">
+                <thead><tr><th>Measure</th><th class="n">Nominal</th><th class="n">Min</th><th class="n">Max</th><th class="n">Inches</th></tr></thead>
+                <tbody>
+                  {dimRows.map(([label, v]) => (
+                    <tr>
+                      <td class="font-sans font-semibold text-ink-2">{label}</td>
+                      <td class="n font-semibold">{fmt(v!.nominal)} mm</td>
+                      <td class="n">{v!.min ? fmt(v!.min) : '—'}</td>
+                      <td class="n">{v!.max ? fmt(v!.max) : '—'}</td>
+                      <td class="n">{inch(v!.nominal)}</td>
+                    </tr>
+                  ))}
+                  {b.geometry?.positive?.diameter && <tr><td class="font-sans font-semibold text-ink-2">Positive end, across</td><td class="n">{fmt(b.geometry.positive.diameter)} mm</td><td class="n">—</td><td class="n">—</td><td class="n">{inch(b.geometry.positive.diameter)}</td></tr>}
+                  {b.geometry?.positive?.height && <tr><td class="font-sans font-semibold text-ink-2">Positive end, raised (height)</td><td class="n">{fmt(b.geometry.positive.height)} mm</td><td class="n">—</td><td class="n">—</td><td class="n">{inch(b.geometry.positive.height)}</td></tr>}
+                </tbody>
+              </table>
+            </div>
+            {d.note && <p class="mt-3 text-base text-ink-2">{d.note}</p>}
+            {b.geometry?.note && <p class="mt-2 text-base text-ink-2">{b.geometry.note}</p>}
+            <p class="mt-3 text-sm text-ink-2">Sources: {cite(d.sources).map((n) => <a href={`#src-${n}`} class="link mr-1.5 inline-block py-1">[{n}]</a>)}</p>
           </div>
-        ))}
-      </dl>
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <h3 class="text-lg font-semibold mb-2">3D model and data</h3>
+        <p class="text-base text-ink-2 measure">The 3D model is drawn from the nominal sizes above and is free to use under the MIT license; check the tolerances before you print a tight fit.{model.assumed.length > 0 && ` The ${list(model.assumed)} ${model.assumed.length > 1 ? 'are' : 'is'} not published, so ${model.assumed.length > 1 ? 'they are' : 'it is'} drawn to typical proportions.`}</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <a class="btn" href={`/models/${b.id}.stl`} download data-download="stl">Download STL (mm)</a>
+          <a class="btn" href={`/models/${b.id}.glb`} download data-download="glb">Download GLB</a>
+          <a class="btn" href={`/api/batteries/${b.id}.json`}>Data as JSON</a>
+        </div>
+      </div>
+
+      {(b.history || b.notes) && (
+        <div class="mt-10">
+          <h3 class="text-lg font-semibold mb-2">Notes</h3>
+          <div class="prose">
+            {b.notes && <p>{b.notes}</p>}
+            {b.history && <p>{b.history}</p>}
+          </div>
+        </div>
+      )}
     </section>
 
     <section id="sources">
       <h2 class="section-title">Sources</h2>
-      <ol class="space-y-2 text-[0.7rem] max-w-4xl">
+      <ol class="space-y-2 text-sm measure-wide">
         {b.sources.map((s, i) => (
           <li id={`src-${i + 1}`} class="flex gap-3 scroll-mt-28">
-            <span class="text-muted tabular w-6 shrink-0 text-right">{i + 1}.</span>
-            <span>
+            <span class="text-ink-2 tabular w-7 shrink-0 text-right">{i + 1}.</span>
+            <span class="font-sans">
               <span class="text-ink-2">{s.publisher}.</span>{' '}
               {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span class="text-ink">{s.title}</span>}
-              <span class="text-muted">. {s.kind[0].toUpperCase() + s.kind.slice(1)}, accessed {s.accessed}.</span>
-              {s.note && <span class="block text-muted text-[0.62rem]">{s.note}</span>}
+              <span class="text-ink-2">. {s.kind[0].toUpperCase() + s.kind.slice(1)}, read {longDate(s.accessed)}.</span>
+              {s.note && <span class="block text-xs text-ink-2 mt-0.5">{s.note}</span>}
             </span>
           </li>
         ))}
       </ol>
+      {b.form === 'disc' && (
+        <p class="mt-3 text-sm text-ink-2 font-sans">Coin sizes in the summary are from the United States Mint's <a class="link" href="https://www.usmint.gov/learn/coin-and-medal-programs/coin-specifications" rel="nofollow noopener" target="_blank">coin specifications</a>.</p>
+      )}
+      <p class="mt-3 text-sm"><a class="link" href={history} rel="noopener">Every change to this entry is public</a></p>
     </section>
 
-    <section class="card p-5 grid gap-4 md:grid-cols-2">
+    <section class="card p-5 grid gap-4 md:grid-cols-2 text-sm">
       <div>
-        <h2 class="text-[0.85rem] font-semibold mb-1">Cite this page</h2>
-        <p class="text-[0.68rem] text-ink-2 mono leading-relaxed select-all">batteries.fyi. “{b.name} battery specifications.” Updated {b.updated}. {url}</p>
+        <h2 class="text-base font-semibold mb-1">Cite this page</h2>
+        <p class="text-ink-2 font-mono leading-relaxed select-all">batteries.fyi. “{b.name} battery.” Updated {longDate(b.updated)}. {url}</p>
       </div>
-      <div class="text-[0.68rem] text-ink-2">
-        <h2 class="text-[0.85rem] font-semibold mb-1 text-ink">Found an error?</h2>
-        <p>Every value here traces to a listed source. Corrections with a source are welcome on <a class="link" href={`https://github.com/centricle/batteries/blob/main/data/batteries/${b.id}.json`}>GitHub</a>, where this entry is one JSON file.</p>
+      <div class="text-ink-2">
+        <h2 class="text-base font-semibold mb-1 text-ink">Found an error?</h2>
+        <p>Every value here comes from a listed source. Corrections with a source are welcome on <a class="link" href={`https://github.com/centricle/batteries/blob/main/data/batteries/${b.id}.json`}>GitHub</a>, where this battery is one JSON file.</p>
       </div>
     </section>
   </div>
@@ -461,4 +569,5 @@ const delta = (mm: number, label: string) => {
 
 <style>
   .drawing { color: var(--ink-2); --draw-dim: var(--accent-ink); --draw-bg: var(--surface); --draw-fill: color-mix(in oklch, var(--accent) 7%, transparent); }
+  .measure-wide { max-width: 48rem; }
 </style>
