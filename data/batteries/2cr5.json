@@ -60,7 +60,7 @@
   "geometry": {
     "cells": 2,
     "variant": "2cr5",
-    "note": "Two cylindrical cells side by side in one keyed wrap. Both terminals sit on one end face as two small square contacts, recessed in the wrap, marked - and +, per the datasheet drawing. Wikipedia gives a 16 mm center-to-center terminal spacing."
+    "note": "Two cylindrical batteries side by side in one keyed wrap. Both terminals sit on one end face as two small square contacts, recessed in the wrap, marked - and +, per the datasheet drawing. Wikipedia gives a 16 mm center-to-center terminal spacing."
   },
   "variants": [
     {

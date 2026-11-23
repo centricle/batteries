@@ -120,7 +120,7 @@
       "style": "spring"
     },
     "cells": 4,
-    "note": "Two coil springs on the top face. Contains four F cells, four D cells or eight C cells depending on the product."
+    "note": "Two coil springs on the top face. Contains four F, four D or eight C batteries depending on the product."
   },
   "variants": [
     {
@@ -137,7 +137,7 @@
           55
         ]
       },
-      "notes": "Energizer EN529 contains four size 3-350 cells in series. The datasheet gives capacity only as a chart.",
+      "notes": "Energizer EN529 contains four size 3-350 batteries in series. The datasheet gives capacity only as a chart.",
       "sources": [
         "energizer-en529"
       ]
@@ -154,7 +154,7 @@
         "conditions": "25 mA continuous to 0.8 V per cell"
       },
       "weight_g": 600,
-      "notes": "Eveready EV90 contains four F cells in series and is listed for industrial trade.",
+      "notes": "Eveready EV90 contains four F batteries in series and is listed for industrial trade.",
       "sources": [
         "energizer-ev90"
       ]

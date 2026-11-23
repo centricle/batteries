@@ -13,7 +13,7 @@
     "nominal": 3,
     "cutoff": 2
   },
-  "self_discharge": "About 1% of capacity per year at room temperature (Energizer coin cells)",
+  "self_discharge": "About 1% of capacity per year at room temperature (Energizer coin batteries)",
   "temperature_c": {
     "operating": [
       -40,

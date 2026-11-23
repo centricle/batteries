@@ -4,7 +4,8 @@
 //   node scripts/validate.mjs a.json ... only these battery files
 // Exits 1 on any error. Also checks cross-file rules: unique ids, unique
 // codes per battery, interchange targets that exist, no slug collisions
-// between ids and alias redirects. A full run also runs scripts/plain-check.mjs.
+// between ids and alias redirects, no "cell" in text a visitor reads. A full
+// run also runs scripts/plain-check.mjs.
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -25,6 +26,64 @@ const fail = (file, msg) => {
 };
 
 const readDir = (dir) => (fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort() : []);
+
+// "Battery", never "cell", in anything a visitor reads.
+// The fields below are the hand-written ones that reach a page,
+// checked sentence by sentence so a long body names the sentence that failed.
+// Left out on purpose: code names and aliases (names people type; nicknames()
+// in src/lib/plain.ts keeps "Coin cell" off the page), sources and a device's
+// source (other people's titles, and the maker's own quoted sentence),
+// legacy_paths and ids (URLs), terminal notes (open data only), and the
+// glossary, which defines the word.
+const SAYS_CELL = /\bcells?\b/i;
+// Sentences that cannot lose the word without changing a fact, by file and
+// exact sentence, so a new one still fails. File names are as fail() prints them.
+const CELL_OK = new Set(
+  [
+    // A maker's capacity rating condition, the end voltage of each cell inside.
+    ['9v.json', '200 mAh rated at 0.2 C to 7.0 V, 20 °C (Varta 56722); 175 mAh at 35 mA to 1.0 V per cell (Energizer NH22-175); 210 mAh typical (GP20R8H)'],
+    ['lantern-6v.json', '25 mA continuous to 0.8 V per cell'],
+    // A cutoff or charge voltage stated per cell. "Per battery" would be wrong
+    // for a battery with several inside, such as a 9V.
+    ['alkaline.json', 'Energizer recommends 0.8 V per cell as the minimum cutoff, because deeper discharge raises the chance of excessive internal gassing; by 0.8 V about 95% of the usable capacity has been removed.'],
+    ['nimh.json', 'The usual discharge cutoff is 0.9 V per cell, 75% of the 1.2 V midpoint, though at high drain rates (1 to 4 C) that cutoff can leave capacity unused.'],
+    ['nickel-zinc.json', "Battery University and PKCELL both specify charging to 1.9 V per cell (constant current, then constant voltage in PKCELL's case), and both Battery University and Wikipedia state that trickle charging is not recommended."],
+    // A fuel cell is a different device, not a battery.
+    ['zinc-air.json', 'Thin electrodes developed from fuel-cell research in the 1970s made small button and prismatic batteries practical for hearing aids.'],
+  ].map(([file, s]) => `${file}\n${s}`),
+);
+const noCell = (file, fields) => {
+  for (const [field, text] of fields) {
+    if (typeof text !== 'string') continue;
+    for (const s of text.split(/(?<=[.!?])\s+|\n+/))
+      if (SAYS_CELL.test(s) && !CELL_OK.has(`${file}\n${s}`)) fail(file, `${field} says "cell"; say "battery": "${s}"`);
+  }
+};
+const batteryText = (b) => [
+  ['notes', b.notes],
+  ['history', b.history],
+  ['plain', b.plain],
+  ['dimensions.note', b.dimensions.note],
+  ['geometry.note', b.geometry.note],
+  ['geometry.tab_color_name', b.geometry.tab_color_name],
+  ...b.variants.flatMap((v, i) => [
+    [`variants.${i}.label`, v.label],
+    [`variants.${i}.subtype`, v.subtype],
+    [`variants.${i}.notes`, v.notes],
+    [`variants.${i}.capacity_mah.conditions`, v.capacity_mah?.conditions],
+    [`variants.${i}.self_discharge`, v.self_discharge],
+  ]),
+  ...b.safety.map((s, i) => [`safety.${i}`, s]),
+  ...b.devices.map((s, i) => [`devices.${i}`, s]),
+  ...b.interchange.map((r, i) => [`interchange.${i}.note`, r.note]),
+  ...b.codes.map((c, i) => [`codes.${i}.note`, c.note]),
+];
+// plain and plain_name are checked on their own below.
+const chemistryText = (c) => [
+  ...['name', 'short', 'summary', 'body', 'anode', 'cathode', 'electrolyte', 'self_discharge'].map((k) => [k, c[k]]),
+  ...['strengths', 'limitations', 'safety'].flatMap((k) => c[k].map((s, i) => [`${k}.${i}`, s])),
+];
+const deviceText = (d) => ['name', 'maker', 'models', 'code', 'note'].map((k) => [k, d[k]]);
 
 const batteries = [];
 for (const file of readDir(bDir)) {
@@ -53,6 +112,7 @@ for (const file of readDir(cDir)) {
     // visitors needs its plain name and sentence.
     else if (!r.data.plain_name || !r.data.plain) fail(file, 'plain_name and plain are required on every chemistry');
     else if (/\bcells?\b/i.test(r.data.plain + ' ' + r.data.plain_name)) fail(file, 'plain text says "cell"; say "battery"');
+    if (r.success) noCell(file, chemistryText(r.data));
   } catch (e) {
     fail(file, `invalid JSON: ${e.message}`);
   }
@@ -77,6 +137,7 @@ for (const { file, b } of batteries) {
     if (said.some((m) => !m[1] || m[1].toLowerCase() === b.name.toLowerCase()))
       fail(file, `interchange "${ic.id}" is "${ic.relation}" but its note says it does not fit or work; use "does-not-fit"`);
   }
+  noCell(file, batteryText(b));
   const seen = new Set();
   for (const c of b.codes) {
     const k = `${c.system}:${c.code}`.toLowerCase();
@@ -117,6 +178,7 @@ for (const file of readDir(dDir)) {
   }
   if (r.data.id + '.json' !== file) fail(`devices/${file}`, `id "${r.data.id}" does not match filename`);
   if (!ids.has(r.data.battery)) fail(`devices/${file}`, `battery "${r.data.battery}" has no entry`);
+  noCell(`devices/${file}`, deviceText(r.data));
   deviceIds.add(r.data.id);
 }
 

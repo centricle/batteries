@@ -53,7 +53,7 @@
   "geometry": {
     "cells": 2,
     "variant": "cr-v3",
-    "note": "Two AA-sized cylindrical cells side by side in one keyed wrap. The contacts are on one end face: two round recessed holes with the + contact marked on the left lobe, per the datasheet drawing."
+    "note": "Two AA-sized cylindrical batteries side by side in one keyed wrap. The contacts are on one end face: two round recessed holes with the + contact marked on the left lobe, per the datasheet drawing."
   },
   "variants": [
     {
@@ -81,7 +81,7 @@
           60
         ]
       },
-      "notes": "Energizer labels the chemical system \"Non-Aqueous Lithium\" and does not name it. The lithium-manganese-dioxide assignment is inferred from the 3.0 V nominal voltage of the two parallel cells. Wikipedia reports a Duracell CR-V3 made of two 3 V AA-sized lithium cells in parallel.",
+      "notes": "Energizer labels the chemical system \"Non-Aqueous Lithium\" and does not name it. The lithium-manganese-dioxide assignment is inferred from the 3.0 V nominal voltage of the two batteries inside, in parallel. Wikipedia reports a Duracell CR-V3 made of two 3 V AA-sized lithium batteries in parallel.",
       "sources": [
         "energizer-crv3",
         "wikipedia-crv3"

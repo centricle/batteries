@@ -125,7 +125,7 @@
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
     "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
-  "notes": "A common cell inside cordless tool packs. Fractional versions (1/2, 2/3, 4/5 and 5/4 Sub-C) differ in length and are not the same size as 1/2AA.",
+  "notes": "A common battery inside cordless tool packs. Fractional versions (1/2, 2/3, 4/5 and 5/4 Sub-C) differ in length and are not the same size as 1/2AA.",
   "sources": [
     {
       "id": "panasonic-bk300scp",

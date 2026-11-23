@@ -108,7 +108,7 @@
       "voltage": {
         "nominal": 1.5
       },
-      "notes": "Listed as R25; four F cells make up many 6 V lantern batteries.",
+      "notes": "Listed as R25; four F batteries make up many 6 V lantern batteries.",
       "sources": [
         "wikipedia-battery-sizes",
         "energizer-ev90"
@@ -133,7 +133,7 @@
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
     "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
-  "notes": "Four F cells are often found inside 6 V rectangular lantern batteries.",
+  "notes": "Four F batteries are often found inside 6 V rectangular lantern batteries.",
   "sources": [
     {
       "id": "panasonic-bk1100fhu",

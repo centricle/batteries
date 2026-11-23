@@ -383,7 +383,7 @@
           25
         ]
       },
-      "notes": "An internal circuit regulates the output of a 3.7 V lithium-ion cell to 1.5 V and drops it to 1.1 V near 5% remaining capacity. Charged only through the built-in USB-C port at 350 mA.",
+      "notes": "An internal circuit regulates the output of the 3.7 V lithium-ion battery inside to 1.5 V and drops it to 1.1 V near 5% remaining capacity. Charged only through the built-in USB-C port at 350 mA.",
       "sources": [
         "ansmann-aa-li"
       ]

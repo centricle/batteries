@@ -58,7 +58,7 @@
     "negative": {
       "style": "flat"
     },
-    "note": "Datasheet lists terminals as flat, cap and base. Two cells in series inside one cylindrical wrap."
+    "note": "Datasheet lists terminals as flat, cap and base. Two batteries in series inside one cylindrical wrap."
   },
   "variants": [
     {

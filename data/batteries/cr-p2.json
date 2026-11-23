@@ -47,7 +47,7 @@
       "min": 34.5,
       "max": 36
     },
-    "note": "Width is the long side of the two-lobed top view; the datasheet gives a 16.8 mm reference spacing between the cell centers.",
+    "note": "Width is the long side of the two-lobed top view; the datasheet gives a 16.8 mm reference spacing between the centers of the two batteries inside.",
     "sources": [
       "energizer-223"
     ]
@@ -55,7 +55,7 @@
   "geometry": {
     "cells": 2,
     "variant": "cr-p2",
-    "note": "Two cylindrical cells side by side in one keyed wrap, each lobe about 16.8 mm apart center to center. Both terminals sit on one end face as two round contacts, one at the center of each lobe, marked + and -, per the datasheet drawing."
+    "note": "Two cylindrical batteries side by side in one keyed wrap, each lobe about 16.8 mm apart center to center. Both terminals sit on one end face as two round contacts, one at the center of each lobe, marked + and -, per the datasheet drawing."
   },
   "variants": [
     {

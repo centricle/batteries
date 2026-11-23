@@ -100,7 +100,7 @@
       "min": 23.9,
       "max": 25.2
     },
-    "note": "Four LR44 cells stacked in a metal jacket.",
+    "note": "Four LR44 batteries stacked in a metal jacket.",
     "sources": [
       "energizer-a544",
       "energizer-544"
@@ -163,9 +163,9 @@
   ],
   "safety": [
     "Do not recharge, short circuit, crush, disassemble or incinerate.",
-    "Keep out of reach of children; swallowing a multi-cell battery can cause serious internal injury."
+    "Keep out of reach of children; swallowing a battery with smaller batteries inside can cause serious internal injury."
   ],
-  "notes": "Four LR44 button cells in series. Shares its envelope with the silver oxide 4SR44.",
+  "notes": "Four LR44 button batteries inside, in series. Shares its envelope with the silver oxide 4SR44.",
   "sources": [
     {
       "id": "energizer-a544",

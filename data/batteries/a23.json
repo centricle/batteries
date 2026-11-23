@@ -186,7 +186,7 @@
           54
         ]
       },
-      "notes": "Eight LR932 cells in series under one jacket. Duracell lists 7.4 g and 22 ohm at 1 kHz; Energizer lists 8.0 g.",
+      "notes": "Eight LR932 batteries in series under one jacket. Duracell lists 7.4 g and 22 ohm at 1 kHz; Energizer lists 8.0 g.",
       "sources": [
         "energizer-a23",
         "duracell-mn21"
@@ -212,10 +212,10 @@
   ],
   "safety": [
     "Do not recharge, short circuit, crush, disassemble or incinerate.",
-    "Keep out of reach of children; swallowing a multi-cell battery can cause serious internal injury.",
-    "Eight cells in series produce 12 V; contact between exposed terminals and metal can produce heat."
+    "Keep out of reach of children; swallowing a battery with smaller batteries inside can cause serious internal injury.",
+    "The eight batteries inside, in series, produce 12 V; contact between exposed terminals and metal can produce heat."
   ],
-  "notes": "A 12 V stack of eight small alkaline button cells. A23 and A27 are the common sizes for remote controls.",
+  "notes": "A 12 V stack of eight small alkaline button batteries. A23 and A27 are the common sizes for remote controls.",
   "sources": [
     {
       "id": "energizer-a23",

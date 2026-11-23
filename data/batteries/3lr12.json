@@ -101,7 +101,7 @@
           30
         ]
       },
-      "notes": "Three alkaline cells in series. Duracell lists self-discharge under 10 percent after one year at 20 °C.",
+      "notes": "Three alkaline batteries inside, in series. Duracell lists self-discharge under 10 percent after one year at 20 °C.",
       "sources": [
         "duracell-mn1203"
       ]
@@ -130,7 +130,7 @@
     "Exposed strips can be shorted by metal objects in a pocket; keep the battery in its packaging or a holder."
   ],
   "history": "Introduced in 1901 and common in continental Europe until the 1970s (Wikipedia list of battery sizes).",
-  "notes": "Usually contains three B-size cells in series. It remains more common in Europe than in North America.",
+  "notes": "Usually contains three B-size batteries in series. It remains more common in Europe than in North America.",
   "sources": [
     {
       "id": "duracell-mn1203",

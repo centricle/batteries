@@ -21,7 +21,7 @@
     500,
     700
   ],
-  "self_discharge": "Under 1% per year at 20 °C (Saft LS 14500); Tadiran cites as little as 0.7% per year for the highest-quality bobbin cells",
+  "self_discharge": "Under 1% per year at 20 °C (Saft LS 14500); Tadiran cites as little as 0.7% per year for the highest-quality bobbin batteries",
   "temperature_c": {
     "operating": [
       -60,

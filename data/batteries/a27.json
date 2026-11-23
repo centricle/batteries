@@ -90,7 +90,7 @@
         "conditions": "20 kohm (0.36 mA) continuous to 6.0 V, 21 °C (Energizer); Duracell rates 18 mAh to 6 V on a 20 load as printed"
       },
       "weight_g": 4.4,
-      "notes": "Eight small alkaline cells in series. Duracell and Energizer both list 4.4 g.",
+      "notes": "Eight small alkaline batteries inside, in series. Duracell and Energizer both list 4.4 g.",
       "sources": [
         "energizer-a27",
         "duracell-mn27"
@@ -114,7 +114,7 @@
   ],
   "safety": [
     "Do not recharge, short circuit, crush, disassemble or incinerate.",
-    "Keep out of reach of children; swallowing a multi-cell battery can cause serious internal injury."
+    "Keep out of reach of children; swallowing a battery with smaller batteries inside can cause serious internal injury."
   ],
   "notes": "Smaller than the A23 and rated for about 40 percent of its capacity.",
   "sources": [

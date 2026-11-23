@@ -285,7 +285,7 @@
           25
         ]
       },
-      "notes": "A built-in 3.7 V, 200 mAh lithium-ion cell feeds a regulator; output drops to 1.05 V below 10% charge. Charges through the built-in USB-C port at 100 mA.",
+      "notes": "A built-in 3.7 V, 200 mAh lithium-ion battery feeds a regulator; output drops to 1.05 V below 10% charge. Charges through the built-in USB-C port at 100 mA.",
       "sources": [
         "ansmann-aaa-li"
       ]
