@@ -1,0 +1,325 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { batteries, searchIndex, stats } from '../lib/data';
+import { BUILTIN, mergeTables, decode, tilesHTML, type Tables } from '../lib/decode';
+
+// Letter and size tables: data/iec-system.json when another pass has written
+// it, else the built-in IEC 60086-1 summary in src/lib/decode.ts.
+const iecPath = path.join(process.cwd(), 'data/iec-system.json');
+let tables: Tables = BUILTIN;
+if (fs.existsSync(iecPath)) {
+  try {
+    tables = mergeTables(JSON.parse(fs.readFileSync(iecPath, 'utf8')));
+  } catch {
+    tables = BUILTIN;
+  }
+}
+
+// Compact cross-reference: [code, system, battery id, chemistry].
+const rows: [string, string, string, string][] = [];
+for (const b of batteries()) {
+  for (const c of b.codes) rows.push([c.code, c.system, b.id, c.chemistry ?? '']);
+  for (const a of [b.name, ...b.aliases]) rows.push([a, 'Name', b.id, '']);
+}
+const s = stats();
+const examples = ['LR6', 'CR2032', 'SR626SW', '6LR61', 'INR18650', 'HR03', 'PR44', '2CR5'];
+const initial = decode('CR2032', tables)!;
+const accessed = '2026-11-22';
+
+const chemRows = Object.entries(tables.chem).map(([k, v]) => ({ k, ...v }));
+const legacyRound = ['R03', 'R1', 'R6', 'R12', 'R14', 'R20', 'R23', 'R25', 'R40'].filter((k) => tables.legacy[k]).map((k) => ({ k, ...tables.legacy[k] }));
+const legacyButton = Object.entries(tables.legacy).filter(([k, v]) => k.startsWith('R') && v.name === 'Button').map(([k, v]) => ({ k, ...v }));
+const diam = Object.entries(tables.diameter).sort((a, b) => +a[0] - +b[0]);
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Battery code decoder',
+  url: 'https://batteries.fyi/decode',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript',
+  isAccessibleForFree: true,
+  description: 'Explains IEC 60086, IEC 61951, IEC 61960 and ANSI C18 battery codes letter by letter, and looks up manufacturer numbers in the batteries.fyi cross-reference.',
+};
+---
+
+<BaseLayout title="Decode a battery code: LR6, CR2032, SR626SW, INR18650 explained | batteries.fyi" description="Enter any battery code to see what each letter and number means: cell count, chemistry, shape and size under IEC 60086, IEC 61960 and ANSI C18, plus the matching entry for manufacturer numbers." jsonld={jsonld}>
+  <section class="wrap pt-8">
+    <p class="eyebrow">Tool</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Decode a battery code</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">A systematic battery code is built from parts: the number of cells in series, a chemistry letter, a shape letter and a size. In CR2032, C is lithium manganese dioxide, R is round, 20 is the diameter in millimeters and 32 is the thickness in tenths of a millimeter. Enter a code to see each part explained, the standard it comes from, and the batteries.fyi entry that lists it. Manufacturer numbers such as 377 encode neither size nor chemistry; for those the page looks the number up in the cross-reference of {s.codes.toLocaleString('en-US')} codes.</p>
+  </section>
+
+  <section class="wrap mt-6">
+    <div class="card p-4 sm:p-5">
+      <form id="dc-form" class="flex flex-col sm:flex-row gap-2 max-w-xl" role="search" action="/decode">
+        <label for="dc-code" class="sr-only">Battery code</label>
+        <input id="dc-code" name="code" class="input font-mono text-[0.95rem] h-12" placeholder="Type a code: LR6, CR2032, 377, INR18650" autocomplete="off" autocapitalize="characters" spellcheck="false" value="CR2032" />
+        <button type="submit" class="btn btn-primary h-12 px-5">Decode</button>
+      </form>
+      <div class="mt-3 flex flex-wrap items-center gap-1.5">
+        <span class="text-[0.62rem] text-muted mr-1">Examples:</span>
+        {examples.map((c) => <a href={`/decode?code=${c}`} class="chip" data-code={c}>{c}</a>)}
+      </div>
+
+      <div id="dc-out" class="mt-6" aria-live="polite">
+        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <h2 class="font-mono text-[1.5rem] font-[750] tracking-tight" id="dc-title">{initial.input}</h2>
+          <span class="chip font-sans" id="dc-system">{initial.system}</span>
+        </div>
+        <p class="mt-2 text-[0.85rem] text-ink max-w-3xl" id="dc-summary">{initial.summary}</p>
+        <div class="mt-4" id="dc-tiles" set:html={tilesHTML(initial)} />
+        <div class="mt-4 space-y-2" id="dc-extra"></div>
+        <div class="mt-5" id="dc-lookup"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap mt-12 grid gap-8 lg:grid-cols-2 [&>*]:min-w-0">
+    <div>
+      <h2 class="section-title" id="iec-60086">Primary cells: IEC 60086</h2>
+      <p class="text-[0.72rem] text-ink-2">Pattern: <span class="mono">[cells in series] [chemistry] [shape] [size] [suffix] [-parallel strings]</span>. Example: <span class="mono">6LR61</span> = 6 cells, L alkaline, R round, size 61, so 6 × 1.5 V = 9 V.</p>
+      <h3 class="text-[0.8rem] font-semibold mt-4 mb-2">Chemistry letters</h3>
+      <div class="card table-scroll">
+        <table class="table">
+          <thead><tr><th>Letter</th><th>Chemistry</th><th class="n">Nominal</th></tr></thead>
+          <tbody>
+            {chemRows.map((r) => (
+              <tr><td class="mono font-semibold">{r.k || '(none)'}</td><td>{r.name}{r.withdrawn ? ' (withdrawn)' : ''}</td><td class="n">{r.v ? `${r.v} V` : ''}</td></tr>
+            ))}
+            {Object.entries(tables.recharge).map(([k, r]) => (
+              <tr><td class="mono font-semibold">{k}</td><td>{r.name}, IEC 61951</td><td class="n">{r.v ? `${r.v} V` : ''}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <h3 class="text-[0.8rem] font-semibold mt-5 mb-2">Shape letters</h3>
+      <ul class="text-[0.72rem] text-ink-2 space-y-1">
+        {Object.entries(tables.shape).map(([k, v]) => <li><span class="mono font-semibold text-ink">{k}</span>: {v.name}. {v.note}</li>)}
+      </ul>
+    </div>
+    <div>
+      <h2 class="section-title" id="sizes">Size numbers</h2>
+      <p class="text-[0.72rem] text-ink-2">One or two digits are a legacy size number kept from earlier editions of the standard: R6 is AA, R03 is AAA. Three or more digits are a measurement: the diameter in millimeters, then the height in tenths of a millimeter. <span class="mono">2032</span> = 20 mm × 3.2 mm. <span class="mono">17345</span> = 17 mm × 34.5 mm. Three digits use a one-digit diameter code: <span class="mono">626</span> = 6.8 mm × 2.6 mm.</p>
+      <h3 class="text-[0.8rem] font-semibold mt-4 mb-2">Legacy size numbers, cylindrical</h3>
+      <div class="card table-scroll">
+        <table class="table">
+          <thead><tr><th>Code</th><th>Name</th><th class="n">Diameter × height</th></tr></thead>
+          <tbody>
+            {legacyRound.map((r) => <tr><td class="mono font-semibold">{r.k}</td><td>{r.name}</td><td class="n">{r.d && r.h ? `${r.d} × ${r.h} mm` : ''}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <details class="mt-3 card p-3">
+        <summary class="cursor-pointer text-[0.72rem] font-semibold">Legacy size numbers, button cells ({legacyButton.length})</summary>
+        <div class="table-scroll mt-2">
+          <table class="table">
+            <thead><tr><th>Code</th><th class="n">Diameter × height</th><th>Example</th></tr></thead>
+            <tbody>
+              {legacyButton.map((r) => <tr><td class="mono font-semibold">{r.k}</td><td class="n">{r.d} × {r.h} mm</td><td class="mono text-muted">LR{r.k.slice(1)}, SR{r.k.slice(1)}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      </details>
+      <h3 class="text-[0.8rem] font-semibold mt-5 mb-2">Diameter codes</h3>
+      <p class="text-[0.68rem] text-ink-2">Where a code uses a recommended diameter code, the digits stand for a maximum diameter rather than the truncated millimeters.</p>
+      <div class="mt-2 flex flex-wrap gap-1.5">
+        {diam.map(([k, v]) => <span class="chip">{k} = {v} mm</span>)}
+      </div>
+      <h3 class="text-[0.8rem] font-semibold mt-5 mb-2">Suffixes</h3>
+      <ul class="text-[0.72rem] text-ink-2 space-y-1">
+        <li><span class="mono font-semibold text-ink">W</span>: meets IEC 60086-3, the watch battery standard.</li>
+        <li><span class="mono font-semibold text-ink">SW</span>, <span class="mono font-semibold text-ink">W</span>: in manufacturer usage, low drain and high drain silver oxide cells of the same size.</li>
+        <li><span class="mono font-semibold text-ink">X</span>, <span class="mono font-semibold text-ink">Y</span>: terminal style or variant (4LR25X, 4LR25Y).</li>
+        <li><span class="mono font-semibold text-ink">-2</span>: two parallel strings (4LR25-2).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap mt-10 grid gap-8 lg:grid-cols-2 [&>*]:min-w-0">
+    <div>
+      <h2 class="section-title" id="iec-61960">Lithium-ion cells: IEC 61960</h2>
+      <p class="text-[0.72rem] text-ink-2">Pattern: <span class="mono">[cells] [negative] [positive] [shape] [dimensions]</span>. In <span class="mono">INR18650</span>, I is lithium-ion, N is a nickel-based positive electrode, R is round, 18 is the diameter in millimeters and 650 is the length in tenths of a millimeter (65.0 mm). The standard itself writes maximum dimensions with slashes (<span class="mono">ICR19/66</span>); the five-digit form is the one makers print. A bare <span class="mono">18650</span> names only the size.</p>
+      <div class="card table-scroll mt-3">
+        <table class="table">
+          <thead><tr><th>Letter</th><th>Positive electrode</th><th>Common reading</th></tr></thead>
+          <tbody>
+            {Object.entries(tables.liCathode).map(([k, v]) => <tr><td class="mono font-semibold">{k}</td><td>{v.name.replace(' positive electrode', '')}</td><td class="text-muted">{v.note ?? ''}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 text-[0.65rem] text-muted">ICR, IMR, INR and IFR are the forms seen on cells. NCR (Panasonic), UR (Panasonic, formerly Sanyo) and US (Sony, now Murata) are manufacturer prefixes, not IEC letters.</p>
+    </div>
+    <div>
+      <h2 class="section-title" id="ansi">ANSI C18</h2>
+      <p class="text-[0.72rem] text-ink-2">ANSI codes are a size number followed by system letters. The number is assigned, not measured: 15 is AA, 24 is AAA, 1604 is 9 V, and lithium coin cells sit in the 5000 range (5004LC is CR2032).</p>
+      <div class="card table-scroll mt-3">
+        <table class="table">
+          <thead><tr><th>Suffix</th><th>System</th><th>IEC letter</th></tr></thead>
+          <tbody>
+            {Object.entries(tables.ansiSuffix).filter(([k]) => k).map(([k, v]) => <tr><td class="mono font-semibold">{k}</td><td>{v.name}</td><td class="mono">{v.iec || '(none)'}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 text-[0.65rem] text-muted">No suffix means carbon-zinc. Size numbers: {Object.entries(tables.ansiSize).map(([k, v]) => `${k} = ${v}`).join(', ')}.</p>
+    </div>
+  </section>
+
+  <section class="wrap mt-10">
+    <h2 class="section-title" id="how">How it works</h2>
+    <div class="prose">
+      <p>The decoder tries each naming system in turn: named exceptions (CR123A, CR2, CR-P2, CR-V3, 2CR5), common names (AA, 9V), IEC 61960 lithium-ion codes, known manufacturer prefixes (LIR, ML, NCR, AG), fractional sizes (CR1/3N), IEC 60086 and IEC 61951 codes, then ANSI C18 codes and bare size digits. The first rule that fits produces the breakdown. Independently, the code is looked up in the batteries.fyi cross-reference, which records every code for each entry and the system that assigns it. When the two disagree, for example a number that fits the ANSI pattern but is listed only as a manufacturer number, the page says so.</p>
+      <p>Dimensions read from a code are maximums or truncated values, not the nominal size. Use the linked entry for measured dimensions and tolerances.</p>
+      <h3>Sources</h3>
+      <ul>
+        <li>IEC 60086-1, Primary batteries, Part 1: General (electrochemical system letters, shape letters, size codes). IEC 61951-1 and 61951-2 (NiCd and NiMH). IEC 61960 (lithium-ion). ANSI C18.1 (primary cell sizes and suffixes). As summarized in the next two references; the standards are not freely published.</li>
+        <li><a href="https://en.wikipedia.org/wiki/Battery_nomenclature">Battery nomenclature</a>, Wikipedia, accessed {accessed}.</li>
+        <li><a href="https://en.wikipedia.org/wiki/List_of_battery_sizes">List of battery sizes</a>, Wikipedia, accessed {accessed} (legacy button size numbers and dimensions).</li>
+        <li>Manufacturer numbers: the <a href="/equivalents">batteries.fyi equivalents table</a>, built from the sources cited on each entry.</li>
+        {tables.source !== 'built-in' && <li>Letter and size tables: <span class="mono">{tables.source}</span> in the batteries.fyi data.</li>}
+      </ul>
+    </div>
+  </section>
+
+  <script type="application/json" id="dc-tables" set:html={JSON.stringify(tables)} />
+  <script type="application/json" id="dc-rows" set:html={JSON.stringify(rows)} />
+  <script type="application/json" id="dc-index" set:html={JSON.stringify(searchIndex())} />
+</BaseLayout>
+
+<script>
+  import { decode, tilesHTML, esc, clean, type Decoded, type Tables } from '../lib/decode';
+  import { rank, norm, type Entry } from '../lib/search';
+
+  const tables: Tables = JSON.parse(document.getElementById('dc-tables')!.textContent!);
+  const rows: [string, string, string, string][] = JSON.parse(document.getElementById('dc-rows')!.textContent!);
+  const index: Entry[] = JSON.parse(document.getElementById('dc-index')!.textContent!);
+  const byId = new Map(index.map((e) => [e.id, e]));
+  const byCode = new Map<string, [string, string, string, string][]>();
+  for (const r of rows) {
+    const k = norm(r[0]);
+    if (!k) continue;
+    if (!byCode.has(k)) byCode.set(k, []);
+    byCode.get(k)!.push(r);
+  }
+
+  const form = document.getElementById('dc-form') as HTMLFormElement;
+  const input = document.getElementById('dc-code') as HTMLInputElement;
+  const out = document.getElementById('dc-out')!;
+  const title = document.getElementById('dc-title')!;
+  const system = document.getElementById('dc-system')!;
+  const summary = document.getElementById('dc-summary')!;
+  const tiles = document.getElementById('dc-tiles')!;
+  const extra = document.getElementById('dc-extra')!;
+  const lookup = document.getElementById('dc-lookup')!;
+  const fmt = (n: number) => Number(n.toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 2 });
+  const STD = new Set(['IEC', 'ANSI', 'JIS', 'NEDA', 'Military']);
+
+  function render(raw: string, sync = true) {
+    const code = clean(raw);
+    if (sync) history.replaceState(null, '', code ? `?code=${encodeURIComponent(code)}` : location.pathname);
+    if (!code) {
+      out.hidden = true;
+      return;
+    }
+    out.hidden = false;
+    const hits = byCode.get(norm(code)) ?? [];
+    const liIon = hits.some((h) => byId.get(h[2])?.c === 'Lithium-ion');
+    let d: Decoded | null = decode(code, tables, { liIon });
+
+    // A listed manufacturer number with no systematic reading.
+    if (!d && hits.length) {
+      const systems = [...new Set(hits.map((h) => h[1]))];
+      d = {
+        input: code,
+        system: 'Manufacturer number',
+        segments: [{ text: code, role: 'model', title: 'Manufacturer or catalog number', meaning: `Listed by ${systems.join(', ')}. A catalog number does not encode size or chemistry.` }],
+        summary: `${code} is a manufacturer number. It identifies a battery only through a cross-reference.`,
+        notes: [],
+      };
+    }
+
+    title.textContent = code;
+    if (!d) {
+      system.textContent = 'Not recognized';
+      summary.textContent = `batteries.fyi does not recognize “${code}”. It does not follow the IEC or ANSI patterns and is not among the ${rows.length.toLocaleString('en-US')} codes and names in the cross-reference.`;
+      tiles.innerHTML = '';
+      extra.innerHTML = '';
+      const near = rank(index, code, 5);
+      lookup.innerHTML = `<p class="text-[0.72rem] text-ink-2">Try <a class="link" href="/search?q=${encodeURIComponent(code)}">searching for ${esc(code)}</a>, or <a class="link" href="/identify">identify the battery by measurement</a>.</p>${near.length ? `<p class="mt-3 eyebrow">Closest names in the index</p><ul class="mt-1 flex flex-wrap gap-1.5">${near.map(({ e }) => `<li><a class="chip" href="/${e.id}">${esc(e.n)}</a></li>`).join('')}</ul>` : ''}`;
+      return;
+    }
+
+    system.textContent = d.system;
+    summary.textContent = d.summary;
+    tiles.innerHTML = tilesHTML(d);
+
+    const bits: string[] = [];
+    if (d.voltage && d.voltage.cells > 1) bits.push(`<p class="text-[0.75rem]"><span class="text-muted">Voltage:</span> <span class="mono">${d.voltage.cells} × ${fmt(d.voltage.per)} V = ${fmt(d.voltage.total)} V</span> nominal</p>`);
+    if (d.dims?.d && d.dims?.h) {
+      const disc = d.dims.h < d.dims.d;
+      const q = new URLSearchParams({ shape: disc ? 'disc' : 'cylinder', d: String(d.dims.d), h: String(d.dims.h) });
+      bits.push(`<p class="text-[0.75rem]"><span class="text-muted">Size read from the code:</span> <span class="mono">${fmt(d.dims.d)} × ${fmt(d.dims.h)} mm</span>${d.dims.approx ? ' (approximate)' : ''}. <a class="link" href="/identify?${q}">Find batteries of this size</a></p>`);
+    }
+    for (const n of d.notes) bits.push(`<p class="text-[0.68rem] text-muted">${esc(n)}</p>`);
+    const std = d.system.startsWith('IEC') ? 'IEC' : d.system.startsWith('ANSI') ? 'ANSI' : null;
+    if (std && hits.length && !hits.some((h) => h[1] === std)) {
+      const systems = [...new Set(hits.map((h) => h[1]))].filter((x) => x !== 'Name');
+      const coreHit = d.core ? (byCode.get(norm(d.core)) ?? []).some((h) => h[1] === std) : false;
+      if (coreHit) bits.push(`<p class="callout info">${std} lists the base code ${esc(d.core!)}. The suffix is added by makers${systems.length ? ` (${esc(systems.join(', '))})` : ''}.</p>`);
+      else if (systems.length) bits.push(`<p class="callout warn">batteries.fyi lists ${esc(code)} under ${esc(systems.join(', '))}, not as an ${std} code. The reading above follows the ${std} pattern only.</p>`);
+    }
+    if (d.partial) bits.push(`<p class="callout info">Part of this code does not match a rule this page knows. The breakdown shows what could be read.</p>`);
+    extra.innerHTML = bits.join('');
+
+    // Cross-reference.
+    if (hits.length) {
+      const groups = new Map<string, string[]>();
+      for (const h of hits) {
+        if (!groups.has(h[2])) groups.set(h[2], []);
+        if (!groups.get(h[2])!.includes(h[1])) groups.get(h[2])!.push(h[1]);
+      }
+      lookup.innerHTML = `<p class="eyebrow">In the batteries.fyi cross-reference</p><ul class="mt-2 grid gap-2 sm:grid-cols-2">${[...groups]
+        .map(([id, systems]) => {
+          const e = byId.get(id);
+          if (!e) return '';
+          const named = systems.includes('Name') && norm(e.n) !== norm(code);
+          const sys = systems.filter((x) => x !== 'Name').map((x) => (STD.has(x) ? `${x} (standard)` : x));
+          const listed = sys.length ? `${esc(code)} is listed by ${esc(sys.join(', '))}.${named ? ' It is also a name for this entry.' : ''}` : `${esc(code)} is a name for this entry.`;
+          const others = e.k.filter((k) => norm(k) !== norm(code)).slice(0, 6);
+          return `<li><a href="/${e.id}" class="card block p-3 hover:border-accent transition-colors h-full">
+            <span class="flex items-center gap-2"><span class="dot" style="background:${esc(e.col)}"></span><span class="font-semibold text-[0.9rem]">${esc(e.n)}</span><span class="text-[0.62rem] text-muted">${esc(e.c)} · ${esc(e.s)} · ${esc(e.v)} V</span></span>
+            <span class="block mt-1 text-[0.66rem] text-ink-2">${listed}</span>
+            ${others.length ? `<span class="block mt-1 text-[0.6rem] text-muted mono">Also: ${esc(others.join(' · '))}</span>` : ''}
+          </a></li>`;
+        })
+        .join('')}</ul>`;
+    } else {
+      const near = rank(index, code, 4).filter((r) => r.score >= 300);
+      lookup.innerHTML = `<p class="text-[0.7rem] text-muted">${esc(code)} is not in the batteries.fyi cross-reference as written.${near.length ? ' Entries with a similar code:' : ''} <a class="link" href="/search?q=${encodeURIComponent(code)}">Search</a></p>${near.length ? `<ul class="mt-2 flex flex-wrap gap-1.5">${near.map(({ e, why }) => `<li><a class="chip" href="/${e.id}">${esc(e.n)}${why ? ` <span class="text-muted">${esc(why)}</span>` : ''}</a></li>`).join('')}</ul>` : ''}`;
+    }
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    render(input.value);
+  });
+  let t: number | undefined;
+  input.addEventListener('input', () => {
+    clearTimeout(t);
+    t = window.setTimeout(() => render(input.value), 150);
+  });
+  document.querySelectorAll<HTMLAnchorElement>('[data-code]').forEach((a) =>
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      input.value = a.dataset.code!;
+      render(input.value);
+      input.focus();
+    }),
+  );
+  const q = new URLSearchParams(location.search).get('code');
+  if (q) input.value = q;
+  render(input.value, !!q);
+</script>

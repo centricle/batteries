@@ -1,0 +1,409 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { batteries, categoryById, chem, primaryVariant, sizeLabel, voltages, stats } from '../lib/data';
+
+// Compact index with tolerances: [min, max] per dimension, nominal when unpublished.
+const tol = (x?: { nominal: number; min?: number; max?: number }) => (x ? [x.min ?? x.nominal, x.max ?? x.nominal] : null);
+const items = batteries().map((b) => {
+  const d = b.dimensions;
+  const cls = b.form === 'disc' ? 'disc' : b.form === 'cylinder' || (b.form === 'twin' && d.diameter && !d.width) ? 'cylinder' : 'box';
+  return {
+    id: b.id,
+    n: b.name,
+    c: categoryById[b.category].short,
+    cls,
+    s: sizeLabel(b),
+    d: d.diameter?.nominal ?? null,
+    h: d.height.nominal,
+    w: d.width?.nominal ?? null,
+    p: d.depth?.nominal ?? null,
+    td: tol(d.diameter),
+    th: tol(d.height),
+    tw: tol(d.width),
+    tp: tol(d.depth),
+    v: voltages(b),
+    col: chem(primaryVariant(b).chemistry).color,
+  };
+});
+const s = stats();
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Identify a battery by measurement',
+  url: 'https://batteries.fyi/identify',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript',
+  isAccessibleForFree: true,
+  description: 'Enter the diameter and height (or width, depth and height) of a battery, and optionally its voltage, to rank every size in the batteries.fyi database by how closely it matches.',
+};
+const examples = [
+  { label: '14.5 × 50.5 mm cylinder', q: 'shape=cylinder&d=14.5&h=50.5' },
+  { label: '18.4 × 65.1 mm cylinder', q: 'shape=cylinder&d=18.4&h=65.1' },
+  { label: '20 × 3.2 mm coin', q: 'shape=disc&d=20&h=3.2' },
+  { label: '11.6 × 5.4 mm button', q: 'shape=disc&d=11.6&h=5.4' },
+  { label: '26.5 × 17.5 × 48.5 mm box', q: 'shape=box&d=26.5&p=17.5&h=48.5' },
+];
+---
+
+<BaseLayout title="Identify a battery by measurement: diameter and height lookup | batteries.fyi" description="Measure a battery's diameter and height (or width, depth and height) and get the closest standard sizes, with the difference in millimeters and the published voltage." jsonld={jsonld}>
+  <section class="wrap pt-8">
+    <p class="eyebrow">Tool</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Identify a battery by measurement</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Measure the battery with calipers or a ruler and enter the numbers. The page compares them with the published dimensions of all {s.batteries} sizes in batteries.fyi, within the same shape (cylinder, coin or button, rectangular), and lists the eight closest with the difference for each dimension. A voltage reading, if you have one, narrows the list further. The link updates as you type, so a result can be shared.</p>
+  </section>
+
+  <section class="wrap mt-6 grid gap-6 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] items-start">
+    <form id="id-form" class="card p-4 sm:p-5 space-y-4" novalidate>
+      <fieldset>
+        <legend class="text-[0.7rem] font-semibold mb-1.5">Shape</legend>
+        <div class="flex flex-wrap gap-1.5" role="group" aria-label="Shape">
+          <button type="button" class="btn btn-sm" data-shape="cylinder" aria-pressed="true">Round cylinder</button>
+          <button type="button" class="btn btn-sm" data-shape="disc" aria-pressed="false">Coin or button</button>
+          <button type="button" class="btn btn-sm" data-shape="box" aria-pressed="false">Rectangular</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="text-[0.7rem] font-semibold mb-1.5">Units</legend>
+        <div class="flex gap-1.5" role="group" aria-label="Units">
+          <button type="button" class="btn btn-sm" data-unit="mm" aria-pressed="true">mm</button>
+          <button type="button" class="btn btn-sm" data-unit="in" aria-pressed="false">inches</button>
+        </div>
+      </fieldset>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="id-d" class="block text-[0.68rem] font-semibold mb-1" id="id-d-label">Diameter</label>
+          <div class="relative">
+            <input id="id-d" class="input pr-10 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-d-hint" />
+            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-[0.65rem] text-muted pointer-events-none">mm</span>
+          </div>
+          <p id="id-d-hint" class="text-[0.58rem] text-muted mt-1">Across the widest point</p>
+        </div>
+        <div>
+          <label for="id-h" class="block text-[0.68rem] font-semibold mb-1" id="id-h-label">Length</label>
+          <div class="relative">
+            <input id="id-h" class="input pr-10 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-h-hint" />
+            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-[0.65rem] text-muted pointer-events-none">mm</span>
+          </div>
+          <p id="id-h-hint" class="text-[0.58rem] text-muted mt-1">End to end, terminal included</p>
+        </div>
+        <div id="id-p-wrap" hidden>
+          <label for="id-p" class="block text-[0.68rem] font-semibold mb-1">Depth <span class="font-normal text-muted">(optional)</span></label>
+          <div class="relative">
+            <input id="id-p" class="input pr-10 tabular" type="number" inputmode="decimal" min="0" step="any" />
+            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-[0.65rem] text-muted pointer-events-none">mm</span>
+          </div>
+        </div>
+        <div>
+          <label for="id-v" class="block text-[0.68rem] font-semibold mb-1">Voltage <span class="font-normal text-muted">(optional)</span></label>
+          <div class="relative">
+            <input id="id-v" class="input pr-8 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-v-hint" />
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[0.65rem] text-muted pointer-events-none">V</span>
+          </div>
+          <p id="id-v-hint" class="text-[0.58rem] text-muted mt-1">From a multimeter</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button type="reset" class="btn btn-sm">Clear</button>
+      </div>
+      <div class="callout info">
+        <p class="font-semibold text-ink">Measuring pitfalls</p>
+        <ul class="mt-1 space-y-1 list-disc pl-4 text-ink-2">
+          <li>Height includes the positive terminal. Measure from the flat negative end to the tip of the button.</li>
+          <li>Protected lithium-ion cells carry a circuit board and are commonly 2 to 5 mm longer than the bare cell: a protected 18650 can measure 67 to 70 mm.</li>
+          <li>A coin cell's thickness is the second pair of digits in its name: CR2032 is 20 mm across and 3.2 mm thick. Button cells work the same way: SR626 is 6.8 by 2.6 mm.</li>
+          <li>Labels and shrink wrap add a few tenths of a millimeter to the diameter. Measure the metal when you can.</li>
+        </ul>
+      </div>
+    </form>
+
+    <div>
+      <div id="id-warn" class="callout warn mb-3" hidden></div>
+      <div id="id-empty" class="card p-5">
+        <p class="text-[0.8rem] text-ink-2">Enter at least one measurement to see matches. Or try one of these:</p>
+        <ul class="mt-3 flex flex-wrap gap-1.5">
+          {examples.map((e) => <li><a class="chip font-sans" href={`/identify?${e.q}`} data-example={e.q}>{e.label}</a></li>)}
+        </ul>
+      </div>
+      <div id="id-results" hidden>
+        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+          <h2 class="section-title mb-0">Closest sizes</h2>
+          <p class="text-[0.6rem] text-muted mono" id="id-formula"></p>
+        </div>
+        <ol id="id-list" class="grid gap-2" aria-live="polite"></ol>
+        <p class="mt-3 text-[0.62rem] text-muted">Differences compare each entry's nominal size with your measurement: "0.3 mm wider" means the listed battery is 0.3 mm wider than what you measured. Inside the published tolerance, a dimension counts as an exact match.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap mt-12">
+    <h2 class="section-title" id="how">How it works</h2>
+    <div class="prose">
+      <p>Each entry's published dimensions are compared with yours, only within the shape you picked: round cylinders (AA, 18650, CR123A), coins and buttons (CR2032, LR44, hearing aid cells), and rectangular batteries (9 V, lantern and flat packs, two-cell photo packs).</p>
+      <p>For round shapes the distance is <span class="mono">√((Δd ÷ d)² + (0.6 × Δh ÷ h)²)</span>, where <span class="mono">d</span> and <span class="mono">h</span> are the entry's nominal diameter and height and <span class="mono">Δ</span> is how far your measurement falls outside the entry's published tolerance range (zero when it falls inside). Height counts at 0.6 because it is the less reliable measurement: terminals, protection circuits and caps change it. For rectangular batteries the three sides are sorted largest first, so the order you enter them in does not matter, and the distance is <span class="mono">√(Σ (Δ ÷ nominal)²)</span> over the sides you entered.</p>
+      <p>A voltage reading within 12% of one of the entry's nominal voltages adds nothing. Further away, it adds <span class="mono">0.5 × (|ln(V ÷ nominal)| − 0.12)</span>. Fresh cells read above nominal and used cells below, which is why the margin is wide.</p>
+      <p>Match quality is <span class="mono">100 × e^(−(distance ÷ 0.1)²)</span>: an exact match is 100%, a 5% difference about 78%, a 10% difference about 37%.</p>
+      <p>Dimensions come from each entry's cited sources: IEC 60086-2 and ANSI C18 tables where they exist, otherwise manufacturer datasheets. See <a href="/sources">sources</a>. To read a size from a printed code instead, use the <a href="/decode">code decoder</a>.</p>
+    </div>
+  </section>
+
+  <script type="application/json" id="id-data" set:html={JSON.stringify(items)} />
+</BaseLayout>
+
+<script>
+  interface Item {
+    id: string; n: string; c: string; cls: 'cylinder' | 'disc' | 'box'; s: string;
+    d: number | null; h: number; w: number | null; p: number | null;
+    td: [number, number] | null; th: [number, number] | null; tw: [number, number] | null; tp: [number, number] | null;
+    v: number[]; col: string;
+  }
+  type Shape = 'cylinder' | 'disc' | 'box';
+  const items: Item[] = JSON.parse(document.getElementById('id-data')!.textContent!);
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const form = $<HTMLFormElement>('id-form');
+  const inD = $<HTMLInputElement>('id-d');
+  const inH = $<HTMLInputElement>('id-h');
+  const inP = $<HTMLInputElement>('id-p');
+  const inV = $<HTMLInputElement>('id-v');
+  const pWrap = $('id-p-wrap');
+  const list = $('id-list');
+  const results = $('id-results');
+  const empty = $('id-empty');
+  const warn = $('id-warn');
+  const formula = $('id-formula');
+  const shapeBtns = [...document.querySelectorAll<HTMLButtonElement>('[data-shape]')];
+  const unitBtns = [...document.querySelectorAll<HTMLButtonElement>('[data-unit]')];
+
+  let shape: Shape = 'cylinder';
+  let unit: 'mm' | 'in' = 'mm';
+  const esc = (s: string) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const num = (el: HTMLInputElement) => {
+    const x = parseFloat(el.value);
+    return isFinite(x) && x > 0 ? x : null;
+  };
+  const toMM = (x: number | null) => (x === null ? null : unit === 'in' ? x * 25.4 : x);
+  const show = (mm: number) => (unit === 'in' ? `${(mm / 25.4).toFixed(3)} in` : `${Number(mm.toFixed(2))} mm`);
+
+  const LABELS: Record<Shape, { d: string; h: string; dh: string; hh: string }> = {
+    cylinder: { d: 'Diameter', h: 'Length', dh: 'Across the widest point', hh: 'End to end, terminal included' },
+    disc: { d: 'Diameter', h: 'Thickness', dh: 'Across the face', hh: 'Edge, both faces included' },
+    box: { d: 'Width', h: 'Height', dh: 'Longest side across the face', hh: 'Terminals included' },
+  };
+
+  function setShape(s: Shape) {
+    shape = s;
+    shapeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.shape === s)));
+    $('id-d-label').textContent = LABELS[s].d;
+    $('id-h-label').textContent = LABELS[s].h;
+    $('id-d-hint').textContent = LABELS[s].dh;
+    $('id-h-hint').textContent = LABELS[s].hh;
+    pWrap.hidden = s !== 'box';
+  }
+  function setUnit(u: 'mm' | 'in', convert = true) {
+    if (u === unit) return;
+    if (convert) {
+      for (const el of [inD, inH, inP]) {
+        const x = num(el);
+        if (x !== null) el.value = String(u === 'in' ? Number((x / 25.4).toFixed(4)) : Number((x * 25.4).toFixed(2)));
+      }
+    }
+    unit = u;
+    unitBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.unit === u)));
+    document.querySelectorAll('.unit').forEach((el) => (el.textContent = u === 'in' ? 'in' : 'mm'));
+  }
+
+  /** How far x falls outside [lo, hi], or 0 inside. */
+  const gap = (x: number, t: [number, number] | null, nominal: number) => {
+    const [lo, hi] = t ?? [nominal, nominal];
+    // 0.01 mm of slack absorbs rounding from inch conversion.
+    return x < lo - 0.01 ? x - lo : x > hi + 0.01 ? x - hi : 0;
+  };
+  const WORDS: Record<string, [string, string, string]> = {
+    diameter: ['wider', 'narrower', 'same diameter'],
+    length: ['longer', 'shorter', 'same length'],
+    thickness: ['thicker', 'thinner', 'same thickness'],
+    width: ['wider', 'narrower', 'same width'],
+    depth: ['deeper', 'shallower', 'same depth'],
+    height: ['taller', 'shorter', 'same height'],
+  };
+  const deltaText = (label: string, mm: number) => {
+    const [more, less, same] = WORDS[label];
+    if (Math.abs(mm) < 0.05) return same;
+    return `${show(Math.abs(mm))} ${mm > 0 ? more : less}`;
+  };
+
+  function score(it: Item, D: number | null, H: number | null, P: number | null, V: number | null) {
+    let dist = 0;
+    const deltas: string[] = [];
+    let inside = true;
+    let tol = false; // any compared dimension with a published min/max range
+    const spread = (t: [number, number] | null) => !!t && t[1] - t[0] > 0.001;
+    if (shape !== 'box') {
+      const hLabel = shape === 'disc' ? 'thickness' : 'length';
+      let sum = 0;
+      if (D !== null && it.d) {
+        const g = gap(D, it.td, it.d);
+        sum += (g / it.d) ** 2;
+        if (g) inside = false;
+        tol ||= spread(it.td);
+        deltas.push(deltaText('diameter', it.d - D));
+      }
+      if (H !== null) {
+        const g = gap(H, it.th, it.h);
+        sum += ((0.6 * g) / it.h) ** 2;
+        if (g) inside = false;
+        tol ||= spread(it.th);
+        deltas.push(deltaText(hLabel, it.h - H));
+      }
+      dist = Math.sqrt(sum);
+    } else {
+      // Orientation-free: sort both sides of the comparison largest first.
+      const sides = [
+        { label: 'width', v: it.w ?? 0, t: it.tw },
+        { label: 'depth', v: it.p ?? 0, t: it.tp },
+        { label: 'height', v: it.h, t: it.th },
+      ].sort((a, b) => b.v - a.v);
+      const meas = [D, P, H].filter((x): x is number => x !== null).sort((a, b) => b - a);
+      // Choose which of the entry's sides the measurements correspond to.
+      const combos: number[][] = meas.length === 3 ? [[0, 1, 2]] : meas.length === 2 ? [[0, 1], [0, 2], [1, 2]] : [[0], [1], [2]];
+      let best = { sum: Infinity, combo: combos[0] };
+      for (const c of combos) {
+        let sum = 0;
+        c.forEach((si, i) => (sum += (gap(meas[i], sides[si].t, sides[si].v) / sides[si].v) ** 2));
+        if (sum < best.sum) best = { sum, combo: c };
+      }
+      dist = Math.sqrt(best.sum);
+      best.combo.forEach((si, i) => {
+        if (gap(meas[i], sides[si].t, sides[si].v)) inside = false;
+        tol ||= spread(sides[si].t);
+        deltas.push(deltaText(sides[si].label, sides[si].v - meas[i]));
+      });
+    }
+    let vNote = '';
+    let vMatch: boolean | null = null;
+    if (V !== null && it.v.length) {
+      const off = Math.min(...it.v.map((n) => Math.abs(Math.log(V / n))));
+      vMatch = off <= 0.12;
+      if (!vMatch) dist += 0.5 * (off - 0.12);
+      vNote = vMatch ? 'voltage fits' : 'voltage differs';
+    }
+    return { it, dist, deltas, inside, tol, vNote, vMatch };
+  }
+
+  function thumb(it: Item, D: number | null, H: number | null, P: number | null) {
+    // Entry outline (filled) with the measurement (dashed) at one scale.
+    let bw: number, bh: number, mw: number | null, mh: number | null, round = false;
+    if (shape === 'disc') {
+      bw = bh = it.d ?? 0;
+      mw = mh = D;
+      round = true;
+    } else if (shape === 'cylinder') {
+      bw = it.d ?? 0; bh = it.h; mw = D; mh = H;
+    } else {
+      const sides = [it.w ?? 0, it.p ?? 0, it.h].sort((a, b) => b - a);
+      const meas = [D, P, H].filter((x): x is number => x !== null).sort((a, b) => b - a);
+      bh = sides[0]; bw = sides[1]; mh = meas[0] ?? null; mw = meas[1] ?? null;
+    }
+    const W = Math.max(bw, mw ?? 0), Hh = Math.max(bh, mh ?? 0);
+    const pad = Math.max(W, Hh) * 0.06;
+    const vb = `${-W / 2 - pad} ${-Hh - pad} ${W + 2 * pad} ${Hh + 2 * pad}`;
+    const sw = Math.max(W, Hh) * 0.025;
+    const cy = -Hh / 2;
+    const body = round
+      ? `<circle cx="0" cy="${cy}" r="${bw / 2}" fill="${it.col}" fill-opacity="0.85" />`
+      : `<rect x="${-bw / 2}" y="${-bh}" width="${bw}" height="${bh}" rx="${Math.min(bw, bh) * 0.08}" fill="${it.col}" fill-opacity="0.85" />`;
+    let meas = '';
+    if (mw && mh) {
+      meas = round
+        ? `<circle cx="0" cy="${cy}" r="${mw / 2}" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-dasharray="${sw * 2} ${sw * 1.5}" />`
+        : `<rect x="${-mw / 2}" y="${-mh}" width="${mw}" height="${mh}" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-dasharray="${sw * 2} ${sw * 1.5}" />`;
+    }
+    return `<svg viewBox="${vb}" class="w-full h-full text-ink" preserveAspectRatio="xMidYMax meet" aria-hidden="true">${body}${meas}</svg>`;
+  }
+
+  function writeURL(D: number | null, H: number | null, P: number | null, V: number | null) {
+    const q = new URLSearchParams();
+    if (D !== null || H !== null || P !== null || V !== null) q.set('shape', shape);
+    if (inD.value) q.set('d', inD.value);
+    if (inH.value) q.set('h', inH.value);
+    if (shape === 'box' && inP.value) q.set('p', inP.value);
+    if (inV.value) q.set('v', inV.value);
+    if (unit === 'in') q.set('u', 'in');
+    const s = q.toString();
+    history.replaceState(null, '', s ? `?${s}` : location.pathname);
+  }
+
+  function run() {
+    const D = toMM(num(inD)), H = toMM(num(inH)), P = shape === 'box' ? toMM(num(inP)) : null, V = num(inV);
+    writeURL(D, H, P, V);
+    warn.hidden = true;
+    if (shape === 'cylinder' && D && H && H < D) {
+      warn.hidden = false;
+      warn.innerHTML = `The length is less than the diameter. Coins and button cells are matched separately. <button type="button" class="link" data-switch="disc">Match as a coin or button</button>`;
+    } else if (shape === 'disc' && D && H && H > D) {
+      warn.hidden = false;
+      warn.innerHTML = `The thickness is more than the diameter. <button type="button" class="link" data-switch="cylinder">Match as a round cylinder</button>`;
+    }
+    if (D === null && H === null && P === null) {
+      results.hidden = true;
+      empty.hidden = false;
+      return;
+    }
+    empty.hidden = true;
+    results.hidden = false;
+    formula.textContent = shape === 'box' ? 'distance = √(Σ (Δ ÷ nominal)²)' : 'distance = √((Δd ÷ d)² + (0.6 × Δh ÷ h)²)';
+    const ranked = items
+      .filter((it) => it.cls === shape)
+      .map((it) => score(it, D, H, P, V))
+      .sort((a, b) => a.dist - b.dist)
+      .slice(0, 8);
+    list.innerHTML = ranked
+      .map((r, i) => {
+        const q = Math.round(100 * Math.exp(-((r.dist / 0.1) ** 2)));
+        const volts = r.it.v.map((x) => `${Number(x.toFixed(2))} V`).join(' / ');
+        return `<li class="card p-3 flex gap-3 items-center">
+          <div class="w-12 h-14 shrink-0 rounded-md grid-paper p-1 flex items-end justify-center">${thumb(r.it, D, H, P)}</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-baseline gap-x-2 gap-y-0 flex-wrap">
+              <span class="text-[0.62rem] text-muted tabular">${i + 1}</span>
+              <a href="/${r.it.id}" class="font-semibold text-[0.9rem] hover:text-accent-ink">${esc(r.it.n)}</a>
+              <span class="text-[0.6rem] text-muted">${esc(r.it.c)} · ${esc(r.it.s)} · ${esc(volts)}</span>
+            </div>
+            <p class="text-[0.68rem] text-ink-2">${esc(r.deltas.join(', '))}${r.inside ? ` <span class="chip font-sans ml-1">${r.tol ? 'within published tolerance' : 'matches nominal size'}</span>` : ''}${r.vNote ? ` <span class="chip font-sans ml-1 ${r.vMatch ? '' : 'text-muted'}">${r.vNote}</span>` : ''}</p>
+            <div class="mt-1 flex items-center gap-2">
+              <div class="h-1.5 flex-1 max-w-[12rem] rounded-full bg-surface-3 overflow-hidden" role="img" aria-label="Match quality ${q} percent"><div class="h-full rounded-full bg-accent" style="width:${q}%"></div></div>
+              <span class="text-[0.58rem] text-muted tabular">${q}% · distance ${r.dist.toFixed(3)}</span>
+            </div>
+          </div>
+        </li>`;
+      })
+      .join('');
+  }
+
+  shapeBtns.forEach((b) => b.addEventListener('click', () => { setShape(b.dataset.shape as Shape); run(); }));
+  unitBtns.forEach((b) => b.addEventListener('click', () => { setUnit(b.dataset.unit as 'mm' | 'in'); run(); }));
+  [inD, inH, inP, inV].forEach((el) => el.addEventListener('input', run));
+  form.addEventListener('submit', (e) => e.preventDefault());
+  form.addEventListener('reset', () => setTimeout(run, 0));
+  warn.addEventListener('click', (e) => {
+    const t = (e.target as HTMLElement).closest('[data-switch]') as HTMLElement | null;
+    if (t) { setShape(t.dataset.switch as Shape); run(); }
+  });
+
+  function load(qs: string) {
+    const q = new URLSearchParams(qs);
+    const sh = (q.get('shape') ?? '').toLowerCase();
+    const alias: Record<string, Shape> = { cylinder: 'cylinder', round: 'cylinder', disc: 'disc', coin: 'disc', button: 'disc', box: 'box', rect: 'box', rectangular: 'box' };
+    setShape(alias[sh] ?? 'cylinder');
+    setUnit(q.get('u') === 'in' ? 'in' : 'mm', false);
+    inD.value = q.get('d') ?? q.get('w') ?? '';
+    inH.value = q.get('h') ?? '';
+    inP.value = q.get('p') ?? '';
+    inV.value = q.get('v') ?? '';
+    run();
+  }
+  document.querySelectorAll<HTMLAnchorElement>('[data-example]').forEach((a) =>
+    a.addEventListener('click', (e) => { e.preventDefault(); load(a.dataset.example!); inD.focus(); }),
+  );
+  load(location.search);
+</script>

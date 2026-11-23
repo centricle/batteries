@@ -1,0 +1,360 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { batteries, categoryById, chem, CATEGORY_META } from '../lib/data';
+
+// Per-variant electrical data for the pack builder.
+const packs = batteries().map((b) => ({
+  id: b.id,
+  n: b.name,
+  c: b.category,
+  vars: b.variants.map((v) => ({
+    l: `${chem(v.chemistry).short}${v.label ? `: ${v.label}` : ''}${v.rechargeable ? '' : ', primary'}`,
+    v: v.voltage.nominal,
+    mx: v.voltage.charge_max ?? null,
+    co: v.voltage.cutoff ?? null,
+    cap: v.capacity_mah?.typical ?? null,
+    rg: v.capacity_mah?.range ?? null,
+    w: v.weight_g ?? null,
+    r: v.rechargeable,
+  })),
+}));
+const groups = CATEGORY_META.map((c) => ({ name: c.name, items: packs.filter((p) => p.c === c.id) })).filter((g) => g.items.length);
+const faaAccessed = '2026-11-22';
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Battery calculators',
+  url: 'https://batteries.fyi/calculators',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript',
+  isAccessibleForFree: true,
+  description: 'Watt-hours from volts and mAh, runtime from capacity and load, series and parallel pack voltage, capacity and weight, and the FAA passenger baggage category for a lithium-ion battery.',
+};
+---
+
+<BaseLayout title="Battery calculators: Wh, runtime, series and parallel packs, air travel | batteries.fyi" description="Convert mAh to Wh, estimate runtime from capacity and load, build a series and parallel pack from any cell, and check the FAA passenger baggage category for a lithium-ion battery. Formulas shown." jsonld={jsonld}>
+  <section class="wrap pt-8">
+    <p class="eyebrow">Tools</p>
+    <h1 class="text-[2rem] font-[750] tracking-tight mt-1">Battery calculators</h1>
+    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Four calculations with the formula next to each result: energy in watt-hours from voltage and capacity, runtime from capacity and load current, the voltage, capacity and weight of a series and parallel pack built from any cell in the database, and the FAA category for carrying a lithium-ion battery on a passenger flight. Results update as you type, and the address bar keeps the inputs so a configuration can be shared.</p>
+  </section>
+
+  <div class="wrap mt-6 grid gap-4 lg:grid-cols-2 items-start [&>*]:min-w-0">
+    <!-- (a) Energy -->
+    <section id="energy" class="card p-4 sm:p-5 scroll-mt-20" aria-labelledby="energy-h">
+      <h2 id="energy-h" class="text-[0.95rem] font-semibold">Energy</h2>
+      <p class="text-[0.66rem] text-muted">Watt-hours from nominal voltage and capacity.</p>
+      <div class="mt-3 grid grid-cols-2 gap-3">
+        <div>
+          <label for="e-v" class="block text-[0.66rem] font-semibold mb-1">Voltage (V)</label>
+          <input id="e-v" class="input tabular" type="number" inputmode="decimal" min="0" step="any" value="3.7" />
+        </div>
+        <div>
+          <label for="e-mah" class="block text-[0.66rem] font-semibold mb-1">Capacity (mAh)</label>
+          <input id="e-mah" class="input tabular" type="number" inputmode="decimal" min="0" step="any" value="3000" />
+        </div>
+      </div>
+      <div class="mt-4 grid grid-cols-2 gap-2" aria-live="polite">
+        <div class="spec"><span><output class="v" id="e-wh" for="e-v e-mah"></output><span class="u">Wh</span></span><span class="s">watt-hours</span></div>
+        <div class="spec"><span><output class="v" id="e-mwh" for="e-v e-mah"></output><span class="u">mWh</span></span><span class="s">milliwatt-hours</span></div>
+      </div>
+      <p class="mt-3 mono text-[0.64rem] text-ink-2" id="e-f"></p>
+      <p class="mt-1 text-[0.6rem] text-muted">Wh = V × mAh ÷ 1,000. mWh = V × mAh. Use the nominal voltage, not the full-charge voltage.</p>
+    </section>
+
+    <!-- (b) Runtime -->
+    <section id="runtime" class="card p-4 sm:p-5 scroll-mt-20" aria-labelledby="runtime-h">
+      <h2 id="runtime-h" class="text-[0.95rem] font-semibold">Runtime</h2>
+      <p class="text-[0.66rem] text-muted">Hours from capacity and a constant load current.</p>
+      <div class="mt-3 grid grid-cols-2 gap-3">
+        <div>
+          <label for="r-mah" class="block text-[0.66rem] font-semibold mb-1">Capacity (mAh)</label>
+          <input id="r-mah" class="input tabular" type="number" inputmode="decimal" min="0" step="any" value="2850" />
+        </div>
+        <div>
+          <label for="r-ma" class="block text-[0.66rem] font-semibold mb-1">Load (mA)</label>
+          <input id="r-ma" class="input tabular" type="number" inputmode="decimal" min="0" step="any" value="100" />
+        </div>
+      </div>
+      <div class="mt-4 grid grid-cols-2 gap-2" aria-live="polite">
+        <div class="spec"><span><output class="v" id="r-h" for="r-mah r-ma"></output><span class="u">h</span></span><span class="s">hours</span></div>
+        <div class="spec"><span class="v text-[1rem]!" id="r-hm"></span><span class="s" id="r-days">hours and minutes</span></div>
+      </div>
+      <p class="mt-3 mono text-[0.64rem] text-ink-2" id="r-f"></p>
+      <p class="mt-2 callout warn">A rated capacity holds only at the load it was rated at. Primary cells deliver less at higher currents. The alkaline AA rating of 2,850 mAh is measured on a 43 ohm load, a light drain; lithium iron disulfide AA cells change less, 3,500 mAh at 100 mA against 3,400 mAh at 1,000 mA. Each battery's page lists its test conditions. See <a class="link" href="/reference/capacity-explained">what mAh and Wh mean</a>.</p>
+    </section>
+
+    <!-- (c) Pack builder -->
+    <section id="pack" class="card p-4 sm:p-5 scroll-mt-20 lg:col-span-2" aria-labelledby="pack-h">
+      <h2 id="pack-h" class="text-[0.95rem] font-semibold">Pack builder</h2>
+      <p class="text-[0.66rem] text-muted">Cells in series (S) add voltage; strings in parallel (P) add capacity.</p>
+      <div class="mt-3 grid gap-3 grid-cols-2 lg:grid-cols-[1fr_1.4fr_0.5fr_0.5fr_0.8fr] [&>*]:min-w-0">
+        <div class="col-span-2 sm:col-span-1">
+          <label for="p-b" class="block text-[0.66rem] font-semibold mb-1">Cell</label>
+          <select id="p-b" class="input">
+            {groups.map((g) => (
+              <optgroup label={g.name}>
+                {g.items.map((p) => <option value={p.id} selected={p.id === '18650'}>{p.n}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <label for="p-var" class="block text-[0.66rem] font-semibold mb-1">Variant</label>
+          <select id="p-var" class="input"></select>
+        </div>
+        <div>
+          <label for="p-s" class="block text-[0.66rem] font-semibold mb-1">Series (S)</label>
+          <input id="p-s" class="input tabular" type="number" inputmode="numeric" min="1" max="200" step="1" value="4" />
+        </div>
+        <div>
+          <label for="p-p" class="block text-[0.66rem] font-semibold mb-1">Parallel (P)</label>
+          <input id="p-p" class="input tabular" type="number" inputmode="numeric" min="1" max="200" step="1" value="2" />
+        </div>
+        <div class="col-span-2 lg:col-span-1">
+          <label for="p-cap" class="block text-[0.66rem] font-semibold mb-1">mAh per cell</label>
+          <input id="p-cap" class="input tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="p-cap-hint" />
+        </div>
+      </div>
+      <p class="mt-1 text-[0.6rem] text-muted" id="p-cap-hint"></p>
+      <div class="mt-4 grid gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6" aria-live="polite" id="p-out"></div>
+      <ul class="mt-3 space-y-0.5 mono text-[0.62rem] text-ink-2" id="p-f"></ul>
+      <p class="mt-2 text-[0.6rem] text-muted">Weight counts cells only, not holders, nickel strip, wiring or a battery management board. Pack values assume matched cells; mixed or aged cells deliver less.</p>
+    </section>
+
+    <!-- (d) Air travel -->
+    <section id="air" class="card p-4 sm:p-5 scroll-mt-20 lg:col-span-2" aria-labelledby="air-h">
+      <h2 id="air-h" class="text-[0.95rem] font-semibold">Air travel check (FAA, lithium-ion)</h2>
+      <p class="text-[0.66rem] text-muted">The U.S. passenger baggage category for one rechargeable lithium-ion battery, by its watt-hour rating.</p>
+      <div class="mt-3 grid gap-3 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] items-end">
+        <div>
+          <label for="a-wh" class="block text-[0.66rem] font-semibold mb-1">Battery rating (Wh)</label>
+          <input id="a-wh" class="input tabular" type="number" inputmode="decimal" min="0" step="any" value="99" />
+        </div>
+        <label class="flex items-center gap-2 text-[0.7rem] pb-2">
+          <input type="checkbox" id="a-src" class="w-4 h-4 accent-[var(--accent)]" />
+          <span>Use the pack builder result (<span id="a-pack-wh" class="tabular"></span> Wh)</span>
+        </label>
+      </div>
+      <div class="mt-4" aria-live="polite">
+        <div id="a-out" class="callout"></div>
+      </div>
+      <div class="card table-scroll mt-4">
+        <table class="table min-w-[32rem]" id="a-table">
+          <thead><tr><th>Rating</th><th>Carry-on</th><th>Checked</th><th>Spares</th></tr></thead>
+          <tbody>
+            <tr data-band="1"><td class="font-semibold">Up to 100 Wh</td><td>Allowed</td><td>Installed in a device that is completely off and protected from activation</td><td>Carry-on only; no FAA quantity limit for personal use</td></tr>
+            <tr data-band="2"><td class="font-semibold">More than 100, up to 160 Wh</td><td>With airline approval</td><td>Installed in a device that is completely off, with airline approval</td><td>Carry-on only; at most two per person, with airline approval</td></tr>
+            <tr data-band="3"><td class="font-semibold">More than 160 Wh</td><td>Forbidden</td><td>Forbidden</td><td>Forbidden</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="mt-3 text-[0.62rem] text-muted space-y-1">
+        <li>The FAA writes the bands as 0 to 100 Wh and 101 to 160 Wh. This page treats any rating above 100 Wh as the second band.</li>
+        <li>Spare batteries and power banks go in carry-on baggage only, with the terminals protected from short circuit (original packaging, tape, or a case). A carry-on bag checked at the gate must have its spares removed.</li>
+        <li>Lithium metal (non-rechargeable) batteries are limited by lithium content instead: 2 g per battery, or 2 to 8 g with airline approval for up to two spares.</li>
+        <li>Airlines may set stricter quantity and watt-hour limits than the FAA. Other countries' rules can differ.</li>
+      </ul>
+      <p class="mt-3 text-[0.62rem] text-muted">Source: FAA, <a class="link" href="https://www.faa.gov/hazmat/packsafe/lithium-batteries">PackSafe: Lithium Batteries</a> (page last updated August 11, 2026) and <a class="link" href="https://www.faa.gov/hazmat/packsafe/airline-passengers-and-batteries">Airline Passengers and Batteries</a>, accessed {faaAccessed}; regulation 49 CFR 175.10(a)(18). More detail: <a class="link" href="/reference/air-travel">lithium batteries on airplanes</a>.</p>
+    </section>
+  </div>
+
+  <section class="wrap mt-12">
+    <h2 class="section-title" id="how">How it works</h2>
+    <div class="prose">
+      <p><strong>Energy.</strong> Energy is voltage times charge. With capacity in milliamp-hours, <span class="mono">Wh = V × mAh ÷ 1,000</span>. Use the nominal voltage: it is the average over a discharge, which is how makers rate watt-hours. Capacity in mAh compares cells only at the same voltage; Wh compares across chemistries.</p>
+      <p><strong>Runtime.</strong> <span class="mono">hours = mAh ÷ mA</span> for a constant current. It is an upper bound: published capacities are measured at a stated load, temperature and cutoff voltage (shown on each battery's page), and a heavier load, cold, or a device that stops at a higher voltage all reduce what a cell delivers. Primary chemistries such as alkaline lose the most at high current.</p>
+      <p><strong>Pack builder.</strong> For S cells in series and P strings in parallel: <span class="mono">V = S × cell nominal</span>, <span class="mono">full charge = S × cell charge maximum</span>, <span class="mono">capacity = P × cell mAh</span>, <span class="mono">Wh = V × capacity ÷ 1,000</span>, <span class="mono">cells = S × P</span> and <span class="mono">weight = cells × cell weight</span>. Cell values come from each battery's cited datasheets; blank values are not published there. The variant list opens on the first variant with a published typical capacity, and the mAh field can be overwritten with any cell's rating. A series pack of rechargeable cells needs balancing and protection to stay within each cell's limits.</p>
+      <p><strong>Air travel.</strong> The category follows the FAA PackSafe rules for rechargeable lithium-ion batteries in passenger baggage, by the rating of each battery. It does not cover cargo shipments.</p>
+    </div>
+  </section>
+
+  <script type="application/json" id="calc-packs" set:html={JSON.stringify(packs)} />
+</BaseLayout>
+
+<script>
+  interface Var { l: string; v: number; mx: number | null; co: number | null; cap: number | null; rg: [number, number] | null; w: number | null; r: boolean }
+  interface Pack { id: string; n: string; c: string; vars: Var[] }
+  const packs: Pack[] = JSON.parse(document.getElementById('calc-packs')!.textContent!);
+  const byId = new Map(packs.map((p) => [p.id, p]));
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const fmt = (n: number, max = 2) => Number(n.toFixed(max)).toLocaleString('en-US', { maximumFractionDigits: max });
+  const num = (id: string) => {
+    const x = parseFloat(($<HTMLInputElement>(id)).value);
+    return isFinite(x) && x >= 0 ? x : null;
+  };
+  const esc = (s: string) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const dash = '–';
+
+  // ------------------------------------------------------------- energy
+  function energy() {
+    const v = num('e-v'), mah = num('e-mah');
+    if (v === null || mah === null) {
+      $('e-wh').textContent = dash; $('e-mwh').textContent = dash; $('e-f').textContent = 'Enter a voltage and a capacity.';
+      return;
+    }
+    const wh = (v * mah) / 1000;
+    $('e-wh').textContent = fmt(wh, wh < 10 ? 3 : 2);
+    $('e-mwh').textContent = fmt(v * mah, 0);
+    $('e-f').textContent = `${fmt(v)} V × ${fmt(mah)} mAh ÷ 1,000 = ${fmt(wh, 3)} Wh`;
+  }
+
+  // ------------------------------------------------------------ runtime
+  function runtime() {
+    const mah = num('r-mah'), ma = num('r-ma');
+    if (mah === null || !ma) {
+      $('r-h').textContent = dash; $('r-hm').textContent = dash; $('r-days').textContent = 'hours and minutes';
+      $('r-f').textContent = 'Enter a capacity and a load above zero.';
+      return;
+    }
+    const h = mah / ma;
+    const H = Math.floor(h), M = Math.round((h - H) * 60);
+    $('r-h').textContent = fmt(h, h < 10 ? 2 : 1);
+    $('r-hm').textContent = `${H.toLocaleString('en-US')} h ${M === 60 ? 59 : M} min`;
+    $('r-days').textContent = h >= 48 ? `${fmt(h / 24, 1)} days` : 'hours and minutes';
+    $('r-f').textContent = `${fmt(mah)} mAh ÷ ${fmt(ma)} mA = ${fmt(h, 2)} h`;
+  }
+
+  // --------------------------------------------------------- pack builder
+  const selB = $<HTMLSelectElement>('p-b');
+  const selV = $<HTMLSelectElement>('p-var');
+  const capIn = $<HTMLInputElement>('p-cap');
+  let customCap = false;
+  let packWh: number | null = null;
+
+  function fillVariants(prefer?: number) {
+    const p = byId.get(selB.value)!;
+    selV.innerHTML = p.vars.map((v, i) => `<option value="${i}">${esc(v.l)} (${fmt(v.v)} V)</option>`).join('');
+    // Default: the first variant with a published typical capacity.
+    const first = p.vars.findIndex((v) => v.cap);
+    selV.value = String(prefer !== undefined && p.vars[prefer] ? prefer : first >= 0 ? first : 0);
+    selV.disabled = p.vars.length < 2;
+  }
+  function resetCap() {
+    const v = byId.get(selB.value)!.vars[+selV.value];
+    capIn.value = v.cap ? String(v.cap) : '';
+    customCap = false;
+  }
+
+  function spec(v: string, u: string, s: string) {
+    return `<div class="spec"><span><span class="v">${v}</span>${u ? `<span class="u">${u}</span>` : ''}</span><span class="s">${s}</span></div>`;
+  }
+
+  function pack() {
+    const p = byId.get(selB.value)!;
+    const v = p.vars[+selV.value];
+    const S = Math.max(1, Math.round(num('p-s') ?? 1));
+    const P = Math.max(1, Math.round(num('p-p') ?? 1));
+    const cap = num('p-cap');
+    const cells = S * P;
+    const V = S * v.v;
+    const hint = [
+      v.cap ? `Published typical: ${fmt(v.cap, 0)} mAh.` : v.rg ? `Published range: ${fmt(v.rg[0], 0)} to ${fmt(v.rg[1], 0)} mAh across products. Enter your cell's rating.` : 'Capacity not published for this variant. Enter your cell\'s rating.',
+      customCap ? 'Using your value.' : '',
+    ].filter(Boolean).join(' ');
+    $('p-cap-hint').textContent = hint;
+    const out: string[] = [];
+    const f: string[] = [];
+    out.push(spec(fmt(V), 'V', 'nominal voltage'));
+    f.push(`V = ${S} × ${fmt(v.v)} V = ${fmt(V)} V`);
+    if (v.mx) {
+      out.push(spec(fmt(S * v.mx), 'V', 'full charge'));
+      f.push(`full charge = ${S} × ${fmt(v.mx)} V = ${fmt(S * v.mx)} V`);
+    } else out.push(spec(dash, '', v.r ? 'full charge: not published' : 'full charge: primary cell'));
+    if (cap) {
+      const C = P * cap;
+      packWh = (V * C) / 1000;
+      out.push(spec(fmt(C, 0), 'mAh', 'capacity'));
+      out.push(spec(fmt(packWh, packWh < 10 ? 2 : 1), 'Wh', 'energy'));
+      f.push(`capacity = ${P} × ${fmt(cap)} mAh = ${fmt(C, 0)} mAh`);
+      f.push(`Wh = ${fmt(V)} V × ${fmt(C, 0)} mAh ÷ 1,000 = ${fmt(packWh, 2)} Wh`);
+    } else {
+      packWh = null;
+      out.push(spec(dash, '', 'capacity: enter mAh'));
+      out.push(spec(dash, '', 'energy: enter mAh'));
+    }
+    out.push(spec(String(cells), '', 'cells'));
+    f.push(`cells = ${S} × ${P} = ${cells}`);
+    if (v.w) {
+      const g = cells * v.w;
+      out.push(spec(g >= 1000 ? fmt(g / 1000, 2) : fmt(g, 1), g >= 1000 ? 'kg' : 'g', 'cell weight'));
+      f.push(`weight = ${cells} × ${fmt(v.w)} g = ${fmt(g, 1)} g`);
+    } else out.push(spec(dash, '', 'weight: not published'));
+    if (v.co) f.push(`cutoff = ${S} × ${fmt(v.co)} V = ${fmt(S * v.co)} V (end of discharge)`);
+    $('p-out').innerHTML = out.join('');
+    $('p-f').innerHTML = f.map((x) => `<li>${esc(x)}</li>`).join('');
+    $('a-pack-wh').textContent = packWh === null ? dash : fmt(packWh, 1);
+  }
+
+  // ---------------------------------------------------------- air travel
+  const src = $<HTMLInputElement>('a-src');
+  function air() {
+    const whIn = $<HTMLInputElement>('a-wh');
+    whIn.disabled = src.checked;
+    if (src.checked && packWh !== null) whIn.value = String(Number(packWh.toFixed(2)));
+    const wh = src.checked ? packWh : num('a-wh');
+    const box = $('a-out');
+    document.querySelectorAll<HTMLTableRowElement>('#a-table tr[data-band]').forEach((tr) => tr.classList.remove('bg-accent-soft'));
+    if (wh === null) {
+      box.className = 'callout';
+      box.textContent = src.checked ? 'The pack builder has no watt-hour result yet: enter a capacity there.' : 'Enter a watt-hour rating.';
+      return;
+    }
+    const band = wh <= 100 ? 1 : wh <= 160 ? 2 : 3;
+    document.querySelector(`#a-table tr[data-band="${band}"]`)?.classList.add('bg-accent-soft');
+    const tag = `${fmt(wh, 2)} Wh`;
+    const rules = {
+      1: ['ok', `${tag}: allowed in carry-on baggage.`, 'Up to 100 Wh. Spares go in carry-on only, terminals protected. Installed in a device, it may also go in checked baggage if the device is completely powered off and protected from accidental activation.'],
+      2: ['warn', `${tag}: airline approval required.`, 'More than 100 Wh and up to 160 Wh. Carry-on with the airline\'s approval; at most two spare batteries of this size per person, carry-on only.'],
+      3: ['danger', `${tag}: forbidden in passenger baggage.`, 'More than 160 Wh. Not allowed in carry-on or checked baggage on passenger aircraft.'],
+    } as const;
+    const [cls, head, body] = rules[band];
+    box.className = `callout ${cls}`;
+    box.innerHTML = `<p class="font-semibold text-ink text-[0.8rem]">${esc(head)}</p><p class="mt-1 text-ink-2">${esc(body)}</p>`;
+  }
+
+  // ------------------------------------------------------------- params
+  const DEF: Record<string, string> = { ev: '3.7', emah: '3000', rmah: '2850', rma: '100', b: '18650', s: '4', p: '2', wh: '99' };
+  const FIELDS: [string, string][] = [['ev', 'e-v'], ['emah', 'e-mah'], ['rmah', 'r-mah'], ['rma', 'r-ma'], ['s', 'p-s'], ['p', 'p-p'], ['wh', 'a-wh']];
+  function write() {
+    const q = new URLSearchParams();
+    for (const [k, id] of FIELDS) {
+      const val = ($<HTMLInputElement>(id)).value;
+      if (k === 'wh' && src.checked) continue;
+      if (val !== '' && val !== DEF[k]) q.set(k, val);
+    }
+    if (selB.value !== DEF.b) q.set('b', selB.value);
+    const p = byId.get(selB.value)!;
+    const firstCap = p.vars.findIndex((v) => v.cap);
+    if (+selV.value !== (firstCap >= 0 ? firstCap : 0)) q.set('var', selV.value);
+    if (customCap && capIn.value) q.set('cap', capIn.value);
+    if (src.checked) q.set('src', 'pack');
+    const s = q.toString();
+    history.replaceState(null, '', (s ? `?${s}` : location.pathname) + location.hash);
+  }
+
+  function all() {
+    energy();
+    runtime();
+    pack();
+    air();
+    write();
+  }
+
+  // Load from the URL.
+  const q = new URLSearchParams(location.search);
+  for (const [k, id] of FIELDS) if (q.has(k)) ($<HTMLInputElement>(id)).value = q.get(k)!;
+  if (q.get('b') && byId.has(q.get('b')!)) selB.value = q.get('b')!;
+  fillVariants(q.has('var') ? parseInt(q.get('var')!, 10) : undefined);
+  resetCap();
+  if (q.has('cap')) { capIn.value = q.get('cap')!; customCap = true; }
+  src.checked = q.get('src') === 'pack';
+
+  ['e-v', 'e-mah', 'r-mah', 'r-ma', 'p-s', 'p-p', 'a-wh'].forEach((id) => $(id).addEventListener('input', all));
+  capIn.addEventListener('input', () => { customCap = true; all(); });
+  selB.addEventListener('change', () => { fillVariants(); resetCap(); all(); });
+  selV.addEventListener('change', () => { resetCap(); all(); });
+  src.addEventListener('change', all);
+  all();
+</script>
