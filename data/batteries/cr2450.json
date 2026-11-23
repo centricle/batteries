@@ -102,7 +102,7 @@
     },
     {
       "id": "cr2477",
-      "relation": "fits-with-caveat",
+      "relation": "does-not-fit",
       "note": "Same 24.5 mm width and 2.7 mm thicker; does not fit a CR2450 holder."
     }
   ],

@@ -67,7 +67,7 @@
   "interchange": [
     {
       "id": "16340",
-      "relation": "do-not-substitute",
+      "relation": "does-not-fit",
       "note": "An 18350 is wider than a 16340 and does not fit the same compartments; the two are different sizes."
     }
   ],

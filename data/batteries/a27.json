@@ -108,7 +108,7 @@
   "interchange": [
     {
       "id": "a23",
-      "relation": "do-not-substitute",
+      "relation": "does-not-fit",
       "note": "An A23 is about 2.3 mm wider and will not fit holders sized for an A27."
     }
   ],

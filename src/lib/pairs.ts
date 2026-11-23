@@ -8,6 +8,8 @@ export const REL_META: Record<string, { label: string; cls: string }> = {
   equivalent: { label: 'Works the same', cls: 'ok' },
   'same-size': { label: 'Looks alike, not a swap', cls: 'info' },
   'fits-with-caveat': { label: 'Fits, with a catch', cls: 'warn' },
+  // Neutral: a plain callout. Red is kept for "Do not use", which is a hazard.
+  'does-not-fit': { label: 'Does not fit', cls: '' },
   'do-not-substitute': { label: 'Do not use', cls: 'danger' },
 };
 

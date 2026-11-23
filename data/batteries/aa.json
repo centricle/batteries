@@ -412,8 +412,13 @@
     },
     {
       "id": "aaa",
-      "relation": "same-size",
+      "relation": "does-not-fit",
       "note": "AAA batteries share the 1.5 V alkaline chemistry but are smaller, and do not work in place of AA batteries."
+    },
+    {
+      "id": "2-3aa",
+      "relation": "does-not-fit",
+      "note": "A 2/3AA battery is as wide as an AA but about 22 mm shorter, so it is not a drop-in for an AA battery."
     }
   ],
   "safety": [

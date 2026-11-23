@@ -81,13 +81,7 @@
     "Medical devices",
     "Professional electronics"
   ],
-  "interchange": [
-    {
-      "id": "c",
-      "relation": "do-not-substitute",
-      "note": "The battery is close to C size but delivers 3.6 V, which can damage devices built for 1.5 V C batteries."
-    }
-  ],
+  "interchange": [],
   "safety": [
     "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
     "Do not solder directly to the battery; use tabbed or pinned versions.",

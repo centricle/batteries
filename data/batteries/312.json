@@ -131,7 +131,7 @@
   "interchange": [
     {
       "id": "13",
-      "relation": "do-not-substitute",
+      "relation": "does-not-fit",
       "note": "A size 13 is the same 7.9 mm across but 5.4 mm tall, so it generally does not fit a 312 compartment."
     }
   ],

@@ -40,6 +40,11 @@ export const CATEGORIES = [
 
 export const FORMS = ['cylinder', 'disc', 'prismatic', 'lantern', 'flatpack', 'twin'];
 
+// equivalent: drop-in. same-size: fits, behaves differently. fits-with-caveat:
+// fits, with a catch the note names. does-not-fit: does not fit or does not
+// work, with no hazard. do-not-substitute: fits or nearly fits but can do harm.
+export const INTERCHANGE_RELATIONS = ['equivalent', 'same-size', 'fits-with-caveat', 'does-not-fit', 'do-not-substitute'];
+
 export const SOURCE_KINDS = ['standard', 'datasheet', 'catalog', 'reference', 'retailer', 'regulation'];
 
 const slug = z.string().regex(/^[a-z0-9][a-z0-9-]*$/, 'lowercase letters, digits and hyphens');
@@ -168,12 +173,15 @@ export const batterySchema = z
       .default({}),
     variants: z.array(variantSchema).min(1),
     devices: z.array(z.string()).default([]),
+    // An entry on battery X with id Y is "a Y in place of an X": it lives on
+    // the page of the battery being replaced, and its note describes Y going
+    // into X's holder. Relations are in data/SCHEMA.md.
     interchange: z
       .array(
         z
           .object({
             id: slug,
-            relation: z.enum(['equivalent', 'same-size', 'fits-with-caveat', 'do-not-substitute']),
+            relation: z.enum(INTERCHANGE_RELATIONS),
             note: z.string(),
           })
           .strict(),

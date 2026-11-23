@@ -104,13 +104,7 @@
     "Specialty electronics",
     "Battery packs"
   ],
-  "interchange": [
-    {
-      "id": "a",
-      "relation": "do-not-substitute",
-      "note": "A 17500 lithium-ion battery is about the size of an A battery but delivers 3.7 V and up to 4.2 V, against 1.2 V for nickel-metal-hydride A batteries."
-    }
-  ],
+  "interchange": [],
   "safety": [
     "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
     "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",

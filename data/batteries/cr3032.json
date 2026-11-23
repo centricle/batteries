@@ -89,13 +89,7 @@
     "Tracking tags",
     "Industrial data loggers"
   ],
-  "interchange": [
-    {
-      "id": "cr2032",
-      "relation": "same-size",
-      "note": "Same 3.2 mm thickness, but 30 mm across instead of 20 mm; does not fit a CR2032 holder."
-    }
-  ],
+  "interchange": [],
   "notes": "VL3032 is a rechargeable cell for devices designed to charge it.",
   "sources": [
     {

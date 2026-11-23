@@ -142,7 +142,8 @@ const jsonld = [
         </li>
       ))}
     </ul>
-    <ul class="mt-6 grid lg:grid-cols-2 gap-x-8 border-t border-line">
+    {/* Below sm three things are hidden, not removed, to keep the phone page short: these featured devices, the guide lines under Safety and the type descriptions. Desktop and the HTML keep them. */}
+    <ul class="max-sm:hidden mt-6 grid lg:grid-cols-2 gap-x-8 border-t border-line">
       {featured.map((d) => {
         const b = batteryById(d.battery)!;
         return (
@@ -228,11 +229,11 @@ const jsonld = [
         Call the National Battery Ingestion Hotline at <a class="link font-mono whitespace-nowrap" href="tel:+18004988666">1-800-498-8666</a> or Poison Help at <a class="link font-mono whitespace-nowrap" href="tel:+18002221222">1-800-222-1222</a> right away, without waiting for symptoms.
       </p>
     </div>
-    <ul class="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2 max-w-4xl">
+    <ul class="mt-5 grid gap-x-8 gap-y-1 sm:gap-y-3 sm:grid-cols-2 max-w-4xl">
       {guides.map((g) => (
         <li>
           <a class="link tap font-semibold text-base" href={`/reference/${g.slug}`}>{g.title}</a>
-          <p class="text-base text-ink-2">{g.line}</p>
+          <p class="max-sm:hidden text-base text-ink-2">{g.line}</p>
         </li>
       ))}
     </ul>
@@ -250,7 +251,7 @@ const jsonld = [
               <div class="w-14 h-14 shrink-0 flex items-center justify-center" aria-hidden="true">{rep && <Silhouette battery={rep} class="max-h-full max-w-full" />}</div>
               <div class="min-w-0">
                 <span class="tile-name">{c.name}</span>
-                <p class="text-sm leading-snug text-ink-2">{c.description}</p>
+                <p class="max-sm:hidden text-sm leading-snug text-ink-2">{c.description}</p>
                 <p class="mt-0.5 text-sm leading-snug text-muted">{n} {n === 1 ? 'size' : 'sizes'}</p>
               </div>
             </a>

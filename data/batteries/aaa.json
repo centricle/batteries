@@ -309,7 +309,7 @@
     },
     {
       "id": "aa",
-      "relation": "same-size",
+      "relation": "does-not-fit",
       "note": "AA batteries share the 1.5 V alkaline chemistry but are larger and do not fit AAA holders."
     }
   ],

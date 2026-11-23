@@ -198,6 +198,11 @@
       "id": "cr2016",
       "relation": "fits-with-caveat",
       "note": "Same 20 mm width and 1.6 mm thinner; much lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
+    },
+    {
+      "id": "cr3032",
+      "relation": "does-not-fit",
+      "note": "Same 3.2 mm thickness, but 30 mm across instead of 20 mm; does not fit a CR2032 holder."
     }
   ],
   "notes": "The most widely used lithium coin cell. BR2032 has the same dimensions and a nominal 3 V but lower rated drain and a wider temperature range; ML2032 and VL2032 are rechargeable cells in the same case per Wikipedia, and fit the same holder only where the device is designed to charge them.",

@@ -61,7 +61,19 @@ const orList = (xs: string[]) => (xs.length < 3 ? xs.join(' or ') : `${xs.slice(
 // place of a CR2012" lives on the CR2012 entry), so entries that only appear
 // here because another page declared them read the other way round.
 const swapNames = (rel: string) => inter.filter((r) => r.relation === rel && !r.reverse).map((r) => withArt(batteryById(r.id)!.name));
-const reverseLead = (o: Battery) => `Using ${withArt(b.name)} in place of ${withArt(o.name)}:`;
+// "Will another battery work instead?" answers two questions, so it shows two
+// groups: what can replace this battery, then where this battery can replace
+// another. Each card says its direction in words.
+const insteadOf = inter.filter((r) => !r.reverse);
+const usedFor = inter.filter((r) => r.reverse);
+const direction = (r: (typeof inter)[number]) => {
+  const o = withArt(batteryById(r.id)!.name);
+  return r.reverse ? `${capFirst(withArt(b.name))} in place of ${o}` : `${capFirst(o)} in place of ${withArt(b.name)}`;
+};
+const swapGroups = [
+  { title: `Instead of ${withArt(b.name)}`, items: insteadOf, empty: `No other battery is listed for use in place of ${withArt(b.name)}. Every name in the list above is the same battery.` },
+  { title: `Using ${withArt(b.name)} in place of another battery`, items: usedFor, empty: '' },
+].filter((g) => g.items.length || g.empty);
 const sameAs = otherNames(b);
 const equiv = swapNames('equivalent');
 const caveat = swapNames('fits-with-caveat');
@@ -322,21 +334,29 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
     {inter.length > 0 && (
       <section id="interchange">
         <h2 class="section-title">Will another battery work instead?</h2>
-        <ul class="grid gap-3 sm:grid-cols-2">
-          {inter.map((r) => {
-            const o = batteryById(r.id)!;
-            return (
-              <li class:list={['callout', REL_META[r.relation].cls]}>
-                <p class="flex flex-wrap items-baseline justify-between gap-x-3">
-                  <a href={`/${o.id}`} class="link font-mono font-semibold text-lg">{o.name}</a>
-                  <strong class="text-base">{REL_META[r.relation].label}</strong>
-                </p>
-                <p class="mt-1 text-base text-ink-2">{r.reverse && <strong class="text-ink font-semibold">{reverseLead(o)}</strong>}{r.reverse && ' '}{r.note}</p>
-                <p class="mt-1 text-sm text-ink-2">{sizeAndVolts(o)}</p>
-              </li>
-            );
-          })}
-        </ul>
+        {swapGroups.map((g, gi) => (
+          <div class:list={[gi > 0 && 'mt-8']} data-swap-group={gi === 0 ? 'instead' : 'used-for'}>
+            <h3 class="text-lg font-semibold mb-3">{g.title}</h3>
+            {g.items.length === 0 ? <p class="text-base text-ink-2 measure">{g.empty}</p> : (
+              <ul class="grid gap-3 sm:grid-cols-2">
+                {g.items.map((r) => {
+                  const o = batteryById(r.id)!;
+                  return (
+                    <li class:list={['callout', REL_META[r.relation].cls]}>
+                      <p class="flex flex-wrap items-baseline justify-between gap-x-3">
+                        <a href={`/${o.id}`} class="link font-mono font-semibold text-lg">{o.name}</a>
+                        <strong class="text-base">{REL_META[r.relation].label}</strong>
+                      </p>
+                      <p class="mt-1 text-base font-semibold text-ink">{direction(r)}.</p>
+                      <p class="mt-1 text-base text-ink-2">{r.note}</p>
+                      <p class="mt-1 text-sm text-ink-2">{sizeAndVolts(o)}</p>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+        ))}
       </section>
     )}
 

@@ -98,7 +98,7 @@
   "interchange": [
     {
       "id": "2cr5",
-      "relation": "do-not-substitute",
+      "relation": "does-not-fit",
       "note": "The 2CR5 is a similar 6 V pack with a different footprint and contact layout, and the keyed shapes do not fit each other."
     }
   ],

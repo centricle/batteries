@@ -78,13 +78,8 @@
   ],
   "interchange": [
     {
-      "id": "cr123a",
-      "relation": "fits-with-caveat",
-      "note": "A 16340 is slightly narrower than a CR123A and fits most holders, but it runs at 3.7 V and 4.2 V fresh against the single-use battery's 3.0 V, so devices without regulation can be damaged, and devices that count on a 3 V battery may mis-read the charge state."
-    },
-    {
       "id": "18350",
-      "relation": "do-not-substitute",
+      "relation": "does-not-fit",
       "note": "The 18350 is wider and about the same length; it does not fit a 16340 compartment and does not work in its place."
     }
   ],

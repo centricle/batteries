@@ -64,6 +64,19 @@ const aliasOwner = new Map();
 for (const { file, b } of batteries) {
   if (only && !only.has(file)) continue;
   for (const ic of b.interchange) if (!ids.has(ic.id)) console.warn(`  ${file}: interchange target "${ic.id}" has no entry yet`);
+  // The verdict is what a person acts on, so it must not contradict its note.
+  // A note that says the swap does not fit or work cannot carry a verdict that
+  // says it does. "a 13 does not fit a 312 compartment" on the 13 entry is
+  // about the other direction and is skipped.
+  const targets = new Set();
+  for (const ic of b.interchange) {
+    if (targets.has(ic.id)) fail(file, `two interchange entries for "${ic.id}"`);
+    targets.add(ic.id);
+    if (!['equivalent', 'same-size', 'fits-with-caveat'].includes(ic.relation)) continue;
+    const said = [...ic.note.matchAll(/\b(?:does|do|will)\s+not\s+(?:fit|work)\b(?:\s+(?:in\s+)?an?\s+(\S+)\s+(?:holder|compartment))?|\bnot a drop-in\b|\bdo not swap\b/gi)];
+    if (said.some((m) => !m[1] || m[1].toLowerCase() === b.name.toLowerCase()))
+      fail(file, `interchange "${ic.id}" is "${ic.relation}" but its note says it does not fit or work; use "does-not-fit"`);
+  }
   const seen = new Set();
   for (const c of b.codes) {
     const k = `${c.system}:${c.code}`.toLowerCase();

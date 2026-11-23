@@ -72,7 +72,7 @@
     },
     {
       "id": "cr2330",
-      "relation": "fits-with-caveat",
+      "relation": "does-not-fit",
       "note": "Same 23 mm width and 1.0 mm thicker; usually does not fit a CR2320 holder."
     }
   ],

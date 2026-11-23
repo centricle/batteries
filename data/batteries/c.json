@@ -220,8 +220,13 @@
   "interchange": [
     {
       "id": "d",
-      "relation": "same-size",
+      "relation": "does-not-fit",
       "note": "D batteries share the 1.5 V alkaline chemistry but are larger; one does not work in place of the other."
+    },
+    {
+      "id": "er26500",
+      "relation": "do-not-substitute",
+      "note": "An ER26500 is close to C size but delivers 3.6 V, which can damage devices built for 1.5 V C batteries."
     }
   ],
   "safety": [

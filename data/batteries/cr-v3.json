@@ -112,7 +112,7 @@
   "interchange": [
     {
       "id": "2cr5",
-      "relation": "do-not-substitute",
+      "relation": "does-not-fit",
       "note": "The 2CR5 is a 6 V pack with a different shape and contacts, and it does not fit a CR-V3 compartment."
     }
   ],

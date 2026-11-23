@@ -101,7 +101,7 @@
     },
     {
       "id": "cr2032",
-      "relation": "fits-with-caveat",
+      "relation": "does-not-fit",
       "note": "Same 20 mm width and 1.6 mm thicker; fits only in holders sized for it. Some devices stack two CR2016 batteries for 6 V."
     }
   ],

@@ -102,13 +102,8 @@
   ],
   "interchange": [
     {
-      "id": "aa",
-      "relation": "do-not-substitute",
-      "note": "The battery has an AA body but delivers 3.6 V; most devices built for 1.5 V AA batteries can be damaged by it."
-    },
-    {
       "id": "1-2aa",
-      "relation": "same-size",
+      "relation": "does-not-fit",
       "note": "A 1/2AA Li-SOCl2 battery is the same width and kind but about half the length."
     }
   ],

@@ -102,7 +102,7 @@
   "interchange": [
     {
       "id": "cr-p2",
-      "relation": "do-not-substitute",
+      "relation": "does-not-fit",
       "note": "The CR-P2 is a similar 6 V pack with a different footprint and contact layout, and the keyed shapes do not fit each other."
     }
   ],

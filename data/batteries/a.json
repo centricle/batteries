@@ -115,7 +115,18 @@
     "Backup power packs",
     "Radio-controlled models"
   ],
-  "interchange": [],
+  "interchange": [
+    {
+      "id": "17500",
+      "relation": "do-not-substitute",
+      "note": "A 17500 lithium-ion battery is about the size of an A battery but delivers 3.7 V and up to 4.2 V, against 1.2 V for nickel-metal-hydride A batteries."
+    },
+    {
+      "id": "4-5a",
+      "relation": "does-not-fit",
+      "note": "A 4/5A battery is as wide as an A battery (17 mm) but 43 mm long instead of 50 mm, so it fits in packs built for it only."
+    }
+  ],
   "safety": [
     "Charge only with a charger designed for nickel-metal hydride batteries; overcharging can cause venting or leakage.",
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",

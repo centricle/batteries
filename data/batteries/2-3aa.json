@@ -82,13 +82,7 @@
     "Small tool packs",
     "Hobby battery packs"
   ],
-  "interchange": [
-    {
-      "id": "aa",
-      "relation": "same-size",
-      "note": "A 2/3AA battery is as wide as an AA but about 22 mm shorter, so it is not a drop-in for an AA battery."
-    }
-  ],
+  "interchange": [],
   "safety": [
     "Charge only with a charger designed for nickel-metal hydride batteries; overcharging can cause venting or leakage.",
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",

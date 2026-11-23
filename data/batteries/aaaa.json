@@ -118,7 +118,7 @@
   "interchange": [
     {
       "id": "aaa",
-      "relation": "same-size",
+      "relation": "does-not-fit",
       "note": "AAA batteries are also 1.5 V but wider (10.5 mm across against 8.3 mm) and do not fit AAAA holders."
     }
   ],

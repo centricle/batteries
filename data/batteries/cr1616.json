@@ -95,7 +95,7 @@
     },
     {
       "id": "cr1632",
-      "relation": "fits-with-caveat",
+      "relation": "does-not-fit",
       "note": "Same 16 mm width and 1.6 mm thicker; usually does not fit a CR1616 holder."
     }
   ],

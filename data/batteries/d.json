@@ -231,8 +231,13 @@
   "interchange": [
     {
       "id": "c",
-      "relation": "same-size",
+      "relation": "does-not-fit",
       "note": "C batteries share the 1.5 V alkaline chemistry but are smaller and have lower capacity."
+    },
+    {
+      "id": "er34615",
+      "relation": "do-not-substitute",
+      "note": "An ER34615 is close to D size but delivers 3.6 V, which can damage devices built for 1.5 V D batteries."
     }
   ],
   "safety": [

@@ -124,7 +124,7 @@
   "interchange": [
     {
       "id": "d",
-      "relation": "do-not-substitute",
+      "relation": "does-not-fit",
       "note": "An F battery is 33 mm by 91 mm and is much longer than a D battery, so the two do not swap."
     }
   ],
