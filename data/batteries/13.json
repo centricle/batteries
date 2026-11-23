@@ -2,7 +2,7 @@
   "category": "hearing-aid",
   "form": "disc",
   "status": "current",
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "id": "13",
   "name": "13",
   "aliases": [
@@ -129,7 +129,7 @@
     {
       "id": "312",
       "relation": "same-size",
-      "note": "A 312 is the same 7.9 mm across but 3.6 mm tall instead of 5.4 mm, and it holds less. A 13 does not fit a 312 compartment."
+      "note": "A 312 is the same 7.9 mm across but 3.6 mm tall instead of 5.4 mm, and it holds less. A 13 does not fit a 312 compartment. Phonak makes the same hearing aid in a 312 model and a 13 model, and tells owners to find the right size from the marking inside the battery door."
     }
   ],
   "safety": [
@@ -173,6 +173,18 @@
         "codes",
         "history",
         "cochlear"
+      ]
+    },
+    {
+      "id": "phonak-audeo-p-guide",
+      "title": "Audéo P-312 and P-13T user guide",
+      "publisher": "Phonak (Sonova)",
+      "url": "https://www.phonak.com/content/dam/celum/phonak/local-assets/us/user-guides/en/ph-user-guide-audeo-312-13-t-92x125-en-us-029-0843-03-p.pdf",
+      "accessed": "2026-11-23",
+      "kind": "reference",
+      "covers": [
+        "312 and 13 are separate hearing aid models",
+        "size marked inside the battery door"
       ]
     },
     {

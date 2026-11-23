@@ -69,9 +69,12 @@ export function inFrac(mm: number): string {
 
 // ------------------------------------------------------------------ coins
 
-// US coin diameters in millimeters, from the United States Mint's coin
-// specifications page (https://www.usmint.gov/learn/coin-and-medal-programs/coin-specifications).
-// The Mint calls the one-cent coin the cent; people say penny.
+// US coin diameters in millimeters. 31 U.S.C. 5112(a) sets them in inches
+// (dime 0.705, one-cent coin 0.75, 5-cent coin 0.835, quarter dollar 0.955);
+// these are those figures times 25.4, to two places. Read 2026-11-23 at
+// https://www.law.cornell.edu/uscode/text/31/5112. The United States Mint's
+// coin specifications page refuses automated readers, so it is not the source.
+// The law says one-cent coin; people say penny.
 export const US_COINS = [
   { name: 'dime', mm: 17.91 },
   { name: 'penny', mm: 19.05 },

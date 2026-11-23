@@ -36,6 +36,16 @@
       "system": "Varta",
       "chemistry": "lithium-manganese-dioxide",
       "note": "Type number"
+    },
+    {
+      "code": "DL2450",
+      "system": "Duracell",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
+      "code": "ECR2450",
+      "system": "Energizer",
+      "chemistry": "lithium-manganese-dioxide"
     }
   ],
   "dimensions": {
@@ -132,6 +142,28 @@
       "kind": "datasheet"
     },
     {
+      "id": "duracell-2450",
+      "title": "2450 Lithium Coin Battery product page",
+      "publisher": "Duracell",
+      "url": "https://duracell.com/products/2450-lithium-coin-button-battery",
+      "accessed": "2026-11-23",
+      "kind": "catalog",
+      "covers": [
+        "Duracell name DL2450"
+      ]
+    },
+    {
+      "id": "energizer-2450-ca",
+      "title": "Energizer 2450 Battery product page (Canada)",
+      "publisher": "Energizer",
+      "url": "https://energizer.com/canada/product/power/specialty/2450-battery/",
+      "accessed": "2026-11-23",
+      "kind": "catalog",
+      "covers": [
+        "Energizer name ECR2450"
+      ]
+    },
+    {
       "id": "wikipedia-battery-sizes",
       "title": "List of battery sizes",
       "publisher": "Wikipedia",
@@ -159,7 +191,7 @@
       "style": "cap"
     }
   },
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "safety": [
     "Swallowed coin batteries can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
     "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",

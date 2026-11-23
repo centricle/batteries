@@ -21,6 +21,11 @@
       "chemistry": "lithium-manganese-dioxide"
     },
     {
+      "code": "DL1632",
+      "system": "Duracell",
+      "chemistry": "lithium-manganese-dioxide"
+    },
+    {
       "code": "BR1632",
       "system": "Panasonic",
       "chemistry": "lithium-carbon-monofluoride"
@@ -149,6 +154,17 @@
       "kind": "datasheet"
     },
     {
+      "id": "duracell-1632",
+      "title": "1632 Lithium Coin Battery product page",
+      "publisher": "Duracell",
+      "url": "https://duracell.com/products/1632-lithium-coin-button-battery",
+      "accessed": "2026-11-23",
+      "kind": "catalog",
+      "covers": [
+        "Duracell name DL1632"
+      ]
+    },
+    {
       "id": "wikipedia-battery-sizes",
       "title": "List of battery sizes",
       "publisher": "Wikipedia",
@@ -176,7 +192,7 @@
       "style": "cap"
     }
   },
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "safety": [
     "Swallowed coin batteries can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
     "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
