@@ -68,3 +68,36 @@ export function rank(index: Entry[], query: string, limit = 12) {
   out.sort((a, b) => b.score - a.score || a.e.n.localeCompare(b.e.n, 'en', { numeric: true }));
   return out.slice(0, limit);
 }
+
+// Devices ("what battery does my X take"), from /api/device-index.json.
+export interface DeviceEntry {
+  id: string; // device id, page at /devices/{id}
+  n: string; // title, "Apple AirTag"
+  k: string[]; // maker, name, models, category words
+  b: string; // battery name, "CR2032"
+  bid: string; // battery id
+  q: number; // count
+  c: string; // category name
+}
+
+const words = (s: string) => s.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+
+/** Every query word must start some word of the device's name, maker or models. */
+export function rankDevices(index: DeviceEntry[], query: string, limit = 6) {
+  const q = norm(query);
+  const qw = words(query);
+  if (q.length < 2 || !qw.length) return [];
+  const out: { d: DeviceEntry; score: number }[] = [];
+  for (const d of index) {
+    const hay = [d.n, ...d.k];
+    const hw = hay.flatMap(words);
+    const flat = norm(hay.join(' '));
+    let score = 0;
+    if (norm(d.n) === q || d.k.some((k) => norm(k) === q)) score = 950;
+    else if (qw.every((w) => hw.some((h) => h.startsWith(w)))) score = 620 + qw.length * 10 - d.n.length / 100;
+    else if (q.length >= 4 && flat.includes(q)) score = 450;
+    if (score) out.push({ d, score });
+  }
+  out.sort((a, b) => b.score - a.score || a.d.n.localeCompare(b.d.n, 'en', { numeric: true }));
+  return out.slice(0, limit);
+}

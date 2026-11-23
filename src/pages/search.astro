@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { searchIndex } from '../lib/data';
+import { searchIndex, deviceIndex } from '../lib/data';
 ---
 
 <BaseLayout title="Search batteries by name, code or size | batteries.fyi" description="Search every battery size by name, IEC, ANSI or brand code, voltage, or dimensions written as diameter × height.">
@@ -8,17 +8,19 @@ import { searchIndex } from '../lib/data';
     <h1 class="text-[2rem] font-[750] tracking-tight">Search</h1>
     <form class="mt-4" role="search" onsubmit="return false">
       <label for="q" class="sr-only">Search</label>
-      <input id="q" name="q" class="input h-12 text-[0.9rem]" placeholder="CR2032, 377, LR6, 18650, 20 x 3.2, 3V" autocomplete="off" autofocus />
+      <input id="q" name="q" class="input h-12 text-[0.9rem]" placeholder="CR2032, 377, LR6, 20 x 3.2, AirTag, RAV4 key" autocomplete="off" autofocus />
     </form>
-    <p class="mt-2 text-[0.62rem] text-muted">Matches names, every standard and manufacturer code, aliases, voltages (<span class="mono">3V</span>) and sizes (<span class="mono">20 x 3.2</span>). No match? <a class="link" href="/identify">Identify by measurement</a> or <a class="link" href="/decode">decode the code</a>.</p>
+    <p class="mt-2 text-[0.62rem] text-muted">Matches names, every standard and manufacturer code, aliases, voltages (<span class="mono">3V</span>), sizes (<span class="mono">20 x 3.2</span>) and <a class="link" href="/devices">devices</a>. No match? <a class="link" href="/identify">Identify by measurement</a> or <a class="link" href="/decode">decode the code</a>.</p>
     <ul id="results" class="mt-6 card divide-y divide-[var(--line)]" aria-live="polite"></ul>
   </section>
   <script type="application/json" id="idx" set:html={JSON.stringify(searchIndex())} />
+  <script type="application/json" id="didx" set:html={JSON.stringify(deviceIndex())} />
 </BaseLayout>
 
 <script>
-  import { rank, type Entry } from '../lib/search';
+  import { rank, rankDevices, type Entry, type DeviceEntry } from '../lib/search';
   const index: Entry[] = JSON.parse(document.getElementById('idx')!.textContent!);
+  const dindex: DeviceEntry[] = JSON.parse(document.getElementById('didx')!.textContent!);
   const q = document.getElementById('q') as HTMLInputElement;
   const out = document.getElementById('results')!;
   const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
@@ -29,9 +31,12 @@ import { searchIndex } from '../lib/data';
     history.replaceState(null, '', u);
     if (!v) { out.innerHTML = ''; out.hidden = true; return; }
     const r = rank(index, v, 40);
+    const dv = rankDevices(dindex, v, 20);
     out.hidden = false;
-    out.innerHTML = r.length
-      ? r.map(({ e, why }) => `<li><a href="/${e.id}" class="flex items-center gap-3 p-3 hover:bg-surface-2"><span class="dot" style="background:${e.col}"></span><span class="font-semibold w-28 shrink-0">${esc(e.n)}</span><span class="text-[0.65rem] text-muted">${esc(e.c)} · ${esc(e.s)} · ${esc(e.v)} V · ${esc(e.x.join(', '))}</span>${why ? `<span class="chip ml-auto">${esc(why)}</span>` : ''}</a></li>`).join('')
+    const devHtml = dv.map(({ d }) => `<li><a href="/devices/${d.id}" class="flex items-center gap-3 p-3 hover:bg-surface-2"><span class="text-muted w-3" aria-hidden="true">↳</span><span class="font-semibold min-w-0 truncate">${esc(d.n)}</span><span class="hidden sm:inline text-[0.65rem] text-muted shrink-0">${esc(d.c)}</span><span class="chip ml-auto shrink-0">takes ${d.q > 1 ? `${d.q} × ` : ''}${esc(d.b)}</span></a></li>`).join('');
+    const top = dv.length && (!r.length || dv[0].score > r[0].score);
+    out.innerHTML = r.length || dv.length
+      ? (top ? devHtml : '') + r.map(({ e, why }) => `<li><a href="/${e.id}" class="flex items-center gap-3 p-3 hover:bg-surface-2"><span class="dot" style="background:${e.col}"></span><span class="font-semibold w-28 shrink-0">${esc(e.n)}</span><span class="text-[0.65rem] text-muted">${esc(e.c)} · ${esc(e.s)} · ${esc(e.v)} V · ${esc(e.x.join(', '))}</span>${why ? `<span class="chip ml-auto">${esc(why)}</span>` : ''}</a></li>`).join('') + (top ? '' : devHtml)
       : `<li class="p-6 text-center text-[0.72rem] text-muted">No match for “${esc(v)}”.</li>`;
   };
   q.value = new URLSearchParams(location.search).get('q') ?? '';

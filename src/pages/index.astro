@@ -2,10 +2,16 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Viewer from '../components/Viewer.astro';
 import Silhouette from '../components/Silhouette.astro';
-import { batteries, batteryById, CATEGORY_META, stats } from '../lib/data';
+import { batteries, batteryById, CATEGORY_META, stats, deviceById, devices, deviceTitle, DEVICE_CATEGORY_META, type Device } from '../lib/data';
 import { pairs } from '../lib/pairs';
 
 const s = stats();
+// Devices people most often ask about, then whatever else exists, to eight.
+const featured = ['apple-airtag', 'toyota-rav4-smart-key', 'tesla-model-y-key-fob', 'liftmaster-893max', 'garmin-hrm-dual', 'google-nest-protect-battery', 'honda-cr-v-2025-smart-entry-remote', 'samsung-galaxy-smarttag2']
+  .map((id) => deviceById(id))
+  .filter((d): d is Device => !!d);
+for (const d of devices()) if (featured.length < 8 && !featured.includes(d)) featured.push(d);
+const deviceCount = devices().length;
 const pick = (ids: string[]) => ids.map((id) => batteryById(id)).filter(Boolean) as ReturnType<typeof batteries>;
 const lineup = pick(['d', 'c', 'aa', 'aaa', 'aaaa', '9v', '21700', '18650', 'cr123a', 'cr2032', 'lr44', '312']);
 const common = pick(['aa', 'aaa', 'cr2032', 'cr2025', 'cr2016', 'lr44', 'sr626sw', '9v', 'cr123a', '18650', '21700', 'cr2', '312', 'cr1220', 'c', 'd', 'a23', 'cr2450']);
@@ -37,7 +43,7 @@ const jsonld = [
       <form action="/search" class="mt-6 max-w-xl relative" role="search" id="hero-search">
         <label for="hero-q" class="sr-only">Search batteries</label>
         <svg class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
-        <input id="hero-q" name="q" class="input h-14 pl-11 text-[0.95rem] shadow-sm" placeholder="377, CR2032, LR6, 18650, 20 x 3.2" autocomplete="off" />
+        <input id="hero-q" name="q" class="input h-14 pl-11 text-[0.95rem] shadow-sm" placeholder="377, CR2032, 18650, 20 x 3.2, AirTag, RAV4 key" autocomplete="off" />
       </form>
       <div class="mt-3 flex flex-wrap gap-1.5 max-w-3xl">
         {common.map((b) => <a href={`/${b.id}`} class="chip font-sans font-medium text-[0.66rem] py-1 px-2.5 bg-surface/80">{b.name}</a>)}
@@ -59,6 +65,30 @@ const jsonld = [
       <div class="spec"><span class="v">{Number(n).toLocaleString('en-US')}</span><span class="s">{label}</span></div>
     ))}
   </section>
+
+  {featured.length > 0 && (
+    <section class="wrap mt-12">
+      <div class="flex items-baseline justify-between mb-4">
+        <h2 class="section-title mb-0">What battery does it take?</h2>
+        <a href="/devices" class="link text-[0.7rem]">All {deviceCount} devices</a>
+      </div>
+      <ul class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        {featured.map((d) => {
+          const b = batteryById(d.battery)!;
+          return (
+            <li><a href={`/devices/${d.id}`} class="card flex items-center gap-3 p-3 h-full hover:border-accent transition-colors">
+              <span class="min-w-0">
+                <span class="block text-[0.75rem] font-semibold text-ink truncate">{deviceTitle(d)}</span>
+                <span class="block text-[0.6rem] text-muted">{DEVICE_CATEGORY_META[d.category].one}</span>
+              </span>
+              <span class="chip ml-auto shrink-0">{d.count > 1 ? `${d.count} × ` : ''}{d.code ?? b.name}</span>
+            </a></li>
+          );
+        })}
+      </ul>
+      <p class="mt-2 text-[0.62rem] text-muted">Each answer quotes the device maker's manual or support page.</p>
+    </section>
+  )}
 
   <section class="wrap mt-12">
     <div class="flex items-baseline justify-between mb-4">

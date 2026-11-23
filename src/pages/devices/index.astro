@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { batteryById, deviceTitle, devices, DEVICE_CATEGORY_META, DEVICE_CATEGORY_ORDER } from '../../lib/data';
+
+const all = devices();
+const groups = DEVICE_CATEGORY_ORDER.map((c) => ({ id: c, meta: DEVICE_CATEGORY_META[c], list: all.filter((d) => d.category === c) })).filter((g) => g.list.length);
+const makers = new Set(all.map((d) => d.maker)).size;
+const yrs = (y?: string) => (y ? (y.endsWith('-') ? `${y.slice(0, -1)} on` : y.replace('-', '–')) : '');
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Which battery each device takes',
+  numberOfItems: all.length,
+  itemListElement: all.map((d, i) => ({ '@type': 'ListItem', position: i + 1, name: `${deviceTitle(d)}: ${d.count > 1 ? `${d.count} × ` : ''}${batteryById(d.battery)!.name}`, url: `https://batteries.fyi/devices/${d.id}` })),
+};
+---
+
+<BaseLayout title="What battery does it take? Devices and their batteries | batteries.fyi" description={`Which battery ${all.length} devices take, from car key fobs to AirTags, each cited to the device maker's manual or support page.`} jsonld={jsonld}>
+  <section class="wrap pt-8 max-w-5xl">
+    <p class="eyebrow">Devices</p>
+    <h1 class="mt-1 text-[2rem] font-[750] tracking-tight">What battery does it take?</h1>
+    <p class="mt-3 text-[0.8rem] text-ink-2 max-w-2xl leading-relaxed">{all.length} devices from {makers} makers, each with the battery its maker specifies and the sentence that says so. Car key fobs are listed by model and year, because the same model can change cells between generations.</p>
+    <form class="mt-5 max-w-md" role="search" onsubmit="return false">
+      <label for="dq" class="sr-only">Filter devices</label>
+      <input id="dq" class="input h-11" placeholder="Filter: RAV4, AirTag, CR2450…" autocomplete="off" />
+    </form>
+    <nav class="mt-4 flex flex-wrap gap-1.5" aria-label="Device categories">
+      {groups.map((g) => <a href={`#${g.id}`} class="chip">{g.meta.name} <span class="text-muted">{g.list.length}</span></a>)}
+    </nav>
+  </section>
+
+  <div class="wrap max-w-5xl mt-8 space-y-10" id="device-groups">
+    {groups.map((g) => (
+      <section id={g.id} data-group>
+        <h2 class="section-title">{g.meta.name}</h2>
+        <div class="table-scroll card">
+          <table class="table">
+            <thead><tr><th scope="col">Device</th><th scope="col">Battery</th><th scope="col" class="hidden sm:table-cell">Source</th></tr></thead>
+            <tbody>
+              {g.list.map((d) => {
+                const b = batteryById(d.battery)!;
+                return (
+                  <tr data-row data-hay={`${d.maker} ${d.name} ${d.models ?? ''} ${b.name} ${g.meta.name}`.toLowerCase()}>
+                    <td><a class="link" href={`/devices/${d.id}`}>{deviceTitle(d)}</a>{d.years && <span class="text-muted"> · {yrs(d.years)}</span>}</td>
+                    <td class="tabular whitespace-nowrap">{d.count > 1 && `${d.count} × `}<a class="link" href={`/${b.id}`}>{b.name}</a></td>
+                    <td class="hidden sm:table-cell text-muted">{d.source.publisher}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+    <p class="text-[0.65rem] text-muted max-w-2xl">Every entry cites the device maker, never a retailer or a forum. A device whose maker does not say which battery it takes is not listed. The list is open data: <a class="link" href="/api/devices.json">/api/devices.json</a>.</p>
+  </div>
+</BaseLayout>
+
+<script>
+  const q = document.getElementById('dq') as HTMLInputElement;
+  const rows = [...document.querySelectorAll<HTMLElement>('[data-row]')];
+  const groups = [...document.querySelectorAll<HTMLElement>('[data-group]')];
+  q.addEventListener('input', () => {
+    const w = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+    for (const r of rows) r.hidden = !w.every((x) => r.dataset.hay!.includes(x));
+    for (const g of groups) g.hidden = !g.querySelector('[data-row]:not([hidden])');
+  });
+</script>
