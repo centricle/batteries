@@ -16,7 +16,7 @@ import {
   DEVICE_CATEGORY_META,
 } from '../lib/data';
 import {
-  art, withArt, list, plainSummary, plainSize, plainWeight, plainRechargeable, voltageLines, otherNames, longDate, voltPhrase, soldAsOther, plainUse, nicknames,
+  art, withArt, list, plainSummary, plainSize, plainWeight, plainRechargeable, voltageLines, otherNames, longDate, voltPhrase, soldAsOther, nicknames, usesSentence,
 } from '../lib/plain';
 
 interface Props { battery: Battery }
@@ -51,8 +51,13 @@ const history = `https://github.com/centricle/batteries/commits/main/data/batter
 
 // At a glance.
 const voltLines = voltageLines(b, (c) => chem(c).status === 'current');
-const alsoCalled = [...nicknames(b).slice(0, 3), ...otherNames(b)];
-const allNames = [...new Set([...b.codes.map((c) => c.code), ...b.aliases])].filter((n) => n !== b.name);
+// Aliases that say "cell" or "primary" stay in the search index and the
+// structured data, where people who type them find the page, and out of
+// anything a visitor reads.
+const shownAliases = nicknames(b);
+const alsoCalled = [...shownAliases.slice(0, 3), ...otherNames(b)];
+const allNames = [...new Set([...b.codes.map((c) => c.code), ...shownAliases])].filter((n) => n !== b.name);
+const searchNames = [...new Set([...b.codes.map((c) => c.code), ...b.aliases])].filter((n) => n !== b.name);
 
 // The answer to "what is a CR2032 equivalent", right under the summary: the
 // same battery under other names, then what else fits, from the swap data.
@@ -104,6 +109,10 @@ const nameRows = (() => {
   const rank = (k: string) => (k === 'any' ? 1000 : kindOrder.includes(k) ? kindOrder.indexOf(k) : 500);
   return [...rows].sort(([x], [y]) => rank(x) - rank(y)).map(([k, names]) => ({ label: k === 'any' ? 'Any kind' : chem(k).plainName, names: [...names] }));
 })();
+// Below sm the names table stacks, so nothing on the page scrolls sideways.
+const STACK_TR = 'max-sm:block max-sm:px-3 max-sm:py-3 max-sm:border-b max-sm:border-line max-sm:last:border-b-0';
+const STACK_TH = 'max-sm:block max-sm:w-auto max-sm:p-0 max-sm:bg-transparent max-sm:border-0 max-sm:whitespace-normal max-sm:text-base max-sm:text-ink';
+const STACK_TD = 'max-sm:block max-sm:p-0 max-sm:pt-2 max-sm:border-0';
 
 // Kinds of this size.
 const kindRows = groups.map((g) => ({
@@ -160,10 +169,19 @@ const shownProps = props.filter((p) => b.variants.some((v) => p.get(v)));
 
 // Answers for search and AI assistants, built from the same strings the page shows.
 const DEVICES_NOTE = "Each entry quotes the device maker's manual or support page.";
+const usesLine = usesSentence(b, sourced.length ? 'Also common in' : 'Common in');
 const devicesAnswer = [
   sourced.length ? `${list(sourced.map((x) => deviceTitle(x)))}. ${DEVICES_NOTE}` : '',
-  b.devices.length ? `${sourced.length ? `Also common in ${list(b.devices.map(plainUse))}` : capFirst(list(b.devices.map(plainUse)))}.` : '',
+  usesLine,
 ].filter(Boolean).join(' ');
+// "What uses it": ten rows, the rest behind one tap.
+const DEVICES_SHOWN = 10;
+const deviceGroups = [
+  { more: false, items: sourced.slice(0, DEVICES_SHOWN) },
+  { more: true, items: sourced.slice(DEVICES_SHOWN) },
+].filter((g) => g.items.length);
+const deviceKind = (x: (typeof sourced)[number]) =>
+  `${capFirst(DEVICE_CATEGORY_META[x.category].one)}${x.years ? `, ${x.years.endsWith('-') ? `${x.years.slice(0, -1)} on` : x.years.replace('-', ' to ')}` : ''}`;
 const faqs = [
   { q: `What is ${withArt(b.name)} battery?`, a: summary },
   { q: `What size is ${withArt(b.name)} battery?`, a: `${capFirst(plainSize(b))}.` },
@@ -183,7 +201,7 @@ const jsonld = [
     '@context': 'https://schema.org',
     '@type': 'ProductModel',
     name: `${b.name} battery`,
-    alternateName: allNames.slice(0, 30),
+    alternateName: searchNames.slice(0, 30),
     description: summary,
     url,
     category: cat.name,
@@ -238,8 +256,10 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
     </nav>
   </div>
 
-  <section class="wrap pt-4 pb-8 grid gap-8 lg:grid-cols-[1fr_1fr] items-start">
-    <div class="min-w-0">
+  <!-- On a phone: heading, summary and answer, then the picture, then the facts.
+       On a wide screen the picture holds the right column beside both. -->
+  <section class="wrap pt-4 pb-8 grid gap-x-8 gap-y-6 lg:grid-cols-[1fr_1fr] lg:grid-rows-[auto_1fr] items-start">
+    <div class="min-w-0 lg:col-start-1 lg:row-start-1">
       <h1 class="text-2xl sm:text-4xl font-semibold leading-tight">{b.name} battery</h1>
       <p class="lede measure mt-3" data-summary>{summary}</p>
       {swapLine && (
@@ -248,8 +268,15 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
         </p>
       )}
       {statusText && <p class="mt-3 chip">{statusText}</p>}
+    </div>
 
-      <dl class="specs mt-5 grid-cols-1 sm:grid-cols-2" data-glance>
+    <div class="bp-viewer min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-20" data-picture>
+      <Viewer batteries={[b]} height="var(--viewer-h)" />
+      <p class="mt-2 text-sm text-ink-2">Drawn from the published dimensions. The label is generic. Drag to turn it.</p>
+    </div>
+
+    <div class="min-w-0 lg:col-start-1 lg:row-start-2">
+      <dl class="specs grid-cols-1 sm:grid-cols-2" data-glance>
         <div class="spec"><dt class="label">Size</dt><dd class="text-base font-sans">{capFirst(plainSize(b))}</dd></div>
         <div class="spec">
           <dt class="label">Voltage</dt>
@@ -288,11 +315,6 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
 
       <Buy battery={b} context="battery" class="mt-5" />
     </div>
-
-    <div class="min-w-0 lg:sticky lg:top-20">
-      <Viewer batteries={[b]} height="min(32rem, 78vw)" />
-      <p class="mt-2 text-sm text-ink-2">Drawn from the published dimensions. The label is generic. Drag to turn it.</p>
-    </div>
   </section>
 
   <nav class="wrap no-print" aria-label="On this page">
@@ -305,26 +327,31 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
     <section id="codes">
       <h2 class="section-title">Other names for {a} {b.name} battery</h2>
       <p class="lede measure mb-4">Makers and standards use different names for the same size. Anything below is {withArt(b.name)}.{groups.length > 1 && ' The name also tells you the kind.'}</p>
-      <div class="card table-scroll">
-        <table class="table">
-          <tbody>
+      {/* A table from sm up. Below sm each row stacks: the kind as a bold
+          line, then one name per line, chip first, then whose name it is. */}
+      <div class="card table-scroll" data-names>
+        <table class="table max-sm:block">
+          <tbody class="max-sm:block">
             {nameRows.map((row) => (
-              <tr>
-                <th scope="row" class="w-48 font-sans text-sm font-semibold text-ink-2 align-top">{row.label}</th>
-                <td>
-                  <ul class="flex flex-wrap gap-x-5 gap-y-2">
+              <tr class={STACK_TR}>
+                <th scope="row" class:list={['w-48 font-sans text-sm font-semibold text-ink-2 align-top', STACK_TH]}>{row.label}</th>
+                <td class={STACK_TD}>
+                  <ul class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-5">
                     {row.names.map(([code, e]) => (
-                      <li class="flex flex-wrap items-baseline gap-x-2">
-                        <span class="chip">{code}</span>
-                        <span class="font-sans text-sm text-ink-2">{e.owners.join(', ')}{e.notes.length > 0 && <span class="text-muted">. {e.notes.join('; ')}</span>}</span>
+                      <li class="flex flex-wrap items-baseline gap-x-2 gap-y-1 min-w-0">
+                        <span class="chip whitespace-normal [overflow-wrap:anywhere]">{code}</span>
+                        <span class="font-sans text-sm text-ink-2 min-w-0">{e.owners.join(', ')}{e.notes.length > 0 && <span class="text-muted">. {e.notes.join('; ')}</span>}</span>
                       </li>
                     ))}
                   </ul>
                 </td>
               </tr>
             ))}
-            {b.aliases.length > 0 && (
-              <tr><th scope="row" class="font-sans text-sm font-semibold text-ink-2 align-top">Common names</th><td class="font-sans text-base">{b.aliases.join(', ')}</td></tr>
+            {shownAliases.length > 0 && (
+              <tr class={STACK_TR}>
+                <th scope="row" class:list={['font-sans text-sm font-semibold text-ink-2 align-top', STACK_TH]}>Common names</th>
+                <td class:list={['font-sans text-base', STACK_TD]}>{shownAliases.join(', ')}</td>
+              </tr>
             )}
           </tbody>
         </table>
@@ -383,7 +410,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
         <div class="mt-4">
           <p class="text-base font-semibold">Compare side by side:</p>
           <ul class="mt-2 flex flex-wrap gap-2">
-            {headToHead.map((h) => <li><a href={`/compare/${h.slug}`} class="chip link">{b.name} vs {h.other.name}</a></li>)}
+            {headToHead.map((h) => <li><a href={`/compare/${h.slug}`} class="chip link whitespace-normal">{b.name} vs {h.other.name}</a></li>)}
           </ul>
         </div>
       )}
@@ -409,30 +436,29 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
     {(sourced.length > 0 || b.devices.length > 0) && (
       <section id="devices">
         <h2 class="section-title">What uses {a} {b.name} battery?</h2>
-        {sourced.length > 0 && (
-          <>
-            <ul class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {sourced.map((x) => (
-                <li class="min-w-0"><a href={`/devices/${x.id}`} class="card flex items-center gap-3 p-3 h-full min-w-0 hover:border-ink">
-                  <span class="min-w-0">
-                    <span class="block text-base font-semibold text-ink">{deviceTitle(x)}</span>
-                    <span class="block font-sans text-sm text-ink-2">{capFirst(DEVICE_CATEGORY_META[x.category].one)}{x.years ? `, ${x.years.endsWith('-') ? `${x.years.slice(0, -1)} on` : x.years.replace('-', ' to ')}` : ''}</span>
+        {deviceGroups.map((g) => {
+          const rows = (
+            <ul class="card divide-y divide-[var(--line)] measure-wide" data-device-rows>
+              {g.items.map((x) => (
+                <li><a href={`/devices/${x.id}`} class="flex items-baseline gap-x-3 px-3 py-2.5 min-h-[2.75rem] hover:bg-surface-2">
+                  <span class="min-w-0 flex-1">
+                    <span class="font-semibold text-ink">{deviceTitle(x)}</span>{' '}
+                    <span class="font-sans text-sm text-ink-2 whitespace-nowrap">{deviceKind(x)}</span>
                   </span>
-                  <span class="chip ml-auto shrink-0">Takes {x.count}</span>
+                  <span class="shrink-0 font-sans text-sm text-ink-2">Takes {x.count}</span>
                 </a></li>
               ))}
             </ul>
-            <p class="mt-2 text-sm text-ink-2">{DEVICES_NOTE} <a class="link" href="/devices">All devices</a></p>
-          </>
-        )}
-        {b.devices.length > 0 && (
-          <>
-            {sourced.length > 0 && <p class="label mt-5 mb-2">Also common in</p>}
-            <ul class="flex flex-wrap gap-2">
-              {b.devices.map((x) => <li class="chip font-sans">{x}</li>)}
-            </ul>
-          </>
-        )}
+          );
+          return g.more ? (
+            <details class="mt-2 measure-wide" data-more-devices>
+              <summary class="link inline-block py-2 cursor-pointer">Show all {sourced.length} devices</summary>
+              <div class="mt-1">{rows}</div>
+            </details>
+          ) : rows;
+        })}
+        {sourced.length > 0 && <p class="mt-2 text-sm text-ink-2">{DEVICES_NOTE} <a class="link" href="/devices">All devices</a></p>}
+        {usesLine && <p class:list={['text-base text-ink-2 measure', sourced.length > 0 && 'mt-5']} data-uses>{usesLine}</p>}
       </section>
     )}
 
@@ -575,11 +601,11 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
     </section>
 
     <section class="card p-5 grid gap-4 md:grid-cols-2 text-sm">
-      <div>
+      <div class="min-w-0">
         <h2 class="text-base font-semibold mb-1">Cite this page</h2>
-        <p class="text-ink-2 font-mono leading-relaxed select-all">batteries.fyi. “{b.name} battery.” Updated {longDate(b.updated)}. {url}</p>
+        <p class="text-ink-2 font-mono leading-relaxed select-all [overflow-wrap:anywhere]">batteries.fyi. “{b.name} battery.” Updated {longDate(b.updated)}. {url}</p>
       </div>
-      <div class="text-ink-2">
+      <div class="min-w-0 text-ink-2">
         <h2 class="text-base font-semibold mb-1 text-ink">Found an error?</h2>
         <p>Every value here comes from a listed source. Corrections with a source are welcome on <a class="link" href={`https://github.com/centricle/batteries/blob/main/data/batteries/${b.id}.json`}>GitHub</a>, where this battery is one JSON file.</p>
       </div>
@@ -590,4 +616,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
 <style>
   .drawing { color: var(--ink-2); --draw-dim: var(--accent-ink); --draw-bg: var(--surface); --draw-fill: color-mix(in oklch, var(--accent) 7%, transparent); }
   .measure-wide { max-width: 48rem; }
+  /* Viewer height: short on a phone so the facts follow soon after. */
+  .bp-viewer { --viewer-h: min(18rem, 70vw); }
+  @media (min-width: 40rem) { .bp-viewer { --viewer-h: min(32rem, 78vw); } }
 </style>

@@ -75,9 +75,9 @@ const arBadge = `<svg xmlns="http://www.w3.org/2000/svg" width="290" height="44"
         </div>
       )}
       {single && chems.length > 3 && (
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 min-w-0 max-w-full">
           <span class="label">Kind</span>
-          <select class="viewer-kind" data-chem-select>
+          <select class="viewer-kind min-w-0 max-w-full" data-chem-select>
             {chems.map((c, i) => <option value={i}>{kindName(c)}</option>)}
           </select>
         </label>

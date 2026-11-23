@@ -130,8 +130,10 @@ eq('voltage cr2032', lines('cr2032'), '3 V lithium | 3.6 V rechargeable, sold as
 eq('voltage 9v', lines('9v'), '9 V alkaline, heavy duty and lithium | 8.4 or 9.6 V rechargeable NiMH | 9 V rechargeable lithium');
 eq('weight aa', plainWeight(byId.aa), 'About 23 g (0.8 oz), alkaline');
 eq('weight 18650', plainWeight(byId['18650']), '45 to 48.5 g (1.6 to 1.7 oz), depending on the product');
-eq('other names aa', otherNames(byId.aa).join(', '), 'LR6, E91, MN1500');
-eq('other names cr2032', otherNames(byId.cr2032).join(', '), '6032, DL2032, ECR2032');
+eq('other names aa', otherNames(byId.aa).join(', '), 'MN1500, E91, 815');
+eq('other names cr2032', otherNames(byId.cr2032).join(', '), 'DL2032, ECR2032, 5004LC');
+eq('other names lr44 (brands first)', otherNames(byId.lr44).join(', '), 'PX76A, A76, RW82');
+eq('other names sr416sw (watchmaker number last)', otherNames(byId.sr416sw).join(', '), 'V337, SR416, 280-75');
 eq('tile volts aa', plainVoltsShort(byId.aa), '1.5 volts; rechargeable 1.2 volts');
 eq('tile volts lr44', plainVoltsShort(byId.lr44), '1.5 volts; silver oxide 1.55 volts');
 eq('tile volts cr2032', plainVoltsShort(byId.cr2032), '3 volts');

@@ -212,6 +212,18 @@ export function plainUse(s: string): string {
 // "Common in". Such entries are used only when the list has nothing else.
 const isJob = (s: string) => /\b(backup|save memory)$/i.test(s.replace(/\s*\([^)]*\)/g, '').trim());
 
+/** Every use in one plain sentence, jobs in a second one: "Also common in
+ *  remote controls and toys. Also used for memory backup." */
+export function usesSentence(b: B, lead = 'Common in'): string {
+  const all = b.devices ?? [];
+  const things = all.filter((s) => !isJob(s)).map(plainUse);
+  const jobs = all.filter(isJob).map(plainUse);
+  return [
+    things.length ? `${lead} ${list(things)}.` : '',
+    jobs.length ? `${things.length ? 'Also used' : 'Used'} for ${list(jobs)}.` : '',
+  ].filter(Boolean).join(' ');
+}
+
 /** Up to three uses, from the entry's own `devices` list, in its order. */
 export function plainUses(b: B, n = 3): { items: string[]; jobs: boolean } {
   const all = b.devices ?? [];
@@ -365,24 +377,34 @@ export function plainWeight(b: B): string {
   return `${num(lo)} to ${num(hi)} g (${olo === ohi ? olo : `${olo.replace(' oz', '')} to ${ohi}`}), depending on the product`;
 }
 
-const STANDARDS = ['IEC', 'ANSI', 'JIS', 'NEDA', 'Military'];
+const STANDARDS = ['IEC', 'ANSI', 'JIS', 'NEDA', 'Military', 'Generic', 'Industry'];
+// The brands most US shoppers see on the rack, in this order.
+const BRANDS = ['Duracell', 'Energizer', 'Panasonic', 'Rayovac'];
+// Watchmakers list their own replacement numbers (Citizen 280-08, Seiko
+// SB-A9), which nobody finds on a battery pack.
+const WATCHMAKERS = ['Citizen', 'Seiko', 'Timex', 'Bulova', 'Orient', 'Omega'];
+/** Type numbers: a maker's catalog number ("Varta type number 6032"), a bare
+ *  number such as 815, or a watchmaker's replacement number. */
+const isTypeNumber = (c: B['codes'][number]) => /type number/i.test(c.note ?? '') || WATCHMAKERS.includes(c.system);
 
 /** A few other names a shopper may see on the pack for the main kind (or for
- *  any kind): the IEC name, then makers' names, at most one per system. Names
- *  for other kinds (BR1632A on a CR1632), product model numbers and
- *  other-name variants (LIR2032) are left to the full table, so "Any battery
- *  sold as these is a CR2032" stays true. */
+ *  any kind), at most one per system: the big four brands' names first, then
+ *  other brands, then standards names, and type numbers last. Names for other
+ *  kinds (BR1632A on a CR1632), product model numbers and other-name
+ *  variants (LIR2032) are left to the full table, so "Any battery sold as
+ *  these is a CR2032" stays true. */
 export function otherNames(b: B & { aliases?: string[] }, n = 3): string[] {
   const main = b.variants[0].chemistry;
   const labelTokens = new Set(b.variants.flatMap((v) => (v.label ?? '').split(/[\s(),]+/)).filter(Boolean).map((t) => t.toLowerCase()));
   const taken = new Set([b.name, ...(b.aliases ?? [])].map((s) => s.toLowerCase()));
-  const rank = (system: string) => (system === 'IEC' ? 0 : STANDARDS.includes(system) ? 2 : 1);
+  const rank = (c: B['codes'][number]) =>
+    isTypeNumber(c) ? 6 : BRANDS.includes(c.system) ? BRANDS.indexOf(c.system) : STANDARDS.includes(c.system) ? 5 : 4;
   const out: string[] = [];
   const systems = new Set<string>();
   const sorted = b.codes
     .map((c, i) => ({ c, i }))
     .filter(({ c }) => !labelTokens.has(c.code.toLowerCase()) && (!c.chemistry || c.chemistry === main))
-    .sort((x, y) => rank(x.c.system) - rank(y.c.system) || x.i - y.i);
+    .sort((x, y) => rank(x.c) - rank(y.c) || x.i - y.i);
   for (const { c } of sorted) {
     const k = c.code.toLowerCase();
     if (taken.has(k) || systems.has(c.system)) continue;
