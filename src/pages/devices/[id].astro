@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Silhouette from '../../components/Silhouette.astro';
 import Buy from '../../components/Buy.astro';
 import { REL_META } from '../../lib/pairs';
+import { art, longDate, plainSize } from '../../lib/plain';
 import {
   batteries, batteryById, deviceTitle, devices, devicesFor, DEVICE_CATEGORY_META, fmt,
   type Battery, type Device,
@@ -21,29 +22,10 @@ const cat = DEVICE_CATEGORY_META[d.category];
 const title = deviceTitle(d);
 const code = d.code ?? b.name;
 
-// Plain-word helpers, local to this page.
-/** "a" or "an" by how the name is said: an AA, an LR44, an 18650, a CR2032, a 9V. */
-const art = (name: string) => (!/^sub/i.test(name) && (/^(8|1[18](\d{3})?\b|1[18]\d{3})/.test(name) || /^[AEFHILMNORSX]/i.test(name)) ? 'an' : 'a');
-/** Nearest 1/16 in: "2 in", "9/16 in", "1 3/8 in". */
-const inFrac = (mm: number) => {
-  const s = Math.round((mm / 25.4) * 16);
-  if (s === 0) return 'under 1/16 in';
-  const whole = Math.floor(s / 16);
-  let num = s % 16, den = 16;
-  while (num && num % 2 === 0) { num /= 2; den /= 2; }
-  return `${whole || ''}${whole && num ? ' ' : ''}${num ? `${num}/${den}` : ''} in`;
-};
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const longDate = (iso: string) => { const [y, m, dd] = iso.split('-').map(Number); return `${MONTHS[m - 1]} ${dd}, ${y}`; };
+// Plain-word helpers, local to this page. The shared ones (a or an, the size
+// sentence, dates) come from src/lib/plain.ts.
 const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 const countWord = (n: number) => WORDS[n] ?? String(n);
-const plainSize = (x: Battery) => {
-  const m = x.dimensions;
-  const mm = (n: number) => `${fmt(n)} mm`;
-  if (m.diameter && x.form === 'disc') return `${mm(m.diameter.nominal)} across and ${mm(m.height.nominal)} thick (about ${inFrac(m.diameter.nominal)} by ${inFrac(m.height.nominal)})`;
-  if (m.diameter && !m.width) return `${mm(m.height.nominal)} long and ${mm(m.diameter.nominal)} across (about ${inFrac(m.height.nominal)} by ${inFrac(m.diameter.nominal)})`;
-  return `${fmt(m.width!.nominal)} by ${mm(m.depth!.nominal)} and ${mm(m.height.nominal)} tall (about ${inFrac(m.width!.nominal)} by ${inFrac(m.depth!.nominal)} by ${inFrac(m.height.nominal)})`;
-};
 const orList = (xs: string[]) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}`);
 const plainVolts = (x: Battery) => {
   const list = (re: boolean) => [...new Set(x.variants.filter((v) => v.rechargeable === re).map((v) => v.voltage.nominal))].sort((p, q) => p - q).map((n) => fmt(n));

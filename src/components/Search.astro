@@ -31,6 +31,8 @@
 
 <script>
   import { rank, rankDevices, type Entry, type DeviceEntry } from '../lib/search';
+  // plain.ts has no runtime imports, so only `art` reaches the browser bundle.
+  import { art } from '../lib/plain';
 
   const dialog = document.getElementById('search-dialog') as HTMLDialogElement;
   const input = document.getElementById('search-input') as HTMLInputElement;
@@ -63,16 +65,6 @@
     const v = [...new Set(e.v.split(' / ').map(Number).filter((x) => x > 0))].sort((a, b) => a - b);
     const volts = v.length > 1 ? `${v[0]} to ${v[v.length - 1]} V` : v.length ? `${v[0]} V` : '';
     return volts ? `${size}, ${volts}` : size;
-  }
-
-  /** "a" or "an" by how the name is said: an AA, an LR44, an 18650, a CR2032, a 9V. */
-  function art(name: string) {
-    const n = name.trim();
-    if (/^\d/.test(n)) {
-      const digits = n.match(/^\d+/)![0];
-      return /^8/.test(digits) || (/^1[18]/.test(digits) && [2, 4, 5].includes(digits.length)) ? 'an' : 'a';
-    }
-    return /^[AEFHILMNORSX]/i.test(n) ? 'an' : 'a';
   }
 
   /** Why a result matched, when it was another of its names ("Also called LR6"). */
