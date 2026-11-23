@@ -1,0 +1,40 @@
+import type { APIRoute } from 'astro';
+import { batteries, CATEGORY_META, summary, stats } from '../lib/data';
+
+// A plain-text map of the site for language models and answer engines
+// (https://llmstxt.org). Every line is generated from the same data as the pages.
+export const GET: APIRoute = () => {
+  const s = stats();
+  const site = 'https://batteries.fyi';
+  const out: string[] = [
+    '# batteries.fyi',
+    '',
+    `> Open, source-cited specifications for ${s.batteries} consumer battery sizes: dimensions, chemistries, voltages, capacities, ${s.codes.toLocaleString('en-US')} cross-reference codes, and a 3D model of each. Every value cites a datasheet or standard. MIT licensed.`,
+    '',
+    'Each battery has one page at a flat address named for its common designation (/aa, /cr2032, /18650). Any other code for the same size (/lr6, /mn1500, /377) redirects to that page.',
+    '',
+    '## Data',
+    '',
+    `- [Full dataset (JSON)](${site}/api/batteries.json): every battery and chemistry with sources`,
+    `- [Dataset (CSV)](${site}/api/batteries.csv): one row per chemistry variant`,
+    `- [Code cross-reference (JSON)](${site}/api/codes.json): every code mapped to its battery`,
+    `- [One battery (JSON)](${site}/api/batteries/cr2032.json): /api/batteries/{id}.json`,
+    `- [Sources](${site}/sources): every datasheet and standard cited`,
+    '',
+    '## Reference',
+    '',
+    `- [Equivalents table](${site}/equivalents): all codes for all sizes`,
+    `- [Chemistries](${site}/chemistry)`,
+    `- [Reference articles](${site}/reference)`,
+    `- [Glossary](${site}/glossary)`,
+    '',
+  ];
+  for (const c of CATEGORY_META) {
+    const list = batteries().filter((b) => b.category === c.id);
+    if (!list.length) continue;
+    out.push(`## ${c.name}`, '');
+    for (const b of list) out.push(`- [${b.name}](${site}/${b.id}): ${summary(b)}`);
+    out.push('');
+  }
+  return new Response(out.join('\n'), { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+};

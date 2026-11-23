@@ -183,7 +183,9 @@ export function summary(b: Battery) {
   if (groups.length === 1) {
     const v = primaryVariant(b);
     const cap = capacityLabel(v);
-    return `The ${b.name} is a ${volts(v.voltage.nominal)} ${groups[0].chem.name.toLowerCase()} ${shapeWord(b)}, ${size}${cap ? `, with a typical capacity of ${cap}` : ''}.`;
+    const cn = groups[0].chem.name.toLowerCase();
+    const shape = shapeWord(b).replace(`${cn} `, '');
+    return `The ${b.name} is a ${volts(v.voltage.nominal)} ${cn} ${shape}, ${size}${cap ? `, with a typical capacity of ${cap}` : ''}.`;
   }
   const list = groups.slice(0, 4).map((g) => `${g.chem.name.toLowerCase()} (${volts(g.variants[0].voltage.nominal)}${g.variants[0].rechargeable ? ', rechargeable' : ''})`);
   const more = groups.length > 4 ? `, and ${groups.length - 4} more` : '';
