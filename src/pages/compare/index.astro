@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { batteries, modelSpec, searchIndex, primaryVariant, capacityLabel, chemistryGroups, sizeLabel, voltages, volts, fmt, categoryById } from '../lib/data';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { batteries, modelSpec, searchIndex, primaryVariant, capacityLabel, chemistryGroups, sizeLabel, voltages, volts, fmt, categoryById } from '../../lib/data';
 
 const all = batteries();
 const specs = Object.fromEntries(all.map((b) => [b.id, modelSpec(b)]));
@@ -81,7 +81,7 @@ const presets = [
 </style>
 
 <script>
-  import { rank, type Entry } from '../lib/search';
+  import { rank, type Entry } from '../../lib/search';
   const specs = JSON.parse(document.getElementById('cmp-specs')!.textContent!);
   const facts = JSON.parse(document.getElementById('cmp-facts')!.textContent!);
   const index: Entry[] = JSON.parse(document.getElementById('cmp-index')!.textContent!);
@@ -113,7 +113,7 @@ const presets = [
     host?.remove();
     labelsEl.innerHTML = '';
     if (!ids.length) return;
-    mount ??= (await import('../lib/viewer')).mountViewer;
+    mount ??= (await import('../../lib/viewer')).mountViewer;
     host = document.createElement('div');
     host.className = 'absolute inset-0';
     stage.prepend(host);

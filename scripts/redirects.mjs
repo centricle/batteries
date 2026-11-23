@@ -48,6 +48,15 @@ export function buildRedirects(root, distDir) {
     lines.push(`/${s}  /${id}  301`);
     n++;
   }
+  // Head-to-head pages exist in one order; the reverse order points at it.
+  const cmp = path.join(distDir, 'compare');
+  if (fs.existsSync(cmp)) {
+    lines.push('', '# Head to head, reversed');
+    for (const d of fs.readdirSync(cmp)) {
+      const m = d.match(/^(.+)-vs-(.+)$/);
+      if (m && fs.statSync(path.join(cmp, d)).isDirectory()) lines.push(`/compare/${m[2]}-vs-${m[1]}  /compare/${d}  301`);
+    }
+  }
   fs.writeFileSync(path.join(distDir, '_redirects'), lines.join('\n') + '\n');
   return n;
 }

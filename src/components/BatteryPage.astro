@@ -1,4 +1,5 @@
 ---
+import { REL_META, pairsFor } from '../lib/pairs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Viewer from './Viewer.astro';
 import Silhouette from './Silhouette.astro';
@@ -58,12 +59,8 @@ const props: { key: string; label: string; get: (v: Battery['variants'][number])
 ];
 const shownProps = props.filter((p) => b.variants.some((v) => p.get(v)));
 
-const relMeta: Record<string, { label: string; cls: string }> = {
-  equivalent: { label: 'Equivalent', cls: 'ok' },
-  'same-size': { label: 'Same size, different behavior', cls: 'info' },
-  'fits-with-caveat': { label: 'Fits, with a caveat', cls: 'warn' },
-  'do-not-substitute': { label: 'Do not substitute', cls: 'danger' },
-};
+const relMeta = REL_META;
+const headToHead = pairsFor(b).map((p) => ({ slug: p.slug, other: p.a.id === b.id ? p.b : p.a }));
 
 const faqs = [
   { q: `What size is a ${b.name} battery?`, a: `${sizeLabel(b)} (${b.form === 'disc' || b.form === 'cylinder' ? `${inch(d.diameter!.nominal)} × ${inch(d.height.nominal)} in` : `${inch(d.width!.nominal)} × ${inch(d.depth!.nominal)} × ${inch(d.height.nominal)} in`}). ${d.note ?? ''}`.trim() },
@@ -316,6 +313,14 @@ const delta = (mm: number, label: string) => {
         </div>
       </div>
       <a class="link text-[0.7rem] mt-2 inline-block" href={`/compare?ids=${[b.id, ...sims.slice(0, 4).map((s) => s.battery.id)].join(',')}`}>Compare these in 3D</a>
+      {headToHead.length > 0 && (
+        <div class="mt-5">
+          <h3 class="eyebrow mb-2">Head to head</h3>
+          <ul class="flex flex-wrap gap-1.5">
+            {headToHead.map((h) => <li><a href={`/compare/${h.slug}`} class="chip font-sans text-[0.68rem] py-1 px-2.5 hover:border-accent hover:text-accent-ink">{b.name} vs {h.other.name}</a></li>)}
+          </ul>
+        </div>
+      )}
     </section>
 
     {b.devices.length > 0 && (
