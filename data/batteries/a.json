@@ -117,9 +117,9 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
-    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
-    "Do not mix cells of different capacity, age or charge state in one pack."
+    "Charge only with a charger designed for nickel-metal hydride batteries; overcharging can cause venting or leakage.",
+    "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
   "notes": "More common as a nickel-metal hydride or nickel-cadmium cell for pack assembly than as a primary cell. Fractional sizes such as 4/5A and 2/3A share its diameter.",
   "sources": [

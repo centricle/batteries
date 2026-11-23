@@ -117,9 +117,9 @@
     }
   ],
   "safety": [
-    "Lithium photo cells are primary cells and are not designed to be recharged; charging can cause venting, fire or rupture.",
-    "Do not short-circuit, crush, heat or disassemble. The cell contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the cell safe to abuse.",
-    "Replace all cells in a device at the same time and do not mix them with used cells or other types.",
+    "Lithium photo batteries are single-use and are not designed to be recharged; charging can cause venting, fire or rupture.",
+    "Do not short-circuit, crush, heat or disassemble. The battery contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the battery safe to abuse.",
+    "Replace all batteries in a device at the same time and do not mix them with used batteries or other types.",
     "The rechargeable RCR-V3 runs at 3.7 V and charges to a higher voltage; use it only in devices that allow it."
   ],
   "notes": "Digital cameras designed for two AA cells or one CR-V3 accept both, and some cameras not designed for it also accept it, per Wikipedia.",

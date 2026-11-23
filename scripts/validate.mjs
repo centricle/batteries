@@ -48,6 +48,10 @@ for (const file of readDir(cDir)) {
   try {
     const r = chemistrySchema.safeParse(JSON.parse(fs.readFileSync(path.join(cDir, file), 'utf8')));
     if (!r.success) for (const i of r.error.issues) fail(file, `${i.path.join('.')}: ${i.message}`);
+    // Optional in the schema so old files still parse, but every kind shown to
+    // visitors needs its plain name and sentence.
+    else if (!r.data.plain_name || !r.data.plain) fail(file, 'plain_name and plain are required on every chemistry');
+    else if (/\bcells?\b/i.test(r.data.plain + ' ' + r.data.plain_name)) fail(file, 'plain text says "cell"; say "battery"');
   } catch (e) {
     fail(file, `invalid JSON: ${e.message}`);
   }

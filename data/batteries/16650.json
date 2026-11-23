@@ -63,11 +63,11 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger made for lithium-ion cells, using constant current then constant voltage (CC/CV) up to the charge voltage in the cell datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most cells listed here); deep discharge damages the cell and a damaged cell should be discarded.",
-    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the cell against a metal object or an adjacent cell.",
-    "Unprotected cells have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected cells carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion cells to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
+    "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
   ],
   "notes": "Size code: 16 mm diameter, 65 mm length, 0 for cylindrical. A narrower relative of the 18650.",
   "sources": [

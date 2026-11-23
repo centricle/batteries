@@ -26,7 +26,7 @@
     {
       "code": "60",
       "system": "ANSI",
-      "note": "Listed by Wikipedia; Eveready EV90 labels its F cells No. 60."
+      "note": "Listed by Wikipedia; Eveready EV90 labels its F batteries No. 60."
     },
     {
       "code": "BK-1100FHU",
@@ -125,13 +125,13 @@
     {
       "id": "d",
       "relation": "do-not-substitute",
-      "note": "An F cell is 33 mm by 91 mm and is much longer than a D cell, so the two do not swap."
+      "note": "An F battery is 33 mm by 91 mm and is much longer than a D battery, so the two do not swap."
     }
   ],
   "safety": [
-    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
-    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
-    "Do not mix cells of different capacity, age or charge state in one pack."
+    "Charge only with a charger designed for nickel-metal hydride batteries; overcharging can cause venting or leakage.",
+    "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
   "notes": "Four F cells are often found inside 6 V rectangular lantern batteries.",
   "sources": [

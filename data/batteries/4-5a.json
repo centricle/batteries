@@ -89,13 +89,13 @@
     {
       "id": "a",
       "relation": "same-size",
-      "note": "A 4/5A cell has the A cell's 17 mm diameter but is 43 mm long instead of 50 mm, so it fits in packs built for it only."
+      "note": "A 4/5A battery has the A battery's 17 mm diameter but is 43 mm long instead of 50 mm, so it fits in packs built for it only."
     }
   ],
   "safety": [
-    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
-    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
-    "Do not mix cells of different capacity, age or charge state in one pack."
+    "Charge only with a charger designed for nickel-metal hydride batteries; overcharging can cause venting or leakage.",
+    "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
   "notes": "Fractional version of the A cell, used to build battery packs.",
   "sources": [

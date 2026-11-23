@@ -202,10 +202,10 @@
   ],
   "interchange": [],
   "safety": [
-    "Swallowing a button cell is a medical emergency: the manufacturer instruction is to seek medical assistance promptly after any ingestion and to keep batteries out of the reach of children.",
+    "Swallowing a button battery is a medical emergency: the maker's instruction is to seek medical assistance promptly after any ingestion and to keep batteries out of the reach of children.",
     "Equipment intended for use by children should have tamper-proof battery compartments.",
-    "Remove exhausted cells from the device promptly, because leaking cells can damage it.",
-    "Do not recharge, short-circuit, dismantle, heat or burn the cell; do not mix types, brands or charge states."
+    "Remove exhausted batteries from the device promptly, because leaking batteries can damage it.",
+    "Do not recharge, short-circuit, dismantle, heat or burn the battery; do not mix types, brands or charge states."
   ],
   "notes": "7.9 mm by 1.65 mm. Low drain (SW) and high drain (W) silver oxide cells share the case but differ in electrolyte; the manufacturer numbers differ.",
   "sources": [

@@ -138,32 +138,36 @@ export function deviceAnswer(d: Device) {
 
 // ------------------------------------------------------------- formatting
 
+// Wrap colors are pale washes: each kind keeps its hue, chroma is at most 0.06
+// and lightness runs from oklch L 0.60 to 0.74. Alkaline is the mark's body
+// color, #6D89A7. Keep these in step with data/chemistries/*.json and the
+// `wrap` default in src/lib/geometry/model.js.
 export const CHEM_FALLBACK: Record<string, { name: string; short: string; color: string }> = {
-  alkaline: { name: 'Alkaline', short: 'Alkaline', color: '#516791' },
-  'zinc-carbon': { name: 'Zinc-carbon', short: 'Zinc-carbon', color: '#6D7073' },
-  'zinc-chloride': { name: 'Zinc chloride', short: 'Zinc chloride', color: '#585E64' },
-  'nickel-oxyhydroxide': { name: 'Nickel oxyhydroxide', short: 'NiOOH', color: '#605E8D' },
-  'lithium-iron-disulfide': { name: 'Lithium iron disulfide', short: 'Li-FeS₂', color: '#5A837C' },
-  'lithium-manganese-dioxide': { name: 'Lithium manganese dioxide', short: 'Li-MnO₂', color: '#4E705C' },
-  'lithium-carbon-monofluoride': { name: 'Lithium carbon monofluoride', short: 'Li-CFx', color: '#5A7250' },
-  'lithium-thionyl-chloride': { name: 'Lithium thionyl chloride', short: 'Li-SOCl₂', color: '#4C675F' },
-  'silver-oxide': { name: 'Silver oxide', short: 'Silver oxide', color: '#787C81' },
-  'zinc-air': { name: 'Zinc-air', short: 'Zinc-air', color: '#8A7B54' },
-  'mercury-oxide': { name: 'Mercury oxide', short: 'Mercury', color: '#664346' },
-  nimh: { name: 'Nickel-metal hydride', short: 'NiMH', color: '#977457' },
-  nicd: { name: 'Nickel-cadmium', short: 'NiCd', color: '#845D4E' },
-  'nickel-zinc': { name: 'Nickel-zinc', short: 'NiZn', color: '#796046' },
-  'lithium-ion': { name: 'Lithium-ion', short: 'Li-ion', color: '#945B61' },
-  'lithium-iron-phosphate': { name: 'Lithium iron phosphate', short: 'LiFePO₄', color: '#6B5784' },
-  'lithium-ion-regulated': { name: 'Lithium-ion, 1.5 V regulated', short: '1.5 V Li-ion', color: '#A1697A' },
-  'lithium-manganese-rechargeable': { name: 'Rechargeable lithium manganese', short: 'ML', color: '#5F805D' },
-  'lithium-vanadium-rechargeable': { name: 'Rechargeable lithium vanadium', short: 'VL', color: '#60754F' },
-  'lithium-titanate': { name: 'Lithium titanate', short: 'LTO', color: '#584F70' },
+  alkaline: { name: 'Alkaline', short: 'Alkaline', color: '#6D89A7' },
+  'zinc-carbon': { name: 'Zinc-carbon', short: 'Zinc-carbon', color: '#9CA0A3' },
+  'zinc-chloride': { name: 'Zinc chloride', short: 'Zinc chloride', color: '#898F96' },
+  'nickel-oxyhydroxide': { name: 'Nickel oxyhydroxide', short: 'NiOOH', color: '#9190B9' },
+  'lithium-iron-disulfide': { name: 'Lithium iron disulfide', short: 'Li-FeS₂', color: '#88B2AB' },
+  'lithium-manganese-dioxide': { name: 'Lithium manganese dioxide', short: 'Li-MnO₂', color: '#7EA18C' },
+  'lithium-carbon-monofluoride': { name: 'Lithium carbon monofluoride', short: 'Li-CFx', color: '#89A37F' },
+  'lithium-thionyl-chloride': { name: 'Lithium thionyl chloride', short: 'Li-SOCl₂', color: '#7C9890' },
+  'silver-oxide': { name: 'Silver oxide', short: 'Silver oxide', color: '#A6ABB0' },
+  'zinc-air': { name: 'Zinc-air', short: 'Zinc-air', color: '#B9AA81' },
+  'mercury-oxide': { name: 'Mercury oxide', short: 'Mercury', color: '#9B7577' },
+  nimh: { name: 'Nickel-metal hydride', short: 'NiMH', color: '#C7A285' },
+  nicd: { name: 'Nickel-cadmium', short: 'NiCd', color: '#B78D7D' },
+  'nickel-zinc': { name: 'Nickel-zinc', short: 'NiZn', color: '#AB9075' },
+  'lithium-ion': { name: 'Lithium-ion', short: 'Li-ion', color: '#C08F93' },
+  'lithium-iron-phosphate': { name: 'Lithium iron phosphate', short: 'LiFePO₄', color: '#9A8AB1' },
+  'lithium-ion-regulated': { name: 'Lithium-ion, 1.5 V regulated', short: '1.5 V Li-ion', color: '#CB9BA9' },
+  'lithium-manganese-rechargeable': { name: 'Rechargeable lithium manganese', short: 'ML', color: '#8FAF8D' },
+  'lithium-vanadium-rechargeable': { name: 'Rechargeable lithium vanadium', short: 'VL', color: '#90A57F' },
+  'lithium-titanate': { name: 'Lithium titanate', short: 'LTO', color: '#8A80A4' },
 };
 
 export function chem(id: string) {
   const c = chemistryById(id);
-  const f = CHEM_FALLBACK[id] ?? { name: id, short: id, color: '#5b6573' };
+  const f = CHEM_FALLBACK[id] ?? { name: id, short: id, color: '#8B96A5' };
   return { id, name: c?.name ?? f.name, short: c?.short ?? f.short, color: c?.color ?? f.color, exists: !!c };
 }
 

@@ -2,6 +2,8 @@
   "id": "zinc-carbon",
   "name": "Zinc-carbon",
   "short": "Zinc-carbon",
+  "plain_name": "Heavy duty (zinc-carbon)",
+  "plain": "The oldest type still sold, at 1.5 volts, made from low-cost materials. It holds the least energy of the household types and suits light, occasional use.",
   "rechargeable": false,
   "anode": "Zinc (the can)",
   "cathode": "Manganese dioxide with carbon, carbon rod collector",
@@ -9,7 +11,7 @@
   "voltage": {
     "nominal": 1.5
   },
-  "color": "#6D7073",
+  "color": "#9CA0A3",
   "summary": "The zinc-carbon cell, in its original Leclanché form, uses its zinc can as the anode, a manganese dioxide and carbon cathode, and a mildly acidic ammonium chloride electrolyte. It is the oldest dry cell chemistry still sold, rated 1.5 V and suited to light, intermittent loads.",
   "body": "## How it works\n\nIn the Leclanché form of the zinc-carbon cell, the zinc can is the anode. The cathode is a mix of manganese dioxide and powdered carbon packed around a central carbon rod, which collects current. The electrolyte is a slightly acidic aqueous paste of ammonium chloride and zinc chloride, held in a paper separator. Energizer gives the Leclanché reaction as 2MnO2 + 2NH4Cl + Zn → ZnCl2·2NH3 + Mn2O3 + H2O. Because the can itself is consumed, its wall thins during discharge, and in older designs electrolyte could leak through it.\n\n## Discharge behavior\n\nVoltage starts near 1.5 V and slopes steadily downward. Energizer's handbook stresses that service is not a fixed number of ampere-hours: it varies with current drain, operating schedule, cutoff voltage and temperature, and the test curves in that handbook use endpoints between 0.75 and 0.9 V. Internal resistance is higher than in the zinc chloride system, which in turn is higher than alkaline, and it rises as the battery gets colder. Energizer notes that freezer storage at −20 °C is not harmful, though cells should warm to room temperature in their packaging to avoid condensation.\n\nWikipedia notes a short shelf life because ammonium chloride attacks the zinc even when the cell is idle. Energizer's carbon zinc storage table lists 90 to 100% of fresh service retained after one year at 21 °C and 65 to 80% after four years.\n\n## Uses\n\nWikipedia describes zinc-carbon as a cost-effective option for appliances with low power demand. Energizer reports that most of its cylindrical carbon zinc cells now use the zinc chloride system, and that the Leclanché system remains mainly in flat cells and multi-cell batteries such as 9 V. Flat cells can be stacked into batteries of up to about 450 V.\n\n## History\n\nGeorges Leclanché patented his wet cell in 1866. Carl Gassner developed a portable dry version in the late 1880s, with the zinc casing as the anode and a thickened paste electrolyte; Wikipedia's articles give 1886 for his patent and 1888 for the improved dry cell. In 1898 Conrad Hubert used batteries made by W. H. Lawrence to power the first flashlight, and the two formed the Eveready Battery Company. By the end of the 20th century, capacity had risen fourfold over the 1910 equivalent. Zinc anodes were once amalgamated with mercury; current cells use purer zinc, and Energizer states its carbon zinc cells contain no added mercury or cadmium.\n\n## Status\n\nCurrent. IEC 60086-1 assigns no system letter to zinc and manganese dioxide in an ammonium chloride or zinc chloride electrolyte, so a zinc-carbon AA is designated R6 (1.5 V nominal, 1.725 V maximum open-circuit voltage).",
   "strengths": [

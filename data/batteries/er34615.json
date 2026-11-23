@@ -15,7 +15,7 @@
       "code": "ER34615",
       "system": "IEC",
       "chemistry": "lithium-thionyl-chloride",
-      "note": "Not printed on the Saft sheet fetched; standard designation for this D-size Li-SOCl2 cell."
+      "note": "Not printed on the Saft sheet fetched; standard designation for this D-size Li-SOCl2 battery."
     },
     {
       "code": "LS 33600",
@@ -96,13 +96,13 @@
     {
       "id": "d",
       "relation": "do-not-substitute",
-      "note": "The cell is close to D size but delivers 3.6 V, which can damage devices built for 1.5 V D cells."
+      "note": "The battery is close to D size but delivers 3.6 V, which can damage devices built for 1.5 V D batteries."
     }
   ],
   "safety": [
-    "Primary lithium cells are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
-    "Do not solder directly to the cell; use tabbed or pinned versions.",
-    "Lithium thionyl chloride cells run at 3.6 V; most 1.5 V devices are not designed for that voltage.",
+    "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Do not solder directly to the battery; use tabbed or pinned versions.",
+    "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage.",
     "Saft notes that currents above the recommended continuous level may require thermal protection."
   ],
   "notes": "Industrial D-size bobbin cell with a high capacity for long-life, low-drain devices.",

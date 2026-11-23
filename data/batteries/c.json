@@ -25,7 +25,7 @@
       "code": "R14",
       "system": "IEC",
       "chemistry": "zinc-carbon",
-      "note": "Also used for zinc chloride heavy duty cells"
+      "note": "Also used for zinc chloride heavy duty batteries"
     },
     {
       "code": "HR14",
@@ -221,12 +221,12 @@
     {
       "id": "d",
       "relation": "same-size",
-      "note": "D cells share the 1.5 V alkaline chemistry but are larger; they are not interchangeable."
+      "note": "D batteries share the 1.5 V alkaline chemistry but are larger; one does not work in place of the other."
     }
   ],
   "safety": [
     "Do not mix chemistries, brands or charge states in one device.",
-    "Only NiMH and NiCd C cells are designed to be recharged; charging alkaline or zinc-carbon cells can cause leakage or rupture."
+    "Only NiMH and NiCd C batteries are designed to be recharged; charging alkaline or zinc-carbon batteries can cause leakage or rupture."
   ],
   "notes": "Wikipedia lists BA-42 as the US military designation (World War II to the 1980s). NiCd and nickel oxyhydroxide C cells exist (KR14, ZR14) but no datasheet was found for either.",
   "sources": [

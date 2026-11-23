@@ -182,6 +182,9 @@ export const batterySchema = z
     safety: z.array(z.string()).default([]),
     history: z.string().optional(),
     notes: z.string().optional(),
+    // Optional hand-written plain summary for the top of the page. Without it
+    // the page generates one from the data (plainSummary in src/lib/plain.ts).
+    plain: z.string().min(20).optional(),
     sources: z.array(sourceSchema).min(1),
     updated: isoDate,
   })
@@ -206,6 +209,12 @@ export const chemistrySchema = z
     id: z.enum(CHEMISTRIES),
     name: z.string(),
     short: z.string(),
+    // The kind as a person replacing a battery would say it: plain word first,
+    // the technical abbreviation in parentheses ("Rechargeable (NiMH)").
+    plain_name: z.string().min(3).optional(),
+    // One or two sentences in the reader's words, written only from this
+    // file's summary, strengths and limitations.
+    plain: z.string().min(20).optional(),
     iec_letter: z.string().max(2).optional(),
     rechargeable: z.boolean(),
     anode: z.string().optional(),

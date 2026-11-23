@@ -2,6 +2,8 @@
   "id": "zinc-chloride",
   "name": "Zinc chloride",
   "short": "Zinc chloride",
+  "plain_name": "Heavy duty (zinc chloride)",
+  "plain": "A low-cost 1.5-volt battery that lasts about twice as long as basic zinc-carbon, but far less than alkaline in devices that draw a lot of power.",
   "rechargeable": false,
   "anode": "Zinc (the can)",
   "cathode": "Manganese dioxide with carbon, carbon rod collector",
@@ -19,7 +21,7 @@
       55
     ]
   },
-  "color": "#585E64",
+  "color": "#898F96",
   "summary": "Zinc chloride cells are the heavy-duty grade of carbon zinc battery: the same zinc can and manganese dioxide cathode, with an electrolyte that is mainly zinc chloride. They give about twice the service of general-purpose zinc-carbon cells at 1.5 V nominal.",
   "body": "## How it works\n\nA zinc chloride cell shares the zinc-carbon architecture: a zinc can as the anode, a manganese dioxide and carbon cathode, and a carbon rod current collector. The difference is the electrolyte, which consists mainly of zinc chloride in water, may contain a small amount of ammonium chloride, and is slightly more acidic than the Leclanché mix. Energizer gives the overall reaction as 8MnO2 + 4Zn + ZnCl2 + 9H2O → 8MnOOH + ZnCl2·4ZnO·5H2O.\n\n## Discharge behavior\n\nOpen-circuit voltage is typically over 1.60 V, higher than Leclanché or alkaline, and the curve slopes downward under load. Compared with Leclanché cells, Energizer lists lower internal resistance, less loss of capacity as drain rate increases, less sensitivity to duty cycle, and better low-temperature performance. Energy density is about 2 to 2.5 watt-hours per cubic inch, about 122 to 153 Wh/L. Energizer's flash amperage figures for its zinc chloride cells are about 9 A (D), 7 A (C), 5 A (AA) and 3 A (AAA). Average service maintenance exceeds 90% after one year of storage at 21 °C, and Energizer rates operation from −18 to 55 °C.\n\nThe gap to alkaline remains wide on heavy loads: on Energizer's D-cell tests, alkaline gives 250 to 300% of the service of zinc chloride.\n\n## Uses\n\nWikipedia notes that zinc chloride cells are often labeled heavy duty, extra heavy duty or super heavy duty. Energizer describes them as less expensive than alkaline and economical in cost per hour on moderate drains or moderate use frequency. Energizer states that most of its cylindrical carbon zinc batteries use the zinc chloride system, while 9 V flat-cell batteries remain Leclanché.\n\n## History\n\nWikipedia describes the zinc chloride cell as an improvement on the original zinc-carbon cell, using purer chemicals and giving a longer service life and steadier voltage. It reports about twice the service life of general-purpose zinc-carbon cells, and up to four times in continuous or high-drain use. Energizer states that its carbon zinc cells contain no added mercury or cadmium.\n\n## Status\n\nCurrent. IEC 60086-1 does not distinguish zinc chloride from Leclanché cells: both use no system letter, so a zinc chloride AA is designated R6.",
   "strengths": [

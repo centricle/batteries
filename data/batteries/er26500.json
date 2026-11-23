@@ -85,13 +85,13 @@
     {
       "id": "c",
       "relation": "do-not-substitute",
-      "note": "The cell is close to C size but delivers 3.6 V, which can damage devices built for 1.5 V C cells."
+      "note": "The battery is close to C size but delivers 3.6 V, which can damage devices built for 1.5 V C batteries."
     }
   ],
   "safety": [
-    "Primary lithium cells are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
-    "Do not solder directly to the cell; use tabbed or pinned versions.",
-    "Lithium thionyl chloride cells run at 3.6 V; most 1.5 V devices are not designed for that voltage."
+    "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Do not solder directly to the battery; use tabbed or pinned versions.",
+    "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage."
   ],
   "notes": "Industrial C-size bobbin cell for long-life, low-drain devices with periodic pulses.",
   "sources": [

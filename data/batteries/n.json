@@ -157,12 +157,12 @@
     {
       "id": "aaaa",
       "relation": "same-size",
-      "note": "AAAA cells are 1.5 V but longer and thinner than an N cell and do not fit N holders."
+      "note": "AAAA batteries are 1.5 V but longer and thinner than an N battery and do not fit N holders."
     }
   ],
   "safety": [
     "Do not mix chemistries, brands or charge states in one device.",
-    "Do not recharge alkaline or zinc-carbon cells."
+    "Do not recharge alkaline or zinc-carbon batteries."
   ],
   "notes": "A rare size now mostly found in older remotes, pagers and key fobs. Wikipedia also lists KR1 (NiCd), but no datasheet was found.",
   "sources": [

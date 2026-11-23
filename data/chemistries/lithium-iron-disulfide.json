@@ -2,6 +2,8 @@
   "id": "lithium-iron-disulfide",
   "name": "Lithium iron disulfide",
   "short": "Li-FeS₂",
+  "plain_name": "Lithium (single-use)",
+  "plain": "A single-use 1.5-volt battery that works in place of alkaline AA and AAA. It is about a third lighter, lasts much longer in devices that draw a lot of power, works from −40 to 60 °C, and costs more.",
   "iec_letter": "F",
   "rechargeable": false,
   "anode": "Lithium metal",
@@ -26,7 +28,7 @@
       60
     ]
   },
-  "color": "#5A837C",
+  "color": "#88B2AB",
   "summary": "Lithium iron disulfide cells pair a lithium metal anode with an iron disulfide cathode to give a 1.5 V nominal, voltage-compatible replacement for alkaline AA and AAA cells. They hold a flat discharge, work from −40 to 60 °C, and weigh about a third less than alkaline.",
   "body": "## How it works\n\nThe lithium iron disulfide cell is a primary lithium cell built to match the voltage of alkaline AA and AAA batteries. Energizer's L91/L92 handbook describes a spirally wound jellyroll of a lithium metal anode and an iron disulfide cathode coated on aluminum foil, separated by a microporous polyolefin film, with an electrolyte of a lithium salt in organic ethers including 1,2-dimethoxyethane (DME) and 1,3-dioxolane. The jellyroll gives almost 20 times the interfacial electrode area of an alkaline bobbin cell. Discharge proceeds in two steps: 2Li + FeS2 → Li2FeS2, then 2Li + Li2FeS2 → Fe + 2Li2S. Each cell also carries a vent and a PTC device that limits current when the cell heats above about 85 °C.\n\n## Discharge behavior\n\nA fresh cell reads 1.79 to 1.83 V open circuit; Energizer treats an open-circuit reading under 1.70 V as a sign of a discharged cell. Under load the curve is flat, close to 1.5 V for most of its life, and the cell's low effective internal resistance, about 100 mΩ, lets an AA deliver pulses of up to 3 A. Energizer recommends a 0.8 V cutoff and warns against discharging below 0.5 V. The advantage over alkaline grows with drain. At about 200 mA Energizer gives a specific energy of about 297 Wh/kg for its AA, against about 143 Wh/kg for a comparable alkaline. The cell is rated for operation and storage from −40 to 60 °C and keeps about 95% of its capacity after 20 or more years of storage.\n\n## Uses\n\nThe chemistry is sold in AA (FR6) and AAA (FR03) sizes. Energizer positions it for high-drain and extreme-temperature applications, and as a lighter alternative where weight matters: its AA is 33% lighter than an alkaline AA.\n\n## History\n\nEnergizer introduced the first 1.5 V AA lithium cell in 1989 and the AAA version in 2004. Wikipedia lists the system as lithium-iron, IEC code F, at 1.4 to 1.6 V nominal and 1.8 V open circuit, and notes that it replaced the earlier lithium copper oxide (IEC G) voltage-compatible cell by the mid-1990s.\n\n## Status\n\nCurrent. In edition 14 of IEC 60086-1 (2026), the maximum open-circuit voltage for letter F was raised from 1.83 to 1.90 V.",
   "strengths": [

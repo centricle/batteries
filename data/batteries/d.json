@@ -27,7 +27,7 @@
       "code": "R20",
       "system": "IEC",
       "chemistry": "zinc-carbon",
-      "note": "Also used for zinc chloride heavy duty cells"
+      "note": "Also used for zinc chloride heavy duty batteries"
     },
     {
       "code": "HR20",
@@ -232,12 +232,12 @@
     {
       "id": "c",
       "relation": "same-size",
-      "note": "C cells share the 1.5 V alkaline chemistry but are smaller and have lower capacity."
+      "note": "C batteries share the 1.5 V alkaline chemistry but are smaller and have lower capacity."
     }
   ],
   "safety": [
     "Do not mix chemistries, brands or charge states in one device.",
-    "Only NiMH and NiCd D cells are designed to be recharged; charging alkaline or zinc-carbon cells can cause leakage or rupture."
+    "Only NiMH and NiCd D batteries are designed to be recharged; charging alkaline or zinc-carbon batteries can cause leakage or rupture."
   ],
   "notes": "Wikipedia lists BA-30 as the US military designation (World War II to the 1980s). No datasheet was found for nickel oxyhydroxide (ZR20).",
   "sources": [

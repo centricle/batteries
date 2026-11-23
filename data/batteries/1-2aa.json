@@ -147,14 +147,14 @@
     {
       "id": "er14505",
       "relation": "do-not-substitute",
-      "note": "Same diameter as an AA-size Li-SOCl2 cell but about half the length, so it does not fit AA-size holders."
+      "note": "Same diameter as an AA-size Li-SOCl2 battery but about half the length, so it does not fit AA-size holders."
     }
   ],
   "safety": [
-    "Primary lithium cells are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
-    "Do not solder directly to the cell; use tabbed or pinned versions.",
-    "Lithium thionyl chloride cells run at 3.6 V; most 1.5 V devices are not designed for that voltage.",
-    "CR14250 (3.0 V) and ER14250 (3.6 V) fit the same holder but are not interchangeable in a device designed for one voltage."
+    "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Do not solder directly to the battery; use tabbed or pinned versions.",
+    "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage.",
+    "CR14250 (3.0 V) and ER14250 (3.6 V) fit the same holder, but one does not work in place of the other in a device designed for one voltage."
   ],
   "notes": "Same diameter as an AA cell and roughly half its length. Two chemistries share the size at different voltages.",
   "sources": [

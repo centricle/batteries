@@ -2,6 +2,8 @@
   "id": "lithium-manganese-rechargeable",
   "name": "Rechargeable lithium manganese",
   "short": "ML",
+  "plain_name": "Rechargeable lithium coin (ML)",
+  "plain": "A rechargeable 3-volt coin battery, sold with the ML prefix, for memory and clock backup. It delivers very little current and needs a charger set to its own voltage.",
   "rechargeable": true,
   "anode": "Lithium-aluminum alloy",
   "cathode": "Manganese compound oxide",
@@ -18,7 +20,7 @@
       60
     ]
   },
-  "color": "#5F805D",
+  "color": "#8FAF8D",
   "summary": "Rechargeable lithium manganese coin cells, sold with the ML prefix, pair a lithium-aluminum alloy anode with a manganese oxide cathode for 3.0 V nominal. They are charged at a constant 2.8 to 3.2 V and used for memory and real-time clock backup.",
   "body": "## How it works\n\nPanasonic's ML series uses a manganese compound oxide as the positive electrode, a lithium-aluminum alloy as the negative electrode, and a non-aqueous solvent as the electrolyte. Wikipedia lists the Li/Al and manganese dioxide ML cell as a rechargeable lithium metal system at 3 V, mainly marketed by Maxell. The cells are coin format; Panasonic's ML2020, for example, is 20.0 mm in diameter and 2.0 mm high.\n\n## Discharge behavior\n\nNominal voltage is 3.0 V. Panasonic rates the ML2020 at 45.0 mAh to a 2.0 V cutoff at 20 °C, with a continuous drain of 0.12 mA, so these cells are built for very small currents. The operating range is −20 to 60 °C, and Panasonic gives self-discharge of 2% per year at 20 °C. Cycle life is about 1,000 cycles at 10% depth of discharge relative to nominal capacity.\n\nCharging is constant-voltage. Panasonic's guaranteed charging window is 2.8 to 3.2 V from −20 to 60 °C, with 3.1 V as the standard setting. Panasonic warns that trickle charging of the kind used for nickel-cadmium batteries must never be used, because the cell voltage rises to about 5 V and performance deteriorates. A charge voltage above the specification raises internal resistance, and a charge voltage around 4 V can corrode the positive terminal, which is the case, causing leakage. Below the specification, capacity does not fully recover.\n\n## Uses\n\nMemory backup and real-time clock (RTC) backup in drive recorders, PCs, radio and communication equipment, medical equipment and factory automation equipment, according to Panasonic's ML2020 datasheet. Panasonic Industry Europe also lists tracking and RFID, pagers and memory backup for mobile phones.\n\n## History\n\nPanasonic Industry Europe states that its ML series has been in production for more than 23 years.\n\n## Status\n\nCurrent. ML is a manufacturer prefix rather than an IEC designation. The digits of the ML2020 match its dimensions, 20.0 mm in diameter and 2.0 mm high.",
   "strengths": [

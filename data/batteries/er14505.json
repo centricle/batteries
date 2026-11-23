@@ -104,18 +104,18 @@
     {
       "id": "aa",
       "relation": "do-not-substitute",
-      "note": "The cell has an AA body but delivers 3.6 V; most devices built for 1.5 V AA cells can be damaged by it."
+      "note": "The battery has an AA body but delivers 3.6 V; most devices built for 1.5 V AA batteries can be damaged by it."
     },
     {
       "id": "1-2aa",
       "relation": "same-size",
-      "note": "A 1/2AA Li-SOCl2 cell shares the diameter and chemistry but is about half the length."
+      "note": "A 1/2AA Li-SOCl2 battery shares the diameter and chemistry but is about half the length."
     }
   ],
   "safety": [
-    "Primary lithium cells are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
-    "Do not solder directly to the cell; use tabbed or pinned versions.",
-    "Lithium thionyl chloride cells run at 3.6 V; most 1.5 V devices are not designed for that voltage."
+    "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Do not solder directly to the battery; use tabbed or pinned versions.",
+    "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage."
   ],
   "notes": "Industrial AA-size bobbin cell for long-life, low-drain devices with periodic pulses.",
   "sources": [

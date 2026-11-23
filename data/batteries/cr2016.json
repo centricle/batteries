@@ -102,7 +102,7 @@
     {
       "id": "cr2032",
       "relation": "fits-with-caveat",
-      "note": "Same 20 mm diameter and 1.6 mm thicker; fits only in holders sized for it. Some devices stack two CR2016 cells for 6 V."
+      "note": "Same 20 mm diameter and 1.6 mm thicker; fits only in holders sized for it. Some devices stack two CR2016 batteries for 6 V."
     }
   ],
   "sources": [
@@ -168,8 +168,8 @@
   },
   "updated": "2026-11-22",
   "safety": [
-    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "Swallowed coin batteries can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
     "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
-    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+    "Do not recharge, crush, puncture, heat or short-circuit a single-use lithium coin battery."
   ]
 }

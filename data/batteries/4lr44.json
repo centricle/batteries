@@ -86,7 +86,7 @@
       "code": "PX28",
       "system": "Industry",
       "chemistry": "silver-oxide",
-      "note": "Originally a mercury cell designation; not printed on the Energizer 544 datasheet."
+      "note": "Originally a mercury battery designation; not printed on the Energizer 544 datasheet."
     }
   ],
   "dimensions": {
@@ -158,7 +158,7 @@
     {
       "id": "2cr1-3n",
       "relation": "fits-with-caveat",
-      "note": "The 6 V lithium 2CR1/3N is a similar size but has a different voltage profile and a different shape, so check the device before substituting."
+      "note": "The 6 V lithium 2CR1/3N is a similar size but has a different voltage profile and a different shape, so check the device before using one in place of the other."
     }
   ],
   "safety": [

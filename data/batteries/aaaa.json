@@ -119,12 +119,12 @@
     {
       "id": "aaa",
       "relation": "same-size",
-      "note": "AAA cells have the same 1.5 V nominal voltage but a larger diameter (10.5 mm against 8.3 mm) and do not fit AAAA holders."
+      "note": "AAA batteries have the same 1.5 V nominal voltage but a larger diameter (10.5 mm against 8.3 mm) and do not fit AAAA holders."
     }
   ],
   "safety": [
     "Do not mix chemistries, brands or charge states in one device.",
-    "Do not charge alkaline cells."
+    "Do not charge alkaline batteries."
   ],
   "notes": "Wikipedia lists \"Mini\" and MX2500 among the informal names. Capacity data is sparse in this size.",
   "sources": [

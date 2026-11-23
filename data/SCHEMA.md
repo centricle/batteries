@@ -67,6 +67,17 @@ one file in `data/chemistries/<id>.json`. Both are validated against
 A chemistry's `name` has no parentheses ("Lithium manganese dioxide"); its
 `short` carries the formula with subscripts ("Li-MnO₂").
 
+Every chemistry also has a `plain_name` and a `plain` sentence, which battery
+pages show to visitors. `plain_name` is the kind in a shopper's words, the plain
+word first and the technical abbreviation in parentheses: "Rechargeable (NiMH)",
+"Lithium (3 V)". `plain` is one or two sentences written only from the file's
+own `summary`, `strengths` and `limitations`: no new claims, and no "cell".
+
+A battery may carry an optional `plain` string, a hand-written summary for the
+top of its page. Leave it out unless the generated one (`plainSummary` in
+`src/lib/plain.ts`) reads wrong; a hand-written summary does not update when
+the numbers do.
+
 ## Devices
 
 One file per device in `data/devices/`, named `<id>.json`: which battery a

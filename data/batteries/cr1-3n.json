@@ -46,7 +46,7 @@
       "code": "BR11108",
       "system": "IEC",
       "chemistry": "lithium-carbon-monofluoride",
-      "note": "Rare; some makers use BR1/3N for a manganese-dioxide cell"
+      "note": "Rare; some makers use BR1/3N for a manganese-dioxide battery"
     }
   ],
   "dimensions": {
@@ -124,21 +124,21 @@
     {
       "id": "2cr1-3n",
       "relation": "same-size",
-      "note": "The 2CR1/3N pack stacks two of these cells for 6 V and has the same diameter class but a longer body."
+      "note": "The 2CR1/3N pack stacks two of these batteries for 6 V and has the same diameter class but a longer body."
     },
     {
       "id": "lr44",
       "relation": "fits-with-caveat",
-      "note": "Two stacked 1.5 V LR44 or SR44 cells have the same 11.6 mm diameter and replace a CR11108 in some devices; check the device's voltage tolerance first."
+      "note": "Two stacked 1.5 V LR44 or SR44 batteries have the same 11.6 mm diameter and replace a CR11108 in some devices; check the device's voltage tolerance first."
     }
   ],
   "safety": [
-    "Lithium photo cells are primary cells and are not designed to be recharged; charging can cause venting, fire or rupture.",
-    "Do not short-circuit, crush, heat or disassemble. The cell contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the cell safe to abuse.",
-    "Replace all cells in a device at the same time and do not mix them with used cells or other types.",
-    "Swallowed coin cells can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
+    "Lithium photo batteries are single-use and are not designed to be recharged; charging can cause venting, fire or rupture.",
+    "Do not short-circuit, crush, heat or disassemble. The battery contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the battery safe to abuse.",
+    "Replace all batteries in a device at the same time and do not mix them with used batteries or other types.",
+    "Swallowed coin batteries can cause severe internal burns within two hours. Keep batteries away from children, and seek emergency medical care immediately if one is swallowed or placed in the nose or ears.",
     "In the United States, the National Battery Ingestion Hotline is 1-800-498-8666 and Poison Help is 1-800-222-1222.",
-    "Do not recharge, crush, puncture, heat or short-circuit a primary lithium coin cell."
+    "Do not recharge, crush, puncture, heat or short-circuit a single-use lithium coin battery."
   ],
   "notes": "The name reflects a height about one third of an N cell. Wikipedia notes photographers use a CR1/3N in place of two LR44 cells in some cameras. The coin lane may also hold this size as cr11108.",
   "sources": [

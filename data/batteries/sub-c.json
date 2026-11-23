@@ -121,9 +121,9 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger designed for nickel-metal hydride cells; overcharging can cause venting or leakage.",
-    "Cells meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
-    "Do not mix cells of different capacity, age or charge state in one pack."
+    "Charge only with a charger designed for nickel-metal hydride batteries; overcharging can cause venting or leakage.",
+    "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
+    "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
   "notes": "A common cell inside cordless tool packs. Fractional versions (1/2, 2/3, 4/5 and 5/4 Sub-C) differ in length and are not the same size as 1/2AA.",
   "sources": [
