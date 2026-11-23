@@ -26,7 +26,11 @@ export default defineConfig({
   site: 'https://batteries.fyi',
   output: 'static',
   devToolbar: { enabled: false },
-  trailingSlash: 'ignore',
+  // 'file' writes aa.html, which Netlify serves at /aa with no redirect. The
+  // default 'directory' output makes Netlify 301 every /aa to /aa/, an extra
+  // hop on every internal link and on every code redirect.
+  build: { format: 'file' },
+  trailingSlash: 'never',
   integrations: [sitemap({ filter: (p) => !p.includes('/api/') }), redirects()],
   vite: {
     plugins: [tailwindcss()],

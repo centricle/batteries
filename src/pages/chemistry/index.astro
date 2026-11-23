@@ -18,12 +18,12 @@ const rows = Object.keys(CHEM_FALLBACK)
   </section>
   <section class="wrap mt-6">
     <div class="card table-scroll">
-      <table class="table min-w-[44rem]">
+      <table class="table min-w-[32rem]">
         <thead><tr><th>Chemistry</th><th>IEC letter</th><th class="n">Nominal</th><th>Rechargeable</th><th class="n">Wh/kg</th><th class="n">Sizes here</th></tr></thead>
         <tbody>
           {rows.map(({ id, c, meta, n }) => (
             <tr>
-              <td><a href={`/chemistry/${id}`} class="flex items-center gap-2 font-semibold hover:text-accent-ink"><span class="dot" style={`background:${meta.color}`}></span>{meta.name}</a>{c?.summary && <span class="block text-[0.6rem] text-muted mt-0.5 max-w-md">{c.summary}</span>}</td>
+              <td><a href={`/chemistry/${id}`} class="flex items-center gap-2 font-semibold hover:text-accent-ink"><span class="dot" style={`background:${meta.color}`}></span>{meta.name}</a>{c?.summary && <span class="hidden md:block text-[0.6rem] text-muted mt-0.5 max-w-md">{c.summary}</span>}</td>
               <td class="mono">{c?.iec_letter ?? '—'}</td>
               <td class="n">{c ? `${fmt(c.voltage.nominal)} V` : '—'}</td>
               <td>{c ? (c.rechargeable ? 'Yes' : 'No') : '—'}</td>

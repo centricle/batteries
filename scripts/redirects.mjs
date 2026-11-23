@@ -52,9 +52,11 @@ export function buildRedirects(root, distDir) {
   const cmp = path.join(distDir, 'compare');
   if (fs.existsSync(cmp)) {
     lines.push('', '# Head to head, reversed');
-    for (const d of fs.readdirSync(cmp)) {
+    for (const f of fs.readdirSync(cmp)) {
+      // build.format 'file' writes compare/a-vs-b.html; 'directory' writes compare/a-vs-b/.
+      const d = f.replace(/\.html$/, '');
       const m = d.match(/^(.+)-vs-(.+)$/);
-      if (m && fs.statSync(path.join(cmp, d)).isDirectory()) lines.push(`/compare/${m[2]}-vs-${m[1]}  /compare/${d}  301`);
+      if (m) lines.push(`/compare/${m[2]}-vs-${m[1]}  /compare/${d}  301`);
     }
   }
   fs.writeFileSync(path.join(distDir, '_redirects'), lines.join('\n') + '\n');

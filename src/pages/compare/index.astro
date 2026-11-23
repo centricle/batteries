@@ -80,14 +80,16 @@ const pairGroups = CATEGORY_META.map((c) => ({
   <section class="wrap mt-14" id="all-pairs">
     <h2 class="section-title">Head-to-head pages</h2>
     <p class="text-[0.7rem] text-muted mb-4 max-w-2xl">Every pair of sizes that are close enough to confuse, or that the data says can or cannot replace each other.</p>
-    <div class="grid gap-6 md:grid-cols-2">
+    <div class="grid gap-3 md:grid-cols-2 items-start">
       {pairGroups.map((g) => (
-        <div>
-          <h3 class="eyebrow mb-2">{g.c.name}</h3>
-          <ul class="flex flex-wrap gap-1.5">
+        <details class="card p-4 group">
+          <summary class="cursor-pointer flex items-baseline justify-between text-[0.78rem] font-semibold list-none">
+            <span>{g.c.name}</span><span class="text-muted font-normal text-[0.62rem]">{g.list.length} pages <span class="inline-block transition-transform group-open:rotate-90" aria-hidden="true">›</span></span>
+          </summary>
+          <ul class="flex flex-wrap gap-1.5 mt-3">
             {g.list.map((p) => <li><a href={`/compare/${p.slug}`} class="chip font-sans text-[0.65rem] hover:border-accent hover:text-accent-ink">{p.a.name} vs {p.b.name}</a></li>)}
           </ul>
-        </div>
+        </details>
       ))}
     </div>
   </section>

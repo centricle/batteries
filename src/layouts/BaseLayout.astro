@@ -24,10 +24,11 @@ const nav = [
   { href: '/tools', label: 'Tools' },
   { href: '/reference', label: 'Reference' },
 ];
-const path = Astro.url.pathname;
+// build.format 'file' puts .html in the pathname at build; public URLs never have it.
+const path = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
 const active = (href: string) => path === href || path.startsWith(href + '/');
 const ld = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '/' : '');
 ---
 
 <!doctype html>
