@@ -1,29 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const tools = [
-  { href: '/compare', title: 'Compare sizes in 3D', body: 'Line up any batteries at true scale on a 10 mm grid, with a side-by-side spec table. Shareable links.' },
-  { href: '/identify', title: 'Identify by measurement', body: 'Measure diameter and height with calipers or a ruler and get the closest sizes, with the difference for each.' },
-  { href: '/decode', title: 'Decode a code', body: 'Break any designation into its parts: chemistry letter, shape, size number, series count and suffix.' },
-  { href: '/equivalents', title: 'Equivalents table', body: 'Every IEC, ANSI, JIS and brand code for every size, filterable on one page.' },
-  { href: '/actual-size', title: 'Actual size', body: 'Calibrate your screen against a bank card, then compare a battery in hand to its true-size outline. Prints at 1:1.' },
-  { href: '/calculators', title: 'Calculators', body: 'Energy in Wh, runtime at a load, series and parallel pack math, and the airline watt-hour limits.' },
-  { href: '/search', title: 'Search', body: 'Search by name, any code, a voltage, or a size written as diameter × height.' },
-  { href: '/data', title: 'Open data and models', body: 'The full dataset as JSON and CSV, and a GLB and STL model of every battery.' },
+  { href: '/identify', title: 'Identify a battery by its size', body: 'Measure a battery with a ruler and find the sizes that match.' },
+  { href: '/actual-size', title: 'See a battery at actual size', body: 'Set your screen with a bank card, then hold a battery up to its real-size drawing. It prints at actual size too.' },
+  { href: '/decode', title: 'What the letters and numbers mean', body: 'What each letter and number in a battery name tells you.' },
+  { href: '/equivalents', title: 'Other names for every battery', body: 'Every name each battery is sold under, on one page.' },
+  { href: '/compare', title: 'Compare battery sizes', body: 'Put any batteries side by side at their real sizes, in 3D, with a table of the differences.' },
+  { href: '/devices', title: 'What battery does it take?', body: 'Look up a device to see the battery its maker says it takes.' },
+  { href: '/calculators', title: 'Battery calculators', body: 'Energy in watt-hours, how long a battery will run, batteries in series and parallel, and airline limits.' },
+  { href: '/search', title: 'Search', body: 'Search by the name on the battery, what it goes in, its voltage or its size.' },
+  { href: '/data', title: 'Data, 3D models and API', body: 'All the data as JSON and CSV, and a 3D model of every battery to download.' },
 ];
 ---
 
-<BaseLayout title="Battery tools: compare, identify, decode, calculate | batteries.fyi" description="Free battery tools: 3D size comparison, identification by measurement, battery code decoder, equivalents table, actual-size view and calculators.">
+<BaseLayout title="Battery tools: identify, compare, read the name, calculate | batteries.fyi" description="Free battery tools: identify a battery by measuring it, see one at actual size, read what a battery name means, find its other names, compare sizes in 3D, and calculators.">
   <section class="wrap pt-8">
-    <p class="eyebrow">Tools</p>
-    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Tools</h1>
-    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Each tool runs in the browser on the same dataset as the battery pages. Nothing is uploaded or tracked beyond page views.</p>
+    <h1 class="text-2xl sm:text-3xl font-semibold">Battery tools</h1>
+    <p class="lede measure mt-3">Ways to find, measure and compare batteries. If you are holding a battery and do not know what it is, start with the first one.</p>
+    <p class="mt-2 text-base text-ink-2 measure">Each tool runs in your browser on the same data as the battery pages.</p>
   </section>
   <section class="wrap mt-6">
     <ul class="grid gap-3 sm:grid-cols-2">
       {tools.map((t) => (
-        <li><a href={t.href} class="card group block p-5 h-full hover:border-accent transition-colors">
-          <span class="font-semibold text-[0.9rem] group-hover:text-accent-ink">{t.title} <span aria-hidden="true">→</span></span>
-          <p class="text-[0.7rem] text-muted mt-1">{t.body}</p>
+        <li><a href={t.href} class="tile card block h-full">
+          <span class="block font-mono text-lg font-semibold">{t.title}</span>
+          <span class="block text-base text-ink-2 mt-1">{t.body}</span>
         </a></li>
       ))}
     </ul>

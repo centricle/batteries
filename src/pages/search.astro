@@ -3,14 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { searchIndex, deviceIndex } from '../lib/data';
 ---
 
-<BaseLayout title="Search batteries by name, code or size | batteries.fyi" description="Search every battery size by name, IEC, ANSI or brand code, voltage, or dimensions written as diameter × height.">
+<BaseLayout title="Search batteries by name, device or size | batteries.fyi" description="Search every battery by the name printed on it, any other name it is sold under, its voltage, its size written as 20 x 3.2, or the device it goes in.">
   <section class="wrap pt-8 max-w-3xl">
-    <h1 class="text-[2rem] font-semibold tracking-tight">Search</h1>
-    <form class="mt-4" role="search" onsubmit="return false">
-      <label for="q" class="sr-only">Search</label>
-      <input id="q" name="q" class="input h-12 text-[0.9rem]" placeholder="CR2032, 377, LR6, 20 x 3.2, AirTag, RAV4 key" autocomplete="off" autofocus />
+    <h1 class="text-2xl sm:text-3xl font-semibold">Search</h1>
+    <p class="lede measure mt-3">Type the name printed on the battery, or what it goes in.</p>
+    <form class="mt-5" role="search" onsubmit="return false">
+      <label for="q" class="label block mb-1">Battery name or device</label>
+      <input id="q" name="q" class="input text-lg h-13" placeholder="CR2032, 377, AirTag, 20 x 3.2" autocomplete="off" autofocus />
     </form>
-    <p class="mt-2 text-[0.62rem] text-muted">Matches names, every standard and manufacturer code, aliases, voltages (<span class="mono">3V</span>), sizes (<span class="mono">20 x 3.2</span>) and <a class="link" href="/devices">devices</a>. No match? <a class="link" href="/identify">Identify by measurement</a> or <a class="link" href="/decode">decode the code</a>.</p>
+    <p class="mt-2 text-sm text-ink-2 measure">Finds battery names and their other names, voltages (3V), sizes (20 x 3.2) and <a class="link" href="/devices">devices</a>. No match? <a class="link" href="/identify">Identify the battery by its size</a>, or see <a class="link" href="/decode">what the letters and numbers mean</a>.</p>
     <ul id="results" class="mt-6 card divide-y divide-[var(--line)]" aria-live="polite"></ul>
   </section>
   <script type="application/json" id="idx" set:html={JSON.stringify(searchIndex())} />
@@ -24,6 +25,9 @@ import { searchIndex, deviceIndex } from '../lib/data';
   const q = document.getElementById('q') as HTMLInputElement;
   const out = document.getElementById('results')!;
   const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  const vList = (v: string) => v.split(/\s*\/\s*|,\s*/).filter(Boolean);
+  const orList = (xs: string[]) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}`);
   const run = () => {
     const v = q.value.trim();
     const u = new URL(location.href);
@@ -33,11 +37,11 @@ import { searchIndex, deviceIndex } from '../lib/data';
     const r = rank(index, v, 40);
     const dv = rankDevices(dindex, v, 20);
     out.hidden = false;
-    const devHtml = dv.map(({ d }) => `<li><a href="/devices/${d.id}" class="flex items-center gap-3 p-3 hover:bg-surface-2"><span class="text-muted w-3" aria-hidden="true">↳</span><span class="font-semibold min-w-0 truncate">${esc(d.n)}</span><span class="hidden sm:inline text-[0.65rem] text-muted shrink-0">${esc(d.c)}</span><span class="chip ml-auto shrink-0">takes ${d.q > 1 ? `${d.q} × ` : ''}${esc(d.b)}</span></a></li>`).join('');
+    const devHtml = dv.map(({ d }) => `<li><a href="/devices/${d.id}" class="flex flex-wrap items-center gap-x-3 gap-y-1 p-3 min-h-11 hover:bg-surface-2"><span class="font-semibold min-w-0">${esc(d.n)}</span><span class="hidden sm:inline text-sm text-ink-2 shrink-0">${esc(d.c)}</span><span class="chip ml-auto shrink-0">Takes ${WORDS[d.q] ?? d.q} ${esc(d.b)}</span></a></li>`).join('');
     const top = dv.length && (!r.length || dv[0].score > r[0].score);
     out.innerHTML = r.length || dv.length
-      ? (top ? devHtml : '') + r.map(({ e, why }) => `<li><a href="/${e.id}" class="flex items-center gap-3 p-3 hover:bg-surface-2"><span class="dot" style="background:${e.col}"></span><span class="font-semibold w-28 shrink-0">${esc(e.n)}</span><span class="text-[0.65rem] text-muted">${esc(e.c)} · ${esc(e.s)} · ${esc(e.v)} V · ${esc(e.x.join(', '))}</span>${why ? `<span class="chip ml-auto">${esc(why)}</span>` : ''}</a></li>`).join('') + (top ? '' : devHtml)
-      : `<li class="p-6 text-center text-[0.72rem] text-muted">No match for “${esc(v)}”.</li>`;
+      ? (top ? devHtml : '') + r.map(({ e, why }) => `<li><a href="/${e.id}" class="flex flex-wrap items-center gap-x-3 gap-y-1 p-3 min-h-11 hover:bg-surface-2"><span class="dot" style="background:${e.col}"></span><span class="font-mono font-semibold text-lg w-32 shrink-0">${esc(e.n)}</span><span class="text-sm text-ink-2">${esc(e.c)}, ${esc(e.s)}, ${esc(orList(vList(e.v)))} V</span>${why ? `<span class="chip ml-auto">${esc(why)}</span>` : ''}</a></li>`).join('') + (top ? '' : devHtml)
+      : `<li class="p-6 text-center text-base text-ink-2">No match for “${esc(v)}”. Check the name printed on the battery, or <a class="link" href="/identify">measure it</a>.</li>`;
   };
   q.value = new URLSearchParams(location.search).get('q') ?? '';
   q.addEventListener('input', run);

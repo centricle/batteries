@@ -2,184 +2,426 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Viewer from '../components/Viewer.astro';
 import Silhouette from '../components/Silhouette.astro';
-import { batteries, batteryById, CATEGORY_META, stats, deviceById, devices, deviceTitle, DEVICE_CATEGORY_META, type Device } from '../lib/data';
+import { batteries, batteryById, categoryById, CATEGORY_META, stats, deviceById, devices, deviceTitle, DEVICE_CATEGORY_META, DEVICE_CATEGORY_ORDER, primaryVariant, fmt, type Battery, type Device } from '../lib/data';
 import { pairs } from '../lib/pairs';
+import { KIND_WORD, usesLine, acrossThick, brandNames } from '../lib/home';
 
 const s = stats();
-// Devices people most often ask about, then whatever else exists, to eight.
-const featured = ['apple-airtag', 'toyota-rav4-smart-key', 'tesla-model-y-key-fob', 'liftmaster-893max', 'garmin-hrm-dual', 'google-nest-protect-battery', 'honda-cr-v-2025-smart-entry-remote', 'samsung-galaxy-smarttag2']
+const pick = (ids: string[]) => ids.map((id) => batteryById(id)).filter((b): b is Battery => !!b);
+// The height a silhouette is drawn at: discs face-on, everything else standing up.
+const drawnHeight = (b: Battery) => (b.form === 'disc' ? b.dimensions.diameter!.nominal : b.dimensions.height.nominal);
+
+// The ten sizes people most often hold up, smallest household size first.
+const lineup = pick(['aaa', 'aa', 'c', 'd', '9v', 'cr123a', '18650', 'cr2032', 'lr44', '312']);
+const lineupScale = Math.max(...lineup.map(drawnHeight));
+
+// Search result lines name the kind of battery; the index labels it by the
+// category's short name, so map that to the plain word here at build time.
+const kinds = Object.fromEntries(CATEGORY_META.map((c) => [c.short, KIND_WORD[c.id] ?? '']));
+
+const deviceCount = devices().length;
+const deviceGroups = DEVICE_CATEGORY_ORDER.map((id) => ({ id, name: DEVICE_CATEGORY_META[id].name, n: devices().filter((d) => d.category === id).length })).filter((g) => g.n > 0);
+// Things that die and send someone looking: trackers, car keys, the garage
+// remote, smoke alarms, health meters. Then whatever else exists, to eight.
+const featured = ['apple-airtag', 'toyota-rav4-smart-key', 'toyota-camry-2025-smart-key', 'liftmaster-893max', 'kidde-pi9010-smoke-alarm', 'google-nest-protect-battery', 'omron-5-series-bp7250', 'accu-chek-guide']
   .map((id) => deviceById(id))
   .filter((d): d is Device => !!d);
 for (const d of devices()) if (featured.length < 8 && !featured.includes(d)) featured.push(d);
-const deviceCount = devices().length;
-const pick = (ids: string[]) => ids.map((id) => batteryById(id)).filter(Boolean) as ReturnType<typeof batteries>;
-const lineup = pick(['d', 'c', 'aa', 'aaa', 'aaaa', '9v', '21700', '18650', 'cr123a', 'cr2032', 'lr44', '312']);
-const common = pick(['aa', 'aaa', 'cr2032', 'cr2025', 'cr2016', 'lr44', 'sr626sw', '9v', 'cr123a', '18650', '21700', 'cr2', '312', 'cr1220', 'c', 'd', 'a23', 'cr2450']);
-const popularPairs = ['cr2032-vs-cr2025', 'cr2032-vs-cr2016', '18650-vs-21700', 'cr123a-vs-16340', 'aa-vs-14500', 'aa-vs-aaa', 'lr43-vs-lr44', 'lr44-vs-675', 'cr2025-vs-cr2016', '18650-vs-20700']
-  .map((slug) => pairs().get(slug) ?? pairs().get(slug.split('-vs-').reverse().join('-vs-')))
-  .filter(Boolean);
-const tools = [
-  { href: '/compare', title: 'Compare in 3D', body: 'Line up any sizes at true scale and read the differences.' },
-  { href: '/identify', title: 'Identify by measurement', body: 'Enter diameter and height from calipers or a ruler. Get the closest matches.' },
-  { href: '/decode', title: 'Decode a code', body: 'LR6, SR626SW, INR18650, 6LR61. Each letter and number explained.' },
-  { href: '/equivalents', title: 'Equivalents table', body: 'Every code, every brand number, one table. 377 = SR626SW = AG4.' },
-  { href: '/actual-size', title: 'Actual size', body: 'Calibrate your screen with a card, then hold the battery up to it.' },
-  { href: '/calculators', title: 'Calculators', body: 'Runtime, watt-hours, series and parallel packs, airline limits.' },
+
+const round = pick(['cr2032', 'cr2025', 'cr2016', 'cr1632', 'cr2450', 'lr44', 'lr41', 'sr626sw']);
+const roundScale = Math.max(...round.map((b) => b.dimensions.diameter!.nominal));
+
+const pairLinks = ['cr2032-vs-cr2025', 'cr2032-vs-cr2016', 'cr2025-vs-cr2016', 'aa-vs-aaa', 'lr43-vs-lr44', 'lr44-vs-675', 'aa-vs-14500', 'cr123a-vs-16340', '18650-vs-21700']
+  .map((slug) => {
+    const [a, b] = slug.split('-vs-');
+    const p = pairs().get(slug) ?? pairs().get(`${b}-vs-${a}`);
+    const x = batteryById(a);
+    const y = batteryById(b);
+    return p && x && y ? { href: `/compare/${p.slug}`, label: `${x.name} vs ${y.name}` } : null;
+  })
+  .filter((p): p is { href: string; label: string } => !!p);
+
+const finders = [
+  { href: '/actual-size', title: 'Hold it up to the screen', body: 'See a battery at its real size on your screen and lay yours over it.' },
+  { href: '/identify', title: 'Measure it', body: 'Enter how wide and how tall it is. A ruler is enough.' },
+  { href: '/decode', title: 'Read the name', body: 'What the letters and numbers in a battery name mean.' },
 ];
+
+// Each line is a paraphrase of the opening paragraph of its guide.
+const guides = [
+  { slug: 'air-travel', title: 'Flying with batteries', line: 'Spare lithium batteries and power banks go in your carry-on bag, never in a checked bag.' },
+  { slug: 'leakage', title: 'When a battery leaks', line: 'What leaks out of an alkaline battery is caustic, so wear household gloves and glasses to clean the contacts.' },
+  { slug: 'recycling-and-disposal', title: 'Throwing batteries away', line: 'Lithium, coin, button and rechargeable batteries go to a battery drop-off, not the trash or the recycling bin.' },
+  { slug: 'shelf-life-and-storage', title: 'Storing batteries', line: 'Keep spares dry, at room temperature and in their original package.' },
+];
+
 const catRep: Record<string, string> = { household: 'aa', 'li-ion': '18650', coin: 'cr2032', button: 'lr44', 'hearing-aid': '312', photo: 'cr123a', specialty: 'lantern-6v' };
+
 const jsonld = [
   { '@context': 'https://schema.org', '@type': 'WebSite', name: 'batteries.fyi', url: 'https://batteries.fyi/', potentialAction: { '@type': 'SearchAction', target: 'https://batteries.fyi/search?q={query}', 'query-input': 'required name=query' } },
-  { '@context': 'https://schema.org', '@type': 'Dataset', name: 'batteries.fyi consumer battery specifications', description: `Dimensions, chemistries, voltages, capacities and cross-reference codes for ${s.batteries} consumer battery sizes, with sources.`, url: 'https://batteries.fyi/data', license: 'https://opensource.org/licenses/MIT', creator: { '@type': 'Organization', name: 'Centricle LLC' }, distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://batteries.fyi/api/batteries.json' }, { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: 'https://batteries.fyi/api/batteries.csv' }] },
+  { '@context': 'https://schema.org', '@type': 'Dataset', name: 'batteries.fyi battery sizes', description: `Sizes, kinds, voltages, capacities and other names for ${s.batteries} household, coin, button and rechargeable battery sizes, each with its sources.`, url: 'https://batteries.fyi/data', license: 'https://opensource.org/licenses/MIT', creator: { '@type': 'Organization', name: 'Centricle LLC' }, distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://batteries.fyi/api/batteries.json' }, { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: 'https://batteries.fyi/api/batteries.csv' }] },
 ];
 ---
 
 <BaseLayout jsonld={jsonld}>
-  <section class="relative overflow-hidden border-b border-line">
-    <div class="absolute inset-0 grid-paper opacity-70 pointer-events-none" aria-hidden="true"></div>
-    <div class="wrap relative pt-10 sm:pt-14 pb-6">
-      <p class="eyebrow">The consumer battery reference</p>
-      <h1 class="mt-2 text-[1.9rem] sm:text-[2.6rem] font-medium tracking-[-0.025em] leading-[1.05] max-w-3xl">Every battery, measured and cited.</h1>
-      <p class="mt-4 text-[0.85rem] sm:text-[0.95rem] text-ink-2 max-w-2xl">Dimensions with tolerances, every chemistry, every brand and standard code, and a true-scale 3D model for {s.batteries} battery sizes. Each value traces to an IEC standard or a manufacturer datasheet.</p>
-      <form action="/search" class="mt-6 max-w-xl relative" role="search" id="hero-search">
-        <label for="hero-q" class="sr-only">Search batteries</label>
-        <svg class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
-        <input id="hero-q" name="q" class="input h-14 pl-11 text-[0.95rem] shadow-sm" placeholder="377, CR2032, 18650, 20 x 3.2, AirTag, RAV4 key" autocomplete="off" />
+  <section class="wrap pt-10 sm:pt-14">
+    <h1 class="text-2xl sm:text-3xl font-semibold">Which battery do you need?</h1>
+    <p class="lede measure mt-3">Type the name printed on the battery, or what it goes in.</p>
+    {/* Phones: field, matches, then a full-width button. From sm: field and button side by side, matches below both. */}
+    <div class="mt-6 max-w-2xl" data-hero-search>
+      <form action="/search" method="get" role="search" class="relative grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]" data-kinds={JSON.stringify(kinds)}>
+        <label for="hero-q" class="sr-only">Battery name or device</label>
+        <input
+          id="hero-q"
+          name="q"
+          type="search"
+          class="input h-13 text-lg min-w-0 sm:col-start-1 sm:row-start-1"
+          placeholder="CR2032, AA, AirTag, smoke alarm"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          enterkeyhint="search"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="hero-results"
+        />
+        <ul id="hero-results" role="listbox" aria-label="Matches" class="card divide-y divide-line sm:col-span-2 sm:row-start-2" hidden></ul>
+        <p id="hero-none" class="text-base text-ink-2 sm:col-span-2 sm:row-start-2" hidden></p>
+        <button type="submit" class="btn btn-primary h-13 text-base sm:col-start-2 sm:row-start-1">Search</button>
+        <p id="hero-status" class="sr-only" aria-live="polite"></p>
       </form>
-      <div class="mt-3 flex flex-wrap gap-1.5 max-w-3xl">
-        {common.map((b) => <a href={`/${b.id}`} class="chip font-medium text-[0.66rem] py-1 px-2.5 bg-surface/80">{b.name}</a>)}
-      </div>
-    </div>
-    <div class="wrap relative pb-8">
-      <Viewer batteries={lineup} mode="lineup" height="min(26rem, 70vw)" controls={false} class="border-0 bg-transparent" />
-      <p class="text-[0.6rem] text-muted mt-1"><span class="font-mono text-ink-2 uppercase tracking-[0.08em] mr-2">Fig. 1</span>To scale, from the D cell to the size 312 hearing aid cell. Drag to orbit. Labels link to each entry.</p>
     </div>
   </section>
 
-  <section class="wrap mt-10 specs grid-cols-2 md:grid-cols-4">
-    {[
-      [s.batteries, 'battery sizes'],
-      [s.codes, 'cross-reference codes'],
-      [s.variants, 'chemistry variants'],
-      [s.sources, 'cited sources'],
-    ].map(([n, label]) => (
-      <div class="spec"><span class="v">{Number(n).toLocaleString('en-US')}</span><span class="s">{label}</span></div>
-    ))}
+  <section class="wrap mt-8" aria-labelledby="pick-one">
+    <h2 id="pick-one" class="label text-lg">Or pick the one that looks like yours</h2>
+    {/* Hidden below md: a display:none ancestor keeps the viewer from ever intersecting, so three.js never loads on a phone. */}
+    <div class="hidden md:block mt-3">
+      <Viewer batteries={lineup} mode="lineup" height="min(24rem, 46vw)" controls={false} zoom={false} />
+      <p class="mt-2 text-sm text-ink-2">Drawn to scale. Drag to turn them. Choose a name to open that battery.</p>
+    </div>
+    <ul class="md:hidden mt-3 grid grid-cols-2 gap-2">
+      {lineup.map((b) => (
+        <li>
+          <a href={`/${b.id}`} class="card tile flex flex-col h-full">
+            <div class="h-24 flex items-end justify-center" aria-hidden="true">
+              <Silhouette battery={b} scaleTo={lineupScale} class="max-w-full" />
+            </div>
+            <span class="mt-3 font-mono font-semibold text-lg">{b.name}</span>
+            {b.devices.length > 0 && <p class="mt-1 text-sm text-ink-2">{usesLine(b.devices)}</p>}
+          </a>
+        </li>
+      ))}
+    </ul>
   </section>
 
-  {featured.length > 0 && (
-    <section class="wrap mt-12">
-      <div class="flex items-baseline justify-between mb-4">
-        <h2 class="section-title mb-0">What battery does it take?</h2>
-        <a href="/devices" class="link text-[0.7rem]">All {deviceCount} devices</a>
-      </div>
-      <ul class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-        {featured.map((d) => {
-          const b = batteryById(d.battery)!;
-          return (
-            <li><a href={`/devices/${d.id}`} class="card flex items-center gap-3 p-3 h-full hover:border-accent transition-colors">
-              <span class="min-w-0">
-                <span class="block text-[0.75rem] font-semibold text-ink truncate">{deviceTitle(d)}</span>
-                <span class="block text-[0.6rem] text-muted">{DEVICE_CATEGORY_META[d.category].one}</span>
-              </span>
-              <span class="chip ml-auto shrink-0">{d.count > 1 ? `${d.count} × ` : ''}{d.code ?? b.name}</span>
-            </a></li>
-          );
-        })}
-      </ul>
-      <p class="mt-2 text-[0.62rem] text-muted">Each answer quotes the device maker's manual or support page.</p>
-    </section>
-  )}
+  <section class="wrap mt-14">
+    <h2 class="section-title">What does it go in?</h2>
+    <p class="lede measure">If you know the device, start there. Every answer quotes the maker’s own manual or support page.</p>
+    <ul class="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+      {deviceGroups.map((g) => (
+        <li>
+          <a href={`/devices#${g.id}`} class="card tile block h-full">
+            <span class="block font-mono font-semibold text-lg">{g.name}</span>
+            <span class="block mt-1 text-sm text-muted">{g.n} {g.n === 1 ? 'device' : 'devices'}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <ul class="mt-6 grid lg:grid-cols-2 gap-x-8 border-t border-line">
+      {featured.map((d) => {
+        const b = batteryById(d.battery)!;
+        return (
+          <li class="border-b border-line">
+            <a href={`/devices/${d.id}`} class="flex items-baseline justify-between gap-4 py-3 min-h-11 hover:bg-surface-2">
+              <span class="link font-sans text-base">{deviceTitle(d)}</span>
+              <span class="font-mono font-semibold text-base shrink-0">{d.count > 1 ? `${d.count} ` : ''}{d.code ?? b.name}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+    <p class="mt-4"><a href="/devices" class="link text-base">All {deviceCount} devices</a></p>
+  </section>
 
-  <section class="wrap mt-12">
-    <div class="flex items-baseline justify-between mb-4">
-      <h2 class="section-title mb-0">Browse by type</h2>
-      <a href="/batteries" class="link text-[0.7rem]">All {s.batteries} sizes</a>
+  <section class="wrap mt-14">
+    <h2 class="section-title">Small round batteries</h2>
+    <p class="lede measure">Coin and button batteries look alike, but a small difference in size or voltage matters. The name is stamped on the flat side.</p>
+    <ul class="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+      {round.map((b) => {
+        const names = brandNames(b);
+        return (
+          <li>
+            <a href={`/${b.id}`} class="card tile flex flex-col h-full">
+              {/* Face and edge at one scale for all eight: the edge shows the thickness that tells them apart. */}
+              <div class="h-12 sm:h-16 flex items-end gap-2" aria-hidden="true">
+                <Silhouette battery={b} scaleTo={roundScale} />
+                <Silhouette battery={b} view="front" scaleTo={roundScale} />
+              </div>
+              <span class="mt-3 font-mono font-semibold text-lg">{b.name}</span>
+              <p class="mt-1 text-sm text-ink-2">{acrossThick(b)}</p>
+              <p class="text-sm text-ink-2">{fmt(primaryVariant(b).voltage.nominal)} volts</p>
+              {names.length > 0 && (
+                <p class="mt-1 text-sm text-ink-2">
+                  Also sold as {names.map((x, i) => <>{i > 0 && ' and '}{x.brand} <span class="font-mono">{x.code}</span></>)}
+                </p>
+              )}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+    <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-base">
+      <li><a class="link" href={`/${categoryById.coin.slug}`}>All coin batteries</a></li>
+      <li><a class="link" href={`/${categoryById.button.slug}`}>All button batteries</a></li>
+      <li><a class="link" href={`/${categoryById['hearing-aid'].slug}`}>Hearing aid batteries</a></li>
+    </ul>
+  </section>
+
+  <section class="wrap mt-14">
+    <h2 class="section-title">Not sure which one you have?</h2>
+    <ul class="grid sm:grid-cols-3 gap-2">
+      {finders.map((t) => (
+        <li>
+          <a href={t.href} class="card tile block h-full">
+            <span class="block font-mono font-semibold text-lg">{t.title}</span>
+            <p class="mt-1 text-base text-ink-2">{t.body}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="wrap mt-14">
+    <h2 class="section-title">Can I use one instead of the other?</h2>
+    <p class="lede measure">Two batteries that look alike are not always a safe swap. Each page below puts a pair side by side.</p>
+    <ul class="mt-5 flex flex-wrap gap-2">
+      {pairLinks.map((p) => <li><a href={p.href} class="chip">{p.label}</a></li>)}
+    </ul>
+    <p class="mt-4"><a href="/compare#all-pairs" class="link text-base">All {pairs().size} comparisons</a></p>
+  </section>
+
+  <section class="wrap mt-14">
+    <h2 class="section-title">Safety and care</h2>
+    <div class="callout danger measure">
+      <p class="font-mono font-semibold text-lg"><a class="link" href="/reference/button-battery-ingestion">If a battery is swallowed</a></p>
+      <p class="mt-1 text-base">
+        Call the National Battery Ingestion Hotline at <a class="link font-mono whitespace-nowrap" href="tel:+18004988666">1-800-498-8666</a> or Poison Help at <a class="link font-mono whitespace-nowrap" href="tel:+18002221222">1-800-222-1222</a> right away, without waiting for symptoms.
+      </p>
     </div>
-    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <ul class="mt-6 grid gap-x-8 gap-y-5 sm:grid-cols-2 max-w-4xl">
+      {guides.map((g) => (
+        <li>
+          <a class="link font-semibold text-base" href={`/reference/${g.slug}`}>{g.title}</a>
+          <p class="mt-1 text-base text-ink-2">{g.line}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="wrap mt-14">
+    <h2 class="section-title">All batteries by type</h2>
+    <ul class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
       {CATEGORY_META.map((c) => {
         const rep = batteryById(catRep[c.id]);
         const n = batteries().filter((b) => b.category === c.id).length;
         return (
           <li>
-            <a href={`/${c.slug}`} class="card group flex gap-4 p-4 h-full hover:border-accent transition-colors">
-              <div class="w-16 h-20 shrink-0 flex items-end justify-center">{rep && <Silhouette battery={rep} class="max-h-full max-w-full" />}</div>
+            <a href={`/${c.slug}`} class="card tile flex gap-4 h-full">
+              <div class="w-16 h-20 shrink-0 flex items-end justify-center" aria-hidden="true">{rep && <Silhouette battery={rep} class="max-h-full max-w-full" />}</div>
               <div class="min-w-0">
-                <span class="flex items-baseline gap-2"><span class="font-semibold text-[0.85rem] group-hover:text-accent-ink">{c.name}</span><span class="text-[0.6rem] text-muted">{n}</span></span>
-                <p class="text-[0.65rem] text-muted mt-1 leading-snug">{c.description}</p>
+                <span class="block font-mono font-semibold text-lg">{c.name}</span>
+                <p class="mt-1 text-sm text-ink-2">{c.description}</p>
+                <p class="mt-1 text-sm text-muted">{n} {n === 1 ? 'size' : 'sizes'}</p>
               </div>
             </a>
           </li>
         );
       })}
-      <li>
-        <a href="/equivalents" class="card group flex flex-col justify-center p-4 h-full hover:border-accent transition-colors bg-accent-soft border-accent/30">
-          <span class="font-semibold text-[0.85rem] text-accent-ink">Equivalents table</span>
-          <p class="text-[0.65rem] text-ink-2 mt-1 leading-snug">All {s.codes.toLocaleString('en-US')} codes on one page, searchable.</p>
-        </a>
-      </li>
     </ul>
+    <p class="mt-4"><a href="/batteries" class="link text-base">All {s.batteries} sizes</a></p>
   </section>
 
-  {popularPairs.length > 0 && (
-    <section class="wrap mt-12">
-      <h2 class="section-title">Head to head</h2>
-      <ul class="flex flex-wrap gap-2">
-        {popularPairs.map((p) => <li><a href={`/compare/${p!.slug}`} class="chip text-[0.72rem] py-1.5 px-3 hover:border-accent hover:text-accent-ink">{p!.a.name} vs {p!.b.name}</a></li>)}
-        <li><a href="/compare#all-pairs" class="chip text-[0.72rem] py-1.5 px-3 text-muted hover:text-ink">All {pairs().size} comparisons</a></li>
-      </ul>
-    </section>
-  )}
-
-  <section class="wrap mt-12">
-    <h2 class="section-title">Tools</h2>
-    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {tools.map((t) => (
-        <li><a href={t.href} class="card block p-4 h-full hover:border-accent transition-colors group">
-          <span class="font-semibold text-[0.85rem] group-hover:text-accent-ink">{t.title} <span aria-hidden="true">→</span></span>
-          <p class="text-[0.68rem] text-muted mt-1">{t.body}</p>
-        </a></li>
-      ))}
+  <section class="wrap mt-14 pb-6">
+    <h2 class="section-title">Where these numbers come from</h2>
+    <p class="lede measure">Every size, voltage and weight on this site was read from the battery maker’s own datasheet or from the published standard. Each battery page lists its sources, and nothing here is ranked or recommended. The data is free to use.</p>
+    <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-base">
+      <li><a class="link" href="/about">About this site</a></li>
+      <li><a class="link" href="/sources">Sources</a></li>
+      <li><a class="link" href="/data">Data, 3D models and API</a></li>
     </ul>
-  </section>
-
-  <section class="wrap mt-12 grid gap-6 lg:grid-cols-2">
-    <div class="card p-5">
-      <h2 class="text-[0.95rem] font-semibold">How the data is built</h2>
-      <ul class="mt-3 space-y-2 text-[0.72rem] text-ink-2">
-        <li><strong class="text-ink">One entry per physical size.</strong> AA alkaline, AA lithium and AA NiMH are variants of one size, so their codes and dimensions live together.</li>
-        <li><strong class="text-ink">No number without a source.</strong> Every value lists the datasheet or standard it came from and the date it was read. Unpublished values stay blank.</li>
-        <li><strong class="text-ink">Models from measurements.</strong> Each 3D model, drawing and silhouette is generated from the same dimensions the table shows.</li>
-        <li><strong class="text-ink">Open.</strong> The whole dataset and every model are downloadable under the MIT license.</li>
-      </ul>
-      <a href="/data" class="btn mt-4">Open data and models</a>
-    </div>
-    <div class="card p-5">
-      <h2 class="text-[0.95rem] font-semibold">Reference</h2>
-      <ul class="mt-3 grid gap-1.5 text-[0.72rem]">
-        <li><a class="link" href="/reference/battery-naming">How battery names and codes work</a></li>
-        <li><a class="link" href="/reference/air-travel">Lithium batteries on airplanes</a></li>
-        <li><a class="link" href="/reference/button-battery-ingestion">Swallowed coin and button cells</a></li>
-        <li><a class="link" href="/reference/capacity-explained">What mAh and Wh mean, and why capacity varies</a></li>
-        <li><a class="link" href="/reference/rechargeable-vs-disposable">Rechargeable and disposable, compared</a></li>
-        <li><a class="link" href="/chemistry">Battery chemistries</a></li>
-        <li><a class="link" href="/glossary">Glossary</a></li>
-      </ul>
-    </div>
   </section>
 </BaseLayout>
 
+<style>
+  /* The highlighted match: a pale wash and an ink bar, so it shows without color vision. */
+  #hero-results :global([aria-selected='true'] > a) {
+    background: var(--wash, var(--surface-2));
+    box-shadow: inset 4px 0 0 var(--ink);
+  }
+</style>
+
 <script>
-  // The hero field hands off to the command palette as soon as someone types.
-  const f = document.getElementById('hero-q') as HTMLInputElement | null;
-  f?.addEventListener('input', () => {
-    const open = document.querySelector('[data-search-open]') as HTMLElement | null;
-    const v = f.value;
-    open?.click();
-    const si = document.getElementById('search-input') as HTMLInputElement | null;
-    if (si) {
-      si.value = v;
-      si.dispatchEvent(new Event('input'));
+  // Inline results under the hero field. Same index and ranking as the
+  // palette and /search; without JavaScript the form is a plain GET to /search.
+  import { rank, rankDevices, type Entry, type DeviceEntry } from '../lib/search';
+  import { batteryLine, deviceLine } from '../lib/home';
+
+  const box = document.querySelector<HTMLElement>('[data-hero-search]');
+  if (box) {
+    const form = box.querySelector('form')!;
+    const input = box.querySelector<HTMLInputElement>('#hero-q')!;
+    const list = box.querySelector<HTMLUListElement>('#hero-results')!;
+    const none = box.querySelector<HTMLElement>('#hero-none')!;
+    const status = box.querySelector<HTMLElement>('#hero-status')!;
+    const kinds: Record<string, string> = JSON.parse(form.dataset.kinds || '{}');
+    type Hit = { href: string; name: string; line: string };
+    let index: Entry[] | null = null;
+    let dindex: DeviceEntry[] = [];
+    let loading: Promise<void> | null = null;
+    let hits: Hit[] = [];
+    let sel = -1;
+
+    // The index loads on first focus, so the page pays nothing until someone searches.
+    const load = () =>
+      (loading ??= Promise.all([
+        fetch('/api/search-index.json').then((r) => r.json()),
+        fetch('/api/device-index.json')
+          .then((r) => (r.ok ? r.json() : []))
+          .catch(() => []),
+      ])
+        .then(([a, d]) => {
+          index = a;
+          dindex = d;
+        })
+        .catch(() => {
+          loading = null;
+        }));
+
+    function close() {
+      list.hidden = true;
+      none.hidden = true;
+      sel = -1;
+      input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
     }
-    f.value = '';
-  });
+
+    function highlight(i: number) {
+      sel = i;
+      list.querySelectorAll('[role="option"]').forEach((li, j) => li.setAttribute('aria-selected', String(j === i)));
+      if (i < 0) return input.removeAttribute('aria-activedescendant');
+      input.setAttribute('aria-activedescendant', `hero-r${i}`);
+      list.children[i]?.scrollIntoView({ block: 'nearest' });
+    }
+
+    function row(h: Hit, i: number) {
+      const li = document.createElement('li');
+      li.id = `hero-r${i}`;
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', 'false');
+      const a = document.createElement('a');
+      a.href = h.href;
+      a.tabIndex = -1;
+      a.className = 'flex flex-wrap items-baseline gap-x-3 gap-y-0.5 px-3 py-2 min-h-11 text-ink hover:bg-surface-2';
+      const name = document.createElement('span');
+      name.className = 'font-mono font-semibold text-lg';
+      name.textContent = h.name;
+      const line = document.createElement('span');
+      line.className = 'font-sans text-base text-ink-2';
+      line.textContent = h.line;
+      a.append(name, line);
+      li.append(a);
+      return li;
+    }
+
+    function render() {
+      const q = input.value.trim();
+      if (!q || !index) {
+        close();
+        status.textContent = '';
+        return;
+      }
+      const bats = rank(index, q, 8).map(({ e, score, why }) => ({ score, hit: { href: `/${e.id}`, name: e.n, line: batteryLine(e, why, kinds) } }));
+      const devs = rankDevices(dindex, q, 8).map(({ d, score }) => ({ score, hit: { href: `/devices/${d.id}`, name: d.n, line: deviceLine(d) } }));
+      hits = [...bats, ...devs]
+        .sort((x, y) => y.score - x.score)
+        .slice(0, 8)
+        .map((m) => m.hit);
+      sel = -1;
+      list.replaceChildren(...hits.map(row));
+      list.hidden = !hits.length;
+      input.setAttribute('aria-expanded', String(hits.length > 0));
+      input.removeAttribute('aria-activedescendant');
+      none.hidden = hits.length > 0;
+      if (hits.length) {
+        status.textContent = `${hits.length} ${hits.length === 1 ? 'match' : 'matches'}. Use the up and down arrows to choose one.`;
+      } else {
+        const measure = document.createElement('a');
+        measure.className = 'link';
+        measure.href = '/identify';
+        measure.textContent = 'measure the battery';
+        none.replaceChildren(`Nothing here matches “${q}”. You can `, measure, ' instead.');
+        status.textContent = 'No matches.';
+      }
+    }
+
+    // Four examples do not fit a phone-width field. Drop examples from the end
+    // until the rest fit, rather than let the field cut one off mid-word.
+    const examples = input.placeholder.split(', ');
+    const pen = document.createElement('canvas').getContext('2d');
+    const fitPlaceholder = () => {
+      if (!pen || !input.clientWidth) return;
+      const cs = getComputedStyle(input);
+      pen.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      // Leave room for the browser's clear button on a search field.
+      const room = input.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - parseFloat(cs.fontSize);
+      const shown = [...examples];
+      while (shown.length > 2 && pen.measureText(shown.join(', ')).width > room) shown.pop();
+      input.placeholder = shown.join(', ');
+    };
+    fitPlaceholder();
+    document.fonts?.ready.then(fitPlaceholder);
+    window.addEventListener('resize', fitPlaceholder);
+
+    input.addEventListener('focus', () => void load());
+    input.addEventListener('input', async () => {
+      if (!index) await load();
+      render();
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.isComposing) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (list.hidden) {
+          render();
+          if (hits.length) highlight(0);
+        } else highlight(Math.min(sel + 1, hits.length - 1));
+      } else if (e.key === 'ArrowUp') {
+        if (list.hidden) return;
+        e.preventDefault();
+        highlight(Math.max(sel - 1, -1));
+      } else if (e.key === 'Enter') {
+        // A highlighted match opens; otherwise the form submits to /search.
+        if (!list.hidden && sel >= 0 && hits[sel]) {
+          e.preventDefault();
+          location.href = hits[sel].href;
+        }
+      } else if (e.key === 'Escape') {
+        if (!list.hidden || !none.hidden) {
+          e.preventDefault();
+          close();
+        }
+      }
+    });
+    // Keep focus in the field while a match is clicked, so the list does not close under the pointer.
+    list.addEventListener('mousedown', (e) => e.preventDefault());
+    document.addEventListener('pointerdown', (e) => {
+      if (!box.contains(e.target as Node)) close();
+    });
+    box.addEventListener('focusout', (e) => {
+      if (!box.contains(e.relatedTarget as Node | null)) close();
+    });
+    window.addEventListener('pageshow', close);
+  }
 </script>

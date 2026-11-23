@@ -1,11 +1,13 @@
 ---
-// One page per device: the answer first, then the quote that proves it.
+// One page per device: the answer first, then the maker's quote that says so,
+// then what else fits, read from the battery's own interchange data.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Silhouette from '../../components/Silhouette.astro';
 import Buy from '../../components/Buy.astro';
+import { REL_META } from '../../lib/pairs';
 import {
-  batteryById, deviceAnswer, deviceTitle, devices, devicesFor, DEVICE_CATEGORY_META, fmt, sizeLabel, voltages, volts,
-  type Device,
+  batteries, batteryById, deviceTitle, devices, devicesFor, DEVICE_CATEGORY_META, fmt,
+  type Battery, type Device,
 } from '../../lib/data';
 
 export function getStaticPaths() {
@@ -18,14 +20,68 @@ const b = batteryById(d.battery)!;
 const cat = DEVICE_CATEGORY_META[d.category];
 const title = deviceTitle(d);
 const code = d.code ?? b.name;
-const answer = deviceAnswer(d);
-const years = d.years ? (d.years.endsWith('-') ? `${d.years.slice(0, -1)} on` : d.years.replace('-', '–')) : '';
-const codes = [...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name).slice(0, 10);
+
+// Plain-word helpers, local to this page.
+/** "a" or "an" by how the name is said: an AA, an LR44, an 18650, a CR2032, a 9V. */
+const art = (name: string) => (!/^sub/i.test(name) && (/^(8|1[18](\d{3})?\b|1[18]\d{3})/.test(name) || /^[AEFHILMNORSX]/i.test(name)) ? 'an' : 'a');
+/** Nearest 1/16 in: "2 in", "9/16 in", "1 3/8 in". */
+const inFrac = (mm: number) => {
+  const s = Math.round((mm / 25.4) * 16);
+  if (s === 0) return 'under 1/16 in';
+  const whole = Math.floor(s / 16);
+  let num = s % 16, den = 16;
+  while (num && num % 2 === 0) { num /= 2; den /= 2; }
+  return `${whole || ''}${whole && num ? ' ' : ''}${num ? `${num}/${den}` : ''} in`;
+};
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const longDate = (iso: string) => { const [y, m, dd] = iso.split('-').map(Number); return `${MONTHS[m - 1]} ${dd}, ${y}`; };
+const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const countWord = (n: number) => WORDS[n] ?? String(n);
+const plainSize = (x: Battery) => {
+  const m = x.dimensions;
+  const mm = (n: number) => `${fmt(n)} mm`;
+  if (m.diameter && x.form === 'disc') return `${mm(m.diameter.nominal)} across and ${mm(m.height.nominal)} thick (about ${inFrac(m.diameter.nominal)} by ${inFrac(m.height.nominal)})`;
+  if (m.diameter && !m.width) return `${mm(m.height.nominal)} long and ${mm(m.diameter.nominal)} across (about ${inFrac(m.height.nominal)} by ${inFrac(m.diameter.nominal)})`;
+  return `${fmt(m.width!.nominal)} by ${mm(m.depth!.nominal)} and ${mm(m.height.nominal)} tall (about ${inFrac(m.width!.nominal)} by ${inFrac(m.depth!.nominal)} by ${inFrac(m.height.nominal)})`;
+};
+const orList = (xs: string[]) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}`);
+const plainVolts = (x: Battery) => {
+  const list = (re: boolean) => [...new Set(x.variants.filter((v) => v.rechargeable === re).map((v) => v.voltage.nominal))].sort((p, q) => p - q).map((n) => fmt(n));
+  const once = list(false), again = list(true);
+  if (once.length && again.length) return `Single-use ones are ${orList(once)} volts and rechargeable ones are ${orList(again)} volts.`;
+  if (again.length) return `It is rechargeable, ${orList(again)} volts.`;
+  return `It is ${orList(once)} volts.`;
+};
+
+const yearsWords = d.years ? (d.years.endsWith('-') ? `from ${d.years.slice(0, -1)} on` : d.years.includes('-') ? d.years.replace('-', ' to ') : d.years) : '';
+const answer = `The ${title} takes ${countWord(d.count)} ${code} ${d.count === 1 ? 'battery' : 'batteries'}.`;
+// The device's note, when there is one, already explains a maker name that differs from the page name.
+const sameNote = code !== b.name && !d.note ? `${code} is one of the names for the ${b.name} size.` : '';
+const names = [...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name && c !== code).slice(0, 10);
+
+// What else fits: entries declared on this battery, plus reverse entries only
+// where the relation reads the same both ways (equivalent, same size). A
+// "fits, with a catch" declared on another battery describes this one going
+// into that one's holder, which is the opposite of what a reader here needs.
+const SYMMETRIC = new Set(['equivalent', 'same-size']);
+const fits = [
+  ...b.interchange.map((r) => ({ ...r, other: batteryById(r.id) })),
+  ...batteries()
+    .filter((x) => x.id !== b.id && !b.interchange.some((r) => r.id === x.id))
+    .flatMap((x) => x.interchange.filter((r) => r.id === b.id && SYMMETRIC.has(r.relation)).map((r) => ({ id: x.id, relation: r.relation, note: r.note, other: x as Battery | undefined }))),
+].filter((r): r is typeof r & { other: Battery } => !!r.other && !!REL_META[r.relation]);
+
 const sameBattery = devicesFor(b.id).filter((x) => x.id !== d.id).slice(0, 12);
 const sameCategory = devices().filter((x) => x.category === d.category && x.id !== d.id && x.battery !== d.battery).slice(0, 12);
 const url = `https://batteries.fyi/devices/${d.id}`;
 const q = `What battery does the ${title} take?`;
-const a = `${answer}${codes.length ? ` The ${b.name} is also sold as ${codes.slice(0, 5).join(', ')}.` : ''}${d.note ? ` ${d.note}` : ''}`;
+const a = [
+  answer,
+  `${d.source.publisher} says so in ${d.source.title}.`,
+  sameNote,
+  d.note ?? '',
+  names.length ? `The ${b.name} is also sold as ${names.slice(0, 5).join(', ')}.` : '',
+].filter(Boolean).join(' ');
 
 const jsonld = [
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }] },
@@ -51,76 +107,102 @@ const jsonld = [
 
 <BaseLayout title={`${title} battery: ${d.count > 1 ? `${d.count} × ` : ''}${code} | batteries.fyi`} description={a.slice(0, 300)} jsonld={jsonld}>
   <div class="wrap pt-5 max-w-4xl">
-    <nav aria-label="Breadcrumb" class="text-[0.65rem] text-muted flex items-center gap-1.5">
-      <a href="/devices" class="hover:text-ink">Devices</a><span aria-hidden="true">/</span>
-      <a href={`/devices#${d.category}`} class="hover:text-ink">{cat.name}</a><span aria-hidden="true">/</span>
-      <span class="text-ink-2" aria-current="page">{title}</span>
+    <nav aria-label="Breadcrumb" class="text-sm text-ink-2 flex flex-wrap items-center gap-x-2">
+      <a href="/devices" class="link">Devices</a><span aria-hidden="true">/</span>
+      <a href={`/devices#${d.category}`} class="link">{cat.name}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{title}</span>
     </nav>
   </div>
 
   <section class="wrap pt-4 pb-6 max-w-4xl">
-    <p class="eyebrow">{d.maker} {cat.one}{d.models ? ` · ${d.models}` : ''}{years ? ` · ${years}` : ''}</p>
-    <h1 class="mt-1 text-[1.6rem] sm:text-[2rem] font-semibold leading-tight">{q}</h1>
+    <h1 class="text-2xl sm:text-3xl font-semibold">{q}</h1>
+    <p class="mt-4 text-xl text-ink measure" data-answer>{answer}</p>
+    {(d.models || yearsWords) && (
+      <dl class="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-base">
+        {d.models && <><dt class="label">Model</dt><dd>{d.models}</dd></>}
+        {yearsWords && <><dt class="label">Years</dt><dd>{yearsWords}</dd></>}
+      </dl>
+    )}
+    {(sameNote || d.note) && <p class="mt-3 text-base text-ink-2 measure">{sameNote}{sameNote && d.note ? ' ' : ''}{d.note}</p>}
 
-    <div class="mt-5 card p-5 grid gap-5 sm:grid-cols-[auto_1fr] items-center">
-      <a href={`/${b.id}`} class="flex items-center justify-center w-28 h-28 rounded-xl bg-surface-2 border border-line" aria-label={`${b.name} battery page`}>
-        <Silhouette battery={b} class="max-w-[5.5rem] max-h-[5.5rem]" />
-      </a>
-      <div class="min-w-0">
-        <p class="text-[2.2rem] font-semibold tracking-tight leading-none tabular">{d.count > 1 && <span class="text-ink-2">{d.count} × </span>}<a href={`/${b.id}`} class="hover:text-accent-ink">{code}</a></p>
-        <p class="mt-1 text-[0.75rem] text-ink-2 tabular">{code !== b.name && <>{b.name} size · </>}{sizeLabel(b)} · {voltages(b).map((v) => volts(v)).join(' / ')}</p>
-        <p class="mt-3 text-[0.8rem] text-ink-2 leading-relaxed" data-answer>{answer}{d.note && <> {d.note}</>}</p>
-      </div>
-    </div>
-
-    <figure class="mt-4 callout">
-      <blockquote class="text-[0.75rem] text-ink">“{d.source.quote}”</blockquote>
-      <figcaption class="mt-1 text-[0.62rem] text-muted">
-        {d.source.publisher}, <a class="link" href={d.source.url} rel="nofollow noopener" target="_blank">{d.source.title}</a>. Accessed {d.source.accessed}.
+    <figure class="mt-5 callout">
+      <blockquote class="text-base text-ink">“{d.source.quote}”</blockquote>
+      <figcaption class="mt-2 text-sm text-ink-2">
+        {d.source.publisher}, <a class="link" href={d.source.url} rel="nofollow noopener" target="_blank">{d.source.title}</a>. Checked {longDate(d.source.accessed)}.
       </figcaption>
     </figure>
 
-    <Buy battery={b} context="device" class="mt-5" />
-
-    {codes.length > 0 && (
-      <div class="mt-6">
-        <p class="eyebrow mb-2">The {b.name} is also sold as</p>
-        <div class="flex flex-wrap gap-1.5">
-          {codes.map((c) => <span class="chip">{c}</span>)}
-          <a href={`/${b.id}#codes`} class="chip">All codes</a>
-        </div>
+    <div class="mt-6 card p-5 grid gap-5 sm:grid-cols-[auto_1fr] items-center">
+      <a href={`/${b.id}`} class="flex items-center justify-center w-28 h-28 bg-surface-2 border border-line" aria-label={`${b.name} battery page`}>
+        <Silhouette battery={b} class="max-w-[5.5rem] max-h-[5.5rem]" />
+      </a>
+      <div class="min-w-0">
+        <p class="font-mono text-3xl font-semibold leading-none"><a href={`/${b.id}`} class="link">{b.name}</a></p>
+        <p class="mt-3 text-base text-ink-2">{art(b.name) === 'an' ? 'An' : 'A'} {b.name} is {plainSize(b)}. {plainVolts(b)}</p>
+        {names.length > 0 && (
+          <div class="mt-3">
+            <p class="label mb-1">Also sold as</p>
+            <div class="flex flex-wrap gap-2">
+              {names.map((c) => <span class="chip">{c}</span>)}
+              <a href={`/${b.id}#codes`} class="chip">All names</a>
+            </div>
+          </div>
+        )}
       </div>
-    )}
-
-    <div class="mt-6 flex flex-wrap gap-2">
-      <a href={`/${b.id}`} class="btn">{b.name} specifications</a>
-      <a href={`/actual-size?ids=${b.id}`} class="btn">{b.name} at actual size</a>
-      <a href={`/${b.id}#interchange`} class="btn">What can replace it</a>
     </div>
+
+    <Buy battery={b} context="device" class="mt-5" />
   </section>
 
-  <div class="wrap max-w-4xl mt-6 space-y-10 pb-6">
+  <div class="wrap max-w-4xl space-y-10 pb-6">
+    <section id="fits">
+      <h2 class="section-title">Will another battery work instead?</h2>
+      {fits.length > 0 ? (
+        <>
+          <p class="text-base text-ink-2 measure mb-4">Batteries that are sometimes used in place of {art(b.name)} {b.name}, and whether they work. If your device maker says something different, follow the maker.</p>
+          <div class="grid gap-3 sm:grid-cols-2">
+            {fits.map((r) => (
+              <div class:list={['callout', REL_META[r.relation].cls]}>
+                <p class="text-lg font-semibold text-ink">{REL_META[r.relation].label}: <a class="link" href={`/${r.other.id}`}>{r.other.name}</a></p>
+                <p class="mt-1 text-base text-ink-2">{r.note}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <p class="text-base text-ink-2 measure">No other battery is listed as working in place of {art(b.name)} {b.name}. Use the battery your device maker names.</p>
+      )}
+    </section>
+
+    <section>
+      <h2 class="section-title">More about the {b.name}</h2>
+      <div class="flex flex-wrap gap-3">
+        <a href={`/${b.id}`} class="btn btn-primary">Open the {b.name} battery page</a>
+        <a href={`/actual-size?ids=${b.id}`} class="btn">See it at actual size</a>
+      </div>
+    </section>
+
     {sameBattery.length > 0 && (
       <section>
-        <h2 class="section-title">Other devices that take a {b.name}</h2>
+        <h2 class="section-title">Other devices that take {art(b.name)} {b.name}</h2>
         <ul class="flex flex-wrap gap-2">
-          {sameBattery.map((x) => <li><a class="chip text-[0.68rem] py-1 px-2.5 hover:border-accent" href={`/devices/${x.id}`}>{deviceTitle(x)}</a></li>)}
+          {sameBattery.map((x) => <li><a class="chip whitespace-normal" href={`/devices/${x.id}`}>{deviceTitle(x)}</a></li>)}
         </ul>
       </section>
     )}
     {sameCategory.length > 0 && (
       <section>
         <h2 class="section-title">Other {cat.name.toLowerCase()}</h2>
-        <ul class="grid gap-1.5 grid-cols-1 sm:grid-cols-2 text-[0.72rem]">
+        <ul class="grid gap-2 grid-cols-1 sm:grid-cols-2 text-base">
           {sameCategory.map((x) => (
-            <li class="min-w-0"><a class="flex gap-2 min-w-0 hover:text-accent-ink" href={`/devices/${x.id}`}><span class="truncate min-w-0">{deviceTitle(x)}</span><span class="ml-auto text-muted tabular shrink-0">{x.count > 1 ? `${x.count} × ` : ''}{batteryById(x.battery)!.name}</span></a></li>
+            <li class="min-w-0"><a class="flex gap-3 min-w-0 min-h-8 items-center" href={`/devices/${x.id}`}><span class="link truncate min-w-0">{deviceTitle(x)}</span><span class="ml-auto text-ink-2 font-mono text-sm shrink-0">{x.count > 1 ? `${x.count} × ` : ''}{x.code ?? batteryById(x.battery)!.name}</span></a></li>
           ))}
         </ul>
       </section>
     )}
-    <section class="card p-5 text-[0.68rem] text-ink-2">
-      <h2 class="text-[0.85rem] font-semibold mb-1 text-ink">How this is sourced</h2>
-      <p>Device entries cite the device maker only: the owner’s manual, support page or spec sheet, quoted above. If a maker changes the battery in a later model, that model gets its own entry. Corrections with a maker source are welcome on <a class="link" href={`https://github.com/centricle/batteries/blob/main/data/devices/${d.id}.json`}>GitHub</a>, where <a class="link" href={`https://github.com/centricle/batteries/commits/main/data/devices/${d.id}.json`}>every change to this entry</a> is public.</p>
+    <section class="card p-5 text-sm text-ink-2">
+      <h2 class="text-lg font-semibold mb-2 text-ink">Where this comes from</h2>
+      <p>Device entries quote the device maker only: the owner's manual, support page or spec sheet shown above. If a maker changes the battery in a later model, that model gets its own entry. Corrections with a maker source are welcome on <a class="link" href={`https://github.com/centricle/batteries/blob/main/data/devices/${d.id}.json`}>GitHub</a>, where <a class="link" href={`https://github.com/centricle/batteries/commits/main/data/devices/${d.id}.json`}>every change to this entry</a> is public.</p>
     </section>
   </div>
 </BaseLayout>

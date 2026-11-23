@@ -1,18 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { batteries, categoryById, chem, primaryVariant, sizeLabel, voltages, stats } from '../lib/data';
+import { batteries, categoryById, chem, fmt, primaryVariant, sizeLabel, voltages, stats } from '../lib/data';
+
+/** Nearest 1/16 in, no unit: "2", "9/16", "1 3/8". */
+const frac = (mm: number) => {
+  const s = Math.round((mm / 25.4) * 16);
+  if (s === 0) return '1/16';
+  const whole = Math.floor(s / 16);
+  let num = s % 16, den = 16;
+  while (num && num % 2 === 0) { num /= 2; den /= 2; }
+  return `${whole || ''}${whole && num ? ' ' : ''}${num ? `${num}/${den}` : ''}`;
+};
+const orList = (xs: string[]) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}`);
 
 // Compact index with tolerances: [min, max] per dimension, nominal when unpublished.
 const tol = (x?: { nominal: number; min?: number; max?: number }) => (x ? [x.min ?? x.nominal, x.max ?? x.nominal] : null);
 const items = batteries().map((b) => {
   const d = b.dimensions;
   const cls = b.form === 'disc' ? 'disc' : b.form === 'cylinder' || (b.form === 'twin' && d.diameter && !d.width) ? 'cylinder' : 'box';
+  const sides = d.diameter && !d.width ? [d.diameter.nominal, d.height.nominal] : [d.width!.nominal, d.depth!.nominal, d.height.nominal];
   return {
     id: b.id,
     n: b.name,
     c: categoryById[b.category].short,
     cls,
-    s: sizeLabel(b),
+    s: `${sizeLabel(b)} (about ${sides.map(frac).join(' × ')} in)`,
     d: d.diameter?.nominal ?? null,
     h: d.height.nominal,
     w: d.width?.nominal ?? null,
@@ -22,6 +34,7 @@ const items = batteries().map((b) => {
     tw: tol(d.width),
     tp: tol(d.depth),
     v: voltages(b),
+    vw: `${orList(voltages(b).map((x) => fmt(x, 2)))} V`,
     col: chem(primaryVariant(b).chemistry).color,
   };
 });
@@ -29,90 +42,95 @@ const s = stats();
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'Identify a battery by measurement',
+  name: 'Identify a battery by its size',
   url: 'https://batteries.fyi/identify',
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   isAccessibleForFree: true,
-  description: 'Enter the diameter and height (or width, depth and height) of a battery, and optionally its voltage, to rank every size in the batteries.fyi database by how closely it matches.',
+  description: 'Enter how wide and how long a battery is, in millimeters or inches, and optionally its voltage, to see which standard sizes match most closely.',
 };
 const examples = [
-  { label: '14.5 × 50.5 mm cylinder', q: 'shape=cylinder&d=14.5&h=50.5' },
-  { label: '18.4 × 65.1 mm cylinder', q: 'shape=cylinder&d=18.4&h=65.1' },
-  { label: '20 × 3.2 mm coin', q: 'shape=disc&d=20&h=3.2' },
-  { label: '11.6 × 5.4 mm button', q: 'shape=disc&d=11.6&h=5.4' },
-  { label: '26.5 × 17.5 × 48.5 mm box', q: 'shape=box&d=26.5&p=17.5&h=48.5' },
+  { label: '14.5 mm across, 50.5 mm long', q: 'shape=cylinder&d=14.5&h=50.5' },
+  { label: '18.4 mm across, 65.1 mm long', q: 'shape=cylinder&d=18.4&h=65.1' },
+  { label: '20 mm across, 3.2 mm thick', q: 'shape=disc&d=20&h=3.2' },
+  { label: '11.6 mm across, 5.4 mm thick', q: 'shape=disc&d=11.6&h=5.4' },
+  { label: '26.5 by 17.5 by 48.5 mm', q: 'shape=box&d=26.5&p=17.5&h=48.5' },
 ];
 ---
 
-<BaseLayout title="Identify a battery by measurement: diameter and height lookup | batteries.fyi" description="Measure a battery's diameter and height (or width, depth and height) and get the closest standard sizes, with the difference in millimeters and the published voltage." jsonld={jsonld}>
+<BaseLayout title="Identify a battery by its size: measure it, find the match | batteries.fyi" description="Measure a battery with a ruler, enter how wide and how long it is in millimeters or inches, and see which standard sizes match, with the difference for each." jsonld={jsonld}>
   <section class="wrap pt-8">
-    <p class="eyebrow">Tool</p>
-    <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Identify a battery by measurement</h1>
-    <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">Measure the battery with calipers or a ruler and enter the numbers. The page compares them with the published dimensions of all {s.batteries} sizes in batteries.fyi, within the same shape (cylinder, coin or button, rectangular), and lists the eight closest with the difference for each dimension. A voltage reading, if you have one, narrows the list further. The link updates as you type, so a result can be shared.</p>
+    <h1 class="text-2xl sm:text-3xl font-semibold">Identify a battery by its size</h1>
+    <p class="lede measure mt-3">Measure your battery and enter the numbers. A ruler is enough. The closest sizes appear as you type, with how much each one differs from yours.</p>
+    <ol class="mt-4 text-base text-ink-2 measure list-decimal pl-6 space-y-1">
+      <li>Pick the shape that looks like yours.</li>
+      <li>Enter how wide it is and how long or thick it is, in millimeters or inches.</li>
+      <li>If you know the voltage, add it. It narrows the list.</li>
+    </ol>
   </section>
 
-  <section class="wrap mt-6 grid gap-6 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] items-start">
-    <form id="id-form" class="card p-4 sm:p-5 space-y-4" novalidate>
+  <section class="wrap mt-6 grid gap-6 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] items-start [&>*]:min-w-0">
+    <form id="id-form" class="card p-4 sm:p-5 space-y-5" novalidate>
       <fieldset>
-        <legend class="text-[0.7rem] font-semibold mb-1.5">Shape</legend>
-        <div class="flex flex-wrap gap-1.5" role="group" aria-label="Shape">
-          <button type="button" class="btn btn-sm" data-shape="cylinder" aria-pressed="true">Round cylinder</button>
-          <button type="button" class="btn btn-sm" data-shape="disc" aria-pressed="false">Coin or button</button>
-          <button type="button" class="btn btn-sm" data-shape="box" aria-pressed="false">Rectangular</button>
+        <legend class="label mb-2">Shape</legend>
+        <div class="grid gap-2" role="group" aria-label="Shape">
+          <button type="button" class="btn justify-start text-left whitespace-normal" data-shape="cylinder" aria-pressed="true">Round, like an AA</button>
+          <button type="button" class="btn justify-start text-left whitespace-normal" data-shape="disc" aria-pressed="false">Flat and round, like a coin</button>
+          <button type="button" class="btn justify-start text-left whitespace-normal" data-shape="box" aria-pressed="false">Rectangular, like a 9V</button>
         </div>
       </fieldset>
       <fieldset>
-        <legend class="text-[0.7rem] font-semibold mb-1.5">Units</legend>
-        <div class="flex gap-1.5" role="group" aria-label="Units">
-          <button type="button" class="btn btn-sm" data-unit="mm" aria-pressed="true">mm</button>
-          <button type="button" class="btn btn-sm" data-unit="in" aria-pressed="false">inches</button>
+        <legend class="label mb-2">Units</legend>
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Units">
+          <button type="button" class="btn" data-unit="mm" aria-pressed="true">Millimeters</button>
+          <button type="button" class="btn" data-unit="in" aria-pressed="false">Inches</button>
         </div>
+        <p class="mt-1 text-sm text-ink-2">Switching converts what you typed. This browser remembers your choice.</p>
       </fieldset>
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-4">
         <div>
-          <label for="id-d" class="block text-[0.68rem] font-semibold mb-1" id="id-d-label">Diameter</label>
+          <label for="id-d" class="label block mb-1" id="id-d-label">How wide</label>
           <div class="relative">
-            <input id="id-d" class="input pr-10 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-d-hint" />
-            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-[0.65rem] text-muted pointer-events-none">mm</span>
+            <input id="id-d" class="input pr-12 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-d-hint" />
+            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-2 pointer-events-none">mm</span>
           </div>
-          <p id="id-d-hint" class="text-[0.58rem] text-muted mt-1">Across the widest point</p>
+          <p id="id-d-hint" class="text-sm text-ink-2 mt-1">Across the widest part</p>
         </div>
         <div>
-          <label for="id-h" class="block text-[0.68rem] font-semibold mb-1" id="id-h-label">Length</label>
+          <label for="id-h" class="label block mb-1" id="id-h-label">How long</label>
           <div class="relative">
-            <input id="id-h" class="input pr-10 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-h-hint" />
-            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-[0.65rem] text-muted pointer-events-none">mm</span>
+            <input id="id-h" class="input pr-12 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-h-hint" />
+            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-2 pointer-events-none">mm</span>
           </div>
-          <p id="id-h-hint" class="text-[0.58rem] text-muted mt-1">End to end, terminal included</p>
+          <p id="id-h-hint" class="text-sm text-ink-2 mt-1">End to end, including the bump on the + end</p>
         </div>
         <div id="id-p-wrap" hidden>
-          <label for="id-p" class="block text-[0.68rem] font-semibold mb-1">Depth <span class="font-normal text-muted">(optional)</span></label>
+          <label for="id-p" class="label block mb-1">Depth <span class="font-normal">(if you have it)</span></label>
           <div class="relative">
-            <input id="id-p" class="input pr-10 tabular" type="number" inputmode="decimal" min="0" step="any" />
-            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-[0.65rem] text-muted pointer-events-none">mm</span>
+            <input id="id-p" class="input pr-12 tabular" type="number" inputmode="decimal" min="0" step="any" />
+            <span class="unit absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-2 pointer-events-none">mm</span>
           </div>
         </div>
         <div>
-          <label for="id-v" class="block text-[0.68rem] font-semibold mb-1">Voltage <span class="font-normal text-muted">(optional)</span></label>
+          <label for="id-v" class="label block mb-1">Voltage <span class="font-normal">(if you know it)</span></label>
           <div class="relative">
-            <input id="id-v" class="input pr-8 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-v-hint" />
-            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[0.65rem] text-muted pointer-events-none">V</span>
+            <input id="id-v" class="input pr-10 tabular" type="number" inputmode="decimal" min="0" step="any" aria-describedby="id-v-hint" />
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-2 pointer-events-none">V</span>
           </div>
-          <p id="id-v-hint" class="text-[0.58rem] text-muted mt-1">From a multimeter</p>
+          <p id="id-v-hint" class="text-sm text-ink-2 mt-1">Printed on it, or read with a meter</p>
         </div>
       </div>
       <div class="flex flex-wrap gap-2">
-        <button type="reset" class="btn btn-sm">Clear</button>
+        <button type="reset" class="btn">Clear</button>
       </div>
       <div class="callout info">
-        <p class="font-semibold text-ink">Measuring pitfalls</p>
-        <ul class="mt-1 space-y-1 list-disc pl-4 text-ink-2">
-          <li>Height includes the positive terminal. Measure from the flat negative end to the tip of the button.</li>
-          <li>Protected lithium-ion cells carry a circuit board and are commonly 2 to 5 mm longer than the bare cell: a protected 18650 can measure 67 to 70 mm.</li>
-          <li>A coin cell's thickness is the second pair of digits in its name: CR2032 is 20 mm across and 3.2 mm thick. Button cells work the same way: SR626 is 6.8 by 2.6 mm.</li>
-          <li>Labels and shrink wrap add a few tenths of a millimeter to the diameter. Measure the metal when you can.</li>
+        <p class="font-semibold text-ink">Tips for measuring</p>
+        <ul class="mt-2 space-y-2 list-disc pl-5 text-ink-2">
+          <li>Length includes the bump on the positive (+) end. Measure from the flat end to the tip of the bump.</li>
+          <li>Rechargeable lithium-ion batteries with a built-in protection board are often 2 to 5 mm longer than the plain battery: a protected 18650 can measure 67 to 70 mm.</li>
+          <li>On a coin battery the name gives the size: a CR2032 is 20 mm across and 3.2 mm thick. Button batteries work the same way: an SR626 is 6.8 mm across and 2.6 mm thick.</li>
+          <li>A label or plastic wrap adds a few tenths of a millimeter. Measure the metal if you can.</li>
         </ul>
       </div>
     </form>
@@ -120,30 +138,27 @@ const examples = [
     <div>
       <div id="id-warn" class="callout warn mb-3" hidden></div>
       <div id="id-empty" class="card p-5">
-        <p class="text-[0.8rem] text-ink-2">Enter at least one measurement to see matches. Or try one of these:</p>
-        <ul class="mt-3 flex flex-wrap gap-1.5">
-          {examples.map((e) => <li><a class="chip" href={`/identify?${e.q}`} data-example={e.q}>{e.label}</a></li>)}
+        <p class="text-base text-ink-2">Enter at least one measurement to see matches. Or try one of these:</p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {examples.map((e) => <li><a class="chip whitespace-normal" href={`/identify?${e.q}`} data-example={e.q}>{e.label}</a></li>)}
         </ul>
       </div>
       <div id="id-results" hidden>
-        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-          <h2 class="section-title mb-0">Closest sizes</h2>
-          <p class="text-[0.6rem] text-muted mono" id="id-formula"></p>
-        </div>
-        <ol id="id-list" class="grid gap-2" aria-live="polite"></ol>
-        <p class="mt-3 text-[0.62rem] text-muted">Differences compare each entry's nominal size with your measurement: "0.3 mm wider" means the listed battery is 0.3 mm wider than what you measured. Inside the published tolerance, a dimension counts as an exact match.</p>
+        <h2 class="section-title">Closest sizes</h2>
+        <ol id="id-list" class="grid gap-3 [&>*]:min-w-0" aria-live="polite"></ol>
+        <p class="mt-3 text-sm text-ink-2 measure">Each line compares the listed battery with your numbers: "0.3 mm wider" means that battery is 0.3 mm wider than what you measured. A measurement inside the maker's allowed range counts as a match.</p>
       </div>
     </div>
   </section>
 
   <section class="wrap mt-12">
-    <h2 class="section-title" id="how">How it works</h2>
+    <h2 class="section-title" id="how">How the matching works</h2>
     <div class="prose">
-      <p>Each entry's published dimensions are compared with yours, only within the shape you picked: round cylinders (AA, 18650, CR123A), coins and buttons (CR2032, LR44, hearing aid cells), and rectangular batteries (9 V, lantern and flat packs, two-cell photo packs).</p>
-      <p>For round shapes the distance is <span class="mono">√((Δd ÷ d)² + (0.6 × Δh ÷ h)²)</span>, where <span class="mono">d</span> and <span class="mono">h</span> are the entry's nominal diameter and height and <span class="mono">Δ</span> is how far your measurement falls outside the entry's published tolerance range (zero when it falls inside). Height counts at 0.6 because it is the less reliable measurement: terminals, protection circuits and caps change it. For rectangular batteries the three sides are sorted largest first, so the order you enter them in does not matter, and the distance is <span class="mono">√(Σ (Δ ÷ nominal)²)</span> over the sides you entered.</p>
-      <p>A voltage reading within 12% of one of the entry's nominal voltages adds nothing. Further away, it adds <span class="mono">0.5 × (|ln(V ÷ nominal)| − 0.12)</span>. Fresh cells read above nominal and used cells below, which is why the margin is wide.</p>
-      <p>Match quality is <span class="mono">100 × e^(−(distance ÷ 0.1)²)</span>: an exact match is 100%, a 5% difference about 78%, a 10% difference about 37%.</p>
-      <p>Dimensions come from each entry's cited sources: IEC 60086-2 and ANSI C18 tables where they exist, otherwise manufacturer datasheets. See <a href="/sources">sources</a>. To read a size from a printed code instead, use the <a href="/decode">code decoder</a>.</p>
+      <p>Your numbers are compared with the published sizes of all {s.batteries} batteries on this site, only within the shape you picked: round (AA, 18650, CR123A), flat and round (CR2032, LR44, hearing aid batteries), and rectangular (9V, lantern batteries and two-battery camera packs).</p>
+      <p>For round shapes the distance is <span class="mono">√((Δd ÷ d)² + (0.6 × Δh ÷ h)²)</span>, where <span class="mono">d</span> and <span class="mono">h</span> are the listed width across and length, and <span class="mono">Δ</span> is how far your measurement falls outside the published tolerance range (zero when it falls inside). Length counts at 0.6 because it is the less reliable measurement: terminals, protection boards and caps change it. For rectangular batteries the three sides are sorted largest first, so the order you enter them in does not matter, and the distance is <span class="mono">√(Σ (Δ ÷ listed size)²)</span> over the sides you entered.</p>
+      <p>A voltage within 12% of one of the battery's rated voltages adds nothing. Further away, it adds <span class="mono">0.5 × (|ln(V ÷ rated)| − 0.12)</span>. A fresh battery reads above its rated voltage and a used one below, which is why the margin is wide.</p>
+      <p>The match percentage is <span class="mono">100 × e^(−(distance ÷ 0.1)²)</span>: an exact match is 100%, a 5% difference about 78%, a 10% difference about 37%.</p>
+      <p>Sizes come from each battery's cited sources: IEC 60086-2 and ANSI C18 tables where they exist, otherwise the makers' datasheets. See <a href="/sources">sources</a>. To read a size from the name printed on a battery instead, see <a href="/decode">what the letters and numbers mean</a>.</p>
     </div>
   </section>
 
@@ -155,9 +170,10 @@ const examples = [
     id: string; n: string; c: string; cls: 'cylinder' | 'disc' | 'box'; s: string;
     d: number | null; h: number; w: number | null; p: number | null;
     td: [number, number] | null; th: [number, number] | null; tw: [number, number] | null; tp: [number, number] | null;
-    v: number[]; col: string;
+    v: number[]; vw: string; col: string;
   }
   type Shape = 'cylinder' | 'disc' | 'box';
+  type Unit = 'mm' | 'in';
   const items: Item[] = JSON.parse(document.getElementById('id-data')!.textContent!);
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
   const form = $<HTMLFormElement>('id-form');
@@ -170,24 +186,31 @@ const examples = [
   const results = $('id-results');
   const empty = $('id-empty');
   const warn = $('id-warn');
-  const formula = $('id-formula');
   const shapeBtns = [...document.querySelectorAll<HTMLButtonElement>('[data-shape]')];
   const unitBtns = [...document.querySelectorAll<HTMLButtonElement>('[data-unit]')];
 
+  // Shared with /actual-size: one remembered choice of units for the site.
+  const UNIT_KEY = 'batteries:units';
+  const stored = (): Unit | null => {
+    try { const v = localStorage.getItem(UNIT_KEY); return v === 'in' || v === 'mm' ? v : null; } catch { return null; }
+  };
+  const remember = (u: Unit) => { try { localStorage.setItem(UNIT_KEY, u); } catch {} };
+
   let shape: Shape = 'cylinder';
-  let unit: 'mm' | 'in' = 'mm';
+  let unit: Unit = 'mm';
   const esc = (s: string) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
   const num = (el: HTMLInputElement) => {
     const x = parseFloat(el.value);
     return isFinite(x) && x > 0 ? x : null;
   };
   const toMM = (x: number | null) => (x === null ? null : unit === 'in' ? x * 25.4 : x);
-  const show = (mm: number) => (unit === 'in' ? `${(mm / 25.4).toFixed(3)} in` : `${Number(mm.toFixed(2))} mm`);
+  /** A difference in both units, millimeters first. */
+  const show = (mm: number) => `${Number(mm.toFixed(2))} mm (${(mm / 25.4).toFixed(mm < 2.54 ? 3 : 2)} in)`;
 
   const LABELS: Record<Shape, { d: string; h: string; dh: string; hh: string }> = {
-    cylinder: { d: 'Diameter', h: 'Length', dh: 'Across the widest point', hh: 'End to end, terminal included' },
-    disc: { d: 'Diameter', h: 'Thickness', dh: 'Across the face', hh: 'Edge, both faces included' },
-    box: { d: 'Width', h: 'Height', dh: 'Longest side across the face', hh: 'Terminals included' },
+    cylinder: { d: 'How wide', h: 'How long', dh: 'Across the widest part', hh: 'End to end, including the bump on the + end' },
+    disc: { d: 'How wide', h: 'How thick', dh: 'Across the flat side', hh: 'From one flat side to the other' },
+    box: { d: 'Width', h: 'Height', dh: 'The widest side', hh: 'Including the terminals on top' },
   };
 
   function setShape(s: Shape) {
@@ -199,7 +222,7 @@ const examples = [
     $('id-h-hint').textContent = LABELS[s].hh;
     pWrap.hidden = s !== 'box';
   }
-  function setUnit(u: 'mm' | 'in', convert = true) {
+  function setUnit(u: Unit, convert = true) {
     if (u === unit) return;
     if (convert) {
       for (const el of [inD, inH, inP]) {
@@ -219,12 +242,12 @@ const examples = [
     return x < lo - 0.01 ? x - lo : x > hi + 0.01 ? x - hi : 0;
   };
   const WORDS: Record<string, [string, string, string]> = {
-    diameter: ['wider', 'narrower', 'same diameter'],
+    diameter: ['wider', 'narrower', 'same width'],
     length: ['longer', 'shorter', 'same length'],
     thickness: ['thicker', 'thinner', 'same thickness'],
     width: ['wider', 'narrower', 'same width'],
     depth: ['deeper', 'shallower', 'same depth'],
-    height: ['taller', 'shorter', 'same height'],
+    height: ['taller', 'shorter', 'just as tall'],
   };
   const deltaText = (label: string, mm: number) => {
     const [more, less, same] = WORDS[label];
@@ -285,7 +308,7 @@ const examples = [
       const off = Math.min(...it.v.map((n) => Math.abs(Math.log(V / n))));
       vMatch = off <= 0.12;
       if (!vMatch) dist += 0.5 * (off - 0.12);
-      vNote = vMatch ? 'voltage fits' : 'voltage differs';
+      vNote = vMatch ? 'voltage matches' : 'voltage is different';
     }
     return { it, dist, deltas, inside, tol, vNote, vMatch };
   }
@@ -311,7 +334,7 @@ const examples = [
     const cy = -Hh / 2;
     const body = round
       ? `<circle cx="0" cy="${cy}" r="${bw / 2}" fill="${it.col}" fill-opacity="0.85" />`
-      : `<rect x="${-bw / 2}" y="${-bh}" width="${bw}" height="${bh}" rx="${Math.min(bw, bh) * 0.08}" fill="${it.col}" fill-opacity="0.85" />`;
+      : `<rect x="${-bw / 2}" y="${-bh}" width="${bw}" height="${bh}" fill="${it.col}" fill-opacity="0.85" />`;
     let meas = '';
     if (mw && mh) {
       meas = round
@@ -328,7 +351,7 @@ const examples = [
     if (inH.value) q.set('h', inH.value);
     if (shape === 'box' && inP.value) q.set('p', inP.value);
     if (inV.value) q.set('v', inV.value);
-    if (unit === 'in') q.set('u', 'in');
+    if (unit === 'in' && (inD.value || inH.value || inP.value)) q.set('u', 'in');
     const s = q.toString();
     history.replaceState(null, '', s ? `?${s}` : location.pathname);
   }
@@ -339,10 +362,10 @@ const examples = [
     warn.hidden = true;
     if (shape === 'cylinder' && D && H && H < D) {
       warn.hidden = false;
-      warn.innerHTML = `The length is less than the diameter. Coins and button cells are matched separately. <button type="button" class="link" data-switch="disc">Match as a coin or button</button>`;
+      warn.innerHTML = `The length is less than the width. Flat round batteries are matched separately. <button type="button" class="link" data-switch="disc">Match it as a coin or button battery</button>`;
     } else if (shape === 'disc' && D && H && H > D) {
       warn.hidden = false;
-      warn.innerHTML = `The thickness is more than the diameter. <button type="button" class="link" data-switch="cylinder">Match as a round cylinder</button>`;
+      warn.innerHTML = `It is thicker than it is wide. <button type="button" class="link" data-switch="cylinder">Match it as a round battery</button>`;
     }
     if (D === null && H === null && P === null) {
       results.hidden = true;
@@ -351,7 +374,6 @@ const examples = [
     }
     empty.hidden = true;
     results.hidden = false;
-    formula.textContent = shape === 'box' ? 'distance = √(Σ (Δ ÷ nominal)²)' : 'distance = √((Δd ÷ d)² + (0.6 × Δh ÷ h)²)';
     const ranked = items
       .filter((it) => it.cls === shape)
       .map((it) => score(it, D, H, P, V))
@@ -360,19 +382,23 @@ const examples = [
     list.innerHTML = ranked
       .map((r, i) => {
         const q = Math.round(100 * Math.exp(-((r.dist / 0.1) ** 2)));
-        const volts = r.it.v.map((x) => `${Number(x.toFixed(2))} V`).join(' / ');
-        return `<li class="card p-3 flex gap-3 items-center">
-          <div class="w-12 h-14 shrink-0 rounded-md grid-paper p-1 flex items-end justify-center">${thumb(r.it, D, H, P)}</div>
+        const chips = [
+          r.inside ? (r.tol ? 'inside the maker’s allowed range' : 'matches the listed size') : '',
+          r.vNote,
+        ].filter(Boolean);
+        return `<li class="card p-4 flex gap-4 items-center">
+          <div class="w-14 h-16 shrink-0 bg-surface-2 p-1 flex items-end justify-center">${thumb(r.it, D, H, P)}</div>
           <div class="min-w-0 flex-1">
-            <div class="flex items-baseline gap-x-2 gap-y-0 flex-wrap">
-              <span class="text-[0.62rem] text-muted tabular">${i + 1}</span>
-              <a href="/${r.it.id}" class="font-semibold text-[0.9rem] hover:text-accent-ink">${esc(r.it.n)}</a>
-              <span class="text-[0.6rem] text-muted">${esc(r.it.c)} · ${esc(r.it.s)} · ${esc(volts)}</span>
-            </div>
-            <p class="text-[0.68rem] text-ink-2">${esc(r.deltas.join(', '))}${r.inside ? ` <span class="chip ml-1">${r.tol ? 'within published tolerance' : 'matches nominal size'}</span>` : ''}${r.vNote ? ` <span class="chip ml-1 ${r.vMatch ? '' : 'text-muted'}">${r.vNote}</span>` : ''}</p>
-            <div class="mt-1 flex items-center gap-2">
-              <div class="h-1.5 flex-1 max-w-[12rem] bg-surface-3 overflow-hidden" role="img" aria-label="Match quality ${q} percent"><div class="h-full bg-accent" style="width:${q}%"></div></div>
-              <span class="text-[0.58rem] text-muted tabular">${q}% · distance ${r.dist.toFixed(3)}</span>
+            <p class="flex items-baseline gap-x-3 flex-wrap">
+              <span class="text-sm text-ink-2 font-mono">${i + 1}.</span>
+              <a href="/${r.it.id}" class="link font-mono font-semibold text-lg">${esc(r.it.n)}</a>
+              <span class="text-sm text-ink-2">${esc(r.it.c)}, ${esc(r.it.s)}, ${esc(r.it.vw)}</span>
+            </p>
+            <p class="mt-1 text-base text-ink">${esc(r.deltas.join(', '))}</p>
+            ${chips.length ? `<p class="mt-1 flex flex-wrap gap-2">${chips.map((c) => `<span class="chip whitespace-normal">${esc(c)}</span>`).join('')}</p>` : ''}
+            <div class="mt-2 flex items-center gap-3">
+              <div class="h-2 flex-1 max-w-[12rem] bg-surface-3 overflow-hidden" aria-hidden="true"><div class="h-full bg-accent" style="width:${q}%"></div></div>
+              <span class="text-sm text-ink-2 tabular" title="distance ${r.dist.toFixed(3)}">${q}% match</span>
             </div>
           </div>
         </li>`;
@@ -381,7 +407,7 @@ const examples = [
   }
 
   shapeBtns.forEach((b) => b.addEventListener('click', () => { setShape(b.dataset.shape as Shape); run(); }));
-  unitBtns.forEach((b) => b.addEventListener('click', () => { setUnit(b.dataset.unit as 'mm' | 'in'); run(); }));
+  unitBtns.forEach((b) => b.addEventListener('click', () => { const u = b.dataset.unit as Unit; setUnit(u); remember(u); run(); }));
   [inD, inH, inP, inV].forEach((el) => el.addEventListener('input', run));
   form.addEventListener('submit', (e) => e.preventDefault());
   form.addEventListener('reset', () => setTimeout(run, 0));
@@ -395,11 +421,15 @@ const examples = [
     const sh = (q.get('shape') ?? '').toLowerCase();
     const alias: Record<string, Shape> = { cylinder: 'cylinder', round: 'cylinder', disc: 'disc', coin: 'disc', button: 'disc', box: 'box', rect: 'box', rectangular: 'box' };
     setShape(alias[sh] ?? 'cylinder');
-    setUnit(q.get('u') === 'in' ? 'in' : 'mm', false);
+    // Values in a link are millimeters unless it says u=in. Show them in the
+    // visitor's remembered units, else the link's, else millimeters.
+    const linkUnit: Unit = q.get('u') === 'in' ? 'in' : 'mm';
+    setUnit(linkUnit, false);
     inD.value = q.get('d') ?? q.get('w') ?? '';
     inH.value = q.get('h') ?? '';
     inP.value = q.get('p') ?? '';
     inV.value = q.get('v') ?? '';
+    setUnit(stored() ?? linkUnit);
     run();
   }
   document.querySelectorAll<HTMLAnchorElement>('[data-example]').forEach((a) =>

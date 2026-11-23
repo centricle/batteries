@@ -2,96 +2,123 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { batteries, chem, primaryVariant, searchIndex, sizeLabel } from '../lib/data';
 
+/** Nearest 1/16 in, no unit: "2", "9/16", "1 3/8". */
+const frac = (mm: number) => {
+  const s = Math.round((mm / 25.4) * 16);
+  if (s === 0) return '1/16';
+  const whole = Math.floor(s / 16);
+  let num = s % 16, den = 16;
+  while (num && num % 2 === 0) { num /= 2; den /= 2; }
+  return `${whole || ''}${whole && num ? ' ' : ''}${num ? `${num}/${den}` : ''}`;
+};
+
 // What the client needs to rebuild each outline with the same parametric
 // model the silhouettes and 3D viewer use: nominal dimensions and geometry hints.
 const nom = (x?: { nominal: number }) => (x ? { nominal: x.nominal } : undefined);
 const specs = Object.fromEntries(
-  batteries().map((b) => [
-    b.id,
-    {
-      id: b.id,
-      name: b.name,
-      form: b.form,
-      category: b.category,
-      size: sizeLabel(b, false),
-      dimensions: { diameter: nom(b.dimensions.diameter), height: nom(b.dimensions.height)!, width: nom(b.dimensions.width), depth: nom(b.dimensions.depth) },
-      geometry: b.geometry ?? {},
-      col: chem(primaryVariant(b).chemistry).color,
-    },
-  ]),
+  batteries().map((b) => {
+    const d = b.dimensions;
+    const sides = d.diameter && !d.width ? [d.diameter.nominal, d.height.nominal] : [d.width!.nominal, d.depth!.nominal, d.height.nominal];
+    return [
+      b.id,
+      {
+        id: b.id,
+        name: b.name,
+        form: b.form,
+        category: b.category,
+        size: sizeLabel(b, false),
+        sizeIn: sides.map(frac).join(' × '),
+        dimensions: { diameter: nom(d.diameter), height: nom(d.height)!, width: nom(d.width), depth: nom(d.depth) },
+        geometry: b.geometry ?? {},
+        col: chem(primaryVariant(b).chemistry).color,
+      },
+    ];
+  }),
 );
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'Batteries at actual size',
+  name: 'See a battery at actual size',
   url: 'https://batteries.fyi/actual-size',
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   isAccessibleForFree: true,
-  description: 'Calibrate the screen against a bank card, then see batteries drawn at their true physical size on a millimeter ruler, or print them at actual size.',
+  description: 'Set the screen size with a bank card, then see batteries drawn at their real size over a ruler in millimeters or inches, or print them at actual size.',
 };
 ---
 
-<BaseLayout title="Batteries at actual size: calibrated on-screen and printable | batteries.fyi" description="See AA, AAA, CR2032, LR44, 9V, 18650 and any other battery at true physical size. Calibrate your screen with a bank card, or print the page at 100% scale." jsonld={jsonld}>
+<BaseLayout title="See a battery at actual size, on screen or printed | batteries.fyi" description="See AA, AAA, CR2032, LR44, 9V, 18650 and any other battery at its real size. Set your screen with a bank card, or print the page at 100% scale." jsonld={jsonld}>
   <div id="as-screen" class="print:hidden">
     <section class="wrap pt-8">
-      <p class="eyebrow">Tool</p>
-      <h1 class="text-[2rem] font-semibold tracking-tight mt-1">Batteries at actual size</h1>
-      <p class="mt-2 text-[0.8rem] text-ink-2 max-w-2xl">This page draws batteries at their real physical size, so you can hold one against the screen and compare. Screens differ in pixel density, so first match the outline below to a bank card, driver's license or any other ID-1 card (85.60 × 53.98 mm). The setting is saved in this browser. For a sheet you can measure with a ruler, print the page at 100% scale; print sizes are exact without calibration.</p>
+      <h1 class="text-2xl sm:text-3xl font-semibold">See a battery at actual size</h1>
+      <p class="lede measure mt-3">Hold your battery up to the screen and compare it with the drawing. First, match the outline below to a bank card, so the drawings come out at their real size on your screen.</p>
+      <p class="mt-2 text-base text-ink-2 measure">You can also print the page. Printed at 100% scale, the sizes are right without this step.</p>
     </section>
 
-    <section class="wrap mt-6" aria-labelledby="cal-h">
-      <div class="card overflow-hidden">
+    <section class="wrap mt-8" aria-labelledby="cal-h">
+      <h2 id="cal-h" class="section-title">Set the size with a bank card</h2>
+      <ol class="text-base text-ink-2 measure list-decimal pl-6 space-y-1">
+        <li>Hold a bank card, a driver's license or any card that size flat against the screen.</li>
+        <li>Line up the card's top left corner with the top left corner of the outline.</li>
+        <li>Press the plus or minus button, or drag the slider, until the outline is the same size as the card.</li>
+      </ol>
+      <p class="mt-2 text-base text-ink-2 measure">This browser remembers the setting, so you only need to do it once on this screen. If you zoom the page in or out, do it again.</p>
+      <div class="card overflow-hidden mt-4">
         <div class="p-4 sm:p-5 border-b border-line">
-          <h2 id="cal-h" class="text-[0.95rem] font-semibold">1. Calibrate</h2>
-          <p class="mt-1 text-[0.7rem] text-ink-2">Hold a card flat against the screen with its corner at the top left of the outline. Move the slider until the outline's edges meet the card's edges.</p>
-          <div class="mt-3 flex flex-wrap items-center gap-2">
-            <label for="cal-k" class="text-[0.68rem] font-semibold">Card size</label>
-            <button type="button" class="btn btn-sm w-9" id="cal-minus" aria-label="Make the outline smaller">−</button>
-            <input id="cal-k" type="range" min="2" max="10" step="0.01" class="w-48 sm:w-72 accent-[var(--accent)]" aria-describedby="cal-read" />
-            <button type="button" class="btn btn-sm w-9" id="cal-plus" aria-label="Make the outline larger">+</button>
-            <button type="button" class="btn btn-sm" id="cal-reset">Reset</button>
+          <div class="flex flex-wrap items-center gap-3">
+            <label for="cal-k" class="label">Outline size</label>
+            <button type="button" class="btn w-11 text-lg" id="cal-minus" aria-label="Make the outline smaller">−</button>
+            <input id="cal-k" type="range" min="2" max="10" step="0.01" class="w-48 sm:w-72 h-9 accent-[var(--accent-ink)]" aria-describedby="cal-read" />
+            <button type="button" class="btn w-11 text-lg" id="cal-plus" aria-label="Make the outline larger">+</button>
+            <button type="button" class="btn" id="cal-reset">Start over</button>
           </div>
-          <p class="mt-2 text-[0.62rem] text-muted tabular" id="cal-read" aria-live="polite"></p>
+          <p class="mt-3 text-sm text-ink-2" id="cal-read" aria-live="polite"></p>
         </div>
-        <div class="grid-paper p-0 overflow-x-auto" id="cal-stage"></div>
+        <div class="bg-surface-2 p-0 overflow-x-auto" id="cal-stage"></div>
       </div>
     </section>
 
-    <section class="wrap mt-8" aria-labelledby="pick-h">
-      <h2 id="pick-h" class="text-[0.95rem] font-semibold">2. Choose batteries</h2>
-      <div class="mt-3 flex flex-wrap items-center gap-2" id="as-picked" aria-live="polite"></div>
-      <div class="mt-3 flex flex-wrap gap-2 items-start">
+    <section class="wrap mt-10" aria-labelledby="pick-h">
+      <h2 id="pick-h" class="section-title">Pick the batteries to show</h2>
+      <div class="flex flex-wrap items-center gap-2" id="as-picked" aria-live="polite"></div>
+      <div class="mt-4 flex flex-wrap gap-3 items-end">
         <div class="relative w-full max-w-md">
-          <label for="as-add" class="sr-only">Add a battery</label>
-          <input id="as-add" class="input" placeholder="Add a battery: name or any code" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="as-list" aria-autocomplete="list" />
-          <ul id="as-list" class="card absolute z-20 left-0 right-0 mt-1 max-h-72 overflow-y-auto hidden" role="listbox" aria-label="Matching batteries"></ul>
+          <label for="as-add" class="label block mb-1">Add a battery</label>
+          <input id="as-add" class="input" placeholder="Type a name, like CR2032 or AA" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="as-list" aria-autocomplete="list" />
+          <ul id="as-list" class="card absolute z-20 left-0 right-0 mt-1 max-h-80 overflow-y-auto hidden" role="listbox" aria-label="Matching batteries"></ul>
         </div>
-        <button type="button" class="btn" id="as-default">Default set</button>
+        <button type="button" class="btn" id="as-default">Show the common ones</button>
         <button type="button" class="btn btn-primary" id="as-print">Print at actual size</button>
       </div>
+      <fieldset class="mt-5">
+        <legend class="label mb-2">Ruler</legend>
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Ruler units">
+          <button type="button" class="btn" data-unit="mm" aria-pressed="true">Millimeters</button>
+          <button type="button" class="btn" data-unit="in" aria-pressed="false">Inches</button>
+        </div>
+      </fieldset>
     </section>
 
     <section class="wrap mt-6" aria-labelledby="stage-h">
       <h2 id="stage-h" class="sr-only">Batteries at actual size</h2>
-      <div class="card grid-paper p-3 sm:p-4 overflow-x-auto" id="as-stage"></div>
-      <p class="mt-2 text-[0.62rem] text-muted">Nominal dimensions, drawn at the calibrated scale on a millimeter ruler. Cylinders and packs stand upright with the positive end up. Coin and button cells appear twice: face-on, then edge-on.</p>
+      <div class="card p-3 sm:p-4 overflow-x-auto" id="as-stage"></div>
+      <p class="mt-2 text-sm text-ink-2 measure">Drawn at the size you set above, over a ruler. Round batteries stand upright with the + end up. Coin and button batteries are shown twice: the flat side, then the edge.</p>
     </section>
 
     <section class="wrap mt-12">
       <h2 class="section-title" id="how">How it works</h2>
       <div class="prose">
-        <p>A CSS pixel has no fixed physical size; it depends on the screen. Calibration finds the number of CSS pixels per millimeter, <span class="mono">k</span>, from the card: <span class="mono">k = outline width in pixels ÷ 85.60 mm</span>. Every shape is then drawn with <span class="mono">pixels = millimeters × k</span>. Before calibration the page assumes the CSS reference of 96 pixels per inch, <span class="mono">96 ÷ 25.4 = 3.78</span> pixels per millimeter, which is right on few screens. Zooming the browser changes the drawing; calibrate again at the zoom you use.</p>
-        <p>Printing uses CSS millimeter units instead, which printers honor exactly at 100% scale. Turn off "Fit to page" or "Shrink to fit" in the print dialog, then check the 50 mm bar on the sheet with a ruler.</p>
-        <p>The card size, 85.60 × 53.98 mm, is the ID-1 format of ISO/IEC 7810, used by bank cards and most driver's licenses. Outlines come from the same parametric model as the site's 3D views, built from each entry's published nominal dimensions; terminal proportions that datasheets do not give are drawn with typical values. See each battery's page for dimensions, tolerances and sources.</p>
+        <p>A pixel on a screen has no fixed physical size; it depends on the screen. Setting the size finds the number of pixels per millimeter, <span class="mono">k</span>, from the card: <span class="mono">k = outline width in pixels ÷ 85.60 mm</span>. Every shape is then drawn with <span class="mono">pixels = millimeters × k</span>. Before you set it, the page assumes the standard 96 pixels per inch, <span class="mono">96 ÷ 25.4 = 3.78</span> pixels per millimeter, which is right on few screens. Zooming the browser changes the drawing, so set it again at the zoom you use.</p>
+        <p>Printing uses real millimeters instead, which printers follow exactly at 100% scale. Turn off "Fit to page" or "Shrink to fit" in the print dialog, then check the 50 mm and 2 in bars on the sheet with a ruler.</p>
+        <p>The card size, 85.60 × 53.98 mm (3 3/8 × 2 1/8 in), is the ID-1 format of ISO/IEC 7810, used by bank cards and most driver's licenses. The outlines come from the same model as the site's 3D views, built from each battery's published size; the shape of the terminals, which datasheets do not give, is drawn with typical values. Each battery's page has its exact size, the allowed range and the sources.</p>
       </div>
     </section>
   </div>
 
   <div id="print-sheet" class="hidden print:block">
-    <p style="font: 600 12pt system-ui, sans-serif; margin: 0 0 2mm">batteries.fyi: batteries at actual size</p>
-    <p style="font: 9pt system-ui, sans-serif; margin: 0 0 4mm">Printed at 100% scale, the bar below measures exactly 50 mm. If it does not, turn off "Fit to page" and print again. Nominal dimensions.</p>
+    <p style="font: 600 13pt system-ui, sans-serif; margin: 0 0 2mm">batteries.fyi: batteries at actual size</p>
+    <p style="font: 11pt system-ui, sans-serif; margin: 0 0 4mm">Printed at 100% scale, the bars below measure exactly 50 mm and 2 in. If they do not, turn off "Fit to page" and print again.</p>
     <div id="print-rows"></div>
   </div>
 
@@ -105,12 +132,12 @@ const jsonld = {
     :global(#print-sheet) { color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     :global(#print-sheet svg) { break-inside: avoid; page-break-inside: avoid; margin-bottom: 6mm; }
     :global(#print-sheet .as-text) { fill: #000; }
-    :global(#print-sheet .as-muted) { fill: #444; }
+    :global(#print-sheet .as-muted) { fill: #333; }
     :global(#print-sheet .as-tick) { stroke: #000; }
   }
   :global(#as-list li[aria-selected="true"]) { background: var(--accent-soft); }
-  :global(.as-text) { fill: var(--ink); font-family: var(--font-sans); }
-  :global(.as-muted) { fill: var(--muted); font-family: var(--font-sans); }
+  :global(.as-text) { fill: var(--ink); font-family: var(--font-mono); }
+  :global(.as-muted) { fill: var(--ink-2); font-family: var(--font-sans); }
   :global(.as-tick) { stroke: var(--ink-2); }
   :global(.as-card) { fill: color-mix(in oklch, var(--accent) 12%, transparent); stroke: var(--accent-ink); }
 </style>
@@ -120,13 +147,19 @@ const jsonld = {
   import { describe, MATERIALS } from '../lib/geometry/model.js';
   import { rank, type Entry } from '../lib/search';
 
-  interface Spec { id: string; name: string; form: string; category: string; size: string; dimensions: any; geometry: any; col: string }
+  interface Spec { id: string; name: string; form: string; category: string; size: string; sizeIn: string; dimensions: any; geometry: any; col: string }
+  type Unit = 'mm' | 'in';
   const specs: Record<string, Spec> = JSON.parse(document.getElementById('as-specs')!.textContent!);
   const index: Entry[] = JSON.parse(document.getElementById('as-index')!.textContent!);
   const DEFAULT = ['aa', 'aaa', 'cr2032', 'lr44', '9v', '18650'];
   const CARD = { w: 85.6, h: 53.98, r: 3.18 };
   const KEY = 'batteries:px-per-mm';
+  // Shared with /identify: one remembered choice of units for the site.
+  const UNIT_KEY = 'batteries:units';
   const BASE = 96 / 25.4;
+  // Text sizes inside the drawings, in screen pixels: nothing under 16.8 px.
+  const FS = { name: 18, size: 17, small: 17 };
+  const INCH = 25.4;
 
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
   const slider = $<HTMLInputElement>('cal-k');
@@ -136,8 +169,9 @@ const jsonld = {
   const picked = $('as-picked');
   const add = $<HTMLInputElement>('as-add');
   const list = $('as-list');
+  const unitBtns = [...document.querySelectorAll<HTMLButtonElement>('[data-unit]')];
   const esc = (s: string) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
-  const n2 = (x: number) => Number(x.toFixed(3));
+  const n2 = (x: number) => Number(x.toFixed(2));
 
   // ---------------------------------------------------------- calibration
   let k = BASE;
@@ -146,6 +180,9 @@ const jsonld = {
     if (isFinite(v) && v >= 2 && v <= 10) k = v;
   } catch {}
   slider.value = String(k);
+
+  let unit: Unit = 'mm';
+  try { if (localStorage.getItem(UNIT_KEY) === 'in') unit = 'in'; } catch {}
 
   function setK(v: number, save = true) {
     k = Math.min(10, Math.max(2, v));
@@ -163,12 +200,14 @@ const jsonld = {
     const w = portrait ? CARD.h : CARD.w;
     const h = portrait ? CARD.w : CARD.h;
     const pad = 2;
-    calStage.innerHTML = `<svg width="${(w + pad * 2) * k}" height="${(h + pad * 2) * k}" viewBox="${-pad} ${-pad} ${w + pad * 2} ${h + pad * 2}" role="img" aria-label="Card outline, ${portrait ? 'portrait' : 'landscape'}, 85.60 by 53.98 millimeters at the current scale">
+    calStage.innerHTML = `<svg width="${(w + pad * 2) * k}" height="${(h + pad * 2) * k}" viewBox="${-pad} ${-pad} ${w + pad * 2} ${h + pad * 2}" role="img" aria-label="Card outline, ${portrait ? 'standing upright' : 'lying flat'}, 85.6 by 54 millimeters at the current setting">
       <rect x="0" y="0" width="${w}" height="${h}" rx="${CARD.r}" class="as-card" stroke-width="${1.5 / k}" />
-      <text x="${w / 2}" y="${h / 2}" text-anchor="middle" dominant-baseline="middle" class="as-muted" font-size="${12 / k}">ID-1 card, 85.60 × 53.98 mm</text>
+      <text x="${w / 2}" y="${h / 2}" text-anchor="middle" dominant-baseline="middle" class="as-muted" font-size="${FS.size / k}">Bank card, 85.6 × 54 mm</text>
     </svg>`;
-    const dpi = k * 25.4;
-    read.textContent = `${n2(k)} pixels per millimeter (${dpi.toFixed(1)} pixels per inch). Outline width ${(CARD.w * k).toFixed(1)} px = 85.60 mm × ${n2(k)}.${portrait ? ' Shown upright to fit the screen.' : ''}${Math.abs(k - BASE) < 0.005 ? ' Not yet calibrated: this is the 96 dpi default.' : ''}`;
+    const unset = Math.abs(k - BASE) < 0.005;
+    read.textContent = unset
+      ? `Not set yet. The outline is drawn for a standard screen and may be a little off on yours.${portrait ? ' It is shown standing upright to fit the screen.' : ''}`
+      : `Set. This screen shows ${n2(k)} pixels per millimeter (${(k * INCH).toFixed(0)} per inch).${portrait ? ' The outline is shown standing upright to fit the screen.' : ''}`;
   }
 
   slider.addEventListener('input', () => setK(parseFloat(slider.value)));
@@ -179,12 +218,21 @@ const jsonld = {
     setK(BASE, false);
   });
 
+  function setUnit(u: Unit, save = true) {
+    unit = u;
+    unitBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.unit === u)));
+    if (save) { try { localStorage.setItem(UNIT_KEY, u); } catch {} }
+    drawStage();
+  }
+  unitBtns.forEach((b) => b.addEventListener('click', () => setUnit(b.dataset.unit as Unit)));
+
   // -------------------------------------------------------------- shapes
   interface View { kind: 'front' | 'face' | 'edge'; w: number; h: number; x0: number; svg: (x: number, gid: string) => string }
-  interface Group { id: string; name: string; size: string; views: View[]; w: number; h: number }
+  interface Group { id: string; name: string; size: string; sizeIn: string; views: View[]; w: number; h: number }
   const cache = new Map<string, Group>();
   const ORDER = ['wrap', 'cap-plastic', 'can', 'gasket', 'steel', 'insulator', 'ring', 'brass', 'spring', 'tab'];
   const VIEW_GAP = 3;
+  const VIEW_NAME: Record<View['kind'], string> = { front: '', face: 'Flat side', edge: 'Edge' };
 
   function fillFor(s: Spec, mat: string) {
     if (mat === 'wrap') return s.col;
@@ -221,7 +269,7 @@ const jsonld = {
         w: 2 * R,
         h: 2 * R,
         x0: -R,
-        svg: (x, gid) => {
+        svg: (x) => {
           const cx = x + R, cy = -R;
           let o = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${fillFor(s, 'can')}" />`;
           o += `<circle cx="${cx}" cy="${cy}" r="${R * 0.9}" fill="none" stroke="#000" stroke-opacity="0.15" stroke-width="${R * 0.02}" />`;
@@ -232,15 +280,28 @@ const jsonld = {
     }
     views.push(front);
     const w = views.reduce((a, v) => a + v.w, 0) + VIEW_GAP * (views.length - 1);
-    const g = { id, name: s.name, size: s.size, views, w, h: Math.max(...views.map((v) => v.h)) };
+    const g = { id, name: s.name, size: `${s.size} mm`, sizeIn: `about ${s.sizeIn} in`, views, w, h: Math.max(...views.map((v) => v.h)) };
     cache.set(id, g);
     return g;
   }
 
-  /** Greedy row packing in millimeters. */
-  /** Width a group needs: its drawings, or its label if that is wider. */
-  const slot = (g: Group, px: number) => Math.max(g.w, g.name.length * 11 * px * 0.62, g.size.length * 9 * px * 0.56);
+  /** Estimated width of a view label ("Flat side", "Edge") in mm. */
+  const viewLabelW = (v: View, px: number) => VIEW_NAME[v.kind].length * FS.small * px * 0.55;
+  /** Space between a coin's two views, wide enough that their labels never touch. */
+  const viewGap = (g: Group, px: number) => {
+    if (g.views.length < 2) return 0;
+    const [a, b] = g.views;
+    return Math.max(VIEW_GAP, (viewLabelW(a, px) + viewLabelW(b, px)) / 2 + 10 * px - (a.w + b.w) / 2);
+  };
+  const drawW = (g: Group, px: number) => g.views.reduce((s, v) => s + v.w, 0) + viewGap(g, px);
+  /** Width a group needs: its drawings, or its labels if those are wider. */
+  const slot = (g: Group, px: number) => Math.max(
+    drawW(g, px),
+    g.name.length * FS.name * px * 0.62,
+    Math.max(g.size.length, g.sizeIn.length) * FS.size * px * 0.55,
+  );
 
+  /** Greedy row packing in millimeters. */
   function pack(groups: Group[], avail: number, gap: number, px: number) {
     const rows: Group[][] = [];
     let row: Group[] = [];
@@ -259,50 +320,70 @@ const jsonld = {
     return rows;
   }
 
+  /** The ruler under a row: ticks every millimeter or every 1/16 inch. */
+  function ruler(width: number, margin: number, px: number, u: Unit) {
+    const numFS = Math.max(FS.small * px, 1.8);
+    const base = 3.6;
+    const stroke = Math.max(px, 0.12);
+    const thin = Math.max(px * 0.9, 0.1);
+    const step = u === 'mm' ? 1 : INCH / 16;
+    const major = u === 'mm' ? 10 : 16;
+    const len = Math.ceil((width + margin) / (u === 'mm' ? 10 : INCH)) * (u === 'mm' ? 10 : INCH);
+    const count = Math.round(len / step);
+    let out = `<line x1="${margin}" y1="0" x2="${margin + len}" y2="0" class="as-tick" stroke-width="${stroke}" />`;
+    for (let i = 0; i <= count; i++) {
+      const x = margin + i * step;
+      const t = u === 'mm'
+        ? (i % 10 === 0 ? 3.2 : i % 5 === 0 ? 2.2 : 1.2)
+        : (i % 16 === 0 ? 3.2 : i % 8 === 0 ? 2.6 : i % 4 === 0 ? 2 : i % 2 === 0 ? 1.5 : 1);
+      out += `<line x1="${x}" y1="0" x2="${x}" y2="${t}" class="as-tick" stroke-width="${thin}" />`;
+      if (i % major === 0) {
+        const n = u === 'mm' ? i : i / 16;
+        out += `<text x="${x + 0.6}" y="${base + numFS * 0.85}" class="as-muted" font-size="${numFS}">${n}${i === count ? (u === 'mm' ? ' mm' : ' in') : ''}</text>`;
+      }
+    }
+    return { svg: out, len, h: base + numFS * 1.1 };
+  }
+
   /**
    * One row as SVG. `unit` sets the outer size: 'px' scales mm by k for the
    * screen; 'mm' writes CSS millimeters for print. `px` is the size of one
    * screen pixel in mm, used to keep strokes and text legible.
    */
-  function rowSVG(row: Group[], gap: number, unit: 'px' | 'mm', px: number, ri: number) {
+  function rowSVG(row: Group[], gap: number, out: 'px' | 'mm', px: number, ri: number) {
     const margin = 3;
     const width = row.reduce((a, g) => a + slot(g, px), 0) + gap * (row.length - 1);
-    const rulerLen = Math.ceil((width + margin) / 10) * 10;
-    const top = Math.max(...row.map((g) => g.h)) + 13 * px + 2;
-    const rulerH = 6;
-    const labelH = 32 * px;
-    const totalW = rulerLen + margin * 2 + Math.max(36 * px, 8);
-    const totalH = top + rulerH + labelH;
-    const gid = `asg-${unit}-${ri}`;
+    const hasViews = row.some((g) => g.views.length > 1);
+    const top = Math.max(...row.map((g) => g.h)) + (hasViews ? FS.small * 1.4 * px : 0) + 2;
+    const r = ruler(width, margin, px, unit);
+    const lineName = FS.name * 1.35 * px, lineSize = FS.size * 1.3 * px;
+    const labelH = lineName + 2 * lineSize + 4 * px;
+    const totalW = r.len + margin * 2 + Math.max(64 * px, 10);
+    const totalH = top + r.h + labelH;
+    const gid = `asg-${out}-${ri}`;
     let body = '';
     let x = margin;
     for (const g of row) {
       const sw = slot(g, px);
-      let vx = x + (sw - g.w) / 2;
+      let vx = x + (sw - drawW(g, px)) / 2;
       for (const v of g.views) {
         body += v.svg(vx, gid);
-        if (g.views.length > 1) body += `<text x="${vx + v.w / 2}" y="${-v.h - 4 * px}" text-anchor="middle" class="as-muted" font-size="${9 * px}">${v.kind}</text>`;
-        vx += v.w + VIEW_GAP;
+        if (g.views.length > 1 && VIEW_NAME[v.kind]) body += `<text x="${vx + v.w / 2}" y="${-v.h - 5 * px}" text-anchor="middle" class="as-muted" font-size="${FS.small * px}">${VIEW_NAME[v.kind]}</text>`;
+        vx += v.w + viewGap(g, px);
       }
       const cx = x + sw / 2;
-      body += `<text x="${cx}" y="${rulerH + 13 * px}" text-anchor="middle" class="as-text" font-weight="650" font-size="${11 * px}">${esc(g.name)}</text>`;
-      body += `<text x="${cx}" y="${rulerH + 26 * px}" text-anchor="middle" class="as-muted" font-size="${9 * px}">${esc(g.size)}</text>`;
+      body += `<text x="${cx}" y="${r.h + lineName}" text-anchor="middle" class="as-text" font-weight="600" font-size="${FS.name * px}">${esc(g.name)}</text>`;
+      body += `<text x="${cx}" y="${r.h + lineName + lineSize}" text-anchor="middle" class="as-muted" font-size="${FS.size * px}">${esc(g.size)}</text>`;
+      body += `<text x="${cx}" y="${r.h + lineName + 2 * lineSize}" text-anchor="middle" class="as-muted" font-size="${FS.size * px}">${esc(g.sizeIn)}</text>`;
       x += sw + gap;
     }
-    // Ruler: baseline at y = 0, ticks every millimeter below it.
-    let ruler = `<line x1="0" y1="0" x2="${rulerLen}" y2="0" class="as-tick" stroke-width="${Math.max(px, 0.12)}" transform="translate(${margin} 0)" />`;
-    for (let i = 0; i <= rulerLen; i++) {
-      const len = i % 10 === 0 ? 3.2 : i % 5 === 0 ? 2.2 : 1.2;
-      ruler += `<line x1="${margin + i}" y1="0" x2="${margin + i}" y2="${len}" class="as-tick" stroke-width="${Math.max(px * 0.9, 0.1)}" />`;
-      if (i % 10 === 0) ruler += `<text x="${margin + i + 0.6}" y="${rulerH - 0.4}" class="as-muted" font-size="${Math.max(8 * px, 1.8)}">${i}${i === rulerLen ? ' mm' : ''}</text>`;
-    }
-    const outerW = unit === 'px' ? `${(totalW / px).toFixed(2)}` : `${totalW}mm`;
-    const outerH = unit === 'px' ? `${(totalH / px).toFixed(2)}` : `${totalH}mm`;
+    const outerW = out === 'px' ? `${(totalW / px).toFixed(2)}` : `${totalW}mm`;
+    const outerH = out === 'px' ? `${(totalH / px).toFixed(2)}` : `${totalH}mm`;
     const defs = `<defs>
       <linearGradient id="${gid}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.1" /><stop offset="0.06" stop-color="#000" stop-opacity="0.1" /><stop offset="0.06" stop-color="#fff" stop-opacity="0" /><stop offset="0.2" stop-color="#fff" stop-opacity="0" /><stop offset="0.2" stop-color="#fff" stop-opacity="0.2" /><stop offset="0.3" stop-color="#fff" stop-opacity="0.2" /><stop offset="0.3" stop-color="#fff" stop-opacity="0" /><stop offset="0.74" stop-color="#000" stop-opacity="0" /><stop offset="0.74" stop-color="#000" stop-opacity="0.14" /><stop offset="1" stop-color="#000" stop-opacity="0.14" /></linearGradient>
     </defs>`;
     const names = row.map((g) => g.name).join(', ');
-    return `<svg width="${outerW}" height="${outerH}" viewBox="0 ${-top} ${totalW} ${totalH}" role="img" aria-label="${esc(names)} at actual size on a millimeter ruler" style="display:block;overflow:visible">${defs}${body}${ruler}</svg>`;
+    return `<svg width="${outerW}" height="${outerH}" viewBox="0 ${-top} ${totalW} ${totalH}" role="img" aria-label="${esc(names)} at actual size over a ruler in ${unit === 'mm' ? 'millimeters' : 'inches'}" style="display:block;overflow:visible">${defs}${body}${r.svg}</svg>`;
   }
 
   // --------------------------------------------------------------- state
@@ -313,26 +394,27 @@ const jsonld = {
   function drawStage() {
     const groups = ids.map(group).filter(Boolean) as Group[];
     if (!groups.length) {
-      stage.innerHTML = '<p class="text-[0.72rem] text-muted p-2">Nothing selected. Add a battery above.</p>';
+      stage.innerHTML = '<p class="text-base text-ink-2 p-2">Nothing chosen yet. Add a battery above.</p>';
     } else {
       const px = 1 / k;
-      // Leave room for margins, ruler rounding (up to 10 mm) and the unit label.
-      const avail = (stage.clientWidth - 40) * px - 16 - Math.max(36 * px, 8);
+      // Leave room for margins, ruler rounding (up to an inch) and the unit label.
+      const avail = (stage.clientWidth - 40) * px - 26 - Math.max(64 * px, 10);
       stage.innerHTML = `<div class="space-y-6">${pack(groups, Math.max(avail, 10), 8, px).map((r, i) => rowSVG(r, 8, 'px', px, i)).join('')}</div>`;
     }
     // Print sheet: CSS millimeters, about 180 mm of usable width on A4 and Letter.
+    const bar = (len: number, label: string, y: number) => `<rect x="0" y="${y}" width="${len}" height="3" fill="#000" /><text x="${len + 1.5}" y="${y + 3}" font-size="3.5" font-family="system-ui, sans-serif">${label}</text>`;
     $('print-rows').innerHTML =
-      `<svg width="70mm" height="8mm" viewBox="0 0 70 8" style="display:block;margin-bottom:6mm"><rect x="0" y="2" width="50" height="3" fill="#000" /><text x="51.5" y="5" font-size="3" font-family="system-ui, sans-serif">50 mm</text></svg>` +
-      (groups.length ? pack(groups, 165, 8, 0.3).map((r, i) => rowSVG(r, 8, 'mm', 0.3, i)).join('') : '');
+      `<svg width="80mm" height="13mm" viewBox="0 0 80 13" style="display:block;margin-bottom:6mm">${bar(50, '50 mm', 1)}${bar(INCH * 2, '2 in', 8)}</svg>` +
+      (groups.length ? pack(groups, 160, 8, 0.2).map((r, i) => rowSVG(r, 8, 'mm', 0.2, i)).join('') : '');
   }
 
   function renderPicked() {
     history.replaceState(null, '', ids.join(',') === DEFAULT.join(',') ? location.pathname : `?ids=${ids.join(',')}`);
     picked.innerHTML = ids.length
       ? ids
-          .map((id) => `<span class="chip text-[0.7rem] py-1 pl-2.5 pr-1"><a href="/${id}" class="font-semibold">${esc(specs[id].name)}</a><button type="button" data-remove="${id}" class="w-5 h-5 hover:bg-surface-2" aria-label="Remove ${esc(specs[id].name)}">×</button></span>`)
+          .map((id) => `<span class="chip text-sm pr-0"><a href="/${id}" class="link font-semibold">${esc(specs[id].name)}</a><button type="button" data-remove="${id}" class="w-8 h-8 inline-flex items-center justify-center hover:bg-surface-2" aria-label="Remove ${esc(specs[id].name)}">×</button></span>`)
           .join('')
-      : '<span class="text-[0.7rem] text-muted">Nothing selected.</span>';
+      : '<span class="text-base text-ink-2">Nothing chosen yet.</span>';
     drawStage();
   }
 
@@ -357,7 +439,7 @@ const jsonld = {
     results = q ? rank(index, q, 8).filter((r) => !ids.includes(r.e.id)) : [];
     sel = 0;
     list.innerHTML = results
-      .map(({ e, why }, i) => `<li role="option" id="as-opt-${i}" aria-selected="${i === sel}" data-id="${e.id}" class="flex items-center gap-2 px-3 py-2 cursor-pointer text-[0.72rem]"><span class="dot" style="background:${esc(e.col)}"></span><span class="font-semibold">${esc(e.n)}</span><span class="text-muted text-[0.62rem] truncate">${esc(e.s)}</span>${why ? `<span class="chip ml-auto">${esc(why)}</span>` : ''}</li>`)
+      .map(({ e, why }, i) => `<li role="option" id="as-opt-${i}" aria-selected="${i === sel}" data-id="${e.id}" class="flex items-center gap-3 px-3 py-2 min-h-11 cursor-pointer"><span class="dot" style="background:${esc(e.col)}"></span><span class="font-mono font-semibold text-base">${esc(e.n)}</span><span class="text-ink-2 text-sm truncate">${esc(e.s)}</span>${why ? `<span class="chip ml-auto">${esc(why)}</span>` : ''}</li>`)
       .join('');
     const open = results.length > 0;
     list.classList.toggle('hidden', !open);
@@ -393,6 +475,7 @@ const jsonld = {
     rt = window.setTimeout(() => { drawCard(); drawStage(); }, 120);
   });
 
+  setUnit(unit, false);
   drawCard();
   renderPicked();
 </script>

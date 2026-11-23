@@ -1,9 +1,11 @@
 ---
+// A vs B. The verdict comes first and is built only from the pair's relation
+// data: when no source relates the two, the page says that instead of guessing.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Viewer from '../../components/Viewer.astro';
 import Silhouette from '../../components/Silhouette.astro';
-import { pairs, verdict, faqs, REL_META, type Pair } from '../../lib/pairs';
-import { primaryVariant, capacityLabel, chemistryGroups, sizeLabel, fmt, categoryById, codesBySystem, type Battery } from '../../lib/data';
+import { pairs, REL_META, type Pair } from '../../lib/pairs';
+import { primaryVariant, capacityLabel, chemistryGroups, chemistryById, chem, fmt, categoryById, codesBySystem, type Battery } from '../../lib/data';
 
 export function getStaticPaths() {
   return [...pairs().values()].map((p) => ({ params: { pair: p.slug }, props: { p } }));
@@ -11,6 +13,105 @@ export function getStaticPaths() {
 const { p } = Astro.props as { p: Pair };
 const { a, b } = p;
 const both = [a, b];
+
+// Plain-word helpers, local to this page.
+/** "a" or "an" by how the name is said: an AA, an LR44, an 18650, a CR2032, a 9V. */
+const art = (name: string) => (!/^sub/i.test(name) && (/^(8|1[18](\d{3})?\b|1[18]\d{3})/.test(name) || /^[AEFHILMNORSX]/i.test(name)) ? 'an' : 'a');
+/** Nearest 1/16 in: "2 in", "9/16 in", "1 3/8 in". */
+const inFrac = (mm: number) => {
+  const s = Math.round((mm / 25.4) * 16);
+  if (s === 0) return 'under 1/16 in';
+  const whole = Math.floor(s / 16);
+  let num = s % 16, den = 16;
+  while (num && num % 2 === 0) { num /= 2; den /= 2; }
+  return `${whole || ''}${whole && num ? ' ' : ''}${num ? `${num}/${den}` : ''} in`;
+};
+const mm = (n: number) => `${fmt(n)} mm`;
+const both2 = (n: number) => `${mm(n)} (${inFrac(n)})`;
+const orList = (xs: string[]) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}`);
+const round = (x: Battery) => !!x.dimensions.diameter && !x.dimensions.width;
+const hWord = (x: Battery) => (x.form === 'disc' ? 'thick' : round(x) ? 'long' : 'tall');
+const plainSize = (x: Battery) => {
+  const m = x.dimensions;
+  if (m.diameter && x.form === 'disc') return `${mm(m.diameter.nominal)} across and ${mm(m.height.nominal)} thick (about ${inFrac(m.diameter.nominal)} by ${inFrac(m.height.nominal)})`;
+  if (round(x)) return `${mm(m.height.nominal)} long and ${mm(m.diameter!.nominal)} across (about ${inFrac(m.height.nominal)} by ${inFrac(m.diameter!.nominal)})`;
+  return `${fmt(m.width!.nominal)} by ${mm(m.depth!.nominal)} and ${mm(m.height.nominal)} tall (about ${inFrac(m.width!.nominal)} by ${inFrac(m.depth!.nominal)} by ${inFrac(m.height.nominal)})`;
+};
+const vlist = (x: Battery, re: boolean) => [...new Set(x.variants.filter((v) => v.rechargeable === re).map((v) => v.voltage.nominal))].sort((p, q) => p - q).map((n) => fmt(n));
+const volts = (x: Battery) => ({ once: vlist(x, false), again: vlist(x, true) });
+const voltWords = (x: Battery) => {
+  const { once, again } = volts(x);
+  if (once.length && again.length) return `${orList(once)} volts, or ${orList(again)} volts when rechargeable`;
+  if (again.length) return `${orList(again)} volts, rechargeable`;
+  return `${orList(once)} volts`;
+};
+const voltCell = (x: Battery) => {
+  const { once, again } = volts(x);
+  return [once.length ? `${orList(once)} V` : '', again.length ? `${orList(again)} V rechargeable` : ''].filter(Boolean).join('; ');
+};
+const kindName = (id: string) => {
+  const c = chemistryById(id) as { plain_name?: string } | undefined;
+  return c?.plain_name ?? chem(id).name;
+};
+const rechargeable = (x: Battery) => {
+  const { once, again } = volts(x);
+  return once.length && again.length ? 'Sold both ways' : again.length ? 'Yes' : 'No';
+};
+const STATUS: Record<string, string> = { current: 'Sold now', legacy: 'Older size, still sold', obsolete: 'No longer made' };
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// The verdict, one line per declared direction.
+const verdicts = p.relations
+  .filter((r) => REL_META[r.relation])
+  .map((r) => ({
+    cls: REL_META[r.relation].cls,
+    head: `${REL_META[r.relation].label}: ${art(r.to.name)} ${r.to.name} in place of ${art(r.from.name)} ${r.from.name}`,
+    note: r.note,
+  }));
+const noVerdict = `Neither one is listed as working in place of the other. They are close in size, so check that the name on the new battery matches the one your device asks for.`;
+
+// The differences in words.
+const sizeLines: string[] = [];
+{
+  const da = a.dimensions, db = b.dimensions;
+  const sameD = da.diameter && db.diameter && a.form === b.form && Math.abs(da.diameter.nominal - db.diameter.nominal) < 0.05;
+  const dh = db.height.nominal - da.height.nominal;
+  if (sameD && Math.abs(dh) < 0.05) {
+    sizeLines.push(`Both are ${plainSize(a)}.`);
+  } else if (sameD) {
+    const more = a.form === 'disc' ? ['thicker', 'thinner'] : ['longer', 'shorter'];
+    sizeLines.push(`Both are ${both2(da.diameter!.nominal)} across. The ${a.name} is ${mm(da.height.nominal)} ${hWord(a)} and the ${b.name} is ${mm(db.height.nominal)}, ${mm(Math.abs(dh))} ${dh > 0 ? more[0] : more[1]}.`);
+  } else {
+    sizeLines.push(`The ${a.name} is ${plainSize(a)}. The ${b.name} is ${plainSize(b)}.`);
+  }
+  const va = voltWords(a), vb = voltWords(b);
+  sizeLines.push(va === vb ? `Both are ${va}.` : `The ${a.name} is ${va}. The ${b.name} is ${vb}.`);
+}
+
+// The plain table.
+const vA = primaryVariant(a), vB = primaryVariant(b);
+const dim = (x?: { nominal: number }) => (x ? both2(x.nominal) : '');
+const lengthLabel = a.form === 'disc' && b.form === 'disc' ? 'Thickness' : round(a) && round(b) && a.form !== 'disc' && b.form !== 'disc' ? 'Length' : 'Height';
+const stdNames = (x: Battery) => [...new Set(codesBySystem(x).filter(([sys]) => ['IEC', 'ANSI', 'JIS'].includes(sys)).flatMap(([, cs]) => cs.map((c) => c.code)))].join(', ');
+const weight = (g?: number) => (g ? `${fmt(g)} g (${fmt(g / 28.35, g < 28 ? 2 : 1)} oz)` : '');
+const capacity = (x: Battery, v: typeof vA) => (capacityLabel(v) ? `${capacityLabel(v)} (${kindName(v.chemistry)})` : '');
+const rows: [string, string, string][] = (
+  [
+    ['Type', categoryById[a.category]?.name ?? a.category, categoryById[b.category]?.name ?? b.category],
+    ['Across', a.dimensions.diameter ? dim(a.dimensions.diameter) : '', b.dimensions.diameter ? dim(b.dimensions.diameter) : ''],
+    ['Width', dim(a.dimensions.width), dim(b.dimensions.width)],
+    ['Depth', dim(a.dimensions.depth), dim(b.dimensions.depth)],
+    [lengthLabel, dim(a.dimensions.height), dim(b.dimensions.height)],
+    ['Voltage', voltCell(a), voltCell(b)],
+    ['Rechargeable', rechargeable(a), rechargeable(b)],
+    ['Kinds', chemistryGroups(a).map((g) => kindName(g.chem.id)).join(', '), chemistryGroups(b).map((g) => kindName(g.chem.id)).join(', ')],
+    ['Typical capacity', capacity(a, vA), capacity(b, vB)],
+    ['Weight', weight(vA.weight_g), weight(vB.weight_g)],
+    ['Standard names', stdNames(a), stdNames(b)],
+    ['Status', STATUS[a.status] ?? cap(a.status), STATUS[b.status] ?? cap(b.status)],
+  ] as [string, string, string][]
+).filter(([, x, y]) => x || y);
+
 // Side profiles share one scale, chosen so the tallest fits the box height and the
 // widest fits its column (flat discs are wide, not tall).
 const BOX = { w: 176, h: 144 };
@@ -19,40 +120,17 @@ const scaleTo = Math.max(...both.map((x) => {
   const w = d.diameter?.nominal ?? d.width?.nominal ?? 0;
   return Math.max(d.height.nominal, (w * BOX.h) / BOX.w);
 }));
-const lines = verdict(p);
-const qa = faqs(p);
-
-const dimRows = (x: Battery) => {
+const shortSize = (x: Battery) => {
   const d = x.dimensions;
-  return {
-    diameter: d.diameter ? `${fmt(d.diameter.nominal)} mm` : '',
-    width: d.width ? `${fmt(d.width.nominal)} mm` : '',
-    depth: d.depth ? `${fmt(d.depth.nominal)} mm` : '',
-    height: `${fmt(d.height.nominal)} mm`,
-  };
+  return d.diameter && !d.width ? `${fmt(d.diameter.nominal)} × ${fmt(d.height.nominal)} mm` : `${fmt(d.width!.nominal)} × ${fmt(d.depth!.nominal)} × ${fmt(d.height.nominal)} mm`;
 };
-const dA = dimRows(a), dB = dimRows(b);
-const vA = primaryVariant(a), vB = primaryVariant(b);
-const codes = (x: Battery) => [...new Set(codesBySystem(x).filter(([sys]) => ['IEC', 'ANSI', 'JIS'].includes(sys)).flatMap(([, cs]) => cs.map((c) => c.code)))].join(', ');
-const rows: [string, string, string][] = (
-  [
-    ['Type', categoryById[a.category]?.name ?? a.category, categoryById[b.category]?.name ?? b.category],
-    ['Size', sizeLabel(a), sizeLabel(b)],
-    ['Diameter', dA.diameter, dB.diameter],
-    ['Width', dA.width, dB.width],
-    ['Depth', dA.depth, dB.depth],
-    [a.form === 'disc' && b.form === 'disc' ? 'Thickness' : 'Height', dA.height, dB.height],
-    ['Chemistries', chemistryGroups(a).map((g) => g.chem.short).join(', '), chemistryGroups(b).map((g) => g.chem.short).join(', ')],
-    ['Nominal voltage', [...new Set(a.variants.map((v) => `${fmt(v.voltage.nominal)} V`))].join(' / '), [...new Set(b.variants.map((v) => `${fmt(v.voltage.nominal)} V`))].join(' / ')],
-    ['Typical capacity', capacityLabel(vA) ? `${capacityLabel(vA)} (${chemistryGroups(a)[0].chem.short})` : '', capacityLabel(vB) ? `${capacityLabel(vB)} (${chemistryGroups(b)[0].chem.short})` : ''],
-    ['Weight', vA.weight_g ? `${fmt(vA.weight_g)} g` : '', vB.weight_g ? `${fmt(vB.weight_g)} g` : ''],
-    ['Standard codes', codes(a), codes(b)],
-    ['Status', a.status[0].toUpperCase() + a.status.slice(1), b.status[0].toUpperCase() + b.status.slice(1)],
-  ] as [string, string, string][]
-).filter(([, x, y]) => x || y);
 
-const title = `${a.name} vs ${b.name}: size, voltage and interchangeability | batteries.fyi`;
-const description = lines.slice(0, 2).join(' ').slice(0, 300);
+const qa = [
+  { q: `What is the difference between the ${a.name} and ${b.name}?`, a: sizeLines.join(' ') },
+  ...p.relations.filter((r) => REL_META[r.relation]).map((r) => ({ q: `Can ${art(r.to.name)} ${r.to.name} be used in place of ${art(r.from.name)} ${r.from.name}?`, a: `${REL_META[r.relation].label}. ${r.note}` })),
+];
+const title = `${a.name} vs ${b.name}: differences, and whether one works instead | batteries.fyi`;
+const description = (verdicts.length ? `${verdicts[0].head}. ${verdicts[0].note}` : `${sizeLines.join(' ')} ${noVerdict}`).slice(0, 300);
 const url = `https://batteries.fyi/compare/${p.slug}`;
 const jsonld = [
   {
@@ -72,43 +150,65 @@ const jsonld = [
 ---
 
 <BaseLayout title={title} description={description} jsonld={jsonld}>
-  <div class="wrap pt-5"><nav class="text-[0.65rem] text-muted" aria-label="Breadcrumb"><a href="/compare" class="hover:text-ink">Compare</a> / <span class="text-ink-2">{a.name} vs {b.name}</span></nav></div>
-  <section class="wrap pt-4 grid gap-8 lg:grid-cols-[1fr_1fr] items-start">
-    <div class="min-w-0">
-      <p class="eyebrow">Head to head</p>
-      <h1 class="text-[2.2rem] font-semibold tracking-tight leading-tight mt-1"><a href={`/${a.id}`} class="hover:text-accent-ink">{a.name}</a> <span class="text-muted font-[450]">vs</span> <a href={`/${b.id}`} class="hover:text-accent-ink">{b.name}</a></h1>
-      <div class="mt-4 space-y-2 text-[0.82rem] text-ink-2 max-w-xl">{lines.map((l) => <p>{l}</p>)}</div>
-      {p.relations.map((r) => (
-        <div class:list={['callout mt-4', REL_META[r.relation].cls]}>
-          <p class="eyebrow mb-1">{REL_META[r.relation].label}: {r.to.name} in place of {r.from.name}</p>
-          <p>{r.note}</p>
+  <div class="wrap pt-5 max-w-4xl"><nav class="text-sm text-ink-2 flex flex-wrap gap-x-2" aria-label="Breadcrumb"><a href="/compare" class="link">Compare</a><span aria-hidden="true">/</span><span aria-current="page">{a.name} vs {b.name}</span></nav></div>
+
+  <section class="wrap pt-4 max-w-4xl">
+    <h1 class="text-2xl sm:text-3xl font-semibold">{a.name} vs {b.name}</h1>
+    <div class="mt-5 space-y-3">
+      {verdicts.length > 0 ? verdicts.map((v) => (
+        <div class:list={['callout', v.cls]}>
+          <p class="text-lg font-semibold text-ink">{v.head}</p>
+          <p class="mt-1 text-base text-ink-2">{v.note}</p>
         </div>
-      ))}
-      <div class="card mt-6 p-5 flex items-end justify-center gap-6 sm:gap-10 h-56">
-        {both.map((x) => (
-          <a href={`/${x.id}`} class="group flex flex-col items-center gap-2 h-full justify-end flex-1 min-w-0 max-w-44">
-            <div class="h-36 w-full flex items-end justify-center"><Silhouette battery={x} scaleTo={scaleTo} view="front" class="max-w-full" /></div>
-            <span class="text-[0.75rem] font-semibold group-hover:text-accent-ink">{x.name}</span>
-            <span class="text-[0.58rem] text-muted tabular">{sizeLabel(x)}</span>
-          </a>
-        ))}
-      </div>
-      <p class="text-[0.58rem] text-muted mt-1.5">Side profiles drawn to the same scale.</p>
+      )) : (
+        <p class="lede measure">{noVerdict}</p>
+      )}
     </div>
-    <div class="min-w-0 lg:sticky lg:top-20">
-      <Viewer batteries={both} mode="lineup" height="24rem" />
+    <div class="mt-5 space-y-2 text-base text-ink-2 measure">{sizeLines.map((l) => <p>{l}</p>)}</div>
+  </section>
+
+  <section class="wrap mt-10 max-w-4xl">
+    <h2 class="section-title">The differences</h2>
+    <div class="card table-scroll">
+      <table class="table">
+        <thead><tr><th scope="col"><span class="sr-only">Detail</span></th><th scope="col"><a href={`/${a.id}`} class="link">{a.name}</a></th><th scope="col"><a href={`/${b.id}`} class="link">{b.name}</a></th></tr></thead>
+        <tbody>{rows.map(([k, x, y]) => <tr><td class="text-ink-2 font-semibold font-sans">{k}</td><td class:list={[x !== y && x && y && 'font-semibold text-ink']}>{x || '—'}</td><td class:list={[x !== y && x && y && 'font-semibold text-ink']}>{y || '—'}</td></tr>)}</tbody>
+      </table>
     </div>
+    <p class="text-sm text-ink-2 mt-2 measure">Where the two differ, the value is in bold. Sizes are the published sizes; each battery page lists the allowed range. Capacities are rated by each maker at its own test load, so they compare only roughly.</p>
   </section>
 
   <section class="wrap mt-10">
-    <h2 class="section-title">Side by side</h2>
-    <div class="card table-scroll">
-      <table class="table">
-        <thead><tr><th></th><th><a href={`/${a.id}`} class="hover:text-accent-ink">{a.name}</a></th><th><a href={`/${b.id}`} class="hover:text-accent-ink">{b.name}</a></th></tr></thead>
-        <tbody>{rows.map(([k, x, y]) => <tr><td class="text-ink-2 font-medium">{k}</td><td class:list={['tabular', x !== y && x && y && 'font-semibold']}>{x || '—'}</td><td class:list={['tabular', x !== y && x && y && 'font-semibold']}>{y || '—'}</td></tr>)}</tbody>
-      </table>
+    <h2 class="section-title">Side by side at the same scale</h2>
+    <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] items-start">
+      <div class="min-w-0">
+        <div class="card p-5 flex items-end justify-center gap-6 sm:gap-10 h-64">
+          {both.map((x) => (
+            <a href={`/${x.id}`} class="group flex flex-col items-center gap-2 h-full justify-end flex-1 min-w-0 max-w-44">
+              <div class="h-36 w-full flex items-end justify-center"><Silhouette battery={x} scaleTo={scaleTo} view="front" class="max-w-full" /></div>
+              <span class="font-mono text-lg font-semibold link">{x.name}</span>
+              <span class="text-sm text-ink-2 font-mono">{shortSize(x)}</span>
+            </a>
+          ))}
+        </div>
+        <p class="text-sm text-ink-2 mt-2">Seen from the side, drawn to the same scale.</p>
+      </div>
+      <div class="min-w-0">
+        <Viewer batteries={both} mode="lineup" height="24rem" />
+      </div>
     </div>
-    <p class="text-[0.6rem] text-muted mt-2">Nominal dimensions. Tolerances, every chemistry and the sources for each value are on the <a class="link" href={`/${a.id}`}>{a.name}</a> and <a class="link" href={`/${b.id}`}>{b.name}</a> pages. Capacities are rated by each maker at its own load and cutoff, so they compare only roughly.</p>
-    <p class="mt-4"><a class="btn btn-sm" href={`/compare?ids=${a.id},${b.id}`}>Add more sizes to this comparison</a></p>
+  </section>
+
+  <section class="wrap mt-10 max-w-4xl">
+    <h2 class="section-title">More about each one</h2>
+    <ul class="grid gap-3 sm:grid-cols-2">
+      {both.map((x) => (
+        <li><a href={`/${x.id}`} class="tile card block h-full">
+          <span class="block font-mono text-lg font-semibold">{x.name} battery</span>
+          <span class="block mt-1 text-base text-ink-2">{cap(art(x.name))} {x.name} is {plainSize(x)}. Its page has the other names, what else fits, and the full specifications with sources.</span>
+        </a></li>
+      ))}
+    </ul>
+    <p class="mt-5"><a class="btn" href={`/compare?ids=${a.id},${b.id}`}>Add more batteries to this comparison</a></p>
   </section>
 </BaseLayout>
