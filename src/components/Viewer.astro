@@ -16,6 +16,7 @@ interface Props {
 }
 const { batteries, mode = batteries.length > 1 ? 'lineup' : 'single', class: cls = '', controls = true, downloads = false, height = '28rem', autoRotate } = Astro.props;
 const specs = batteries.map(modelSpec);
+const arBadge = `<svg xmlns="http://www.w3.org/2000/svg" width="132" height="32" viewBox="0 0 132 32"><rect width="132" height="32" rx="16" fill="#0f766e"/><g fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M16 9l6 3.5v7L16 23l-6-3.5v-7z"/><path d="M10 12.5l6 3.5 6-3.5M16 16v7"/></g><text x="30" y="20.5" font-family="-apple-system,system-ui,sans-serif" font-size="12" font-weight="600" fill="#fff">View in AR, 1:1</text></svg>`;
 const single = batteries.length === 1 ? batteries[0] : null;
 const chems = specs[0]?.chemistries ?? [];
 ---
@@ -54,6 +55,15 @@ const chems = specs[0]?.chemistries ?? [];
       <a class="btn btn-sm bg-surface/90 backdrop-blur" href={`/models/${single.id}.stl`} download>STL</a>
     </div>
   )}
+  {single && (
+    <div class="absolute top-8 left-3 no-print" data-ar hidden>
+      <!-- iOS AR Quick Look wants an anchor whose only child is an image. -->
+      <a rel="ar" data-ar-ios hidden href={`/models/${single.id}.usdz#allowsContentScaling=0`} class="block rounded-full shadow-md">
+        <img src={`data:image/svg+xml,${encodeURIComponent(arBadge)}`} width="132" height="32" alt={`View ${single.name} in AR at actual size`} />
+      </a>
+      <a data-ar-android hidden class="btn btn-sm btn-primary shadow-md" href="#">View in AR, 1:1</a>
+    </div>
+  )}
   <div class="absolute top-2 left-3 text-[0.58rem] text-muted no-print pointer-events-none">Grid: 10 mm</div>
 </battery-viewer>
 
@@ -77,7 +87,27 @@ const chems = specs[0]?.chemistries ?? [];
 <script>
   class BatteryViewer extends HTMLElement {
     api: any;
+    /** Reveal "View in AR" on phones that can place the model at true scale. */
+    setupAR() {
+      const box = this.querySelector('[data-ar]') as HTMLElement | null;
+      if (!box) return;
+      const spec = JSON.parse(this.dataset.specs!)[0];
+      const ios = (document.createElement('a').relList as DOMTokenList | undefined)?.supports?.('ar');
+      if (ios) {
+        (box.querySelector('[data-ar-ios]') as HTMLElement).hidden = false;
+        box.hidden = false;
+      } else if (/android/i.test(navigator.userAgent)) {
+        const glb = new URL(`/models/${spec.id}.glb`, location.href).href;
+        const params = `file=${encodeURIComponent(glb)}&mode=ar_preferred&resizable=false&title=${encodeURIComponent(spec.name)}`;
+        const a = box.querySelector('[data-ar-android]') as HTMLAnchorElement;
+        a.href = `intent://arvr.google.com/scene-viewer/1.2?${params}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(location.href)};end;`;
+        a.hidden = false;
+        box.hidden = false;
+      }
+    }
+
     connectedCallback() {
+      this.setupAR();
       const start = async () => {
         if (this.api) return;
         const canvas = document.createElement('canvas');

@@ -5,6 +5,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { Document, NodeIO } from '@gltf-transform/core';
+import { BufferGeometry, BufferAttribute, Color, Group, Mesh, MeshStandardMaterial, Scene } from 'three';
+import { USDZExporter } from 'three/addons/exporters/USDZExporter.js';
 import { batterySchema } from '../src/lib/schema.mjs';
 import { describe, byMaterial, MATERIALS } from '../src/lib/geometry/model.js';
 
@@ -67,6 +69,33 @@ function writeGLB(battery, model, file, wrapColor) {
   return new NodeIO().writeBinary(doc).then((buf) => fs.writeFileSync(file, buf));
 }
 
+// USDZ for AR Quick Look on iOS: same meshes and materials, meters, Y up.
+async function writeUSDZ(battery, model, file, wrapColor) {
+  const scene = new Scene();
+  const g = new Group();
+  g.name = battery.id;
+  g.scale.setScalar(0.001);
+  scene.add(g);
+  const mats = {};
+  for (const { material, mesh } of byMaterial(model)) {
+    const spec = { ...MATERIALS[material] };
+    if (material === 'wrap') spec.color = wrapColor;
+    if (material === 'tab' && battery.geometry?.tab_color) spec.color = battery.geometry.tab_color;
+    mats[material] ??= new MeshStandardMaterial({ name: material, color: new Color(spec.color), metalness: spec.metalness, roughness: spec.roughness });
+    const geo = new BufferGeometry();
+    geo.setAttribute('position', new BufferAttribute(new Float32Array(mesh.positions), 3));
+    geo.setAttribute('normal', new BufferAttribute(new Float32Array(mesh.normals), 3));
+    geo.setAttribute('uv', new BufferAttribute(new Float32Array(mesh.uvs), 2));
+    geo.setIndex(Array.from(mesh.indices));
+    const m = new Mesh(geo, mats[material]);
+    m.name = material;
+    g.add(m);
+  }
+  scene.updateMatrixWorld(true);
+  const data = await new USDZExporter().parseAsync(scene, { quickLookCompatible: true });
+  fs.writeFileSync(file, Buffer.from(data));
+}
+
 function writeSTL(battery, model, file) {
   const tris = [];
   for (const p of model.parts) {
@@ -115,9 +144,11 @@ for (const f of files) {
   const wrapColor = chemColors[b.variants[0].chemistry] ?? '#5b6573';
   const glb = path.join(outDir, `${b.id}.glb`);
   const stl = path.join(outDir, `${b.id}.stl`);
+  const usdz = path.join(outDir, `${b.id}.usdz`);
   await writeGLB(b, model, glb, wrapColor);
   writeSTL(b, model, stl);
-  bytes += fs.statSync(glb).size + fs.statSync(stl).size;
+  await writeUSDZ(b, model, usdz, wrapColor);
+  bytes += fs.statSync(glb).size + fs.statSync(stl).size + fs.statSync(usdz).size;
   ok++;
 }
 console.log(`models: ${ok} batteries -> public/models (${(bytes / 1024 / 1024).toFixed(1)} MB)`);

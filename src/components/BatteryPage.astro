@@ -14,6 +14,14 @@ interface Props { battery: Battery }
 const { battery: b } = Astro.props;
 const cat = categoryById[b.category];
 const pv = primaryVariant(b);
+// Weight tile: the primary variant's weight, else the range across variants that publish one.
+const weightTile = (() => {
+  if (pv.weight_g) return { v: fmt(pv.weight_g), s: `${(pv.weight_g / 28.3495).toFixed(2)} oz, ${chem(pv.chemistry).short}` };
+  const ws = b.variants.map((v) => v.weight_g).filter((w): w is number => !!w);
+  if (!ws.length) return { v: '', s: 'Not published' };
+  const lo = Math.min(...ws), hi = Math.max(...ws);
+  return { v: lo === hi ? fmt(lo) : `${fmt(lo)}–${fmt(hi)}`, s: `Across ${ws.length} listed product${ws.length > 1 ? 's' : ''}` };
+})();
 const groups = chemistryGroups(b);
 const sum = summary(b);
 const d = b.dimensions;
@@ -134,9 +142,9 @@ const delta = (mm: number, label: string) => {
 
       <div class="mt-5 grid grid-cols-2 gap-2">
         <div class="spec"><span class="eyebrow">Voltage</span><span class="v">{fmt(pv.voltage.nominal)}<span class="u">V</span></span><span class="s">{chem(pv.chemistry).name}{groups.length > 1 ? `, +${groups.length - 1} more` : ''}</span></div>
-        <div class="spec"><span class="eyebrow">Capacity</span>{capacityLabel(pv) ? <span class="v">{capacityLabel(pv).replace(' mAh', '')}<span class="u">mAh</span></span> : <span class="v text-muted">n/p</span>}<span class="s">{pv.capacity_mah?.conditions ? (() => { const c = pv.capacity_mah!.conditions!.split(/[;(]/)[0].trim(); return 'Rated: ' + (c.length > 46 ? c.slice(0, 44).replace(/\s+\S*$/, '') + '…' : c); })() : 'Not published'}</span></div>
+        <div class="spec"><span class="eyebrow">Capacity</span>{capacityLabel(pv) ? <span class="v">{capacityLabel(pv).replace(' mAh', '')}<span class="u">mAh</span></span> : <span class="v text-muted">—</span>}<span class="s">{pv.capacity_mah?.range && !pv.capacity_mah?.typical ? 'Range across listed products; see table' : pv.capacity_mah?.conditions ? (() => { const c = pv.capacity_mah!.conditions!.split(/[;(]/)[0].trim(); return 'Rated: ' + (c.length > 46 ? c.slice(0, 44).replace(/\s+\S*$/, '') + '…' : c); })() : 'Not published'}</span></div>
         <div class="spec"><span class="eyebrow">{b.form === 'disc' ? 'Diameter × thickness' : b.form === 'cylinder' ? 'Diameter × length' : 'W × D × H'}</span><span class="v text-[1.05rem]">{sizeLabel(b, false)}<span class="u">mm</span></span><span class="s">{b.form === 'disc' || b.form === 'cylinder' ? `${inch(d.diameter!.nominal)} × ${inch(d.height.nominal)} in` : `${inch(d.width!.nominal)} × ${inch(d.depth!.nominal)} × ${inch(d.height.nominal)} in`}</span></div>
-        <div class="spec"><span class="eyebrow">Weight</span>{pv.weight_g ? <span class="v">{fmt(pv.weight_g)}<span class="u">g</span></span> : <span class="v text-muted">n/p</span>}<span class="s">{pv.weight_g ? `${(pv.weight_g / 28.3495).toFixed(2)} oz, ${chem(pv.chemistry).short}` : 'Not published'}</span></div>
+        <div class="spec"><span class="eyebrow">Weight</span>{weightTile.v ? <span class="v">{weightTile.v}<span class="u">g</span></span> : <span class="v text-muted">—</span>}<span class="s">{weightTile.s}</span></div>
       </div>
 
       <div class="mt-5">

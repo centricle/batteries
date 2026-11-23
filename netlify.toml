@@ -18,3 +18,20 @@
   for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Generated 3D models. AR Quick Look and Scene Viewer need the right types.
+[[headers]]
+  for = "/models/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/models/*.usdz"
+  [headers.values]
+    Content-Type = "model/vnd.usdz+zip"
+
+[[headers]]
+  for = "/models/*.glb"
+  [headers.values]
+    Content-Type = "model/gltf-binary"

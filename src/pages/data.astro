@@ -48,10 +48,11 @@ const jsonld = {
 
   <section class="wrap mt-10 max-w-4xl">
     <h2 class="section-title">3D models</h2>
-    <p class="text-[0.75rem] text-ink-2">Every battery page offers two files, generated from the entry's nominal dimensions by the same code that draws the on-page model:</p>
+    <p class="text-[0.75rem] text-ink-2">Every battery has three model files, generated from the entry's nominal dimensions by the same code that draws the on-page model:</p>
     <ul class="mt-3 space-y-2 text-[0.72rem] text-ink-2">
       <li><strong class="text-ink">GLB</strong> (<span class="mono">/models/&#123;id&#125;.glb</span>): glTF 2.0 binary with PBR materials, true scale in meters, Y up. Opens in Blender, three.js, model viewers and AR Quick Look converters.</li>
       <li><strong class="text-ink">STL</strong> (<span class="mono">/models/&#123;id&#125;.stl</span>): binary, millimeters, Z up. For CAD, enclosure design and battery holder prints. Each part is a closed shell; slicers merge them.</li>
+      <li><strong class="text-ink">USDZ</strong> (<span class="mono">/models/&#123;id&#125;.usdz</span>): for AR Quick Look on iPhone and iPad. Battery pages offer "View in AR" on phones, which places the model on a surface at its real size.</li>
     </ul>
     <p class="mt-3 callout info">Models use nominal dimensions. For a press fit, design to the maximum dimensions in the entry's tolerance table, not the model.</p>
   </section>
