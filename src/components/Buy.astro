@@ -1,0 +1,22 @@
+---
+// "Where do I get one": a retailer search for the exact size, or for loose
+// lithium-ion cells the sourced capacity ceiling instead. Rules in src/lib/buy.ts.
+import { amazonUrl, capacityCeiling, paid, sellable, shopQuery } from '../lib/buy';
+import { fmt, type Battery } from '../lib/data';
+
+interface Props { battery: Battery; context: 'battery' | 'device'; class?: string }
+const { battery: b, context, class: cls = '' } = Astro.props;
+const ceiling = sellable(b) ? null : capacityCeiling(b);
+---
+
+{sellable(b) ? (
+  <p class={`text-[0.68rem] text-ink-2 flex flex-wrap items-center gap-x-2 gap-y-1 ${cls}`}>
+    <span class="eyebrow">Need one?</span>
+    <a class="link" href={amazonUrl(shopQuery(b))} rel={paid ? 'sponsored noopener' : 'nofollow noopener'} target="_blank" data-buy={b.id} data-retailer="amazon" data-ctx={context}>Search Amazon for {b.name}<span aria-hidden="true"> ↗</span></a>
+    <span class="text-muted">{paid ? 'Paid link: a sale may earn batteries.fyi a commission. Any brand with the same code is the same size.' : 'Any brand with the same code is the same size.'}</span>
+  </p>
+) : ceiling ? (
+  <p class={`callout text-[0.7rem] ${cls}`}>
+    <strong class="text-ink">Buying {b.name} cells.</strong> The highest capacity any source on this page gives for the {b.name} is {fmt(ceiling, 0)} mAh. A cell sold as larger is claiming more than any cited maker publishes. <a class="link" href="/reference/lithium-ion-safety">Lithium-ion safety</a>
+  </p>
+) : null}

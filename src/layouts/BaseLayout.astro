@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Search from '../components/Search.astro';
+import { paid } from '../lib/buy';
 
 export interface Props {
   title?: string;
@@ -19,6 +20,7 @@ const {
 
 const nav = [
   { href: '/batteries', label: 'Batteries' },
+  { href: '/devices', label: 'Devices' },
   { href: '/compare', label: 'Compare' },
   { href: '/identify', label: 'Identify' },
   { href: '/tools', label: 'Tools' },
@@ -66,6 +68,16 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', 'G-KWF27YQNP4');
+      // What people do here that an answer engine cannot do for them: buy,
+      // download a model, open AR. GA4's enhanced measurement misses all three.
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a') : null;
+        if (!a) return;
+        var path = location.pathname;
+        if (a.dataset.buy) gtag('event', 'buy_click', { battery: a.dataset.buy, retailer: a.dataset.retailer, page_type: a.dataset.ctx, page_path: path });
+        else if (a.hasAttribute('download') && a.pathname.indexOf('/models/') === 0) gtag('event', 'model_download', { file: a.pathname.slice(8), page_path: path });
+        else if (a.rel === 'ar' || a.href.indexOf('intent://arvr') === 0) gtag('event', 'ar_launch', { page_path: path });
+      }, true);
     </script>
     {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
     <slot name="head" />
@@ -137,6 +149,7 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
             <li><a class="hover:text-ink" href="/button-cells">Button cells</a></li>
             <li><a class="hover:text-ink" href="/lithium-ion">Lithium-ion</a></li>
             <li><a class="hover:text-ink" href="/equivalents">Equivalents table</a></li>
+            <li><a class="hover:text-ink" href="/devices">What battery does it take?</a></li>
           </ul>
         </div>
         <div>
@@ -156,10 +169,12 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
             <li><a class="hover:text-ink" href="/data">Open data and models</a></li>
             <li><a class="hover:text-ink" href="/sources">Sources</a></li>
             <li><a class="hover:text-ink" href="/glossary">Glossary</a></li>
+            <li><a class="hover:text-ink" href="/about#funding">How it is paid for</a></li>
           </ul>
         </div>
       </div>
       <div class="wrap pb-8 text-[0.62rem] text-muted">
+        {paid && <p class="text-center mb-4">As an Amazon Associate, batteries.fyi earns from qualifying purchases. No listing or value on this site depends on it.</p>}
         <div class="flex flex-wrap justify-center gap-2 items-center mb-5">
           <span>See also:</span>
           <a href="https://cables.fyi" class="hover:text-ink">Cables</a>

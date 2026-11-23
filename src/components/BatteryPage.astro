@@ -3,11 +3,12 @@ import { REL_META, pairsFor } from '../lib/pairs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Viewer from './Viewer.astro';
 import Silhouette from './Silhouette.astro';
+import Buy from './Buy.astro';
 import { drawingSVG } from '../lib/drawing';
 import { describe } from '../lib/geometry/model.js';
 import {
   type Battery, categoryById, chem, chemistryGroups, codesBySystem, fmt, inch, interchangeFor, primaryVariant,
-  similar, sizeLabel, shapeWord, summary, volts, capacityLabel, batteryById, voltages,
+  similar, sizeLabel, shapeWord, summary, volts, capacityLabel, batteryById, voltages, devicesFor, deviceTitle, DEVICE_CATEGORY_META,
 } from '../lib/data';
 
 interface Props { battery: Battery }
@@ -34,6 +35,7 @@ const srcIndex = new Map(b.sources.map((s, i) => [s.id, i + 1]));
 const cite = (ids: string[]) => ids.map((id) => srcIndex.get(id)).filter(Boolean).sort((a, c) => a! - c!);
 const url = `https://batteries.fyi/${b.id}`;
 const vs = voltages(b);
+const sourced = devicesFor(b.id);
 
 const dimRows = (
   [
@@ -75,6 +77,7 @@ const faqs = [
   { q: `What voltage is a ${b.name} battery?`, a: groups.map((g) => `${g.chem.name}: ${volts(g.variants[0].voltage.nominal)} nominal`).join('. ') + '.' },
   { q: `What are other names for the ${b.name}?`, a: `${[...new Set(b.codes.map((c) => c.code))].join(', ')}${b.aliases.length ? `. Also called ${b.aliases.join(', ')}` : ''}.` },
   ...inter.slice(0, 6).map((r) => ({ q: `Can a ${batteryById(r.id)!.name} replace a ${b.name}?`, a: `${relMeta[r.relation].label}. ${r.note}` })),
+  ...(sourced.length ? [{ q: `What uses a ${b.name} battery?`, a: `${sourced.slice(0, 8).map((x) => deviceTitle(x)).join(', ')}${sourced.length > 8 ? `, and ${sourced.length - 8} more listed here` : ''}, according to each maker's manual or support page.` }] : []),
 ];
 
 const jsonld = [
@@ -102,6 +105,16 @@ const jsonld = [
       { '@type': 'ListItem', position: 3, name: b.name, item: url },
     ],
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url,
+    name: `${b.name} battery specifications`,
+    dateModified: b.updated,
+    license: 'https://opensource.org/licenses/MIT',
+    isPartOf: { '@type': 'Dataset', name: 'batteries.fyi open battery data', url: 'https://batteries.fyi/data' },
+    citation: b.sources.filter((s) => s.url).map((s) => ({ '@type': 'CreativeWork', name: s.title, publisher: s.publisher, url: s.url })),
+  },
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
 ];
 
@@ -110,7 +123,7 @@ const desc = `${sum} ${b.codes.length} cross-reference codes, chemistries, dimen
 const nav = [
   ['specs', 'Specs'], ['dimensions', 'Dimensions'], ['codes', 'Codes'],
   ...(inter.length ? [['interchange', 'Interchange']] : []), ['similar', 'Similar'],
-  ...(b.devices.length ? [['devices', 'Devices']] : []), ...(b.safety.length ? [['safety', 'Safety']] : []), ['sources', 'Sources'],
+  ...(b.devices.length || sourced.length ? [['devices', 'Devices']] : []), ...(b.safety.length ? [['safety', 'Safety']] : []), ['answers', 'Answers'], ['sources', 'Sources'],
 ];
 const scaleRef = Math.max(...[b, ...sims.map((s) => s.battery)].map((x) => (x.form === 'disc' ? x.dimensions.diameter!.nominal : x.dimensions.height.nominal)));
 const delta = (mm: number, label: string) => {
@@ -150,7 +163,7 @@ const delta = (mm: number, label: string) => {
       <div class="mt-5">
         <p class="eyebrow mb-2">Also known as</p>
         <div class="flex flex-wrap gap-1.5">
-          {[...new Set(b.codes.map((c) => c.code))].slice(0, 14).map((c) => <span class="chip">{c}</span>)}
+          {[...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name).slice(0, 14).map((c) => <span class="chip">{c}</span>)}
           {b.codes.length > 14 && <a href="#codes" class="chip">+{b.codes.length - 14} more</a>}
         </div>
       </div>
@@ -161,6 +174,8 @@ const delta = (mm: number, label: string) => {
           {danger.map((r) => <span>Same size as the <a class="link" href={`/${r.id}`}>{batteryById(r.id)!.name}</a>: {r.note} </span>)}
         </div>
       )}
+
+      <Buy battery={b} context="battery" class="mt-5" />
     </div>
 
     <div class="min-w-0 lg:sticky lg:top-20">
@@ -331,12 +346,33 @@ const delta = (mm: number, label: string) => {
       )}
     </section>
 
-    {b.devices.length > 0 && (
+    {(sourced.length > 0 || b.devices.length > 0) && (
       <section id="devices">
-        <h2 class="section-title">Typical devices</h2>
-        <ul class="flex flex-wrap gap-2">
-          {b.devices.map((x) => <li class="chip font-sans text-[0.68rem] py-1 px-2.5">{x}</li>)}
-        </ul>
+        <h2 class="section-title">Devices that take a {b.name}</h2>
+        {sourced.length > 0 && (
+          <>
+            <ul class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {sourced.map((x) => (
+                <li class="min-w-0"><a href={`/devices/${x.id}`} class="card flex items-center gap-3 p-3 hover:border-accent transition-colors h-full min-w-0">
+                  <span class="min-w-0">
+                    <span class="block text-[0.75rem] font-semibold text-ink truncate">{deviceTitle(x)}</span>
+                    <span class="block text-[0.6rem] text-muted">{DEVICE_CATEGORY_META[x.category].one}{x.years ? ` · ${x.years.endsWith('-') ? `${x.years.slice(0, -1)} on` : x.years.replace('-', '–')}` : ''}</span>
+                  </span>
+                  <span class="chip ml-auto shrink-0">{x.count > 1 ? `${x.count} ×` : '1 ×'}</span>
+                </a></li>
+              ))}
+            </ul>
+            <p class="mt-2 text-[0.62rem] text-muted">Each entry cites the device maker's manual or support page. <a class="link" href="/devices">All devices</a></p>
+          </>
+        )}
+        {b.devices.length > 0 && (
+          <>
+            {sourced.length > 0 && <p class="eyebrow mt-5 mb-2">Also common in</p>}
+            <ul class="flex flex-wrap gap-2">
+              {b.devices.map((x) => <li class="chip font-sans text-[0.68rem] py-1 px-2.5">{x}</li>)}
+            </ul>
+          </>
+        )}
       </section>
     )}
 
@@ -365,6 +401,18 @@ const delta = (mm: number, label: string) => {
         </div>
       </section>
     )}
+
+    <section id="answers">
+      <h2 class="section-title">Quick answers</h2>
+      <dl class="grid gap-x-8 gap-y-4 md:grid-cols-2 max-w-5xl">
+        {faqs.map((f) => (
+          <div>
+            <dt class="text-[0.75rem] font-semibold text-ink">{f.q}</dt>
+            <dd class="mt-1 text-[0.72rem] text-ink-2 leading-relaxed">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
 
     <section id="sources">
       <h2 class="section-title">Sources</h2>

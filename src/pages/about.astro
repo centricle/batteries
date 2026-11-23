@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { stats } from '../lib/data';
+import { stats, devices } from '../lib/data';
+import { paid } from '../lib/buy';
 const s = stats();
+const nDevices = devices().length;
 ---
 
 <BaseLayout title="About batteries.fyi" description="batteries.fyi is an open, source-cited reference for consumer battery specifications: dimensions, chemistries, codes and 3D models. No rankings, no recommendations, no ads.">
@@ -13,13 +15,13 @@ const s = stats();
       <p>No rankings. No recommendations. The data is here. What you do with it is your call.</p>
 
       <h2>What it does</h2>
-      <p>It covers {s.batteries} physical battery sizes with {s.variants} chemistry variants and {s.codes.toLocaleString('en-US')} cross-reference codes. Each size has a dimensioned drawing, a true-scale 3D model you can rotate or download, every code that names it, and the sources behind every number. Tools compare sizes in 3D, identify a battery from its measurements, decode designations, and do the arithmetic of runtime, energy and packs.</p>
+      <p>It covers {s.batteries} physical battery sizes with {s.variants} chemistry variants and {s.codes.toLocaleString('en-US')} cross-reference codes. Each size has a dimensioned drawing, a true-scale 3D model you can rotate or download, every code that names it, and the sources behind every number. {nDevices} device pages say which battery a product takes, each quoting the device maker. Tools compare sizes in 3D, identify a battery from its measurements, decode designations, and do the arithmetic of runtime, energy and packs.</p>
 
       <h2>How the data is kept honest</h2>
       <ul>
         <li><strong>No number without a source.</strong> Every value lists the datasheet, standard or catalog it came from and the date it was read. If no source publishes a value, the field stays blank rather than estimated.</li>
         <li><strong>Primary sources first.</strong> IEC 60086 and ANSI C18 for designations and dimensions, manufacturer datasheets for electrical values, distributor listings and references only where a datasheet is unavailable, and labeled as such.</li>
-        <li><strong>Capacity with its conditions.</strong> A primary cell's capacity depends on the load and the cutoff voltage, so every capacity carries the conditions it was rated at.</li>
+        <li><strong>Capacity with its conditions.</strong> A primary cell’s capacity depends on the load and the cutoff voltage, so every capacity carries the conditions it was rated at.</li>
         <li><strong>Validated at build.</strong> The data is a folder of JSON files checked against a schema every time the site is built. Invalid data stops the build.</li>
         <li><strong>Models from measurements.</strong> 3D models, drawings and silhouettes are generated from the same dimensions the tables show, so they cannot disagree.</li>
       </ul>
@@ -27,9 +29,18 @@ const s = stats();
       <h2>Open</h2>
       <p>The dataset, the models and the code are published under the MIT license: <a href="/data">download them</a>, or read and correct them on <a href="https://github.com/centricle/batteries">GitHub</a>.</p>
 
+      <h2 id="funding">How it is paid for</h2>
+      <p>The information is free and stays free. Every page, the full dataset, the 3D models and the API are open to anyone, with nothing to sign up for.</p>
+      <p>Battery and device pages link to a retailer’s search for the exact size, for the moment you need one. {paid ? 'Those links are Amazon affiliate links: a purchase can earn batteries.fyi a commission, at no cost to you.' : 'Today those links are plain searches that earn nothing. If they become affiliate links, this page and the links themselves will say so.'}</p>
+      <ul>
+        <li><strong>A link goes to a search for the size,</strong> never to a chosen brand or product.</li>
+        <li><strong>Nothing depends on it.</strong> No entry, value, sort order or device listing changes with whether a link exists or pays.</li>
+        <li><strong>No store link for loose lithium-ion cells.</strong> Marketplace listings for 18650, 21700 and similar cells often claim capacities no cell maker publishes, so those pages state the highest capacity in their sources instead.</li>
+      </ul>
+      <p>No display ads. No sponsored content.</p>
+
       <h2>Built by</h2>
       <p>Built by <a href="https://centricle.com">Centricle</a>. Part of a family of reference sites with <a href="https://cables.fyi">cables.fyi</a> and <a href="https://fasteners.fyi">fasteners.fyi</a>.</p>
-      <p>No ads. No sponsored content. No affiliate links.</p>
     </div>
   </article>
 </BaseLayout>
