@@ -34,7 +34,7 @@ const items = batteries().map((b) => {
     tw: tol(d.width),
     tp: tol(d.depth),
     v: voltages(b),
-    vw: `${orList(voltages(b).map((x) => fmt(x, 2)))} V`,
+    vw: `${orList(voltages(b).map((x) => fmt(x, 2)))}V`,
     col: chem(primaryVariant(b).chemistry).color,
   };
 });
@@ -51,11 +51,11 @@ const jsonld = {
   description: 'Enter how wide and how long a battery is, in millimeters or inches, and optionally its voltage, to see which standard sizes match most closely.',
 };
 const examples = [
-  { label: '14.5 mm across, 50.5 mm long', q: 'shape=cylinder&d=14.5&h=50.5' },
-  { label: '18.4 mm across, 65.1 mm long', q: 'shape=cylinder&d=18.4&h=65.1' },
-  { label: '20 mm across, 3.2 mm thick', q: 'shape=disc&d=20&h=3.2' },
-  { label: '11.6 mm across, 5.4 mm thick', q: 'shape=disc&d=11.6&h=5.4' },
-  { label: '26.5 by 17.5 by 48.5 mm', q: 'shape=box&d=26.5&p=17.5&h=48.5' },
+  { label: '14.5mm across, 50.5mm long', q: 'shape=cylinder&d=14.5&h=50.5' },
+  { label: '18.4mm across, 65.1mm long', q: 'shape=cylinder&d=18.4&h=65.1' },
+  { label: '20mm across, 3.2mm thick', q: 'shape=disc&d=20&h=3.2' },
+  { label: '11.6mm across, 5.4mm thick', q: 'shape=disc&d=11.6&h=5.4' },
+  { label: '26.5 by 17.5 by 48.5mm', q: 'shape=box&d=26.5&p=17.5&h=48.5' },
 ];
 ---
 
@@ -128,8 +128,8 @@ const examples = [
         <p class="font-semibold text-ink">Tips for measuring</p>
         <ul class="mt-2 space-y-2 list-disc pl-5 text-ink-2">
           <li>Length includes the bump on the positive (+) end. Measure from the flat end to the tip of the bump.</li>
-          <li>Rechargeable lithium-ion batteries with a built-in protection board are often 2 to 5 mm longer than the plain battery: a protected 18650 can measure 67 to 70 mm.</li>
-          <li>On a coin battery the name gives the size: a CR2032 is 20 mm across and 3.2 mm thick. Button batteries work the same way: an SR626 is 6.8 mm across and 2.6 mm thick.</li>
+          <li>Rechargeable lithium-ion batteries with a built-in protection board are often 2 to 5mm longer than the plain battery: a protected 18650 can measure 67 to 70mm.</li>
+          <li>On a coin battery the name gives the size: a CR2032 is 20mm across and 3.2mm thick. Button batteries work the same way: an SR626 is 6.8mm across and 2.6mm thick.</li>
           <li>A label or plastic wrap adds a few tenths of a millimeter. Measure the metal if you can.</li>
         </ul>
       </div>
@@ -146,7 +146,7 @@ const examples = [
       <div id="id-results" hidden>
         <h2 class="section-title">Closest sizes</h2>
         <ol id="id-list" class="grid gap-3 [&>*]:min-w-0" aria-live="polite"></ol>
-        <p class="mt-3 text-sm text-ink-2 measure">Each line compares the listed battery with your numbers: "0.3 mm wider" means that battery is 0.3 mm wider than what you measured. A measurement inside the maker's allowed range counts as a match.</p>
+        <p class="mt-3 text-sm text-ink-2 measure">Each line compares the listed battery with your numbers: "0.3mm wider" means that battery is 0.3mm wider than what you measured. A measurement inside the maker's allowed range counts as a match.</p>
       </div>
     </div>
   </section>
@@ -205,7 +205,7 @@ const examples = [
   };
   const toMM = (x: number | null) => (x === null ? null : unit === 'in' ? x * 25.4 : x);
   /** A difference in both units, millimeters first. */
-  const show = (mm: number) => `${Number(mm.toFixed(2))} mm (${(mm / 25.4).toFixed(mm < 2.54 ? 3 : 2)} in)`;
+  const show = (mm: number) => `${Number(mm.toFixed(2))}mm (${(mm / 25.4).toFixed(mm < 2.54 ? 3 : 2)} in)`;
 
   const LABELS: Record<Shape, { d: string; h: string; dh: string; hh: string }> = {
     cylinder: { d: 'How wide', h: 'How long', dh: 'Across the widest part', hh: 'End to end, including the bump on the + end' },
@@ -238,7 +238,7 @@ const examples = [
   /** How far x falls outside [lo, hi], or 0 inside. */
   const gap = (x: number, t: [number, number] | null, nominal: number) => {
     const [lo, hi] = t ?? [nominal, nominal];
-    // 0.01 mm of slack absorbs rounding from inch conversion.
+    // 0.01mm of slack absorbs rounding from inch conversion.
     return x < lo - 0.01 ? x - lo : x > hi + 0.01 ? x - hi : 0;
   };
   const WORDS: Record<string, [string, string, string]> = {

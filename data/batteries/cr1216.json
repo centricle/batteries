@@ -54,7 +54,7 @@
       },
       "capacity_mah": {
         "typical": 25,
-        "conditions": "Panasonic nominal capacity at 0.1 mA continuous standard drain; cutoff voltage not stated",
+        "conditions": "Panasonic nominal capacity at 0.1mA continuous standard drain; cutoff voltage not stated",
         "range": [
           25,
           27
@@ -67,7 +67,7 @@
           85
         ]
       },
-      "notes": "Varta lists 27 mAh and 0.7 g for type 6216 without stating load; Panasonic lists 25 mAh.",
+      "notes": "Varta lists 27mAh and 0.7g for type 6216 without stating load; Panasonic lists 25mAh.",
       "sources": [
         "panasonic-cr1216",
         "varta-primary-lithium"
@@ -85,12 +85,12 @@
     {
       "id": "cr1220",
       "relation": "fits-with-caveat",
-      "note": "Same 12.5 mm width and 0.4 mm thicker; fits only where the holder has the clearance."
+      "note": "Same 12.5mm width and 0.4mm thicker; fits only where the holder has the clearance."
     },
     {
       "id": "cr1225",
       "relation": "fits-with-caveat",
-      "note": "Same 12.5 mm width and 0.9 mm thicker; fits only where the holder has the clearance."
+      "note": "Same 12.5mm width and 0.9mm thicker; fits only where the holder has the clearance."
     }
   ],
   "sources": [

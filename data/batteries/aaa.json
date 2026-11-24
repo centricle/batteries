@@ -122,7 +122,7 @@
       "min": 43.3,
       "max": 44.5
     },
-    "note": "Height includes the positive terminal. An older Duracell sheet shows a 42.5 mm lower limit.",
+    "note": "Height includes the positive terminal. An older Duracell sheet shows a 42.5mm lower limit.",
     "sources": [
       "energizer-en92",
       "energizer-l92",
@@ -150,7 +150,7 @@
       },
       "capacity_mah": {
         "typical": 1150,
-        "conditions": "75 ohm load to 0.8 V, 21 °C (Duracell MN2400 rated capacity)"
+        "conditions": "75 ohm load to 0.8V, 21°C (Duracell MN2400 rated capacity)"
       },
       "weight_g": 11.5,
       "shelf_life_years": 7,
@@ -160,7 +160,7 @@
           55
         ]
       },
-      "notes": "Weight, operating range and shelf life (80% of initial capacity at 21 °C) are from the Energizer EN92 sheet. Duracell lists 11 g.",
+      "notes": "Weight, operating range and shelf life (80% of initial capacity at 21°C) are from the Energizer EN92 sheet. Duracell lists 11g.",
       "sources": [
         "energizer-en92",
         "duracell-mn2400",
@@ -180,7 +180,7 @@
           1250,
           1300
         ],
-        "conditions": "100 mA continuous to 1.0 V (1250 mAh); 10 mA continuous to 1.0 V (1300 mAh)"
+        "conditions": "100mA continuous to 1.0V (1250mAh); 10mA continuous to 1.0V (1300mAh)"
       },
       "weight_g": 7.6,
       "max_continuous_ma": 1500,
@@ -216,7 +216,7 @@
           750,
           800
         ],
-        "conditions": "Minimum 750 mAh: charge 75 mA for 16 h, discharge 150 mA to 1.0 V, 20 °C. Typical 800 mAh as tabulated by Wikipedia."
+        "conditions": "Minimum 750mAh: charge 75mA for 16h, discharge 150mA to 1.0V, 20°C. Typical 800mAh as tabulated by Wikipedia."
       },
       "weight_g": 13,
       "cycle_life": 2100,
@@ -245,7 +245,7 @@
       },
       "capacity_mah": {
         "typical": 540,
-        "conditions": "25 mA continuous to 0.8 V, 21 °C"
+        "conditions": "25mA continuous to 0.8V, 21°C"
       },
       "weight_g": 7.3,
       "temperature_c": {
@@ -261,7 +261,7 @@
     },
     {
       "chemistry": "lithium-ion-regulated",
-      "label": "USB-C rechargeable, 1.5 V regulated",
+      "label": "USB-C rechargeable, 1.5V regulated",
       "rechargeable": true,
       "voltage": {
         "nominal": 1.5,
@@ -269,12 +269,12 @@
       },
       "capacity_mah": {
         "typical": 500,
-        "conditions": "Nominal 500 mAh (minimum 400 mAh) at 0.2 C to 0.9 V, 20 °C"
+        "conditions": "Nominal 500mAh (minimum 400mAh) at 0.2C to 0.9V, 20°C"
       },
       "weight_g": 7,
       "max_continuous_ma": 500,
       "cycle_life": 1200,
-      "self_discharge": "Up to 2% per month at 20 °C",
+      "self_discharge": "Up to 2% per month at 20°C",
       "temperature_c": {
         "discharge": [
           0,
@@ -285,7 +285,7 @@
           25
         ]
       },
-      "notes": "A built-in 3.7 V, 200 mAh lithium-ion battery feeds a regulator; output drops to 1.05 V below 10% charge. Charges through the built-in USB-C port at 100 mA.",
+      "notes": "A built-in 3.7V, 200mAh lithium-ion battery feeds a regulator; output drops to 1.05V below 10% charge. Charges through the built-in USB-C port at 100mA.",
       "sources": [
         "ansmann-aaa-li"
       ]
@@ -305,12 +305,12 @@
     {
       "id": "10440",
       "relation": "do-not-substitute",
-      "note": "A 10440 lithium-ion battery has the same size as an AAA but runs at 3.7 V, which damages most devices built for 1.5 V batteries."
+      "note": "A 10440 lithium-ion battery has the same size as an AAA but runs at 3.7V, which damages most devices built for 1.5V batteries."
     },
     {
       "id": "aa",
       "relation": "does-not-fit",
-      "note": "AA batteries are also 1.5 V alkaline but are larger and do not fit AAA holders."
+      "note": "AA batteries are also 1.5V alkaline but are larger and do not fit AAA holders."
     }
   ],
   "safety": [

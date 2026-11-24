@@ -187,7 +187,7 @@
       },
       "capacity_mah": {
         "typical": 20.0,
-        "conditions": "Discharge over 47 kΩ at 20 °C to 1.2 V (Renata OEM)",
+        "conditions": "Discharge over 47kΩ at 20°C to 1.2V (Renata OEM)",
         "range": [
           19.0,
           20.0
@@ -200,7 +200,7 @@
           60
         ]
       },
-      "self_discharge": "Less than 5% per year at 20 °C",
+      "self_discharge": "Less than 5% per year at 20°C",
       "notes": "The capacity range spans the manufacturers listed in the sources, which rate at different loads and cutoff voltages; compare only within one source. Sodium hydroxide electrolyte; intended for continuous low drain such as analog quartz watches.",
       "sources": [
         "renata-364",
@@ -217,7 +217,7 @@
       },
       "capacity_mah": {
         "typical": 18,
-        "conditions": "Nominal discharge current 50 µA to 1.2 V at 20 °C (Maxell)"
+        "conditions": "Nominal discharge current 50µA to 1.2V at 20°C (Maxell)"
       },
       "weight_g": 0.3,
       "temperature_c": {
@@ -257,7 +257,7 @@
     "Remove exhausted batteries from the device promptly, because leaking batteries can damage it.",
     "Do not recharge, short-circuit, dismantle, heat or burn the battery; do not mix types, brands or charge states."
   ],
-  "notes": "6.8 mm by 2.15 mm. The same case is sold as alkaline (LR60/LR621) and as silver oxide (SR60); both hold the same size, but silver oxide holds a nearly flat voltage near 1.55 V until late in discharge while alkaline voltage declines gradually, which matters for watches, calipers and light meters. Low drain (SW) and high drain (W) silver oxide batteries share the case but differ in electrolyte; the manufacturer numbers differ.",
+  "notes": "6.8mm by 2.15mm. The same case is sold as alkaline (LR60/LR621) and as silver oxide (SR60); both hold the same size, but silver oxide holds a nearly flat voltage near 1.55V until late in discharge while alkaline voltage declines gradually, which matters for watches, calipers and light meters. Low drain (SW) and high drain (W) silver oxide batteries share the case but differ in electrolyte; the manufacturer numbers differ.",
   "sources": [
     {
       "id": "energizer-364",

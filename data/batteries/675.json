@@ -75,7 +75,7 @@
       "min": 5,
       "max": 5.4
     },
-    "note": "Datasheet gives a 3.8 mm minimum for the flat negative contact.",
+    "note": "Datasheet gives a 3.8mm minimum for the flat negative contact.",
     "sources": [
       "energizer-675"
     ]
@@ -104,7 +104,7 @@
           570,
           620
         ],
-        "conditions": "Power One p675: IEC hearing aid standard test to 1.05 V (5 mA base load, 15 mA 100 ms pulse every 2 h), 20 °C, 55% RH; 570 mAh under the IEC high drain test (8 mA base load, 24 mA pulse) to 1.05 V"
+        "conditions": "Power One p675: IEC hearing aid standard test to 1.05V (5mA base load, 15mA 100ms pulse every 2h), 20°C, 55% RH; 570mAh under the IEC high drain test (8mA base load, 24mA pulse) to 1.05V"
       },
       "weight_g": 1.8,
       "shelf_life_years": 4,
@@ -118,7 +118,7 @@
           30
         ]
       },
-      "notes": "Rayovac rates 107 h in the IEC standard test to 1.05 V and 57 h in the high drain test at 21 °C. Rayovac also lists a \"675 Zero Mercury Cochlear\" version for cochlear implant sound processors; no separate electrical data for it was found in the sources read.",
+      "notes": "Rayovac rates 107h in the IEC standard test to 1.05V and 57h in the high drain test at 21°C. Rayovac also lists a \"675 Zero Mercury Cochlear\" version for cochlear implant sound processors; no separate electrical data for it was found in the sources read.",
       "sources": [
         "energizer-675",
         "rayovac-675",

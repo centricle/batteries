@@ -108,14 +108,14 @@ Regulation (EU) 2023/1542 entered into force on 17 August 2023 and replaced the 
 | Portable | 45% | 31 December 2023 |
 | Portable | 63% | 31 December 2027 |
 | Portable | 73% | 31 December 2030 |
-| Light means of transport (LMT): sealed traction batteries of 25 kg or less for wheeled vehicles powered by a motor, alone or with human power | 51% | 31 December 2028 |
+| Light means of transport (LMT): sealed traction batteries of 25kg or less for wheeled vehicles powered by a motor, alone or with human power | 51% | 31 December 2028 |
 | LMT | 61% | 31 December 2031 |
 
 Source: Articles 59(3) and 60 of the regulation. The collection rate is calculated against the average sales of the three preceding years (Annex XI).
 
 ### Labels and removability
 
-- **Separate collection symbol.** From 18 August 2025, all batteries must carry the separate collection symbol shown in Part B of Annex VI. If the symbol would be smaller than 0.47 cm by 0.47 cm, it goes on the packaging instead, at least 1 cm by 1 cm (Article 13(4)).
+- **Separate collection symbol.** From 18 August 2025, all batteries must carry the separate collection symbol shown in Part B of Annex VI. If the symbol would be smaller than 4.7mm by 4.7mm, it goes on the packaging instead, at least 10mm by 10mm (Article 13(4)).
 - **Heavy metals.** Batteries containing more than 0.002% cadmium or 0.004% lead must also be marked Cd or Pb (Article 13(5)).
 - **Removability.** From 18 February 2027, portable batteries in products must be removable and replaceable by the end user with commercially available tools (Article 11).
 

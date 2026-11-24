@@ -58,7 +58,7 @@
       },
       "capacity_mah": {
         "typical": 55,
-        "conditions": "Panasonic nominal capacity at 0.1 mA continuous standard drain; cutoff voltage not stated",
+        "conditions": "Panasonic nominal capacity at 0.1mA continuous standard drain; cutoff voltage not stated",
         "range": [
           50,
           55
@@ -72,7 +72,7 @@
           85
         ]
       },
-      "notes": "GP lists 50 mAh and 1.1 g; Varta lists 55 mAh and 1.2 g.",
+      "notes": "GP lists 50mAh and 1.1g; Varta lists 55mAh and 1.2g.",
       "sources": [
         "panasonic-cr1616",
         "varta-primary-lithium",
@@ -91,12 +91,12 @@
     {
       "id": "cr1620",
       "relation": "fits-with-caveat",
-      "note": "Same 16 mm width and 0.4 mm thicker; fits only where the holder has the clearance."
+      "note": "Same 16mm width and 0.4mm thicker; fits only where the holder has the clearance."
     },
     {
       "id": "cr1632",
       "relation": "does-not-fit",
-      "note": "Same 16 mm width and 1.6 mm thicker; usually does not fit a CR1616 holder."
+      "note": "Same 16mm width and 1.6mm thicker; usually does not fit a CR1616 holder."
     }
   ],
   "sources": [

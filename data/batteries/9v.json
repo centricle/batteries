@@ -136,7 +136,7 @@
       "code": "56722",
       "system": "Varta",
       "chemistry": "nimh",
-      "note": "Ready2Use, 200 mAh"
+      "note": "Ready2Use, 200mAh"
     },
     {
       "code": "GP20R8H",
@@ -159,7 +159,7 @@
       "nominal": 48.5,
       "max": 48.5
     },
-    "note": "Height is the overall maximum including the snap terminals; the body measures about 46.4 to 46.5 mm to the shoulder. Terminal centers are 12.45 to 12.95 mm apart. Lithium-ion 9V packs can be thinner (about 12.7 mm deep).",
+    "note": "Height is the overall maximum including the snap terminals; the body measures about 46.4 to 46.5mm to the shoulder. Terminal centers are 12.45 to 12.95mm apart. Lithium-ion 9V packs can be thinner (about 12.7mm deep).",
     "sources": [
       "energizer-522",
       "duracell-mn1604"
@@ -173,7 +173,7 @@
       "style": "snap-female"
     },
     "cells": 6,
-    "note": "Six 1.5 V batteries in series inside alkaline, zinc-carbon and lithium types (seven 1.2 V batteries in NiMH 8.4 V packs, eight in 9.6 V packs)."
+    "note": "Six 1.5V batteries in series inside alkaline, zinc-carbon and lithium types (seven 1.2V batteries in NiMH 8.4V packs, eight in 9.6V packs)."
   },
   "variants": [
     {
@@ -185,7 +185,7 @@
       },
       "capacity_mah": {
         "typical": 580,
-        "conditions": "620 ohm load to 4.8 V, 21 °C (Duracell MN1604 rated capacity)"
+        "conditions": "620 ohm load to 4.8V, 21°C (Duracell MN1604 rated capacity)"
       },
       "weight_g": 45,
       "shelf_life_years": 5,
@@ -195,7 +195,7 @@
           55
         ]
       },
-      "notes": "Weight, operating range and shelf life are from the Energizer 522 sheet; the 4.8 V end point corresponds to 0.8 V for each battery inside.",
+      "notes": "Weight, operating range and shelf life are from the Energizer 522 sheet; the 4.8V end point corresponds to 0.8V for each battery inside.",
       "sources": [
         "energizer-522",
         "duracell-summary",
@@ -226,7 +226,7 @@
       },
       "capacity_mah": {
         "typical": 1200,
-        "conditions": "9 mA continuous to 5.4 V, 23 °C (Ultralife U9VL nominal capacity)"
+        "conditions": "9mA continuous to 5.4V, 23°C (Ultralife U9VL nominal capacity)"
       },
       "weight_g": 33.9,
       "shelf_life_years": 10,
@@ -241,7 +241,7 @@
           60
         ]
       },
-      "notes": "Weight, lithium content, shelf life and temperature range are from the Energizer L522 sheet. The Ultralife U9VL weighs 33.8 g, operates from -20 to 60 °C and is rated 120 mA continuous with pulses to 400 mA; Energizer states 1000 mA continuous with a PTC switch.",
+      "notes": "Weight, lithium content, shelf life and temperature range are from the Energizer L522 sheet. The Ultralife U9VL weighs 33.8g, operates from -20 to 60°C and is rated 120mA continuous with pulses to 400mA; Energizer states 1000mA continuous with a PTC switch.",
       "sources": [
         "energizer-l522",
         "ultralife-u9vl",
@@ -250,7 +250,7 @@
     },
     {
       "chemistry": "nimh",
-      "label": "8.4 V (seven batteries inside)",
+      "label": "8.4V (seven batteries inside)",
       "rechargeable": true,
       "voltage": {
         "nominal": 8.4,
@@ -262,11 +262,11 @@
           175,
           210
         ],
-        "conditions": "200 mAh rated at 0.2 C to 7.0 V, 20 °C (Varta 56722); 175 mAh at 35 mA to 1.0 V per cell (Energizer NH22-175); 210 mAh typical (GP20R8H)"
+        "conditions": "200mAh rated at 0.2C to 7.0V, 20°C (Varta 56722); 175mAh at 35mA to 1.0V per cell (Energizer NH22-175); 210mAh typical (GP20R8H)"
       },
       "weight_g": 36,
-      "self_discharge": "About 75% of initial capacity after one year at 20 °C (Varta 56722)",
-      "notes": "Weight is for the Varta 56722; the Energizer NH22-175 weighs 42.0 g.",
+      "self_discharge": "About 75% of initial capacity after one year at 20°C (Varta 56722)",
+      "notes": "Weight is for the Varta 56722; the Energizer NH22-175 weighs 42.0g.",
       "sources": [
         "varta-56722",
         "energizer-nh22",
@@ -275,7 +275,7 @@
     },
     {
       "chemistry": "nimh",
-      "label": "9.6 V (eight batteries inside)",
+      "label": "9.6V (eight batteries inside)",
       "rechargeable": true,
       "voltage": {
         "nominal": 9.6
@@ -286,7 +286,7 @@
           180,
           190
         ],
-        "conditions": "0.1 C charge for 16 h, 0.2 C discharge: minimum 180 mAh, typical 190 mAh"
+        "conditions": "0.1C charge for 16h, 0.2C discharge: minimum 180mAh, typical 190mAh"
       },
       "weight_g": 44,
       "cycle_life": 500,
@@ -300,14 +300,14 @@
           50
         ]
       },
-      "notes": "9.6 V packs with eight batteries inside run above the 9 V of a single-use battery and are not interchangeable with 8.4 V packs in every device. The cycle life is a reference figure under IEC 61951-2.",
+      "notes": "9.6V packs with eight batteries inside run above the 9V of a single-use battery and are not interchangeable with 8.4V packs in every device. The cycle life is a reference figure under IEC 61951-2.",
       "sources": [
         "emmerich-nimh-96v"
       ]
     },
     {
       "chemistry": "lithium-ion-regulated",
-      "label": "USB-C rechargeable, 9.0 V regulated",
+      "label": "USB-C rechargeable, 9.0V regulated",
       "rechargeable": true,
       "voltage": {
         "nominal": 9,
@@ -319,12 +319,12 @@
           340,
           400
         ],
-        "conditions": "Nominal 400 mAh and minimum 340 mAh at 0.2 C to 5.4 V, 20 °C; 300 mAh at 0.5 C"
+        "conditions": "Nominal 400mAh and minimum 340mAh at 0.2C to 5.4V, 20°C; 300mAh at 0.5C"
       },
       "weight_g": 22.5,
       "max_continuous_ma": 300,
       "cycle_life": 1200,
-      "self_discharge": "Up to 2% per month at 20 °C",
+      "self_discharge": "Up to 2% per month at 20°C",
       "temperature_c": {
         "charge": [
           0,
@@ -339,7 +339,7 @@
           25
         ]
       },
-      "notes": "A built-in 3.7 V, 1000 mAh lithium-ion battery feeds a regulator; charged only through the USB-C port at 450 mA. Other 9V lithium-ion packs without a regulator have a 7.4 V nominal voltage.",
+      "notes": "A built-in 3.7V, 1000mAh lithium-ion battery feeds a regulator; charged only through the USB-C port at 450mA. Other 9V lithium-ion packs without a regulator have a 7.4V nominal voltage.",
       "sources": [
         "ansmann-9v-li"
       ]

@@ -6,7 +6,7 @@
   "status": "current",
   "aliases": [
     "AA lithium thionyl chloride",
-    "3.6 V AA",
+    "3.6V AA",
     "LS14500",
     "TL-5903"
   ],
@@ -39,7 +39,7 @@
       "min": 49.7,
       "max": 50.3
     },
-    "note": "Saft drawing: 14.4 +/-0.2 mm diameter and 50 +/-0.3 mm height. The table lists maximums of 14.62 mm and 50.28 mm for the sleeved battery.",
+    "note": "Saft drawing: 14.4 +/-0.2mm diameter and 50 +/-0.3mm height. The table lists maximums of 14.62mm and 50.28mm for the sleeved battery.",
     "sources": [
       "saft-ls14500"
     ]
@@ -49,12 +49,12 @@
       "style": "button",
       "diameter": 4.5,
       "height": 1.5,
-      "note": "Saft drawing: 4.5 mm minimum diameter, 1.5 +/-0.2 mm high."
+      "note": "Saft drawing: 4.5mm minimum diameter, 1.5 +/-0.2mm high."
     },
     "negative": {
       "style": "flat",
       "diameter": 7.0,
-      "note": "Saft drawing: 7 mm minimum contact diameter."
+      "note": "Saft drawing: 7mm minimum contact diameter."
     }
   },
   "variants": [
@@ -72,7 +72,7 @@
           2400,
           2600
         ],
-        "conditions": "Saft LS 14500: 14 mA, 20 °C, 2.0 V cut-off. Tadiran TL-5903 lists 2.4 Ah nominal"
+        "conditions": "Saft LS 14500: 14mA, 20°C, 2.0V cut-off. Tadiran TL-5903 lists 2.4Ah nominal"
       },
       "weight_g": 17,
       "max_continuous_ma": 50,
@@ -84,8 +84,8 @@
           85
         ]
       },
-      "self_discharge": "Under 1 percent per year at 20 °C after the first year (Saft)",
-      "notes": "Tadiran lists 100 mA continuous, 200 mA pulse, 18 g and 0.65 g lithium for the TL-5903. Saft recommends storage at 30 °C maximum.",
+      "self_discharge": "Under 1 percent per year at 20°C after the first year (Saft)",
+      "notes": "Tadiran lists 100mA continuous, 200mA pulse, 18g and 0.65g lithium for the TL-5903. Saft recommends storage at 30°C maximum.",
       "sources": [
         "saft-ls14500",
         "tadiran-tl-5903"
@@ -108,9 +108,9 @@
     }
   ],
   "safety": [
-    "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100°C can cause fire, explosion or venting.",
     "Do not solder directly to the battery; use tabbed or pinned versions.",
-    "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage."
+    "Lithium thionyl chloride batteries run at 3.6V; most 1.5V devices are not designed for that voltage."
   ],
   "notes": "Industrial AA-size bobbin battery for long-life, low-drain devices with periodic pulses.",
   "sources": [

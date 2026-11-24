@@ -2,7 +2,7 @@
   "id": "lithium-thionyl-chloride",
   "name": "Lithium thionyl chloride",
   "short": "Li-SOCl₂",
-  "plain_name": "Lithium, 3.6 V (ER)",
+  "plain_name": "Lithium, 3.6V (ER)",
   "plain": "A single-use 3.6-volt lithium type for meters, sensors and industrial equipment that run for ten years or more. It is not sold as a household battery, and an AA-sized one is not a replacement for a 1.5-volt AA.",
   "iec_letter": "E",
   "rechargeable": false,
@@ -21,7 +21,7 @@
     500,
     700
   ],
-  "self_discharge": "Under 1% per year at 20 °C (Saft LS 14500); Tadiran cites as little as 0.7% per year for the highest-quality bobbin batteries",
+  "self_discharge": "Under 1% per year at 20°C (Saft LS 14500); Tadiran cites as little as 0.7% per year for the highest-quality bobbin batteries",
   "temperature_c": {
     "operating": [
       -60,
@@ -29,18 +29,18 @@
     ]
   },
   "color": "#7C9890",
-  "summary": "Lithium thionyl chloride batteries use a lithium metal anode and a liquid thionyl chloride cathode for 3.6 V nominal and the highest energy density of the common single-use chemistries. They power meters, sensors and industrial equipment for a decade or more, but are not sold as consumer batteries.",
-  "body": "## How it works\n\nA lithium thionyl chloride battery, IEC system E, has a lithium metal anode and a liquid cathode: thionyl chloride serves as both the active cathode material and the solvent, with lithium tetrachloroaluminate dissolved in it as the electrolyte. Batteries come in two constructions. Tadiran describes bobbin batteries as having the highest capacity and energy density, a wide temperature range (−80 to 125 °C) and very low self-discharge, while spiral-wound batteries are specified where higher current is needed. Saft's LS 14500, an AA-size bobbin battery that Saft cross-references to the R6 size, uses a hermetic glass-to-metal seal and contains about 0.7 g of lithium.\n\n## Discharge behavior\n\nNominal voltage is 3.6 V and the open-circuit voltage is about 3.65 to 3.67 V. Saft rates the LS 14500 at 2.6 Ah to a 2.0 V cutoff, with a maximum continuous current of 70 mA, and for operation from −60 to 85 °C. Wikipedia lists 500 to 700 Wh/kg and about 1,200 Wh/L, operation down to −55 °C with over 50% of rated capacity, relatively high internal impedance and limited short-circuit current.\n\nDuring storage a thin film of lithium chloride forms on the anode. Tadiran explains that this passivation layer is what limits self-discharge, and that it dissipates under load. The tradeoff is voltage delay: a battery stored for a long time can show a temporary low voltage when first put into service. Saft gives under 1% self-discharge after one year at 20 °C. Tadiran states that the highest-quality bobbin batteries self-discharge as little as 0.7% per year, retaining 70% of capacity after 40 years, while lower-quality bobbin batteries can lose up to 3% per year.\n\n## Uses\n\nWikipedia describes low-current batteries for memory backup and portable electronics and high-current batteries for military applications, and notes that the chemistry is not used for consumer or general-purpose batteries. Tadiran's white paper discusses bobbin batteries for long-life wireless devices.\n\n## History\n\nA dated introduction for the chemistry was not found in the sources consulted.\n\n## Status\n\nCurrent, in industrial and specialist use. IEC 60086-1 lists system E at 3.6 V nominal with a 3.9 V maximum open-circuit voltage, and the letter is rarely seen on retail batteries.",
+  "summary": "Lithium thionyl chloride batteries use a lithium metal anode and a liquid thionyl chloride cathode for 3.6V nominal and the highest energy density of the common single-use chemistries. They power meters, sensors and industrial equipment for a decade or more, but are not sold as consumer batteries.",
+  "body": "## How it works\n\nA lithium thionyl chloride battery, IEC system E, has a lithium metal anode and a liquid cathode: thionyl chloride serves as both the active cathode material and the solvent, with lithium tetrachloroaluminate dissolved in it as the electrolyte. Batteries come in two constructions. Tadiran describes bobbin batteries as having the highest capacity and energy density, a wide temperature range (−80 to 125°C) and very low self-discharge, while spiral-wound batteries are specified where higher current is needed. Saft's LS 14500, an AA-size bobbin battery that Saft cross-references to the R6 size, uses a hermetic glass-to-metal seal and contains about 0.7g of lithium.\n\n## Discharge behavior\n\nNominal voltage is 3.6V and the open-circuit voltage is about 3.65 to 3.67V. Saft rates the LS 14500 at 2.6Ah to a 2.0V cutoff, with a maximum continuous current of 70mA, and for operation from −60 to 85°C. Wikipedia lists 500 to 700Wh/kg and about 1,200Wh/L, operation down to −55°C with over 50% of rated capacity, relatively high internal impedance and limited short-circuit current.\n\nDuring storage a thin film of lithium chloride forms on the anode. Tadiran explains that this passivation layer is what limits self-discharge, and that it dissipates under load. The tradeoff is voltage delay: a battery stored for a long time can show a temporary low voltage when first put into service. Saft gives under 1% self-discharge after one year at 20°C. Tadiran states that the highest-quality bobbin batteries self-discharge as little as 0.7% per year, retaining 70% of capacity after 40 years, while lower-quality bobbin batteries can lose up to 3% per year.\n\n## Uses\n\nWikipedia describes low-current batteries for memory backup and portable electronics and high-current batteries for military applications, and notes that the chemistry is not used for consumer or general-purpose batteries. Tadiran's white paper discusses bobbin batteries for long-life wireless devices.\n\n## History\n\nA dated introduction for the chemistry was not found in the sources consulted.\n\n## Status\n\nCurrent, in industrial and specialist use. IEC 60086-1 lists system E at 3.6V nominal with a 3.9V maximum open-circuit voltage, and the letter is rarely seen on retail batteries.",
   "strengths": [
-    "Highest energy density of common single-use chemistries: 500 to 700 Wh/kg (Wikipedia)",
-    "Very low self-discharge, under 1% per year at 20 °C (Saft)",
-    "Wide temperature range: −60 to 85 °C for the Saft LS 14500",
-    "Flat 3.6 V discharge"
+    "Highest energy density of common single-use chemistries: 500 to 700Wh/kg (Wikipedia)",
+    "Very low self-discharge, under 1% per year at 20°C (Saft)",
+    "Wide temperature range: −60 to 85°C for the Saft LS 14500",
+    "Flat 3.6V discharge"
   ],
   "limitations": [
-    "Low current capability in bobbin batteries (70 mA maximum continuous for the Saft LS 14500)",
+    "Low current capability in bobbin batteries (70mA maximum continuous for the Saft LS 14500)",
     "Voltage delay after storage caused by anode passivation",
-    "Not interchangeable with 1.5 V AA batteries despite sharing the size",
+    "Not interchangeable with 1.5V AA batteries despite sharing the size",
     "Not rechargeable"
   ],
   "safety": [

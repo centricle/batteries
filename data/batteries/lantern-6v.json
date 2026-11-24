@@ -5,7 +5,7 @@
   "form": "lantern",
   "status": "current",
   "aliases": [
-    "6 V lantern battery",
+    "6V lantern battery",
     "Spring-top lantern battery",
     "Square lantern battery",
     "Lantern battery"
@@ -106,7 +106,7 @@
       "min": 107.0,
       "max": 115.0
     },
-    "note": "Height is overall, including the springs; the body alone is 96.0 to 103.2 mm. The battery must pass freely through a 82.6 mm diameter by 101.6 mm long tube.",
+    "note": "Height is overall, including the springs; the body alone is 96.0 to 103.2mm. The battery must pass freely through a 82.6mm diameter by 101.6mm long tube.",
     "sources": [
       "energizer-en529",
       "energizer-ev90"
@@ -151,7 +151,7 @@
       },
       "capacity_mah": {
         "typical": 10000,
-        "conditions": "25 mA continuous to 0.8 V per cell"
+        "conditions": "25mA continuous to 0.8V per cell"
       },
       "weight_g": 600,
       "notes": "Eveready EV90 contains four F batteries in series and is listed for industrial trade.",
@@ -183,14 +183,14 @@
     {
       "id": "lantern-6v-screw",
       "relation": "fits-with-caveat",
-      "note": "The screw-terminal lantern battery has the same 6 V and a similar footprint, but spring holders do not contact its posts reliably."
+      "note": "The screw-terminal lantern battery has the same 6V and a similar footprint, but spring holders do not contact its posts reliably."
     }
   ],
   "safety": [
     "Do not recharge alkaline or zinc-based lantern batteries.",
     "Metal objects across the springs can short the battery and cause heat; remove from devices before storage."
   ],
-  "notes": "The most common 6 V lantern battery in the United States. The IEC letter X versus Y for spring versus screw terminals is applied inconsistently across sources.",
+  "notes": "The most common 6V lantern battery in the United States. The IEC letter X versus Y for spring versus screw terminals is applied inconsistently across sources.",
   "sources": [
     {
       "id": "energizer-en529",

@@ -72,7 +72,7 @@
       "min": 3.25,
       "max": 3.6
     },
-    "note": "The negative cap is about 5.0 mm in diameter and stands at least 0.25 mm above the can step.",
+    "note": "The negative cap is about 5.0mm in diameter and stands at least 0.25mm above the can step.",
     "sources": [
       "energizer-312"
     ]
@@ -102,7 +102,7 @@
           160,
           189
         ],
-        "conditions": "Power One p312: IEC hearing aid standard test to 1.05 V (2 mA base load, 10 mA 100 ms pulse every 2 h), 20 °C, 55% RH; 173 mAh under the IEC wireless streaming test to 1.1 V. Ansmann A312 sheet: 160 mAh at 1500 ohm, 24 h/day, 25 °C, 60% RH, to 0.9 V"
+        "conditions": "Power One p312: IEC hearing aid standard test to 1.05V (2mA base load, 10mA 100ms pulse every 2h), 20°C, 55% RH; 173mAh under the IEC wireless streaming test to 1.1V. Ansmann A312 sheet: 160mAh at 1500 ohm, 24h/day, 25°C, 60% RH, to 0.9V"
       },
       "weight_g": 0.54,
       "shelf_life_years": 4,
@@ -116,7 +116,7 @@
           30
         ]
       },
-      "notes": "Energizer, Rayovac and Power One list 1.45 V nominal; the Ansmann sheet gives 1.4 V at no load. Rayovac rates 151 h in a hearing aid test (1.2 mA background, 5 mA pulse), 90 h in the IEC standard test to 1.05 V and 60 h in the wireless streaming test to 1.1 V at 21 °C.",
+      "notes": "Energizer, Rayovac and Power One list 1.45V nominal; the Ansmann sheet gives 1.4V at no load. Rayovac rates 151h in a hearing aid test (1.2mA background, 5mA pulse), 90h in the IEC standard test to 1.05V and 60h in the wireless streaming test to 1.1V at 21°C.",
       "sources": [
         "energizer-312",
         "rayovac-312",
@@ -132,7 +132,7 @@
     {
       "id": "13",
       "relation": "does-not-fit",
-      "note": "A size 13 is the same 7.9 mm across but 5.4 mm tall, so it generally does not fit a 312 compartment. Phonak makes the same hearing aid in a 312 model and a 13 model, and tells owners to find the right size from the marking inside the battery door."
+      "note": "A size 13 is the same 7.9mm across but 5.4mm tall, so it generally does not fit a 312 compartment. Phonak makes the same hearing aid in a 312 model and a 13 model, and tells owners to find the right size from the marking inside the battery door."
     }
   ],
   "safety": [

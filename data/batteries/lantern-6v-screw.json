@@ -5,7 +5,7 @@
   "form": "lantern",
   "status": "current",
   "aliases": [
-    "6 V screw-terminal lantern battery",
+    "6V screw-terminal lantern battery",
     "Screw-top lantern battery"
   ],
   "codes": [
@@ -55,11 +55,11 @@
   "geometry": {
     "positive": {
       "style": "screw",
-      "note": "Corner post, maximum 3.5 mm diameter."
+      "note": "Corner post, maximum 3.5mm diameter."
     },
     "negative": {
       "style": "screw",
-      "note": "Center post, maximum 3.5 mm diameter."
+      "note": "Center post, maximum 3.5mm diameter."
     },
     "cells": 4
   },
@@ -98,7 +98,7 @@
     {
       "id": "lantern-6v",
       "relation": "fits-with-caveat",
-      "note": "The spring-terminal lantern battery has the same 6 V and a similar footprint, but screw terminals need a wired connector, not springs."
+      "note": "The spring-terminal lantern battery has the same 6V and a similar footprint, but screw terminals need a wired connector, not springs."
     }
   ],
   "safety": [

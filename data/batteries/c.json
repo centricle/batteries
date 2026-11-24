@@ -139,7 +139,7 @@
       },
       "capacity_mah": {
         "typical": 7800,
-        "conditions": "20 ohm load to 0.8 V, 21 °C (Duracell MN1400 rated capacity)"
+        "conditions": "20 ohm load to 0.8V, 21°C (Duracell MN1400 rated capacity)"
       },
       "weight_g": 66.2,
       "shelf_life_years": 7,
@@ -149,7 +149,7 @@
           55
         ]
       },
-      "notes": "Weight, operating range and shelf life (80% of initial capacity at 21 °C) are from the Energizer E93 sheet. Duracell lists 69 to 71 g.",
+      "notes": "Weight, operating range and shelf life (80% of initial capacity at 21°C) are from the Energizer E93 sheet. Duracell lists 69 to 71g.",
       "sources": [
         "energizer-e93",
         "duracell-mn1400",
@@ -165,7 +165,7 @@
       },
       "capacity_mah": {
         "typical": 3800,
-        "conditions": "25 mA continuous to 0.8 V, 21 °C"
+        "conditions": "25mA continuous to 0.8V, 21°C"
       },
       "weight_g": 45,
       "temperature_c": {
@@ -188,7 +188,7 @@
       },
       "capacity_mah": {
         "typical": 2500,
-        "conditions": "Rated capacity at 500 mA (0.2 C) to 1.0 V, 21 °C"
+        "conditions": "Rated capacity at 500mA (0.2C) to 1.0V, 21°C"
       },
       "weight_g": 66,
       "internal_resistance_mohm": 11,
@@ -221,12 +221,12 @@
     {
       "id": "d",
       "relation": "does-not-fit",
-      "note": "D batteries are also 1.5 V alkaline but are larger; one does not work in place of the other."
+      "note": "D batteries are also 1.5V alkaline but are larger; one does not work in place of the other."
     },
     {
       "id": "er26500",
       "relation": "do-not-substitute",
-      "note": "An ER26500 is close to C size but delivers 3.6 V, which can damage devices built for 1.5 V C batteries."
+      "note": "An ER26500 is close to C size but delivers 3.6V, which can damage devices built for 1.5V C batteries."
     }
   ],
   "safety": [

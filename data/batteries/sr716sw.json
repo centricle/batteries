@@ -119,7 +119,7 @@
       "min": 1.47,
       "max": 1.65
     },
-    "note": "Maxell SR716 drawing: diameter 7.9 mm, tolerance -0.15 mm; height 1.65 mm, tolerance -0.18 mm. Tolerances come from the high-drain or standard datasheet drawing; the case size is shared with the other types of this size.",
+    "note": "Maxell SR716 drawing: diameter 7.9mm, tolerance -0.15mm; height 1.65mm, tolerance -0.18mm. Tolerances come from the high-drain or standard datasheet drawing; the case size is shared with the other types of this size.",
     "sources": [
       "murata-xref",
       "maxell-xref",
@@ -148,7 +148,7 @@
       },
       "capacity_mah": {
         "typical": 23.0,
-        "conditions": "Discharge over 47 kΩ at 20 °C to 1.2 V (Renata OEM)",
+        "conditions": "Discharge over 47kΩ at 20°C to 1.2V (Renata OEM)",
         "range": [
           21.0,
           23.0
@@ -161,7 +161,7 @@
           60
         ]
       },
-      "self_discharge": "Less than 5% per year at 20 °C",
+      "self_discharge": "Less than 5% per year at 20°C",
       "notes": "The capacity range spans the manufacturers listed in the sources, which rate at different loads and cutoff voltages; compare only within one source. Sodium hydroxide electrolyte; intended for continuous low drain such as analog quartz watches.",
       "sources": [
         "renata-315",
@@ -178,7 +178,7 @@
       },
       "capacity_mah": {
         "typical": 18,
-        "conditions": "Nominal discharge current 30 µA to 1.2 V at 20 °C (Maxell)"
+        "conditions": "Nominal discharge current 30µA to 1.2V at 20°C (Maxell)"
       },
       "weight_g": 0.3,
       "temperature_c": {
@@ -207,7 +207,7 @@
     "Remove exhausted batteries from the device promptly, because leaking batteries can damage it.",
     "Do not recharge, short-circuit, dismantle, heat or burn the battery; do not mix types, brands or charge states."
   ],
-  "notes": "7.9 mm by 1.65 mm. Low drain (SW) and high drain (W) silver oxide batteries share the case but differ in electrolyte; the manufacturer numbers differ.",
+  "notes": "7.9mm by 1.65mm. Low drain (SW) and high drain (W) silver oxide batteries share the case but differ in electrolyte; the manufacturer numbers differ.",
   "sources": [
     {
       "id": "energizer-315",

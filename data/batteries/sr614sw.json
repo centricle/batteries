@@ -90,7 +90,7 @@
       },
       "capacity_mah": {
         "typical": 11.0,
-        "conditions": "Discharge over 68.1 kΩ at 20 °C to 1.2 V (Renata OEM)",
+        "conditions": "Discharge over 68.1kΩ at 20°C to 1.2V (Renata OEM)",
         "range": [
           11.0,
           13.0
@@ -103,7 +103,7 @@
           60
         ]
       },
-      "self_discharge": "Less than 10% per year at 20 °C",
+      "self_discharge": "Less than 10% per year at 20°C",
       "notes": "The capacity range spans the manufacturers listed in the sources, which rate at different loads and cutoff voltages; compare only within one source. Sodium hydroxide electrolyte; intended for continuous low drain such as analog quartz watches.",
       "sources": [
         "renata-339",
@@ -125,7 +125,7 @@
     "Remove exhausted batteries from the device promptly, because leaking batteries can damage it.",
     "Do not recharge, short-circuit, dismantle, heat or burn the battery; do not mix types, brands or charge states."
   ],
-  "notes": "6.8 mm by 1.4 mm. Sold as a low drain (SW) silver oxide battery.",
+  "notes": "6.8mm by 1.4mm. Sold as a low drain (SW) silver oxide battery.",
   "sources": [
     {
       "id": "energizer-339",

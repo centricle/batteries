@@ -31,7 +31,7 @@
       "nominal": 49.36,
       "max": 49.36
     },
-    "note": "Maximum dimensions with tube from the Panasonic NCR18500A data sheet. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Maximum dimensions with tube from the Panasonic NCR18500A data sheet. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "panasonic-ncr18500a"
     ]
@@ -62,7 +62,7 @@
         ],
         "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
       },
-      "notes": "Nominal voltage 3.7 V is the common listing value.",
+      "notes": "Nominal voltage 3.7V is the common listing value.",
       "sources": [
         "wiki-sizes"
       ]
@@ -77,7 +77,7 @@
       },
       "capacity_mah": {
         "typical": 2040,
-        "conditions": "Rated 1900 mAh at 20 °C; minimum 1940 mAh and typical 2040 mAh at 25 °C (discharge rate not stated in the table)"
+        "conditions": "Rated 1900mAh at 20°C; minimum 1940mAh and typical 2040mAh at 25°C (discharge rate not stated in the table)"
       },
       "weight_g": 33.5,
       "temperature_c": {
@@ -94,7 +94,7 @@
           50
         ]
       },
-      "notes": "Weight is the maximum. Charge method CC/CV with a 0.02C cut-off at 4.20 V.",
+      "notes": "Weight is the maximum. Charge method CC/CV with a 0.02C cut-off at 4.20V.",
       "sources": [
         "panasonic-ncr18500a"
       ]
@@ -108,13 +108,13 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2V for cobalt, nickel and manganese chemistries, 3.65V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
     "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100Wh each (FAA PackSafe)."
   ],
-  "notes": "Size code: 18 mm diameter, 50 mm length, 0 for cylindrical. About the length of an A battery with a larger diameter.",
+  "notes": "Size code: 18mm diameter, 50mm length, 0 for cylindrical. About the length of an A battery with a larger diameter.",
   "sources": [
     {
       "id": "wiki-sizes",

@@ -261,7 +261,7 @@ function shadowTexture() {
   return new CanvasTexture(cv);
 }
 
-/** Ground plane with an anti-aliased 1 mm / 10 mm grid that fades out. */
+/** Ground plane with an anti-aliased 1mm / 10mm grid that fades out. */
 function groundMaterial() {
   return new ShaderMaterial({
     transparent: true,

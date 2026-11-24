@@ -1,8 +1,8 @@
 {
   "id": "lithium-ion-regulated",
   "name": "Regulated lithium-ion",
-  "short": "Li-ion 1.5 V",
-  "plain_name": "Rechargeable lithium, 1.5 V",
+  "short": "Li-ion 1.5V",
+  "plain_name": "Rechargeable lithium, 1.5V",
   "plain": "A rechargeable AA or AAA with built-in electronics that hold a steady 1.5 volts; some charge through a USB port. It stops suddenly when empty, and a charger made for 1.2-volt batteries cannot charge it.",
   "rechargeable": true,
   "voltage": {
@@ -19,19 +19,19 @@
     ]
   },
   "color": "#CB9BA9",
-  "summary": "Regulated lithium-ion batteries, sold as 1.5 V rechargeable lithium AA and AAA batteries, house a 3.7 V lithium-ion battery and a buck converter that holds the output at 1.5 V. Voltage stays nearly constant until the electronics shut the battery down, and some charge through a built-in USB port.",
-  "body": "## How it works\n\nA regulated lithium-ion battery has a lithium-ion battery and electronics inside an AA or AAA case. Wikipedia describes the first widely sold example, the Kentli PH5, as a AA-size housing containing a rechargeable 3.7 V lithium-ion battery and an internal buck converter at the positive terminal that reduces the output to 1.5 V. A protection circuit is part of the design: Ansmann's datasheet states that its circuitry protects against overcharging, overload, short circuit and deep discharge. Because the electronics set the terminal voltage, this entry describes behavior at the terminals rather than a single chemistry inside.\n\n## Discharge behavior\n\nOutput stays at 1.5 V with virtually no drop over the discharge, unlike alkaline or NiMH batteries. Ansmann specifies a stable 1.5 V over 95% of the runtime, then a drop to 1.1 V at about 5% remaining capacity to signal that the battery needs charging; XTAR describes a 1.1 V low-power indication. Current is limited by the converter: both Ansmann and XTAR give a 2 A maximum continuous discharge current. A device that reads battery voltage to estimate remaining charge sees little change until the final drop.\n\nAnsmann rates its AA at 2000 mAh (minimum 1800 mAh) and 3.26 Wh; XTAR rates its AA at 2450 mAh and 4100 mWh. Ansmann lists up to 1,500 charge cycles and XTAR 1,200. Ansmann specifies operation from −20 to 60 °C and storage from −20 to 25 °C; XTAR specifies operation and storage from −20 to 50 °C and charging from 0 to 45 °C. Wikipedia gives self-discharge of 3% per month for the Kentli battery.\n\n## Uses\n\nDevices designed for 1.5 V single-use batteries that run poorly on the 1.2 V of NiMH. Ansmann lists electric toys, flashlights, radios, measuring devices, security cameras, soap dispensers and electric door locks.\n\n## History\n\nKentli has sold its PH5 since 2014. The Kentli design exposes the internal 3.7 V electrode in a ring around the AA terminal so that a dedicated charger can reach it. By 2023, several brands sold 1.5 V lithium-ion batteries in both AA and AAA sizes. Some need a special charger, since a charger for 1.2 V batteries will not supply sufficient voltage, and others have a USB port built into the battery; Ansmann's AA charges through USB-C at 350 mA.\n\n## Status\n\nCurrent. No IEC designation for these batteries appears in the sources consulted.",
+  "summary": "Regulated lithium-ion batteries, sold as 1.5V rechargeable lithium AA and AAA batteries, house a 3.7V lithium-ion battery and a buck converter that holds the output at 1.5V. Voltage stays nearly constant until the electronics shut the battery down, and some charge through a built-in USB port.",
+  "body": "## How it works\n\nA regulated lithium-ion battery has a lithium-ion battery and electronics inside an AA or AAA case. Wikipedia describes the first widely sold example, the Kentli PH5, as a AA-size housing containing a rechargeable 3.7V lithium-ion battery and an internal buck converter at the positive terminal that reduces the output to 1.5V. A protection circuit is part of the design: Ansmann's datasheet states that its circuitry protects against overcharging, overload, short circuit and deep discharge. Because the electronics set the terminal voltage, this entry describes behavior at the terminals rather than a single chemistry inside.\n\n## Discharge behavior\n\nOutput stays at 1.5V with virtually no drop over the discharge, unlike alkaline or NiMH batteries. Ansmann specifies a stable 1.5V over 95% of the runtime, then a drop to 1.1V at about 5% remaining capacity to signal that the battery needs charging; XTAR describes a 1.1V low-power indication. Current is limited by the converter: both Ansmann and XTAR give a 2A maximum continuous discharge current. A device that reads battery voltage to estimate remaining charge sees little change until the final drop.\n\nAnsmann rates its AA at 2000mAh (minimum 1800mAh) and 3.26Wh; XTAR rates its AA at 2450mAh and 4100mWh. Ansmann lists up to 1,500 charge cycles and XTAR 1,200. Ansmann specifies operation from −20 to 60°C and storage from −20 to 25°C; XTAR specifies operation and storage from −20 to 50°C and charging from 0 to 45°C. Wikipedia gives self-discharge of 3% per month for the Kentli battery.\n\n## Uses\n\nDevices designed for 1.5V single-use batteries that run poorly on the 1.2V of NiMH. Ansmann lists electric toys, flashlights, radios, measuring devices, security cameras, soap dispensers and electric door locks.\n\n## History\n\nKentli has sold its PH5 since 2014. The Kentli design exposes the internal 3.7V electrode in a ring around the AA terminal so that a dedicated charger can reach it. By 2023, several brands sold 1.5V lithium-ion batteries in both AA and AAA sizes. Some need a special charger, since a charger for 1.2V batteries will not supply sufficient voltage, and others have a USB port built into the battery; Ansmann's AA charges through USB-C at 350mA.\n\n## Status\n\nCurrent. No IEC designation for these batteries appears in the sources consulted.",
   "strengths": [
-    "Constant 1.5 V output over about 95% of runtime (Ansmann)",
+    "Constant 1.5V output over about 95% of runtime (Ansmann)",
     "Some charge directly by USB",
     "Up to 1,200 to 1,500 cycles (XTAR, Ansmann)",
     "Low self-discharge: about 3% per month (Wikipedia, Kentli)"
   ],
   "limitations": [
-    "Converter limits current, typically 2 A maximum",
+    "Converter limits current, typically 2A maximum",
     "Abrupt end of runtime; voltage-based gauges give little warning",
-    "A charger for 1.2 V batteries does not supply sufficient voltage (Wikipedia)",
-    "Narrow storage range: −20 to 25 °C (Ansmann)"
+    "A charger for 1.2V batteries does not supply sufficient voltage (Wikipedia)",
+    "Narrow storage range: −20 to 25°C (Ansmann)"
   ],
   "safety": [
     "Relies on built-in protection circuitry against overcharge, overload, short circuit and deep discharge",

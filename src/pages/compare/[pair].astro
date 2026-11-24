@@ -17,7 +17,7 @@ const both = [a, b];
 
 // Plain-word helpers, local to this page. The shared ones (a or an, inches,
 // the size sentence) come from src/lib/plain.ts.
-const mm =(n: number) => `${fmt(n)} mm`;
+const mm =(n: number) => `${fmt(n)}mm`;
 const both2 = (n: number) => `${mm(n)} (${inFrac(n)})`;
 const orList = (xs: string[]) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}`);
 const round = (x: Battery) => !!x.dimensions.diameter && !x.dimensions.width;
@@ -32,7 +32,7 @@ const voltWords = (x: Battery) => {
 };
 const voltCell = (x: Battery) => {
   const { once, again } = volts(x);
-  return [once.length ? `${orList(once)} V` : '', again.length ? `${orList(again)} V rechargeable` : ''].filter(Boolean).join('; ');
+  return [once.length ? `${orList(once)}V` : '', again.length ? `${orList(again)}V rechargeable` : ''].filter(Boolean).join('; ');
 };
 const kindName = (id: string) => {
   const c = chemistryById(id) as { plain_name?: string } | undefined;
@@ -78,7 +78,7 @@ const vA = primaryVariant(a), vB = primaryVariant(b);
 const dim = (x?: { nominal: number }) => (x ? both2(x.nominal) : '');
 const lengthLabel = a.form === 'disc' && b.form === 'disc' ? 'Thickness' : round(a) && round(b) && a.form !== 'disc' && b.form !== 'disc' ? 'Length' : 'Height';
 const stdNames = (x: Battery) => [...new Set(codesBySystem(x).filter(([sys]) => ['IEC', 'ANSI', 'JIS'].includes(sys)).flatMap(([, cs]) => cs.map((c) => c.code)))].join(', ');
-const weight = (g?: number) => (g ? `${fmt(g)} g (${fmt(g / 28.35, g < 28 ? 2 : 1)} oz)` : '');
+const weight = (g?: number) => (g ? `${fmt(g)}g (${fmt(g / 28.35, g < 28 ? 2 : 1)} oz)` : '');
 const capacity = (x: Battery, v: typeof vA) => (capacityLabel(v) ? `${capacityLabel(v)} (${kindName(v.chemistry)})` : '');
 const rows: [string, string, string][] = (
   [
@@ -107,7 +107,7 @@ const scaleTo = Math.max(...both.map((x) => {
 }));
 const shortSize = (x: Battery) => {
   const d = x.dimensions;
-  return d.diameter && !d.width ? `${fmt(d.diameter.nominal)} × ${fmt(d.height.nominal)} mm` : `${fmt(d.width!.nominal)} × ${fmt(d.depth!.nominal)} × ${fmt(d.height.nominal)} mm`;
+  return d.diameter && !d.width ? `${fmt(d.diameter.nominal)} × ${fmt(d.height.nominal)}mm` : `${fmt(d.width!.nominal)} × ${fmt(d.depth!.nominal)} × ${fmt(d.height.nominal)}mm`;
 };
 
 const qa = [

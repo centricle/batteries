@@ -24,14 +24,13 @@ const scale = (list: Battery[]) => Math.max(...list.map((b) => (b.form === 'disc
 // The body is the technical write-up. It sits under its own h2 here, so its
 // own h2s step down to h3.
 const body = c ? (await marked.parse(c.body)).replace(/<(\/?)h2\b/g, '<$1h3') : '';
-const range = (r: [number, number], unit: string) => `${fmt(r[0])} to ${fmt(r[1])} ${unit}`;
-const longDate = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const range = (r: [number, number], unit: string) => `${fmt(r[0])} to ${fmt(r[1])}${unit}`;
 const facts: [string, string][] = c
   ? ([
-      ['Voltage (nominal)', `${fmt(c.voltage.nominal)} V`],
+      ['Voltage (nominal)', `${fmt(c.voltage.nominal)}V`],
       ['Voltage with nothing connected (open-circuit)', c.voltage.open_circuit ? range(c.voltage.open_circuit, 'V') : ''],
-      ['Voltage when used up (cutoff)', c.voltage.cutoff ? `${fmt(c.voltage.cutoff)} V` : ''],
-      ['Charging voltage (maximum)', c.voltage.charge_max ? `${fmt(c.voltage.charge_max)} V` : ''],
+      ['Voltage when used up (cutoff)', c.voltage.cutoff ? `${fmt(c.voltage.cutoff)}V` : ''],
+      ['Charging voltage (maximum)', c.voltage.charge_max ? `${fmt(c.voltage.charge_max)}V` : ''],
       ['Energy per kilogram (Wh/kg)', c.energy_density_wh_kg ? range(c.energy_density_wh_kg, 'Wh/kg') : ''],
       ['Energy per liter (Wh/L)', c.energy_density_wh_l ? range(c.energy_density_wh_l, 'Wh/L') : ''],
       ['Rechargeable', c.rechargeable ? 'Yes' : 'No'],
@@ -40,7 +39,7 @@ const facts: [string, string][] = c
       ['Positive side (cathode)', c.cathode ?? ''],
       ['Paste or liquid inside (electrolyte)', c.electrolyte ?? ''],
       ['Charge lost in storage (self-discharge)', c.self_discharge ?? ''],
-      ['Working temperature', c.temperature_c?.operating ? `${c.temperature_c.operating[0]} to ${c.temperature_c.operating[1]} °C` : ''],
+      ['Working temperature', c.temperature_c?.operating ? `${c.temperature_c.operating[0]} to ${c.temperature_c.operating[1]}°C` : ''],
     ] as [string, string][]).filter(([, v]) => v)
   : [];
 const jsonld = c && {
@@ -97,7 +96,7 @@ const jsonld = c && {
           <li><a href={`/${b.id}`} class="tile flex flex-col items-center p-2 h-full">
             <div class="h-14 w-full flex items-end justify-center mb-1"><Silhouette battery={b} scaleTo={scale(using)} class="max-w-full" /></div>
             <span class="text-sm font-semibold">{b.name}</span>
-            <span class="text-sm text-ink-2 tabular">{fmt(v.voltage.nominal)} V</span>
+            <span class="text-sm text-ink-2 tabular">{fmt(v.voltage.nominal)}V</span>
             <span class="text-sm text-muted tabular">{sizeLabel(b, false)}</span>
           </a></li>
         );

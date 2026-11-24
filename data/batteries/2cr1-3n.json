@@ -75,7 +75,7 @@
           60
         ]
       },
-      "notes": "Duracell lists a typical voltage of 6.0 to 6.6 V and 700 milliohm impedance at 1 kHz. The datasheet gives discharge curves but no single rated capacity.",
+      "notes": "Duracell lists a typical voltage of 6.0 to 6.6V and 700 milliohm impedance at 1 kHz. The datasheet gives discharge curves but no single rated capacity.",
       "sources": [
         "duracell-px28l"
       ]
@@ -91,7 +91,7 @@
     {
       "id": "cr1-3n",
       "relation": "same-size",
-      "note": "The pack is made of two CR1/3N batteries in series and delivers 6 V instead of 3 V."
+      "note": "The pack is made of two CR1/3N batteries in series and delivers 6V instead of 3V."
     }
   ],
   "safety": [

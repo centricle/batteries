@@ -55,7 +55,7 @@ export function pairsFor(b: Battery): Pair[] {
   return [...pairs().values()].filter((p) => p.a.id === b.id || p.b.id === b.id);
 }
 
-const mm = (n: number) => `${fmt(n)} mm`;
+const mm = (n: number) => `${fmt(n)}mm`;
 const hWord = (b: Battery) => (b.form === 'disc' ? 'thick' : b.form === 'cylinder' ? 'long' : 'tall');
 
 function dimsSentence(b: Battery) {
@@ -82,9 +82,9 @@ export function verdict(p: Pair): string[] {
   }
   const ca = chem(va.chemistry), cb = chem(vb.chemistry);
   if (va.voltage.nominal === vb.voltage.nominal && va.chemistry === vb.chemistry) {
-    out.push(`Both are most often made as ${ca.name.toLowerCase()} batteries at ${fmt(va.voltage.nominal)} V.`);
+    out.push(`Both are most often made as ${ca.name.toLowerCase()} batteries at ${fmt(va.voltage.nominal)}V.`);
   } else {
-    out.push(`The ${a.name} is most often ${ca.name.toLowerCase()} at ${fmt(va.voltage.nominal)} V; the ${b.name} is most often ${cb.name.toLowerCase()} at ${fmt(vb.voltage.nominal)} V.`);
+    out.push(`The ${a.name} is most often ${ca.name.toLowerCase()} at ${fmt(va.voltage.nominal)}V; the ${b.name} is most often ${cb.name.toLowerCase()} at ${fmt(vb.voltage.nominal)}V.`);
   }
   const capA = capacityLabel(va), capB = capacityLabel(vb);
   if (capA && capB) out.push(`Typical rated capacity is ${capA} for the ${a.name} and ${capB} for the ${b.name}, each at its maker's own test conditions.`);

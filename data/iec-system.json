@@ -76,7 +76,7 @@
       "max_open_circuit_voltage": 1.9,
       "status": "current",
       "standard": "IEC 60086-1",
-      "note": "Edition 14 (2026) raised the maximum open-circuit voltage from 1.83 V to 1.90 V. Example: FR6."
+      "note": "Edition 14 (2026) raised the maximum open-circuit voltage from 1.83V to 1.90V. Example: FR6."
     },
     {
       "letter": "G",
@@ -141,7 +141,7 @@
       "max_open_circuit_voltage": 1.68,
       "status": "current",
       "standard": "IEC 60086-1",
-      "note": "Edition 13 (2021) lists the voltage as 1.4 V or 1.45 V. The kind used in hearing aid batteries."
+      "note": "Edition 13 (2021) lists the voltage as 1.4V or 1.45V. The kind used in hearing aid batteries."
     },
     {
       "letter": "S",
@@ -379,7 +379,7 @@
     },
     {
       "suffix": "A to L (not F or I)",
-      "meaning": "Size modifier added to a size code: 0.0 to 0.9 mm, or 0.00 to 0.09 mm, depending on the largest dimension (A is 0.0, L is 0.9)",
+      "meaning": "Size modifier added to a size code: 0.0 to 0.9mm, or 0.00 to 0.09mm, depending on the largest dimension (A is 0.0, L is 0.9)",
       "applies_to": "IEC 60086-1 size codes",
       "example": "LR8D425, LR2616J"
     },
@@ -520,16 +520,16 @@
     "The system letter identifies the chemistry and implies a nominal voltage. A code with no system letter, such as R6, is a zinc-carbon cell (zinc, manganese dioxide, ammonium chloride or zinc chloride electrolyte).",
     "Shape letters: R round (coin, button or cylindrical), P prismatic, F flat (layer built), S square. F and S are still in use but are not used for new battery definitions.",
     "One- or two-digit size numbers are legacy codes kept from earlier editions. Before October 1990, round cells were given sequential size numbers from R06 to R70; R20 is the D size.",
-    "Since October 1990, new round cells are identified by dimensions: the truncated diameter in millimeters followed by the height in tenths of a millimeter. CR2032 is 20 mm in diameter and 3.2 mm high; CR17345 is 17 mm by 34.5 mm.",
-    "When a single dimension is 100 mm or more, the code gives the diameter in millimeters, a slash, and the height in millimeters, as in 6P222/162.",
-    "Ten size modifier letters, A to L without F and I, can follow a size code to add 0.0 to 0.9 mm (or 0.00 to 0.09 mm) to a maximum dimension. Wikipedia gives LR2616J as 26.2 mm by 1.67 mm and LR8D425 (AAAA) as 8.8 mm by 42.5 mm.",
+    "Since October 1990, new round cells are identified by dimensions: the truncated diameter in millimeters followed by the height in tenths of a millimeter. CR2032 is 20mm in diameter and 3.2mm high; CR17345 is 17mm by 34.5mm.",
+    "When a single dimension is 100mm or more, the code gives the diameter in millimeters, a slash, and the height in millimeters, as in 6P222/162.",
+    "Ten size modifier letters, A to L without F and I, can follow a size code to add 0.0 to 0.9mm (or 0.00 to 0.09mm) to a maximum dimension. Wikipedia gives LR2616J as 26.2mm by 1.67mm and LR8D425 (AAAA) as 8.8mm by 42.5mm.",
     "IEC 60086 has defined this coding system since 1992. The first IEC battery size standards were issued in 1957.",
     "IEC 60086-3 watch batteries add electrolyte and drain suffixes: P for potassium hydroxide, S for sodium hydroxide, SW for low drain and W for high drain, as in SR626SW.",
     "NiCd (K) and NiMH (H) cylindrical cells that are dimensionally interchangeable with primary cells use the primary designation with K or H as the system letter, as in HR6 (IEC 61951-1 and 61951-2). Other cylindrical cells use KR or HR, a discharge rate letter (L, M, H or X), optional T, U or R, then maximum diameter and height in millimeters, as in KRL 33/62.",
-    "IEC 61960-3 designates lithium-ion cells as A1 A2 A3 N2/N3/N4: negative electrode letter, positive electrode letter, shape letter (R cylindrical, P prismatic), then maximum diameter or thickness, width (prismatic only) and maximum height, each in millimeters rounded up to the next whole number. A dimension under 1 mm is written in tenths of a millimeter as tN.",
+    "IEC 61960-3 designates lithium-ion cells as A1 A2 A3 N2/N3/N4: negative electrode letter, positive electrode letter, shape letter (R cylindrical, P prismatic), then maximum diameter or thickness, width (prismatic only) and maximum height, each in millimeters rounded up to the next whole number. A dimension under 1mm is written in tenths of a millimeter as tN.",
     "For lithium-ion batteries, IEC 61960-3 adds the number of series cells in front and, when greater than one, a hyphen and the number of parallel cells at the end: 1ICR20/70, 2ICP20/34/70, 1ICP20/68/70-2.",
-    "IEC 61960-3 examples: ICR19/66 is a cylindrical cell with a carbon negative and a cobalt-based positive, at most 19 mm in diameter and 66 mm high. ICPt9/35/48 is a prismatic cell 0.9 mm thick.",
-    "Five-digit lithium-ion size names such as 18650 and 21700 are not IEC 61960 designations. They follow the IEC 60086 round-cell pattern of diameter in millimeters and height in tenths of a millimeter (18650 is 18 mm by 65.0 mm), and are often paired with IEC 61960 letters as in INR18650.",
+    "IEC 61960-3 examples: ICR19/66 is a cylindrical cell with a carbon negative and a cobalt-based positive, at most 19mm in diameter and 66mm high. ICPt9/35/48 is a prismatic cell 0.9mm thick.",
+    "Five-digit lithium-ion size names such as 18650 and 21700 are not IEC 61960 designations. They follow the IEC 60086 round-cell pattern of diameter in millimeters and height in tenths of a millimeter (18650 is 18mm by 65.0mm), and are often paired with IEC 61960 letters as in INR18650.",
     "In IEC 61960-3, iron phosphate is Fp and F alone is iron, so a strict designation for a cylindrical lithium iron phosphate cell with a carbon negative begins IFpR.",
     "ANSI C18 uses a size number plus a chemistry suffix: 13 is D, 14 is C, 15 is AA, 24 is AAA and 25 is AAAA, so 15A is an alkaline AA. Coin cells were assigned size codes in the 5000 range, as in 5004LC (CR2032). ANSI and IEC sizes are harmonized, so an R20 cell has the same dimensions as an ANSI 13 cell."
   ],
@@ -574,14 +574,14 @@
       "size": "F",
       "diameter_mm": 32,
       "height_mm": 91,
-      "note": "Battery nomenclature lists 32 mm diameter; List of battery sizes lists 33 mm. Four F cells are often found in 6 V lantern batteries."
+      "note": "Battery nomenclature lists 32mm diameter; List of battery sizes lists 33mm. Four F cells are often found in 6V lantern batteries."
     },
     {
       "code": "R12",
       "size": "B",
       "diameter_mm": 21.5,
       "height_mm": 60,
-      "note": "Most commonly found inside the European 4.5 V lantern battery (3R12)."
+      "note": "Most commonly found inside the European 4.5V lantern battery (3R12)."
     },
     {
       "code": "R23",
@@ -602,13 +602,13 @@
     },
     {
       "code": "R61",
-      "size": "One of the six inside a 6LR61 9 V battery",
-      "note": "Six R61 cells in series form most alkaline 9 V batteries. Slightly smaller than an LR8D425 (AAAA) cell."
+      "size": "One of the six inside a 6LR61 9V battery",
+      "note": "Six R61 cells in series form most alkaline 9V batteries. Slightly smaller than an LR8D425 (AAAA) cell."
     },
     {
       "code": "F22",
-      "size": "One of the six flat layers inside a 6F22 9 V battery",
-      "note": "Six flat cells stacked in series form the zinc-carbon 9 V battery."
+      "size": "One of the six flat layers inside a 6F22 9V battery",
+      "note": "Six flat cells stacked in series form the zinc-carbon 9V battery."
     },
     {
       "code": "R8D425",
@@ -849,7 +849,7 @@
       "accessed": "2026-11-22",
       "kind": "standard",
       "covers": [
-        "zinc-air nominal voltage 1.4 V or 1.45 V"
+        "zinc-air nominal voltage 1.4V or 1.45V"
       ]
     },
     {

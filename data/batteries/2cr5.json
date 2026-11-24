@@ -52,7 +52,7 @@
       "min": 43.5,
       "max": 45
     },
-    "note": "Width is the long side of the two-lobed top view. The datasheet also shows a 16.4 mm maximum and 15.6 mm minimum dimension on the lobe outline.",
+    "note": "Width is the long side of the two-lobed top view. The datasheet also shows a 16.4mm maximum and 15.6mm minimum dimension on the lobe outline.",
     "sources": [
       "energizer-2cr5"
     ]
@@ -60,7 +60,7 @@
   "geometry": {
     "cells": 2,
     "variant": "2cr5",
-    "note": "Two cylindrical batteries side by side in one keyed wrap. Both terminals sit on one end face as two small square contacts, recessed in the wrap, marked - and +, per the datasheet drawing. Wikipedia gives a 16 mm center-to-center terminal spacing."
+    "note": "Two cylindrical batteries side by side in one keyed wrap. Both terminals sit on one end face as two small square contacts, recessed in the wrap, marked - and +, per the datasheet drawing. Wikipedia gives a 16mm center-to-center terminal spacing."
   },
   "variants": [
     {
@@ -71,7 +71,7 @@
       },
       "capacity_mah": {
         "typical": 1500,
-        "conditions": "200 ohm continuous, 21 °C; the datasheet prints the end point as 2.0 V, while its service table reads 58 hours to 4.0 V"
+        "conditions": "200 ohm continuous, 21°C; the datasheet prints the end point as 2.0V, while its service table reads 58 hours to 4.0V"
       },
       "weight_g": 40,
       "max_continuous_ma": 1500,
@@ -103,7 +103,7 @@
     {
       "id": "cr-p2",
       "relation": "does-not-fit",
-      "note": "The CR-P2 is a similar 6 V pack with a different footprint and contact layout, and the keyed shapes do not fit each other."
+      "note": "The CR-P2 is a similar 6V pack with a different footprint and contact layout, and the keyed shapes do not fit each other."
     }
   ],
   "safety": [

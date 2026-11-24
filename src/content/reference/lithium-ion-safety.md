@@ -1,6 +1,6 @@
 ---
 title: "Lithium-ion battery safety"
-description: "Stop using a lithium-ion battery with a damaged wrapper, a dented or swollen case, or an electrolyte smell. Most charge to 4.2 V and discharge no lower than 2.5 V; LFP charges to 3.65 V."
+description: "Stop using a lithium-ion battery with a damaged wrapper, a dented or swollen case, or an electrolyte smell. Most charge to 4.2V and discharge no lower than 2.5V; LFP charges to 3.65V."
 updated: 2026-11-22
 order: 60
 related: [18650, 21700, 26650, 14500, 16340, 18350, 10440, 4680]
@@ -75,7 +75,7 @@ sources:
     accessed: 2026-11-22
 ---
 
-Stop using a lithium-ion battery that has a damaged plastic wrapper, a dented or swollen case, or an electrolyte smell, according to Samsung SDI's battery specification. If one overheats, hisses or bulges, Battery University says to move the device away from anything that can burn, onto a surface that cannot. Most lithium-ion batteries with cobalt, nickel, manganese or aluminum cathodes (the positive side) are charged to 4.20 V per cell using a constant-current, then constant-voltage (CC/CV) method, and discharged no lower than 2.5 V. Lithium iron phosphate (LFP) batteries charge to 3.65 V. Makers prohibit trickle charging after full charge and specify temperature windows for charging.
+Stop using a lithium-ion battery that has a damaged plastic wrapper, a dented or swollen case, or an electrolyte smell, according to Samsung SDI's battery specification. If one overheats, hisses or bulges, Battery University says to move the device away from anything that can burn, onto a surface that cannot. Most lithium-ion batteries with cobalt, nickel, manganese or aluminum cathodes (the positive side) are charged to 4.20V per cell using a constant-current, then constant-voltage (CC/CV) method, and discharged no lower than 2.5V. Lithium iron phosphate (LFP) batteries charge to 3.65V. Makers prohibit trickle charging after full charge and specify temperature windows for charging.
 
 ## If a battery is swollen, damaged or recalled
 
@@ -93,7 +93,7 @@ The FAA prohibits damaged or recalled batteries on passenger aircraft unless the
 
 Published storage guidance points to a partial charge, a cool location and a dry environment:
 
-- **Battery University (BU-702):** store at around 40 percent state of charge, which most lithium-ion batteries show as about 3.82 V open-circuit at room temperature after a 90-minute rest; the recommended storage temperature for most batteries is 15°C (59°F).
+- **Battery University (BU-702):** store at around 40 percent state of charge, which most lithium-ion batteries show as about 3.82V open-circuit at room temperature after a 90-minute rest; the recommended storage temperature for most batteries is 15°C (59°F).
 - **Samsung SDI (INR18650-30Q):** batteries ship at 50 ± 5 percent state of charge, and for storage of 3 months or more the specification "strongly" recommends a dry, low-temperature location.
 - **Panasonic (NCR18650B):** storage temperature range -20°C to 50°C.
 
@@ -107,15 +107,15 @@ Makers' datasheets state the same method with specific numbers:
 
 | Battery | Charge method | Charge voltage | Charge termination | Discharge cutoff | Charge temperature |
 |---|---|---|---|---|---|
-| Panasonic NCR18650B | CC-CV, 0.5C max | 4.20 V | 65 mA | 2.50 V | 0 to 45°C |
-| Molicel INR-18650-P28A | CC-CV, 2.8 A standard | 4.2 V | 50 mA | 2.5 V | 0 to 60°C |
-| Samsung INR18650-30Q | CC-CV, 1.5 A standard | 4.20 ± 0.05 V | 150 mA | 2.5 V | 0 to 50°C |
+| Panasonic NCR18650B | CC-CV, 0.5C max | 4.20V | 65mA | 2.50V | 0 to 45°C |
+| Molicel INR-18650-P28A | CC-CV, 2.8A standard | 4.2V | 50mA | 2.5V | 0 to 60°C |
+| Samsung INR18650-30Q | CC-CV, 1.5A standard | 4.20 ± 0.05V | 150mA | 2.5V | 0 to 50°C |
 
-Panasonic's datasheet adds that below 10°C the NCR18650B should be charged at a 0.25C rate. Battery University gives the general tolerance for 4.20 V types as ±50 mV per cell and notes that some high-capacity batteries are rated to 4.30 V; the battery's own datasheet governs.
+Panasonic's datasheet adds that below 10°C the NCR18650B should be charged at a 0.25C rate. Battery University gives the general tolerance for 4.20V types as ±50mV per cell and notes that some high-capacity batteries are rated to 4.30V; the battery's own datasheet governs.
 
 ### Lithium iron phosphate
 
-[LFP](/chemistry/lithium-iron-phosphate) batteries use a lower voltage window. Battery University's BU-205 lists LFP at 3.20 to 3.30 V nominal (its rated voltage), with a typical operating range of 2.5 to 3.65 V per cell, and states that LFP "charges to 3.65V." A charger set for 4.2 V batteries is not set correctly for LFP. Battery University also notes that lithium systems, LFP included, should not receive the float charge that lead-acid chargers apply.
+[LFP](/chemistry/lithium-iron-phosphate) batteries use a lower voltage window. Battery University's BU-205 lists LFP at 3.20 to 3.30V nominal (its rated voltage), with a typical operating range of 2.5 to 3.65V per cell, and states that LFP "charges to 3.65V." A charger set for 4.2V batteries is not set correctly for LFP. Battery University also notes that lithium systems, LFP included, should not receive the float charge that lead-acid chargers apply.
 
 ### Temperature limits
 
@@ -123,20 +123,20 @@ Battery University's BU-410 states that Li-ion can be fast-charged from 5°C to 
 
 ## How low to discharge
 
-All three datasheets above set the end of discharge at 2.5 V. Battery University's BU-802b states that lithium-ion should not be discharged below 2.50 V per cell, that the protection circuit in a pack turns off below that point, and that copper dendrites can grow if a battery sits at low voltage for longer than a week, raising self-discharge and potentially compromising safety.
+All three datasheets above set the end of discharge at 2.5V. Battery University's BU-802b states that lithium-ion should not be discharged below 2.50V per cell, that the protection circuit in a pack turns off below that point, and that copper dendrites can grow if a battery sits at low voltage for longer than a week, raising self-discharge and potentially compromising safety.
 
 ## Protected and unprotected batteries
 
 A datasheet sets limits; something else has to enforce them. A lithium-ion pack is built from one or more cells, the single units inside it. Battery University's BU-304b calls a protection circuit mandatory for Li-ion packs and lists some or all of these safeguards, with safety governed by IEC 62133:
 
-- an electronic circuit that keeps any cell from exceeding 4.30 V on charge;
-- a control circuit that cuts the current at about 2.20 V per cell to prevent over-discharge;
+- an electronic circuit that keeps any cell from exceeding 4.30V on charge;
+- a control circuit that cuts the current at about 2.20V per cell to prevent over-discharge;
 - a fuse that opens if a cell's skin temperature approaches 90°C; and
 - inside each cell, a PTC device and a circuit interrupt device (CID) that opens at an internal pressure of 1,000 kPa (145 psi).
 
 Battery University adds that protection circuits only guard against outside abuse such as a short or a faulty charger; they cannot stop an internal defect once it starts. Samsung SDI's specification for the INR18650-30Q states that the battery "should be designed to be connected only to the specified charger and system."
 
-Some single batteries sold in stores carry their own circuit. Ansmann's datasheet for its 1.5 V lithium-ion AA (1312-0036) lists integrated protective circuitry against overcharging, overload, short circuit and deep discharge, and XTAR's datasheet for its 1.5 V AA lists the battery as protected. A battery without such a circuit relies on the charger and the device to keep it within its datasheet limits.
+Some single batteries sold in stores carry their own circuit. Ansmann's datasheet for its 1.5V lithium-ion AA (1312-0036) lists integrated protective circuitry against overcharging, overload, short circuit and deep discharge, and XTAR's datasheet for its 1.5V AA lists the battery as protected. A battery without such a circuit relies on the charger and the device to keep it within its datasheet limits.
 
 ## The wrapper and the case
 

@@ -21,7 +21,7 @@
     "height": {
       "nominal": 18
     },
-    "note": "Nominal size from the size code; no datasheet was fetched for this size. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Nominal size from the size code; no datasheet was fetched for this size. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "wiki-sizes"
     ]
@@ -45,7 +45,7 @@
         "nominal": 3.7,
         "charge_max": 4.2
       },
-      "notes": "The reference table lists about 90 mAh for this size. Nominal voltage 3.7 V is the common listing value; no 10180 datasheet was fetched.",
+      "notes": "The reference table lists about 90mAh for this size. Nominal voltage 3.7V is the common listing value; no 10180 datasheet was fetched.",
       "sources": [
         "wiki-sizes"
       ]
@@ -58,13 +58,13 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2V for cobalt, nickel and manganese chemistries, 3.65V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
     "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100Wh each (FAA PackSafe)."
   ],
-  "notes": "Size code: 10 mm diameter, 18 mm length, 0 for cylindrical. Sometimes called 1/3 AAA.",
+  "notes": "Size code: 10mm diameter, 18mm length, 0 for cylindrical. Sometimes called 1/3 AAA.",
   "sources": [
     {
       "id": "wiki-sizes",

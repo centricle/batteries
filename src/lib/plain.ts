@@ -107,10 +107,10 @@ function sizeParts(b: B): Part[] {
   return [[d.height.nominal, 'tall'], [w, 'wide'], [p, p / w < 0.75 ? 'thick' : 'deep']];
 }
 
-/** "50.5 mm long and 14.5 mm across (about 2 in by 9/16 in)". */
+/** "50.5mm long and 14.5mm across (about 2 in by 9/16 in)". */
 export function plainSize(b: B, opts: { inches?: boolean } = {}): string {
   const parts = sizeParts(b);
-  const mm = list(parts.map(([n, w]) => `${num(n)} mm ${w}`));
+  const mm = list(parts.map(([n, w]) => `${num(n)}mm ${w}`));
   if (opts.inches === false) return mm;
   return `${mm} (about ${parts.map(([n]) => inFrac(n)).join(' by ')})`;
 }
@@ -308,11 +308,11 @@ export function plainRechargeable(b: B): string {
   return base;
 }
 
-/** Voltage written out by kind, one line per voltage: "1.5 V alkaline, lithium
- *  and heavy duty", "1.2 V rechargeable NiMH". Kinds no longer made are left
+/** Voltage written out by kind, one line per voltage: "1.5V alkaline, lithium
+ *  and heavy duty", "1.2V rechargeable NiMH". Kinds no longer made are left
  *  to the full table when anything current remains. A same-size battery sold
  *  under another name gets its own line when its voltage differs:
- *  "3.6 V rechargeable, sold as LIR2032". */
+ *  "3.6V rechargeable, sold as LIR2032". */
 export function voltageLines(b: B, isCurrent: (chemistry: string) => boolean = () => true): string[] {
   const core = coreVariants(b);
   const current = core.filter((v) => isCurrent(v.chemistry));
@@ -326,10 +326,10 @@ export function voltageLines(b: B, isCurrent: (chemistry: string) => boolean = (
     const w = kindWord(k.chemistry).fine;
     if (!l.words.includes(w)) l.words.push(w);
   }
-  const out = [...lines.values()].map((l) => `${l.phrase} V ${l.rech ? 'rechargeable ' : ''}${list(l.words)}`);
+  const out = [...lines.values()].map((l) => `${l.phrase}V ${l.rech ? 'rechargeable ' : ''}${list(l.words)}`);
   for (const v of b.variants.filter((x) => soldAsOther(b, x))) {
     const same = use.some((c) => c.voltage.nominal === v.voltage.nominal && c.rechargeable === v.rechargeable);
-    const line = `${num(v.voltage.nominal)} V${v.rechargeable ? ' rechargeable' : ''}, sold as ${v.label}`;
+    const line = `${num(v.voltage.nominal)}V${v.rechargeable ? ' rechargeable' : ''}, sold as ${v.label}`;
     if (!same && !out.includes(line)) out.push(line);
   }
   return out;
@@ -367,18 +367,18 @@ const oz = (g: number) => {
   return `${num(Number(o.toFixed(o < 0.1 ? 2 : 1)))} oz`;
 };
 
-/** "About 23 g (0.8 oz), alkaline": the first listed kind's weight, else the
+/** "About 23g (0.8 oz), alkaline": the first listed kind's weight, else the
  *  range across the listed products. */
 export function plainWeight(b: B): string {
   const pv = b.variants[0];
-  if (pv.weight_g) return `About ${num(pv.weight_g)} g (${oz(pv.weight_g)}), ${soldAsOther(b, pv) ? pv.label : kindWord(pv.chemistry).fine}`;
+  if (pv.weight_g) return `About ${num(pv.weight_g)}g (${oz(pv.weight_g)}), ${soldAsOther(b, pv) ? pv.label : kindWord(pv.chemistry).fine}`;
   const ws = b.variants.map((v) => v.weight_g).filter((w): w is number => !!w);
   if (!ws.length) return 'Not published';
   const lo = Math.min(...ws);
   const hi = Math.max(...ws);
-  if (lo === hi) return `About ${num(lo)} g (${oz(lo)})`;
+  if (lo === hi) return `About ${num(lo)}g (${oz(lo)})`;
   const [olo, ohi] = [oz(lo), oz(hi)];
-  return `${num(lo)} to ${num(hi)} g (${olo === ohi ? olo : `${olo.replace(' oz', '')} to ${ohi}`}), depending on the product`;
+  return `${num(lo)} to ${num(hi)}g (${olo === ohi ? olo : `${olo.replace(' oz', '')} to ${ohi}`}), depending on the product`;
 }
 
 // Well-known makers whose names a shopper finds on a pack, in this order.

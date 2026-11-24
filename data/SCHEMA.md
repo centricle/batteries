@@ -41,7 +41,7 @@ one file in `data/chemistries/<id>.json`. Both are validated against
 | `geometry` | Hints for the 3D model and drawing, all optional. `positive` / `negative`: `{ style, diameter?, height? }`. Cylinder styles: positive `button` (raised nipple) or `flat`; negative `flat` or `recessed`. Disc: positive `can`, negative `cap` with the cap `diameter` if published. 9V: `snap-male` (+), `snap-female` (−). Lantern: `spring` or `screw`. Flatpack: `strip`. `tab_color` / `tab_color_name` for zinc-air sticker colors (`#FFD100`, `"Yellow"`). `cells` for multi-cell packs. `variant` names a special builder (`2cr5`, `cr-p2`, `cr-v3`, `2cr1-3n`). |
 | `variants` | One per chemistry sold in this size. See below. Order by market prevalence. |
 | `devices` | 4 to 12 generic device categories. |
-| `interchange` | Relations to other entries by id: `equivalent` (drop-in), `same-size` (fits, different behavior, e.g. LR44 vs SR44 discharge curve), `fits-with-caveat` (fits with a caveat, e.g. CR2025 in a CR2032 holder), `does-not-fit` (does not fit or does not work, no hazard: CR2032 in a CR2025 holder, AAA in an AA holder), `do-not-substitute` (dangerous lookalike: 14500 vs AA at 3.7 V). One direction per entry: an entry on X with id Y means "a Y in place of an X", so it goes on the battery being replaced and its `note` describes Y in X's holder. Declare the other direction on Y if it is known. `note` is one plain sentence explaining why, and must agree with the relation (`scripts/validate.mjs` fails a "fits" relation whose note says it does not fit). |
+| `interchange` | Relations to other entries by id: `equivalent` (drop-in), `same-size` (fits, different behavior, e.g. LR44 vs SR44 discharge curve), `fits-with-caveat` (fits with a caveat, e.g. CR2025 in a CR2032 holder), `does-not-fit` (does not fit or does not work, no hazard: CR2032 in a CR2025 holder, AAA in an AA holder), `do-not-substitute` (dangerous lookalike: 14500 vs AA at 3.7V). One direction per entry: an entry on X with id Y means "a Y in place of an X", so it goes on the battery being replaced and its `note` describes Y in X's holder. Declare the other direction on Y if it is known. `note` is one plain sentence explaining why, and must agree with the relation (`scripts/validate.mjs` fails a "fits" relation whose note says it does not fit). |
 | `safety` | Plain sentences. Ingestion hazard for coin and button cells. Li-ion charge and discharge limits. |
 | `history` | Optional. Dated facts only (introduction year, standardization), with a source. |
 | `notes` | Optional. 1 to 3 sentences of context not captured elsewhere. |
@@ -52,11 +52,11 @@ one file in `data/chemistries/<id>.json`. Both are validated against
 
 | Field | Notes |
 |---|---|
-| `chemistry` | One of the ids in `CHEMISTRIES` (`src/lib/schema.mjs`). Li-ion subtypes (NMC, NCA, LCO, LMO) go in `subtype`; LiFePO4 is its own chemistry, `lithium-iron-phosphate`. 1.5 V USB-rechargeable Li-ion AA/AAA cells are `lithium-ion-regulated`. |
+| `chemistry` | One of the ids in `CHEMISTRIES` (`src/lib/schema.mjs`). Li-ion subtypes (NMC, NCA, LCO, LMO) go in `subtype`; LiFePO4 is its own chemistry, `lithium-iron-phosphate`. 1.5V USB-rechargeable Li-ion AA/AAA cells are `lithium-ion-regulated`. |
 | `label` | Optional display label when the chemistry name alone is ambiguous, e.g. `"High drain (INR)"`, `"Protected, button top"`. |
 | `rechargeable` | Boolean. |
 | `voltage` | `nominal` (required), `open_circuit` (fresh), `cutoff` (end-point used for rated capacity), `charge_max` (rechargeables). |
-| `capacity_mah` | `typical` and/or `range` `[low, high]` across products, and `conditions` (load and end voltage: `"25 mA continuous to 0.8 V, 21 °C"`). Capacity without conditions is nearly meaningless for primaries; capture them. |
+| `capacity_mah` | `typical` and/or `range` `[low, high]` across products, and `conditions` (load and end voltage: `"25mA continuous to 0.8V, 21°C"`). Capacity without conditions is nearly meaningless for primaries; capture them. |
 | `weight_g`, `max_continuous_ma`, `max_pulse_ma`, `internal_resistance_mohm`, `cycle_life`, `shelf_life_years`, `self_discharge`, `lithium_content_g` | As published. `lithium_content_g` matters for lithium metal shipping rules. |
 | `temperature_c` | Ranges `[min, max]` in °C: `operating`, `discharge`, `charge`, `storage`. |
 | `notes` | One or two sentences. |
@@ -70,7 +70,7 @@ A chemistry's `name` has no parentheses ("Lithium manganese dioxide"); its
 Every chemistry also has a `plain_name` and a `plain` sentence, which battery
 pages show to visitors. `plain_name` is the kind in a shopper's words, the plain
 word first and the technical abbreviation in parentheses: "Rechargeable (NiMH)",
-"Lithium (3 V)". `plain` is one or two sentences written only from the file's
+"Lithium (3V)". `plain` is one or two sentences written only from the file's
 own `summary`, `strengths` and `limitations`: no new claims, and no "cell".
 
 A battery may carry an optional `plain` string, a hand-written summary for the

@@ -2,7 +2,7 @@
   {
     "term": "Nominal voltage",
     "slug": "nominal-voltage",
-    "definition": "The voltage assigned to a cell or chemistry for identification, such as 1.5 V for alkaline, 1.2 V for NiMH and 3.6 to 3.7 V for lithium-ion. The actual terminal voltage varies with state of charge, load and temperature.",
+    "definition": "The voltage assigned to a cell or chemistry for identification, such as 1.5V for alkaline, 1.2V for NiMH and 3.6 to 3.7V for lithium-ion. The actual terminal voltage varies with state of charge, load and temperature.",
     "see_also": [
       "open-circuit-voltage",
       "closed-circuit-voltage",
@@ -41,7 +41,7 @@
   {
     "term": "Milliampere-hour (mAh)",
     "slug": "mah",
-    "definition": "A unit of electric charge: a current of 1 mA flowing for one hour, equal to 3.6 coulombs. A capacity in mAh depends on the discharge current and cutoff voltage, and does not compare energy between cells of different voltage.",
+    "definition": "A unit of electric charge: a current of 1mA flowing for one hour, equal to 3.6 coulombs. A capacity in mAh depends on the discharge current and cutoff voltage, and does not compare energy between cells of different voltage.",
     "see_also": [
       "capacity",
       "watt-hour",
@@ -61,7 +61,7 @@
   {
     "term": "C-rate",
     "slug": "c-rate",
-    "definition": "A charge or discharge current expressed relative to capacity. For a 2,000 mAh cell, 1C is 2,000 mA and 0.5C is 1,000 mA; a 1C discharge nominally empties the cell in about one hour.",
+    "definition": "A charge or discharge current expressed relative to capacity. For a 2,000mAh cell, 1C is 2,000mA and 0.5C is 1,000mA; a 1C discharge nominally empties the cell in about one hour.",
     "see_also": [
       "capacity",
       "mah",
@@ -81,7 +81,7 @@
   {
     "term": "Self-discharge",
     "slug": "self-discharge",
-    "definition": "The gradual loss of stored charge in a cell that is not connected to a load, caused by internal side reactions. Rates range from under 1% per year for lithium thionyl chloride to about 10% per month for nickel-cadmium at 20 °C, and rise with temperature.",
+    "definition": "The gradual loss of stored charge in a cell that is not connected to a load, caused by internal side reactions. Rates range from under 1% per year for lithium thionyl chloride to about 10% per month for nickel-cadmium at 20°C, and rise with temperature.",
     "see_also": [
       "shelf-life",
       "low-self-discharge",
@@ -186,7 +186,7 @@
   {
     "term": "Flash amperage",
     "slug": "flash-amperage",
-    "definition": "The maximum short-circuit current of a fresh cell, measured briefly with an ammeter. It is quoted mainly for carbon zinc cells; Energizer lists about 5 A for its zinc chloride AA.",
+    "definition": "The maximum short-circuit current of a fresh cell, measured briefly with an ammeter. It is quoted mainly for carbon zinc cells; Energizer lists about 5A for its zinc chloride AA.",
     "see_also": [
       "internal-resistance",
       "high-drain"
@@ -283,7 +283,7 @@
   {
     "term": "PTC device",
     "slug": "ptc",
-    "definition": "A positive temperature coefficient component whose resistance rises sharply as it heats, limiting current during a short circuit or overload. Energizer's lithium AA uses one that limits current above about 85 °C, and similar devices are built into the caps of many cylindrical lithium cells.",
+    "definition": "A positive temperature coefficient component whose resistance rises sharply as it heats, limiting current during a short circuit or overload. Energizer's lithium AA uses one that limits current above about 85°C, and similar devices are built into the caps of many cylindrical lithium cells.",
     "see_also": [
       "protection-circuit",
       "thermal-runaway"
@@ -292,7 +292,7 @@
   {
     "term": "Protection circuit",
     "slug": "protection-circuit",
-    "definition": "A small circuit attached to a lithium-ion cell or pack that disconnects it on overcharge, over-discharge, overcurrent or short circuit. It is what makes a protected cell, and it is part of every regulated 1.5 V lithium-ion cell.",
+    "definition": "A small circuit attached to a lithium-ion cell or pack that disconnects it on overcharge, over-discharge, overcurrent or short circuit. It is what makes a protected cell, and it is part of every regulated 1.5V lithium-ion cell.",
     "see_also": [
       "protected-cell",
       "bms",
@@ -338,7 +338,7 @@
   {
     "term": "Battery",
     "slug": "battery",
-    "definition": "Strictly, two or more cells connected in series or parallel, such as a 9 V battery of six cells. In common use, a single cell is also called a battery.",
+    "definition": "Strictly, two or more cells connected in series or parallel, such as a 9V battery of six cells. In common use, a single cell is also called a battery.",
     "see_also": [
       "cell",
       "series-and-parallel"
@@ -402,7 +402,7 @@
   {
     "term": "Coin cell",
     "slug": "coin-cell",
-    "definition": "A flat round cell whose diameter is much larger than its height, usually a 3 V lithium cell such as the CR2032. Coin cells of 20 mm or more cause the most serious injuries when swallowed.",
+    "definition": "A flat round cell whose diameter is much larger than its height, usually a 3V lithium cell such as the CR2032. Coin cells of 20mm or more cause the most serious injuries when swallowed.",
     "see_also": [
       "button-cell",
       "ingestion-hazard"
@@ -420,7 +420,7 @@
   {
     "term": "Low self-discharge (LSD)",
     "slug": "low-self-discharge",
-    "definition": "A NiMH design that keeps more charge in storage than standard NiMH. Sanyo introduced it in 2005 as Eneloop, and manufacturers claim 70 to 85% of capacity retained after one year at 20 °C.",
+    "definition": "A NiMH design that keeps more charge in storage than standard NiMH. Sanyo introduced it in 2005 as Eneloop, and manufacturers claim 70 to 85% of capacity retained after one year at 20°C.",
     "see_also": [
       "self-discharge",
       "shelf-life"
@@ -525,7 +525,7 @@
   {
     "term": "Ingestion hazard",
     "slug": "ingestion-hazard",
-    "definition": "A swallowed button or coin cell can react with body fluids and cause severe internal burns, damaging the esophagus within two hours. Lithium coin cells of 20 mm diameter or more cause the most serious injuries, even when spent.",
+    "definition": "A swallowed button or coin cell can react with body fluids and cause severe internal burns, damaging the esophagus within two hours. Lithium coin cells of 20mm diameter or more cause the most serious injuries, even when spent.",
     "see_also": [
       "coin-cell",
       "button-cell"
@@ -544,7 +544,7 @@
   {
     "term": "Over-discharge",
     "slug": "over-discharge",
-    "definition": "Discharging a cell below its recommended cutoff voltage. It can cause cell reversal in series strings and permanent damage in lithium-ion cells; Wikipedia gives 2.5 V per cell as the limit for most lithium iron phosphate cells.",
+    "definition": "Discharging a cell below its recommended cutoff voltage. It can cause cell reversal in series strings and permanent damage in lithium-ion cells; Wikipedia gives 2.5V per cell as the limit for most lithium iron phosphate cells.",
     "see_also": [
       "cutoff-voltage",
       "cell-reversal",
@@ -572,7 +572,7 @@
   {
     "term": "CC-CV charging",
     "slug": "cc-cv",
-    "definition": "Constant current, constant voltage charging: the charger supplies a fixed current until the cell reaches a set voltage, then holds that voltage while the current tapers off. Lithium-ion cells are typically charged this way to 4.2 V.",
+    "definition": "Constant current, constant voltage charging: the charger supplies a fixed current until the cell reaches a set voltage, then holds that voltage while the current tapers off. Lithium-ion cells are typically charged this way to 4.2V.",
     "see_also": [
       "trickle-charge",
       "protection-circuit"
@@ -581,7 +581,7 @@
   {
     "term": "Memory effect",
     "slug": "memory-effect",
-    "definition": "A loss of usable capacity in nickel-cadmium cells that are repeatedly recharged after only partial discharge; the cell appears to remember the shorter cycle. Energizer reports a voltage depression of about 150 mV and describes the effect as no longer a concern for NiMH.",
+    "definition": "A loss of usable capacity in nickel-cadmium cells that are repeatedly recharged after only partial discharge; the cell appears to remember the shorter cycle. Energizer reports a voltage depression of about 150mV and describes the effect as no longer a concern for NiMH.",
     "see_also": [
       "capacity-fade",
       "secondary-cell"
@@ -656,7 +656,7 @@
   {
     "term": "LCO",
     "slug": "lco",
-    "definition": "Lithium cobalt oxide (LiCoO2), the cathode of the first commercial lithium-ion cells sold by Sony in 1991. Battery University lists 3.6 V nominal, 150 to 200 Wh/kg and a thermal runaway onset near 150 °C.",
+    "definition": "Lithium cobalt oxide (LiCoO2), the cathode of the first commercial lithium-ion cells sold by Sony in 1991. Battery University lists 3.6V nominal, 150 to 200Wh/kg and a thermal runaway onset near 150°C.",
     "see_also": [
       "icr",
       "nmc",
@@ -666,7 +666,7 @@
   {
     "term": "LMO",
     "slug": "lmo",
-    "definition": "Lithium manganese oxide (LiMn2O4), a lithium-ion cathode with high power and lower capacity, often blended with NMC. Battery University lists 3.7 V nominal and 100 to 150 Wh/kg.",
+    "definition": "Lithium manganese oxide (LiMn2O4), a lithium-ion cathode with high power and lower capacity, often blended with NMC. Battery University lists 3.7V nominal and 100 to 150Wh/kg.",
     "see_also": [
       "imr",
       "nmc"
@@ -675,7 +675,7 @@
   {
     "term": "NMC",
     "slug": "nmc",
-    "definition": "Lithium nickel manganese cobalt oxide (LiNiMnCoO2), also written NCM, a lithium-ion cathode used in e-bikes, power tools and electric vehicles. Battery University lists 3.6 to 3.7 V nominal and 150 to 220 Wh/kg.",
+    "definition": "Lithium nickel manganese cobalt oxide (LiNiMnCoO2), also written NCM, a lithium-ion cathode used in e-bikes, power tools and electric vehicles. Battery University lists 3.6 to 3.7V nominal and 150 to 220Wh/kg.",
     "see_also": [
       "nca",
       "inr",
@@ -685,7 +685,7 @@
   {
     "term": "NCA",
     "slug": "nca",
-    "definition": "Lithium nickel cobalt aluminum oxide (LiNiCoAlO2), a high-capacity lithium-ion cathode. Battery University lists 3.6 V nominal and 200 to 260 Wh/kg.",
+    "definition": "Lithium nickel cobalt aluminum oxide (LiNiCoAlO2), a high-capacity lithium-ion cathode. Battery University lists 3.6V nominal and 200 to 260Wh/kg.",
     "see_also": [
       "nmc",
       "inr"
@@ -694,7 +694,7 @@
   {
     "term": "LFP",
     "slug": "lfp",
-    "definition": "Lithium iron phosphate (LiFePO4), a lithium-ion cathode with 3.2 V nominal voltage, long cycle life and high thermal stability, and no nickel or cobalt. Its specific energy is lower than NMC or NCA.",
+    "definition": "Lithium iron phosphate (LiFePO4), a lithium-ion cathode with 3.2V nominal voltage, long cycle life and high thermal stability, and no nickel or cobalt. Its specific energy is lower than NMC or NCA.",
     "see_also": [
       "ifr",
       "nmc",
@@ -704,7 +704,7 @@
   {
     "term": "LTO",
     "slug": "lto",
-    "definition": "Lithium titanate (Li4Ti5O12), used in place of graphite as a lithium-ion anode. LTO cells run at about 2.4 V and accept very fast and cold charging over thousands of cycles, with low energy density.",
+    "definition": "Lithium titanate (Li4Ti5O12), used in place of graphite as a lithium-ion anode. LTO cells run at about 2.4V and accept very fast and cold charging over thousands of cycles, with low energy density.",
     "see_also": [
       "sei",
       "lfp"

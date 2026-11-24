@@ -17,7 +17,7 @@ const rows = Object.keys(CHEM_FALLBACK)
   })
   .filter((r) => r.c || r.n)
   .sort((a, b) => b.n - a.n);
-const volts = (v: number) => `${fmt(v)} V`;
+const volts = (v: number) => `${fmt(v)}V`;
 const voltWords = (v: number) => `${fmt(v)} ${v === 1 ? 'volt' : 'volts'}`;
 const sizesLine = (n: number) => (n === 0 ? 'No sizes listed here yet.' : n === 1 ? 'One size on this site.' : `${n} sizes on this site.`);
 const STATUS: Record<string, string> = { legacy: 'Older kind, still sold', obsolete: 'No longer made' };

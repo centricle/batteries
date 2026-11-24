@@ -13,7 +13,7 @@
     "cutoff": 2,
     "charge_max": 3.2
   },
-  "self_discharge": "2% per year at 20 °C (Panasonic ML series)",
+  "self_discharge": "2% per year at 20°C (Panasonic ML series)",
   "temperature_c": {
     "operating": [
       -20,
@@ -21,21 +21,21 @@
     ]
   },
   "color": "#8FAF8D",
-  "summary": "Rechargeable lithium manganese coin batteries, sold with the ML prefix, pair a lithium-aluminum alloy anode with a manganese oxide cathode for 3.0 V nominal. They are charged at a constant 2.8 to 3.2 V and used for memory and real-time clock backup.",
-  "body": "## How it works\n\nPanasonic's ML series uses a manganese compound oxide as the positive electrode, a lithium-aluminum alloy as the negative electrode, and a non-aqueous solvent as the electrolyte. Wikipedia lists the Li/Al and manganese dioxide ML battery as a rechargeable lithium metal system at 3 V, mainly marketed by Maxell. The batteries are coin format; Panasonic's ML2020, for example, is 20.0 mm in diameter and 2.0 mm high.\n\n## Discharge behavior\n\nNominal voltage is 3.0 V. Panasonic rates the ML2020 at 45.0 mAh to a 2.0 V cutoff at 20 °C, with a continuous drain of 0.12 mA, so these batteries are built for very small currents. The operating range is −20 to 60 °C, and Panasonic gives self-discharge of 2% per year at 20 °C. Cycle life is about 1,000 cycles at 10% depth of discharge relative to nominal capacity.\n\nCharging is constant-voltage. Panasonic's guaranteed charging window is 2.8 to 3.2 V from −20 to 60 °C, with 3.1 V as the standard setting. Panasonic warns that trickle charging of the kind used for nickel-cadmium batteries must never be used, because the battery voltage rises to about 5 V and performance deteriorates. A charge voltage above the specification raises internal resistance, and a charge voltage around 4 V can corrode the positive terminal, which is the case, causing leakage. Below the specification, capacity does not fully recover.\n\n## Uses\n\nMemory backup and real-time clock (RTC) backup in drive recorders, PCs, radio and communication equipment, medical equipment and factory automation equipment, according to Panasonic's ML2020 datasheet. Panasonic Industry Europe also lists tracking and RFID, pagers and memory backup for mobile phones.\n\n## History\n\nPanasonic Industry Europe states that its ML series has been in production for more than 23 years.\n\n## Status\n\nCurrent. ML is a manufacturer prefix rather than an IEC designation. The digits of the ML2020 match its dimensions, 20.0 mm in diameter and 2.0 mm high.",
+  "summary": "Rechargeable lithium manganese coin batteries, sold with the ML prefix, pair a lithium-aluminum alloy anode with a manganese oxide cathode for 3.0V nominal. They are charged at a constant 2.8 to 3.2V and used for memory and real-time clock backup.",
+  "body": "## How it works\n\nPanasonic's ML series uses a manganese compound oxide as the positive electrode, a lithium-aluminum alloy as the negative electrode, and a non-aqueous solvent as the electrolyte. Wikipedia lists the Li/Al and manganese dioxide ML battery as a rechargeable lithium metal system at 3V, mainly marketed by Maxell. The batteries are coin format; Panasonic's ML2020, for example, is 20.0mm in diameter and 2.0mm high.\n\n## Discharge behavior\n\nNominal voltage is 3.0V. Panasonic rates the ML2020 at 45.0mAh to a 2.0V cutoff at 20°C, with a continuous drain of 0.12mA, so these batteries are built for very small currents. The operating range is −20 to 60°C, and Panasonic gives self-discharge of 2% per year at 20°C. Cycle life is about 1,000 cycles at 10% depth of discharge relative to nominal capacity.\n\nCharging is constant-voltage. Panasonic's guaranteed charging window is 2.8 to 3.2V from −20 to 60°C, with 3.1V as the standard setting. Panasonic warns that trickle charging of the kind used for nickel-cadmium batteries must never be used, because the battery voltage rises to about 5V and performance deteriorates. A charge voltage above the specification raises internal resistance, and a charge voltage around 4V can corrode the positive terminal, which is the case, causing leakage. Below the specification, capacity does not fully recover.\n\n## Uses\n\nMemory backup and real-time clock (RTC) backup in drive recorders, PCs, radio and communication equipment, medical equipment and factory automation equipment, according to Panasonic's ML2020 datasheet. Panasonic Industry Europe also lists tracking and RFID, pagers and memory backup for mobile phones.\n\n## History\n\nPanasonic Industry Europe states that its ML series has been in production for more than 23 years.\n\n## Status\n\nCurrent. ML is a manufacturer prefix rather than an IEC designation. The digits of the ML2020 match its dimensions, 20.0mm in diameter and 2.0mm high.",
   "strengths": [
-    "Low self-discharge: 2% per year at 20 °C (Panasonic)",
+    "Low self-discharge: 2% per year at 20°C (Panasonic)",
     "About 1,000 cycles at 10% depth of discharge",
-    "Higher capacity than VL batteries of the same size (ML2020 45.0 mAh against VL2020 20.0 mAh)"
+    "Higher capacity than VL batteries of the same size (ML2020 45.0mAh against VL2020 20.0mAh)"
   ],
   "limitations": [
-    "Very low current: 0.12 mA continuous for the ML2020",
-    "Needs a constant-voltage charger set between 2.8 and 3.2 V",
+    "Very low current: 0.12mA continuous for the ML2020",
+    "Needs a constant-voltage charger set between 2.8 and 3.2V",
     "Cycle life is rated at 10% depth of discharge"
   ],
   "safety": [
-    "Never trickle charge: voltage rises to about 5 V (Panasonic)",
-    "A charge voltage near 4 V can corrode the case and cause leakage",
+    "Never trickle charge: voltage rises to about 5V (Panasonic)",
+    "A charge voltage near 4V can corrode the case and cause leakage",
     "Coin format carries the button battery ingestion hazard"
   ],
   "status": "current",

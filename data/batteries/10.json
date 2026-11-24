@@ -71,7 +71,7 @@
       "min": 3.3,
       "max": 3.6
     },
-    "note": "Datasheet gives a 3.0 mm minimum for the flat negative contact.",
+    "note": "Datasheet gives a 3.0mm minimum for the flat negative contact.",
     "sources": [
       "energizer-10"
     ]
@@ -100,7 +100,7 @@
           92,
           99
         ],
-        "conditions": "Power One p10: IEC hearing aid standard test to 1.05 V (1 mA base load, 5 mA 100 ms pulse every 2 h), 20 °C, 55% RH; 92 mAh under the IEC high drain test to 1.1 V"
+        "conditions": "Power One p10: IEC hearing aid standard test to 1.05V (1mA base load, 5mA 100ms pulse every 2h), 20°C, 55% RH; 92mAh under the IEC high drain test to 1.1V"
       },
       "weight_g": 0.3,
       "shelf_life_years": 4,
@@ -114,7 +114,7 @@
           30
         ]
       },
-      "notes": "Energizer, Rayovac and Power One list 1.45 V nominal. Rayovac rates 136 h in a hearing aid test (0.7 mA background, 3 mA pulse) and 90 h in the IEC standard test to 1.05 V at 21 °C.",
+      "notes": "Energizer, Rayovac and Power One list 1.45V nominal. Rayovac rates 136h in a hearing aid test (0.7mA background, 3mA pulse) and 90h in the IEC standard test to 1.05V at 21°C.",
       "sources": [
         "energizer-10",
         "rayovac-10",

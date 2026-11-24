@@ -1,6 +1,6 @@
 ---
 title: "Rechargeable vs. disposable AA batteries"
-description: "NiMH runs at 1.2 V and recharges hundreds to 2,100 times; alkaline and lithium AA run at 1.5 V once; 1.5 V Li-ion holds 1.5 V until nearly empty."
+description: "NiMH runs at 1.2V and recharges hundreds to 2,100 times; alkaline and lithium AA run at 1.5V once; 1.5V Li-ion holds 1.5V until nearly empty."
 updated: 2026-11-22
 order: 80
 related: [aa, aaa, 14500, 9v, c, d]
@@ -47,24 +47,24 @@ sources:
     accessed: 2026-11-22
 ---
 
-Alkaline and lithium AA batteries are single-use and rated at 1.5 V; rechargeable NiMH AA batteries are rated at 1.2 V (Energizer lists 1.25 V), and rechargeable lithium-ion AA batteries use a built-in converter to give a regulated 1.5 V. Which one costs less depends on the price, the charger and how many times the batteries are actually recharged, and the formula at the end of this page works it out. The four differ in voltage, in how the voltage holds up, in reuse and in how much charge they lose in storage. Energizer describes the alkaline discharge curve as sloping (the voltage falls steadily as the battery is used) and the lithium curve as flat (it stays level). Panasonic rates its eneloop AA for up to 2,100 charge cycles.
+Alkaline and lithium AA batteries are single-use and rated at 1.5V; rechargeable NiMH AA batteries are rated at 1.2V (Energizer lists 1.25V), and rechargeable lithium-ion AA batteries use a built-in converter to give a regulated 1.5V. Which one costs less depends on the price, the charger and how many times the batteries are actually recharged, and the formula at the end of this page works it out. The four differ in voltage, in how the voltage holds up, in reuse and in how much charge they lose in storage. Energizer describes the alkaline discharge curve as sloping (the voltage falls steadily as the battery is used) and the lithium curve as flat (it stays level). Panasonic rates its eneloop AA for up to 2,100 charge cycles.
 
 ## Side by side
 
 Each column below is a specific product, because published values belong to products rather than to kinds of battery in general.
 
-| Property | Alkaline (Energizer E91) | Lithium iron disulfide (Energizer L91) | NiMH (Panasonic eneloop BK-3MCCE) | 1.5 V lithium-ion (Ansmann 1312-0036; XTAR AA) |
+| Property | Alkaline (Energizer E91) | Lithium iron disulfide (Energizer L91) | NiMH (Panasonic eneloop BK-3MCCE) | 1.5V lithium-ion (Ansmann 1312-0036; XTAR AA) |
 |---|---|---|---|---|
-| Voltage (nominal) | 1.5 V | 1.5 V | 1.2 V | 1.5 V, regulated |
-| Voltage during discharge | Sloping | Flat | Flat | Holds 1.5 V for about 95% of runtime, then drops to 1.1 V (Ansmann) |
-| Capacity | About 2,600 mAh at 25 mA; about 1,350 mAh at 500 mA (to 0.8 V) | Not stated as a single figure in the handbook | 1,900 mAh minimum | 2,000 mAh nominal, 1,800 mAh minimum, 3.26 Wh (Ansmann); 2,500 mAh, 4,150 mWh (XTAR) |
+| Voltage (nominal) | 1.5V | 1.5V | 1.2V | 1.5V, regulated |
+| Voltage during discharge | Sloping | Flat | Flat | Holds 1.5V for about 95% of runtime, then drops to 1.1V (Ansmann) |
+| Capacity | About 2,600mAh at 25mA; about 1,350mAh at 500mA (to 0.8V) | Not stated as a single figure in the handbook | 1,900mAh minimum | 2,000mAh nominal, 1,800mAh minimum, 3.26Wh (Ansmann); 2,500mAh, 4,150mWh (XTAR) |
 | Recharge cycles | Single use | Single use | Up to 2,100 | Up to 1,500 (Ansmann); 1,200 (XTAR) |
 | Storage loss | About 3% per year at 20°C; 10-year shelf life at 21°C | About 95% of capacity retained after 20+ years | 70% of charge retained after up to 10 years | Not stated |
 | Operating temperature | -18°C to 55°C | -40°C to 60°C | -5°C to 50°C (discharge); 0°C to 40°C (charge) | -20°C to 60°C; XTAR charge 0°C to 45°C |
-| Maximum continuous current | Not stated | Not stated | Not stated | 2 A (both) |
-| Weight | 23.0 g | About 33% less than alkaline | Not stated | 19.5 g (XTAR) |
+| Maximum continuous current | Not stated | Not stated | Not stated | 2A (both) |
+| Weight | 23.0g | About 33% less than alkaline | Not stated | 19.5g (XTAR) |
 
-Sources: Energizer E91 datasheet and alkaline handbook; Energizer lithium handbook; Panasonic eneloop catalog 2015-2016; Ansmann and XTAR datasheets. The E91 capacities are approximate readings from Energizer's bar chart. Panasonic's cycle and retention figures come from its internal testing to IEC 61951-2. The NiMH rated voltage is Battery University's figure for nickel-based batteries; Energizer's NiMH handbook rates NiMH at 1.25 V.
+Sources: Energizer E91 datasheet and alkaline handbook; Energizer lithium handbook; Panasonic eneloop catalog 2015-2016; Ansmann and XTAR datasheets. The E91 capacities are approximate readings from Energizer's bar chart. Panasonic's cycle and retention figures come from its internal testing to IEC 61951-2. The NiMH rated voltage is Battery University's figure for nickel-based batteries; Energizer's NiMH handbook rates NiMH at 1.25V.
 
 ## How they behave in a device
 
@@ -74,20 +74,20 @@ Energizer's NiMH handbook summarizes the trade-offs between NiMH and the two sin
 - **Against single-use lithium:** NiMH "will not last as long as primary lithium (single cycle)," and both have relatively flat discharge curves.
 - **Reuse:** "several hundred cycles for NiMH," a figure from Energizer's 2010 handbook.
 
-Wikipedia's AA battery article adds that NiMH and lithium-ion AA batteries "can supply most of their capacity even when under a high current drain (0.5A and higher)," unlike alkaline and zinc-chloride batteries. Energizer's E91 chart shows the alkaline side of that: capacity at 500 mA is roughly half of capacity at 25 mA.
+Wikipedia's AA battery article adds that NiMH and lithium-ion AA batteries "can supply most of their capacity even when under a high current drain (0.5A and higher)," unlike alkaline and zinc-chloride batteries. Energizer's E91 chart shows the alkaline side of that: capacity at 500mA is roughly half of capacity at 25mA.
 
-A 1.5 V lithium-ion AA contains a lithium-ion cell and a step-down (buck) converter, according to Wikipedia. The converter holds the output near 1.5 V for most of the discharge. Ansmann's datasheet states that its battery holds 1.5 V for 95% of the runtime and drops to 1.1 V at about 5% remaining capacity "to signal to the user that the battery needs to be replaced." XTAR lists a "voltage at low power" of 1.1 V. Wikipedia describes the output of these batteries as having "virtually no drop over the discharge cycle, unlike other disposable or rechargeable cells."
+A 1.5V lithium-ion AA contains a lithium-ion cell and a step-down (buck) converter, according to Wikipedia. The converter holds the output near 1.5V for most of the discharge. Ansmann's datasheet states that its battery holds 1.5V for 95% of the runtime and drops to 1.1V at about 5% remaining capacity "to signal to the user that the battery needs to be replaced." XTAR lists a "voltage at low power" of 1.1V. Wikipedia describes the output of these batteries as having "virtually no drop over the discharge cycle, unlike other disposable or rechargeable cells."
 
-Plain lithium-ion batteries in the AA size are a different product: Wikipedia notes they are rated 3.6 to 3.7 V and are named [14500](/14500) rather than AA.
+Plain lithium-ion batteries in the AA size are a different product: Wikipedia notes they are rated 3.6 to 3.7V and are named [14500](/14500) rather than AA.
 
 ## Reading capacity labels
 
-Capacities in mAh compare fairly only at the same voltage and test conditions (see [what mAh and Wh mean](/reference/capacity-explained)). For 1.5 V lithium-ion batteries, Wikipedia notes that some brands advertise milliwatt-hours rather than milliamp-hours, so a label claiming 3,000 mWh or more may correspond to about 2,000 mAh. Converting the datasheet figures shows the basis:
+Capacities in mAh compare fairly only at the same voltage and test conditions (see [what mAh and Wh mean](/reference/capacity-explained)). For 1.5V lithium-ion batteries, Wikipedia notes that some brands advertise milliwatt-hours rather than milliamp-hours, so a label claiming 3,000mWh or more may correspond to about 2,000mAh. Converting the datasheet figures shows the basis:
 
-- **Ansmann:** 3.26 Wh / 2.0 Ah = 1.63 V.
-- **XTAR:** 4.15 Wh / 2.5 Ah = 1.66 V.
+- **Ansmann:** 3.26Wh / 2.0Ah = 1.63V.
+- **XTAR:** 4.15Wh / 2.5Ah = 1.66V.
 
-Both results are above the 1.5 V output, so neither datasheet's energy figure is stated at the 1.5 V the device receives, and neither datasheet states the basis.
+Both results are above the 1.5V output, so neither datasheet's energy figure is stated at the 1.5V the device receives, and neither datasheet states the basis.
 
 ## After time on a shelf
 

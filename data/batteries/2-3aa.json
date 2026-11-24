@@ -27,7 +27,7 @@
       "min": 28.0,
       "max": 29.0
     },
-    "note": "Emmerich lists 14.0 +/-0.5 mm diameter and 28.5 +/-0.5 mm height for its flat-top battery.",
+    "note": "Emmerich lists 14.0 +/-0.5mm diameter and 28.5 +/-0.5mm height for its flat-top battery.",
     "sources": [
       "emmerich-255020"
     ]
@@ -49,7 +49,7 @@
       },
       "capacity_mah": {
         "typical": 630,
-        "conditions": "Charge 0.1 C, discharge 0.2 C (rated 600 mAh minimum)"
+        "conditions": "Charge 0.1C, discharge 0.2C (rated 600mAh minimum)"
       },
       "weight_g": 14,
       "internal_resistance_mohm": 45,
@@ -70,7 +70,7 @@
       "max_continuous_ma": 1800,
       "max_pulse_ma": 6000,
       "cycle_life": 500,
-      "notes": "Emmerich lists 1.8 A continuous and 6 A momentary maximum discharge. Storage range is for periods under one year.",
+      "notes": "Emmerich lists 1.8A continuous and 6A momentary maximum discharge. Storage range is for periods under one year.",
       "sources": [
         "emmerich-255020"
       ]

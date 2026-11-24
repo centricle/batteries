@@ -5,7 +5,7 @@
   "form": "cylinder",
   "status": "current",
   "aliases": [
-    "12 V 27A",
+    "12V 27A",
     "27A",
     "Car alarm battery",
     "Cigarette lighter battery"
@@ -64,7 +64,7 @@
       "min": 27.0,
       "max": 28.2
     },
-    "note": "Limits from the Energizer A27 drawing. The Duracell MN27 sheet publishes a narrower window: 7.4 to 7.7 mm diameter, 27 mm maximum length.",
+    "note": "Limits from the Energizer A27 drawing. The Duracell MN27 sheet publishes a narrower window: 7.4 to 7.7mm diameter, 27mm maximum length.",
     "sources": [
       "energizer-a27",
       "duracell-mn27"
@@ -87,10 +87,10 @@
           18,
           22
         ],
-        "conditions": "20 kohm (0.36 mA) continuous to 6.0 V, 21 °C (Energizer); Duracell rates 18 mAh to 6 V on a 20 load as printed"
+        "conditions": "20 kohm (0.36mA) continuous to 6.0V, 21°C (Energizer); Duracell rates 18mAh to 6V on a 20 load as printed"
       },
       "weight_g": 4.4,
-      "notes": "Eight small alkaline batteries inside, in series. Duracell and Energizer both list 4.4 g.",
+      "notes": "Eight small alkaline batteries inside, in series. Duracell and Energizer both list 4.4g.",
       "sources": [
         "energizer-a27",
         "duracell-mn27"
@@ -109,7 +109,7 @@
     {
       "id": "a23",
       "relation": "does-not-fit",
-      "note": "An A23 is about 2.3 mm wider and will not fit holders sized for an A27."
+      "note": "An A23 is about 2.3mm wider and will not fit holders sized for an A27."
     }
   ],
   "safety": [

@@ -17,7 +17,7 @@
     360,
     500
   ],
-  "self_discharge": "Under 0.5% per year at 60 °C and under 1% per year at 85 °C (Wikipedia)",
+  "self_discharge": "Under 0.5% per year at 60°C and under 1% per year at 85°C (Wikipedia)",
   "temperature_c": {
     "operating": [
       -40,
@@ -25,12 +25,12 @@
     ]
   },
   "color": "#89A37F",
-  "summary": "Lithium carbon monofluoride batteries use a lithium metal anode and a carbon monofluoride cathode for 3.0 V nominal, with very low self-discharge and good high-temperature tolerance. They are the BR coin and pin batteries used for memory backup, meters and aerospace hardware.",
-  "body": "## How it works\n\nA lithium carbon monofluoride battery, IEC system B, pairs a lithium metal anode with a cathode of carbon monofluoride, a material made by high-temperature intercalation of fluorine gas into graphite powder. Wikipedia lists the electrolyte as lithium tetrafluoroborate in propylene carbonate, dimethoxyethane or gamma-butyrolactone. The batteries are sold with the BR prefix, as in BR2032 or BR1225.\n\n## Discharge behavior\n\nNominal voltage is 3.0 V, the same as lithium manganese dioxide, and the open-circuit voltage is about 3.1 V. Wikipedia lists a specific energy of 360 to 500 Wh/kg and about 1,000 Wh/L. The chemistry is positioned for long, light loads: Panasonic describes its BR series as suited to backup power in low-drain applications, while it lists high-rate pulse discharge and low-temperature performance among the features of its CR series. Panasonic states BR nominal capacity to a 2.0 V cutoff at 20 °C and rates standard BR coin batteries from −40 to 85 °C and high-temperature BR types such as the BR1225A from −40 to 125 °C.\n\nSelf-discharge is very low. Wikipedia gives under 0.5% per year at 60 °C and under 1% per year at 85 °C, and Panasonic cites stable performance after long storage as the main feature of the BR line.\n\n## Uses\n\nWikipedia lists memory and clock backup, aerospace, military hardware on land and at sea, missiles and artificial cardiac pacemakers. Panasonic lists communication and measurement equipment, gas and water meters, electricity meters, electronic toll collection, memory backup and, for its high-temperature types, tire pressure monitoring systems (TPMS).\n\n## History\n\nWikipedia states that the chemistry was developed in the 1970s by Matsushita and qualified for space use in 1976.\n\n## Status\n\nCurrent. IEC 60086-1 lists system B at 3.0 V nominal with a 3.7 V maximum open-circuit voltage.",
+  "summary": "Lithium carbon monofluoride batteries use a lithium metal anode and a carbon monofluoride cathode for 3.0V nominal, with very low self-discharge and good high-temperature tolerance. They are the BR coin and pin batteries used for memory backup, meters and aerospace hardware.",
+  "body": "## How it works\n\nA lithium carbon monofluoride battery, IEC system B, pairs a lithium metal anode with a cathode of carbon monofluoride, a material made by high-temperature intercalation of fluorine gas into graphite powder. Wikipedia lists the electrolyte as lithium tetrafluoroborate in propylene carbonate, dimethoxyethane or gamma-butyrolactone. The batteries are sold with the BR prefix, as in BR2032 or BR1225.\n\n## Discharge behavior\n\nNominal voltage is 3.0V, the same as lithium manganese dioxide, and the open-circuit voltage is about 3.1V. Wikipedia lists a specific energy of 360 to 500Wh/kg and about 1,000Wh/L. The chemistry is positioned for long, light loads: Panasonic describes its BR series as suited to backup power in low-drain applications, while it lists high-rate pulse discharge and low-temperature performance among the features of its CR series. Panasonic states BR nominal capacity to a 2.0V cutoff at 20°C and rates standard BR coin batteries from −40 to 85°C and high-temperature BR types such as the BR1225A from −40 to 125°C.\n\nSelf-discharge is very low. Wikipedia gives under 0.5% per year at 60°C and under 1% per year at 85°C, and Panasonic cites stable performance after long storage as the main feature of the BR line.\n\n## Uses\n\nWikipedia lists memory and clock backup, aerospace, military hardware on land and at sea, missiles and artificial cardiac pacemakers. Panasonic lists communication and measurement equipment, gas and water meters, electricity meters, electronic toll collection, memory backup and, for its high-temperature types, tire pressure monitoring systems (TPMS).\n\n## History\n\nWikipedia states that the chemistry was developed in the 1970s by Matsushita and qualified for space use in 1976.\n\n## Status\n\nCurrent. IEC 60086-1 lists system B at 3.0V nominal with a 3.7V maximum open-circuit voltage.",
   "strengths": [
     "Very low self-discharge, even at high temperature",
-    "Wide temperature range, to 125 °C in high-temperature types (Panasonic)",
-    "High specific energy: 360 to 500 Wh/kg (Wikipedia)"
+    "Wide temperature range, to 125°C in high-temperature types (Panasonic)",
+    "High specific energy: 360 to 500Wh/kg (Wikipedia)"
   ],
   "limitations": [
     "Positioned for low-drain backup rather than pulse loads (Panasonic)",
@@ -81,8 +81,8 @@
       "covers": [
         "BR features",
         "applications",
-        "2.0 V end voltage",
-        "125 °C types"
+        "2.0V end voltage",
+        "125°C types"
       ]
     },
     {

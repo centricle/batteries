@@ -28,7 +28,7 @@
     "height": {
       "nominal": 28.5
     },
-    "note": "GP publishes a nominal 17.0 by 28.5 mm with sleeve; Emmerich lists 16.5 +/-0.5 by 28.0 +/-0.5 mm for its flat-top battery. The lithium CR-2/3A (CR17335) is a different size, 17 mm by 33.5 mm.",
+    "note": "GP publishes a nominal 17.0 by 28.5mm with sleeve; Emmerich lists 16.5 +/-0.5 by 28.0 +/-0.5mm for its flat-top battery. The lithium CR-2/3A (CR17335) is a different size, 17mm by 33.5mm.",
     "sources": [
       "gp-110afh",
       "emmerich-255032"
@@ -51,7 +51,7 @@
       },
       "capacity_mah": {
         "typical": 1133,
-        "conditions": "Discharge at 220 mA to 1.0 V, 20 °C (GP110AFH typical; minimum 1,100)"
+        "conditions": "Discharge at 220mA to 1.0V, 20°C (GP110AFH typical; minimum 1,100)"
       },
       "weight_g": 21,
       "internal_resistance_mohm": 22,
@@ -71,7 +71,7 @@
       },
       "max_continuous_ma": 3300,
       "cycle_life": 500,
-      "notes": "GP lists 500 cycles to IEC 61951-2. Emmerich lists 3.3 A continuous and 11 A momentary maximum discharge for its version.",
+      "notes": "GP lists 500 cycles to IEC 61951-2. Emmerich lists 3.3A continuous and 11A momentary maximum discharge for its version.",
       "sources": [
         "gp-110afh",
         "emmerich-255032"
@@ -89,7 +89,7 @@
     {
       "id": "cr17335",
       "relation": "do-not-substitute",
-      "note": "The lithium CR17335 is also sold as 2/3A but is 5 mm longer and runs at 3 V, not 1.2 V."
+      "note": "The lithium CR17335 is also sold as 2/3A but is 5mm longer and runs at 3V, not 1.2V."
     }
   ],
   "safety": [
@@ -97,7 +97,7 @@
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
     "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
-  "notes": "The nickel-metal hydride 2/3A is about 28 mm long; lithium batteries sold under the same name are 33.5 mm long.",
+  "notes": "The nickel-metal hydride 2/3A is about 28mm long; lithium batteries sold under the same name are 33.5mm long.",
   "sources": [
     {
       "id": "gp-110afh",

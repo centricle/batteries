@@ -125,7 +125,7 @@
       },
       "capacity_mah": {
         "typical": 15000,
-        "conditions": "10 ohm load to 0.8 V, 21 °C (Duracell MN1300 rated capacity)"
+        "conditions": "10 ohm load to 0.8V, 21°C (Duracell MN1300 rated capacity)"
       },
       "weight_g": 148,
       "shelf_life_years": 7,
@@ -135,7 +135,7 @@
           55
         ]
       },
-      "notes": "Weight, operating range and shelf life (80% of initial capacity at 21 °C) are from the Energizer EN95 sheet. Duracell lists 139 g.",
+      "notes": "Weight, operating range and shelf life (80% of initial capacity at 21°C) are from the Energizer EN95 sheet. Duracell lists 139g.",
       "sources": [
         "energizer-en95",
         "duracell-mn1300",
@@ -171,7 +171,7 @@
       },
       "capacity_mah": {
         "typical": 2500,
-        "conditions": "Rated capacity at 500 mA (0.2 C) to 1.0 V"
+        "conditions": "Rated capacity at 500mA (0.2C) to 1.0V"
       },
       "weight_g": 73,
       "internal_resistance_mohm": 11,
@@ -196,7 +196,7 @@
       },
       "capacity_mah": {
         "typical": 4000,
-        "conditions": "Nominal capacity; standard charge 400 mA (0.1 C) for 15 h, discharge to 1.0 V"
+        "conditions": "Nominal capacity; standard charge 400mA (0.1C) for 15h, discharge to 1.0V"
       },
       "weight_g": 135,
       "temperature_c": {
@@ -213,7 +213,7 @@
           45
         ]
       },
-      "notes": "This battery measures 33.0 mm by 60.5 mm with tube, slightly under the standard D envelope.",
+      "notes": "This battery measures 33.0mm by 60.5mm with tube, slightly under the standard D envelope.",
       "sources": [
         "nicd-d4000h"
       ]
@@ -232,12 +232,12 @@
     {
       "id": "c",
       "relation": "does-not-fit",
-      "note": "C batteries are also 1.5 V alkaline but are smaller and hold less."
+      "note": "C batteries are also 1.5V alkaline but are smaller and hold less."
     },
     {
       "id": "er34615",
       "relation": "do-not-substitute",
-      "note": "An ER34615 is close to D size but delivers 3.6 V, which can damage devices built for 1.5 V D batteries."
+      "note": "An ER34615 is close to D size but delivers 3.6V, which can damage devices built for 1.5V D batteries."
     }
   ],
   "safety": [

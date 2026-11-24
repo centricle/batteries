@@ -36,7 +36,7 @@
       },
       "capacity_mah": {
         "typical": 1000,
-        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated"
+        "conditions": "Panasonic nominal capacity at 0.2mA continuous standard drain; cutoff voltage not stated"
       },
       "weight_g": 10.5,
       "temperature_c": {
@@ -60,7 +60,7 @@
     {
       "id": "cr2450",
       "relation": "fits-with-caveat",
-      "note": "Same 24.5 mm width and 2.7 mm thinner; much lower capacity and loose in a CR2477 holder."
+      "note": "Same 24.5mm width and 2.7mm thinner; much lower capacity and loose in a CR2477 holder."
     }
   ],
   "notes": "The highest-capacity lithium coin battery in the IEC series.",

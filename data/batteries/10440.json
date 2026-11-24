@@ -21,7 +21,7 @@
       "code": "ICR10440",
       "system": "Markyn",
       "chemistry": "lithium-ion",
-      "note": "Model name used on the Markyn 300 mAh specification"
+      "note": "Model name used on the Markyn 300mAh specification"
     }
   ],
   "dimensions": {
@@ -35,7 +35,7 @@
       "min": 43.5,
       "max": 44.5
     },
-    "note": "Tolerances from one maker's ICR10440 specification (10.0 ± 0.2 mm by 44.0 ± 0.5 mm). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Tolerances from one maker's ICR10440 specification (10.0 ± 0.2mm by 44.0 ± 0.5mm). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "markyn-icr10440"
     ]
@@ -66,14 +66,14 @@
         ],
         "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
       },
-      "notes": "Nominal voltage 3.7 V.",
+      "notes": "Nominal voltage 3.7V.",
       "sources": [
         "wiki-sizes"
       ]
     },
     {
       "chemistry": "lithium-ion",
-      "label": "Markyn ICR10440 300 mAh",
+      "label": "Markyn ICR10440 300mAh",
       "rechargeable": true,
       "voltage": {
         "nominal": 3.7,
@@ -82,7 +82,7 @@
       },
       "capacity_mah": {
         "typical": 300,
-        "conditions": "Nominal 300 mAh, minimum 250 mAh, 0.2C discharge to 2.75 V at 25 °C after 0.5C CC/CV charge to 4.2 V"
+        "conditions": "Nominal 300mAh, minimum 250mAh, 0.2C discharge to 2.75V at 25°C after 0.5C CC/CV charge to 4.2V"
       },
       "weight_g": 12,
       "max_continuous_ma": 600,
@@ -116,13 +116,13 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2V for cobalt, nickel and manganese chemistries, 3.65V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
     "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100Wh each (FAA PackSafe)."
   ],
-  "notes": "Size code: 10 mm diameter, 44 mm length, 0 for cylindrical. Same size as an AAA battery; the shape does not make it a drop-in replacement.",
+  "notes": "Size code: 10mm diameter, 44mm length, 0 for cylindrical. Same size as an AAA battery; the shape does not make it a drop-in replacement.",
   "sources": [
     {
       "id": "wiki-sizes",

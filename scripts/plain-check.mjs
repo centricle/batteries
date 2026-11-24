@@ -92,7 +92,7 @@ for (const b of all) {
   ok(`${t} uses a banned word: ${s}`, !/\b(nominal|diameter|chemistry|interchangeable|substitute|primary)\b/i.test(s));
   for (const k of ['diameter', 'height', 'width', 'depth']) {
     const v = b.dimensions[k]?.nominal;
-    if (v !== undefined) ok(`${t} is missing ${k} ${v} mm: ${s}`, s.includes(`${num(v)} mm`));
+    if (v !== undefined) ok(`${t} is missing ${k} ${v}mm: ${s}`, s.includes(`${num(v)}mm`));
   }
   if (b.form === 'disc') ok(`${t} has no coin comparison: ${s}`, / US (dime|penny|nickel|quarter)\b/.test(s));
   // Retelling, not adding: every voltage the summary names is in the data, and
@@ -102,21 +102,21 @@ for (const b of all) {
   for (const v of said) ok(`${t} names ${v} volts, which no variant has: ${s}`, volts.has(v));
   ok(`${t} does not name the main voltage ${b.variants[0].voltage.nominal}: ${s}`, said.includes(num(b.variants[0].voltage.nominal)));
   const mms = new Set(['diameter', 'height', 'width', 'depth'].map((k) => b.dimensions[k]?.nominal).filter((x) => x !== undefined).map(num));
-  for (const m of s.matchAll(/(\d+(?:\.\d+)?) mm/g)) ok(`${t} names ${m[1]} mm, which is not a dimension: ${s}`, mms.has(m[1]));
+  for (const m of s.matchAll(/(\d+(?:\.\d+)?) ?mm/g)) ok(`${t} names ${m[1]}mm, which is not a dimension: ${s}`, mms.has(m[1]));
   ok(`${t} is too long (${s.length}): ${s}`, s.length <= 420);
 }
 
-eq('summary aa', generatedSummary(byId.aa), 'A round battery 50.5 mm long and 14.5 mm across (about 2 in by 9/16 in). Most are 1.5 volts; rechargeable ones are 1.2 volts. Common in remote controls, flashlights, wireless mice and keyboards.');
-eq('summary cr2032', generatedSummary(byId.cr2032), 'A flat, round 3-volt lithium battery, 20 mm across and 3.2 mm thick (about 13/16 in by 1/8 in), a little smaller than a US nickel. Common in vehicle key fobs, item trackers and computer motherboards.');
-eq('size 9v', plainSize(byId['9v']), '48.5 mm tall, 26.5 mm wide and 17.5 mm thick (about 1 15/16 in by 1 1/16 in by 11/16 in)');
-eq('size 9v, mm only', plainSize(byId['9v'], { inches: false }), '48.5 mm tall, 26.5 mm wide and 17.5 mm thick');
+eq('summary aa', generatedSummary(byId.aa), 'A round battery 50.5mm long and 14.5mm across (about 2 in by 9/16 in). Most are 1.5 volts; rechargeable ones are 1.2 volts. Common in remote controls, flashlights, wireless mice and keyboards.');
+eq('summary cr2032', generatedSummary(byId.cr2032), 'A flat, round 3-volt lithium battery, 20mm across and 3.2mm thick (about 13/16 in by 1/8 in), a little smaller than a US nickel. Common in vehicle key fobs, item trackers and computer motherboards.');
+eq('size 9v', plainSize(byId['9v']), '48.5mm tall, 26.5mm wide and 17.5mm thick (about 1 15/16 in by 1 1/16 in by 11/16 in)');
+eq('size 9v, mm only', plainSize(byId['9v'], { inches: false }), '48.5mm tall, 26.5mm wide and 17.5mm thick');
 eq('rechargeable cr2032', plainRechargeable(byId.cr2032), 'No. The rechargeable version is sold as LIR2032.');
 eq('rechargeable aa', plainRechargeable(byId.aa), 'Sold both ways');
 eq('rechargeable 18650', plainRechargeable(byId['18650']), 'Yes');
 
 // A battery with no devices listed, and one with a hand-written summary.
 const bare = { ...byId.cr2032, devices: [] };
-eq('summary with no devices', generatedSummary(bare), 'A flat, round 3-volt lithium battery, 20 mm across and 3.2 mm thick (about 13/16 in by 1/8 in), a little smaller than a US nickel.');
+eq('summary with no devices', generatedSummary(bare), 'A flat, round 3-volt lithium battery, 20mm across and 3.2mm thick (about 13/16 in by 1/8 in), a little smaller than a US nickel.');
 eq('hand-written plain wins', plainSummary({ ...byId.aa, plain: ' Written by hand. ' }), 'Written by hand.');
 
 // At a glance and the tiles. Kinds no longer made drop out of the voltage list,
@@ -125,11 +125,11 @@ const cdir = path.join(root, 'data/chemistries');
 const chemStatus = Object.fromEntries(fs.readdirSync(cdir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(path.join(cdir, f), 'utf8'))).map((c) => [c.id, c.status]));
 const isCurrent = (c) => chemStatus[c] === 'current';
 const lines = (id) => voltageLines(byId[id], isCurrent).join(' | ');
-eq('voltage aa', lines('aa'), '1.5 V alkaline, lithium and heavy duty | 1.2 V rechargeable NiMH | 1.6 V rechargeable NiZn | 1.5 V rechargeable lithium');
-eq('voltage cr2032', lines('cr2032'), '3 V lithium | 3.6 V rechargeable, sold as LIR2032');
-eq('voltage 9v', lines('9v'), '9 V alkaline, heavy duty and lithium | 8.4 or 9.6 V rechargeable NiMH | 9 V rechargeable lithium');
-eq('weight aa', plainWeight(byId.aa), 'About 23 g (0.8 oz), alkaline');
-eq('weight 18650', plainWeight(byId['18650']), '45 to 48.5 g (1.6 to 1.7 oz), depending on the product');
+eq('voltage aa', lines('aa'), '1.5V alkaline, lithium and heavy duty | 1.2V rechargeable NiMH | 1.6V rechargeable NiZn | 1.5V rechargeable lithium');
+eq('voltage cr2032', lines('cr2032'), '3V lithium | 3.6V rechargeable, sold as LIR2032');
+eq('voltage 9v', lines('9v'), '9V alkaline, heavy duty and lithium | 8.4 or 9.6V rechargeable NiMH | 9V rechargeable lithium');
+eq('weight aa', plainWeight(byId.aa), 'About 23g (0.8 oz), alkaline');
+eq('weight 18650', plainWeight(byId['18650']), '45 to 48.5g (1.6 to 1.7 oz), depending on the product');
 eq('other names aa (IEC name first)', otherNames(byId.aa).join(', '), 'LR6, MN1500, E91');
 eq('other names cr2032 (no US standard or type number)', otherNames(byId.cr2032).join(', '), 'DL2032, ECR2032');
 eq('other names cr2025 (maker names from their own product pages)', otherNames(byId.cr2025).join(', '), 'DL2025, ECR2025');

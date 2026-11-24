@@ -55,7 +55,7 @@ sources:
     accessed: 2026-11-22
 ---
 
-Read a battery name from left to right. In LR6, the international (IEC 60086) name for an alkaline AA, the L means alkaline, the R means round and the 6 is the size. One size is sold under many names, so an alkaline [AA](/aa) is also 15A (the US standard name), MN1500 (Duracell) and E91 (Energizer). Newer round batteries carry a number built from their size, so a CR2032 is a lithium manganese dioxide battery 20 mm across and 3.2 mm thick. A battery name is a short description of the battery: its kind, its shape, its size and, for a battery made of several cells (the single units inside), how many cells there are. One size has many names because the IEC, ANSI, Japanese standards and each maker number it separately.
+Read a battery name from left to right. In LR6, the international (IEC 60086) name for an alkaline AA, the L means alkaline, the R means round and the 6 is the size. One size is sold under many names, so an alkaline [AA](/aa) is also 15A (the US standard name), MN1500 (Duracell) and E91 (Energizer). Newer round batteries carry a number built from their size, so a CR2032 is a lithium manganese dioxide battery 20mm across and 3.2mm thick. A battery name is a short description of the battery: its kind, its shape, its size and, for a battery made of several cells (the single units inside), how many cells there are. One size has many names because the IEC, ANSI, Japanese standards and each maker number it separately.
 
 ## The international pattern (IEC 60086)
 
@@ -77,17 +77,17 @@ Wikipedia's summary of the IEC letter table lists these letters for household ki
 
 | Letter | Kind | Voltage (nominal) |
 |---|---|---|
-| (none) | [Zinc-carbon](/chemistry/zinc-carbon) | 1.5 V |
-| B | Lithium carbon monofluoride | 3.0 V |
-| C | [Lithium manganese dioxide](/chemistry/lithium-manganese-dioxide) | 3.0 V |
-| E | [Lithium thionyl chloride](/chemistry/lithium-thionyl-chloride) | 3.6 V |
-| F | [Lithium iron disulfide](/chemistry/lithium-iron-disulfide) | 1.5 V |
-| L | [Alkaline](/chemistry/alkaline) (zinc, manganese dioxide) | 1.5 V |
-| P | [Zinc-air](/chemistry/zinc-air) | 1.4 V |
-| S | [Silver oxide](/chemistry/silver-oxide) | 1.55 V |
-| Z | Nickel oxyhydroxide | 1.5 V |
-| H | [Nickel-metal hydride](/chemistry/nimh) (rechargeable) | 1.2 V |
-| K | [Nickel-cadmium](/chemistry/nicd) (rechargeable) | 1.2 V |
+| (none) | [Zinc-carbon](/chemistry/zinc-carbon) | 1.5V |
+| B | Lithium carbon monofluoride | 3.0V |
+| C | [Lithium manganese dioxide](/chemistry/lithium-manganese-dioxide) | 3.0V |
+| E | [Lithium thionyl chloride](/chemistry/lithium-thionyl-chloride) | 3.6V |
+| F | [Lithium iron disulfide](/chemistry/lithium-iron-disulfide) | 1.5V |
+| L | [Alkaline](/chemistry/alkaline) (zinc, manganese dioxide) | 1.5V |
+| P | [Zinc-air](/chemistry/zinc-air) | 1.4V |
+| S | [Silver oxide](/chemistry/silver-oxide) | 1.55V |
+| Z | Nickel oxyhydroxide | 1.5V |
+| H | [Nickel-metal hydride](/chemistry/nimh) (rechargeable) | 1.2V |
+| K | [Nickel-cadmium](/chemistry/nicd) (rechargeable) | 1.2V |
 
 Wikipedia notes that NiMH and NiCd cylindrical batteries made to the same dimensions as single-use batteries use the single-use name with H or K as the kind letter, which is why a rechargeable AA is an HR6. The IEC lists a new letter "T" among the changes in the 2026 edition of IEC 60086-1; its public summary does not say what kind T denotes.
 
@@ -101,21 +101,21 @@ Before October 1990, round batteries were given size numbers in sequence, from R
 
 | IEC size | Common name | Width (nominal diameter) | Length (nominal height) |
 |---|---|---|---|
-| R20 | [D](/d) | 34.2 mm | 61.5 mm |
-| R14 | [C](/c) | 26.2 mm | 50.0 mm |
-| R6 | [AA](/aa) | 14.5 mm | 50.5 mm |
-| R1 | [N](/n) | 12.0 mm | 30.2 mm |
-| R03 | [AAA](/aaa) | 10.5 mm | 44.5 mm |
+| R20 | [D](/d) | 34.2mm | 61.5mm |
+| R14 | [C](/c) | 26.2mm | 50.0mm |
+| R6 | [AA](/aa) | 14.5mm | 50.5mm |
+| R1 | [N](/n) | 12.0mm | 30.2mm |
+| R03 | [AAA](/aaa) | 10.5mm | 44.5mm |
 
 Dimensions as listed in Wikipedia's battery nomenclature article.
 
-After 1990, new round batteries were named from their size. For batteries under 100 mm, the number is the width (diameter) in whole millimeters, with any fraction dropped, followed by the height in tenths of a millimeter. That rule makes coin battery names easy to read:
+After 1990, new round batteries were named from their size. For batteries under 100mm, the number is the width (diameter) in whole millimeters, with any fraction dropped, followed by the height in tenths of a millimeter. That rule makes coin battery names easy to read:
 
-- [CR2032](/cr2032): 20 mm across, 3.2 mm thick
-- [CR2025](/cr2025): 20 mm across, 2.5 mm thick
-- [CR2016](/cr2016): 20 mm across, 1.6 mm thick
+- [CR2032](/cr2032): 20mm across, 3.2mm thick
+- [CR2025](/cr2025): 20mm across, 2.5mm thick
+- [CR2016](/cr2016): 20mm across, 1.6mm thick
 
-Some button sizes kept two-digit names. Wikipedia's button cell article gives LR1154 and SR1154 as the size-based names for the 11.6 mm by 5.4 mm battery that is usually sold as [LR44](/lr44) or SR44.
+Some button sizes kept two-digit names. Wikipedia's button cell article gives LR1154 and SR1154 as the size-based names for the 11.6mm by 5.4mm battery that is usually sold as [LR44](/lr44) or SR44.
 
 ## Letters at the end of watch battery names
 
@@ -129,7 +129,7 @@ The American standard, ANSI C18, uses an arbitrary number for the size and a let
 
 Common end letters are A (alkaline), D (carbon-zinc, heavy duty), LF (lithium iron disulfide), LC (lithium manganese dioxide), SO (silver oxide), Z (zinc-air), H (nickel-metal hydride) and K (nickel-cadmium). Reading a name is then simple: 15A is an alkaline AA, 24A an alkaline AAA, 15LF a lithium AA and 1604A an alkaline 9-volt.
 
-Button batteries use four-digit ANSI numbers. Energizer's datasheets list its A76 as ANSI/NEDA 1166A and IEC LR44, and its 357/303 silver oxide battery as ANSI 1131SO and IEC SR44. The two batteries share a physical size and differ in kind and voltage (1.5 V and 1.55 V).
+Button batteries use four-digit ANSI numbers. Energizer's datasheets list its A76 as ANSI/NEDA 1166A and IEC LR44, and its 357/303 silver oxide battery as ANSI 1131SO and IEC SR44. The two batteries share a physical size and differ in kind and voltage (1.5V and 1.55V).
 
 ## Lithium-ion names (IEC 61960)
 
@@ -140,7 +140,7 @@ Rechargeable lithium-ion batteries follow a separate standard, IEC 61960, whose 
 - **Third letter:** R for cylindrical, P for prismatic.
 - **Numbers:** maximum diameter (or thickness) and maximum height in millimeters, as in ICR19/66.
 
-Batteries sold in stores usually pair those letters with a five-digit size number instead. The [18650](/18650) is 18 mm across and 65.0 mm long; Wikipedia notes that the number describes only the physical size, not the kind. Samsung SDI's specification for its INR18650-30Q lists a diameter of 18.33 ± 0.07 mm, a height of 64.85 ± 0.15 mm and a rating of 3.6 V nominal; under the IEC 61960 letters, its INR prefix stands for lithium-ion, nickel-based positive electrode, round. Other five-digit sizes include [21700](/21700) and [26650](/26650).
+Batteries sold in stores usually pair those letters with a five-digit size number instead. The [18650](/18650) is 18mm across and 65.0mm long; Wikipedia notes that the number describes only the physical size, not the kind. Samsung SDI's specification for its INR18650-30Q lists a diameter of 18.33 ± 0.07mm, a height of 64.85 ± 0.15mm and a rating of 3.6V nominal; under the IEC 61960 letters, its INR prefix stands for lithium-ion, nickel-based positive electrode, round. Other five-digit sizes include [21700](/21700) and [26650](/26650).
 
 ## Why one size has many names
 
@@ -153,6 +153,6 @@ The AA size alone carries these names, drawn from Wikipedia's list of battery si
 | JIS | AM-3 | UM 3 (carbon-zinc) |
 | Maker | MN1500 (Duracell), E91 (Energizer) | Varies by brand and line |
 
-The same size does not mean a battery works in every device. Wikipedia's nomenclature article states that fitting the same space is not the only thing that matters when using one battery in place of another, and the voltages above show why: an HR6 is rated at 1.2 V, an LR6 at 1.5 V. A [14500](/14500) lithium-ion battery is named for roughly AA proportions (14 mm by 50.0 mm under the naming rule), but lithium-ion batteries such as Samsung's INR18650-30Q are rated at 3.6 V, so a 14500 cannot simply replace an alkaline AA.
+The same size does not mean a battery works in every device. Wikipedia's nomenclature article states that fitting the same space is not the only thing that matters when using one battery in place of another, and the voltages above show why: an HR6 is rated at 1.2V, an LR6 at 1.5V. A [14500](/14500) lithium-ion battery is named for roughly AA proportions (14mm by 50.0mm under the naming rule), but lithium-ion batteries such as Samsung's INR18650-30Q are rated at 3.6V, so a 14500 cannot simply replace an alkaline AA.
 
 To read the name printed on a battery, use the [battery name decoder](/decode).

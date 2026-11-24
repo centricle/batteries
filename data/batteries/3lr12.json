@@ -5,11 +5,11 @@
   "form": "flatpack",
   "status": "current",
   "aliases": [
-    "4.5 V flat battery",
+    "4.5V flat battery",
     "Flachbatterie",
     "Pocket lamp battery",
     "Flat pack battery",
-    "4.5 V"
+    "4.5V"
   ],
   "codes": [
     {
@@ -69,7 +69,7 @@
   "geometry": {
     "positive": {
       "style": "strip",
-      "note": "Shorter strip, up to 7.0 mm wide."
+      "note": "Shorter strip, up to 7.0mm wide."
     },
     "negative": {
       "style": "strip",
@@ -88,7 +88,7 @@
       },
       "capacity_mah": {
         "typical": 4000,
-        "conditions": "20 ohm continuous to 2.4 V"
+        "conditions": "20 ohm continuous to 2.4V"
       },
       "weight_g": 165,
       "temperature_c": {
@@ -101,7 +101,7 @@
           30
         ]
       },
-      "notes": "Three alkaline batteries inside, in series. Duracell lists self-discharge under 10 percent after one year at 20 °C.",
+      "notes": "Three alkaline batteries inside, in series. Duracell lists self-discharge under 10 percent after one year at 20°C.",
       "sources": [
         "duracell-mn1203"
       ]

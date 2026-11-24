@@ -41,7 +41,7 @@ const answer = `The ${title} takes ${countWord(d.count)} ${code} ${d.count === 1
 const sameNote = code !== b.name && !d.note ? `${code} is one of the names for the ${b.name} size.` : '';
 // Only names for the same battery that a shopper finds on a pack (plain.ts
 // otherNames). The full code list also holds names for other kinds in the same
-// case (LIR2032 is 3.6 V and does not work where a CR2032 does), so it is not
+// case (LIR2032 is 3.6V and does not work where a CR2032 does), so it is not
 // what "Also sold as" may show.
 const names = otherNames(b).filter((c) => c !== code);
 

@@ -53,7 +53,7 @@
       "min": 25.8,
       "max": 27
     },
-    "note": "Height includes the positive terminal. Datasheet drawing gives the positive terminal diameter as 6.5 mm maximum and height as 0.7 mm minimum, and the negative flat contact as 8.5 mm minimum diameter, recessed 0.05 to 0.5 mm.",
+    "note": "Height includes the positive terminal. Datasheet drawing gives the positive terminal diameter as 6.5mm maximum and height as 0.7mm minimum, and the negative flat contact as 8.5mm minimum diameter, recessed 0.05 to 0.5mm.",
     "sources": [
       "energizer-cr2"
     ]
@@ -67,7 +67,7 @@
     "negative": {
       "style": "recessed",
       "diameter": 8.5,
-      "note": "Contact recessed 0.05 to 0.5 mm."
+      "note": "Contact recessed 0.05 to 0.5mm."
     }
   },
   "variants": [
@@ -80,7 +80,7 @@
       },
       "capacity_mah": {
         "typical": 800,
-        "conditions": "100 ohm continuous to 2.0 V, 21 °C"
+        "conditions": "100 ohm continuous to 2.0V, 21°C"
       },
       "weight_g": 11,
       "max_continuous_ma": 1000,
@@ -116,7 +116,7 @@
     "Do not short-circuit, crush, heat or disassemble. The battery contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the battery safe to abuse.",
     "Replace all batteries in a device at the same time and do not mix them with used batteries or other types."
   ],
-  "notes": "Wikipedia lists a rechargeable lithium-ion battery in this size (15270, nominally 3.6 V, 450 to 800 mAh depending on the product); it is a different product and not a drop-in for devices specified for 3.0 V single-use batteries.",
+  "notes": "Wikipedia lists a rechargeable lithium-ion battery in this size (15270, nominally 3.6V, 450 to 800mAh depending on the product); it is a different product and not a drop-in for devices specified for 3.0V single-use batteries.",
   "sources": [
     {
       "id": "energizer-cr2",

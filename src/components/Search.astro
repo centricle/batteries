@@ -52,24 +52,24 @@
   }
 
   const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
-  const mm = (n: number | null) => `${Number(n ?? 0).toLocaleString('en-US', { maximumFractionDigits: 1 })} mm`;
+  const mm = (n: number | null) => `${Number(n ?? 0).toLocaleString('en-US', { maximumFractionDigits: 1 })}mm`;
 
-  /** One plain line: the size in words and the voltage, "20 mm across, 3.2 mm thick, 3 V". */
+  /** One plain line: the size in words and the voltage, "20mm across, 3.2mm thick, 3V". */
   function line(e: Entry) {
     const size =
       e.f === 'disc' ? `${mm(e.d)} across, ${mm(e.h)} thick`
       : e.d ? `${mm(e.d)} across, ${mm(e.h)} long`
       : e.w ? `${mm(e.h)} tall, ${mm(e.w)} wide`
       : e.s;
-    // Every voltage the size is sold at, as a range: "1.2 to 1.6 V".
+    // Every voltage the size is sold at, as a range: "1.2 to 1.6V".
     const v = [...new Set(e.v.split(' / ').map(Number).filter((x) => x > 0))].sort((a, b) => a - b);
-    const volts = v.length > 1 ? `${v[0]} to ${v[v.length - 1]} V` : v.length ? `${v[0]} V` : '';
+    const volts = v.length > 1 ? `${v[0]} to ${v[v.length - 1]}V` : v.length ? `${v[0]}V` : '';
     return volts ? `${size}, ${volts}` : size;
   }
 
   /** Why a result matched, when it was another of its names ("Also called LR6"). */
   function matched(e: Entry, why: string) {
-    if (!why || why === e.s || /^\d+(\.\d+)? V$/.test(why)) return '';
+    if (!why || why === e.s || /^\d+(\.\d+)? ?V$/.test(why)) return '';
     return `Also called ${why}`;
   }
 

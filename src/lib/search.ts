@@ -105,7 +105,7 @@ export function rank(index: Entry[], query: string, limit = 12) {
       const target = parseFloat(volt[1]);
       if (e.v.split(' / ').some((v) => Math.abs(parseFloat(v) - target) < 0.051)) {
         score = Math.max(score, 200);
-        why = why || `${volt[1]} V`;
+        why = why || `${volt[1]}V`;
       }
     }
     if (why && norm(why) === name) why = '';

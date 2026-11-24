@@ -45,7 +45,7 @@
       "min": 51.5,
       "max": 52.5
     },
-    "note": "Width is the long side of the two-lobed top view, about the width of two AA batteries side by side. The datasheet drawing also shows 14.0 to 14.6 mm and 6.4 to 7.7 mm dimensions on the end-face contacts.",
+    "note": "Width is the long side of the two-lobed top view, about the width of two AA batteries side by side. The datasheet drawing also shows 14.0 to 14.6mm and 6.4 to 7.7mm dimensions on the end-face contacts.",
     "sources": [
       "energizer-crv3"
     ]
@@ -65,7 +65,7 @@
       },
       "capacity_mah": {
         "typical": 3000,
-        "conditions": "100 ohm continuous to 2.0 V, 21 °C"
+        "conditions": "100 ohm continuous to 2.0V, 21°C"
       },
       "weight_g": 32,
       "max_continuous_ma": 2000,
@@ -81,7 +81,7 @@
           60
         ]
       },
-      "notes": "Energizer labels the chemical system \"Non-Aqueous Lithium\" and does not name it. The lithium-manganese-dioxide assignment is inferred from the 3.0 V nominal voltage of the two batteries inside, in parallel. Wikipedia reports a Duracell CR-V3 made of two 3 V AA-sized lithium batteries in parallel.",
+      "notes": "Energizer labels the chemical system \"Non-Aqueous Lithium\" and does not name it. The lithium-manganese-dioxide assignment is inferred from the 3.0V nominal voltage of the two batteries inside, in parallel. Wikipedia reports a Duracell CR-V3 made of two 3V AA-sized lithium batteries in parallel.",
       "sources": [
         "energizer-crv3",
         "wikipedia-crv3"
@@ -97,7 +97,7 @@
       "capacity_mah": {
         "typical": 1300
       },
-      "notes": "Wikipedia gives a 3.7 V nominal voltage in the CR-V3 article and 3.6 V in the battery size list, and 1,300 mAh without test conditions. Some packs add a small third terminal for charging.",
+      "notes": "Wikipedia gives a 3.7V nominal voltage in the CR-V3 article and 3.6V in the battery size list, and 1,300mAh without test conditions. Some packs add a small third terminal for charging.",
       "sources": [
         "wikipedia-crv3",
         "wikipedia-sizes"
@@ -113,14 +113,14 @@
     {
       "id": "2cr5",
       "relation": "does-not-fit",
-      "note": "The 2CR5 is a 6 V pack with a different shape and contacts, and it does not fit a CR-V3 compartment."
+      "note": "The 2CR5 is a 6V pack with a different shape and contacts, and it does not fit a CR-V3 compartment."
     }
   ],
   "safety": [
     "Lithium photo batteries are single-use and are not designed to be recharged; charging can cause venting, fire or rupture.",
     "Do not short-circuit, crush, heat or disassemble. The battery contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the battery safe to abuse.",
     "Replace all batteries in a device at the same time and do not mix them with used batteries or other types.",
-    "The rechargeable RCR-V3 runs at 3.7 V and charges to a higher voltage; use it only in devices that allow it."
+    "The rechargeable RCR-V3 runs at 3.7V and charges to a higher voltage; use it only in devices that allow it."
   ],
   "notes": "Digital cameras designed for two AA batteries or one CR-V3 accept both, and some cameras not designed for it also accept it, per Wikipedia.",
   "sources": [

@@ -86,7 +86,7 @@
           160,
           170
         ],
-        "conditions": "15 kilohm continuous (0.16 mA) to 2.0 V, 21 °C (Energizer 2L76); Varta lists 170 mAh at 5.6 kilohm to 2.0 V"
+        "conditions": "15 kilohm continuous (0.16mA) to 2.0V, 21°C (Energizer 2L76); Varta lists 170mAh at 5.6 kilohm to 2.0V"
       },
       "weight_g": 3,
       "max_continuous_ma": 60,
@@ -107,7 +107,7 @@
         "varta-primary-lithium",
         "batteryequivalents-cr11108"
       ],
-      "notes": "Operating range is from the Energizer 2L76 datasheet; other makers list from -20 °C (Varta) to +75 °C (Duracell)."
+      "notes": "Operating range is from the Energizer 2L76 datasheet; other makers list from -20°C (Varta) to +75°C (Duracell)."
     }
   ],
   "devices": [
@@ -124,12 +124,12 @@
     {
       "id": "2cr1-3n",
       "relation": "same-size",
-      "note": "The 2CR1/3N pack stacks two of these batteries for 6 V and is about as wide but longer."
+      "note": "The 2CR1/3N pack stacks two of these batteries for 6V and is about as wide but longer."
     },
     {
       "id": "lr44",
       "relation": "fits-with-caveat",
-      "note": "Two stacked 1.5 V LR44 or SR44 batteries are the same 11.6 mm across and replace a CR11108 in some devices; check the device's voltage tolerance first."
+      "note": "Two stacked 1.5V LR44 or SR44 batteries are the same 11.6mm across and replace a CR11108 in some devices; check the device's voltage tolerance first."
     }
   ],
   "safety": [

@@ -5,7 +5,7 @@
   "form": "cylinder",
   "status": "current",
   "aliases": [
-    "12 V 23A",
+    "12V 23A",
     "23A",
     "12 volt remote battery",
     "Car alarm battery",
@@ -158,12 +158,12 @@
       "style": "flat",
       "diameter": 5.5,
       "height": 0.5,
-      "note": "Duracell drawing: flat contact 5.38 to 5.63 mm across, 0.43 to 0.58 mm high."
+      "note": "Duracell drawing: flat contact 5.38 to 5.63mm across, 0.43 to 0.58mm high."
     },
     "negative": {
       "style": "recessed",
       "diameter": 5.5,
-      "note": "Duracell drawing: recessed flat contact 5.38 to 5.63 mm across."
+      "note": "Duracell drawing: recessed flat contact 5.38 to 5.63mm across."
     }
   },
   "variants": [
@@ -176,7 +176,7 @@
       },
       "capacity_mah": {
         "typical": 55,
-        "conditions": "20 kohm (0.48 mA) continuous to 6.0 V, 21 °C"
+        "conditions": "20 kohm (0.48mA) continuous to 6.0V, 21°C"
       },
       "weight_g": 8.0,
       "internal_resistance_mohm": 22000,
@@ -186,7 +186,7 @@
           54
         ]
       },
-      "notes": "Eight LR932 batteries in series under one jacket. Duracell lists 7.4 g and 22 ohm at 1 kHz; Energizer lists 8.0 g.",
+      "notes": "Eight LR932 batteries in series under one jacket. Duracell lists 7.4g and 22 ohm at 1 kHz; Energizer lists 8.0g.",
       "sources": [
         "energizer-a23",
         "duracell-mn21"
@@ -207,15 +207,15 @@
     {
       "id": "a27",
       "relation": "fits-with-caveat",
-      "note": "An A27 has the same 12 V and similar length but is about 2.3 mm narrower, so it can sit loosely in an A23 holder and holds less capacity."
+      "note": "An A27 has the same 12V and similar length but is about 2.3mm narrower, so it can sit loosely in an A23 holder and holds less capacity."
     }
   ],
   "safety": [
     "Do not recharge, short circuit, crush, disassemble or incinerate.",
     "Keep out of reach of children; swallowing a battery with smaller batteries inside can cause serious internal injury.",
-    "The eight batteries inside, in series, produce 12 V; contact between exposed terminals and metal can produce heat."
+    "The eight batteries inside, in series, produce 12V; contact between exposed terminals and metal can produce heat."
   ],
-  "notes": "A 12 V stack of eight small alkaline button batteries. A23 and A27 are the common sizes for remote controls.",
+  "notes": "A 12V stack of eight small alkaline button batteries. A23 and A27 are the common sizes for remote controls.",
   "sources": [
     {
       "id": "energizer-a23",

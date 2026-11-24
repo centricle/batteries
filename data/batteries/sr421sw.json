@@ -84,7 +84,7 @@
       },
       "capacity_mah": {
         "typical": 12,
-        "conditions": "Nominal discharge current 20 µA to 1.2 V at 20 °C (Maxell)"
+        "conditions": "Nominal discharge current 20µA to 1.2V at 20°C (Maxell)"
       },
       "weight_g": 0.17,
       "temperature_c": {
@@ -113,7 +113,7 @@
     "Remove exhausted batteries from the device promptly, because leaking batteries can damage it.",
     "Do not recharge, short-circuit, dismantle, heat or burn the battery; do not mix types, brands or charge states."
   ],
-  "notes": "4.8 mm by 2.15 mm. Sold as a low drain (SW) silver oxide battery.",
+  "notes": "4.8mm by 2.15mm. Sold as a low drain (SW) silver oxide battery.",
   "sources": [
     {
       "id": "maxell-sr-catalog",

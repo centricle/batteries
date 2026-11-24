@@ -51,7 +51,7 @@
         "nominal": 3.7
       },
       "weight_g": 355,
-      "notes": "Figures are from a teardown and test site, not a manufacturer datasheet: nominal voltage 3.7 V, mass 0.355 kg and nominal energy about 86.5 Wh. The reference table lists 23000 mAh. No cutoff, charge voltage or maximum current is published.",
+      "notes": "Figures are from a teardown and test site, not a manufacturer datasheet: nominal voltage 3.7V, mass 0.355kg and nominal energy about 86.5Wh. The reference table lists 23000mAh. No cutoff, charge voltage or maximum current is published.",
       "sources": [
         "batterydesign-4680",
         "wiki-sizes"
@@ -64,15 +64,15 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2V for cobalt, nickel and manganese chemistries, 3.65V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
     "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe).",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100Wh each (FAA PackSafe).",
     "Batteries of this size are used in vehicle packs and are not consumer replacement batteries."
   ],
   "history": "Tesla introduced the 4680 concept in 2020; production began in 2023 (Wikipedia, List of battery sizes).",
-  "notes": "Size code: 46 mm diameter, 80 mm length, 0 for cylindrical; the five-digit form is 46800.",
+  "notes": "Size code: 46mm diameter, 80mm length, 0 for cylindrical; the five-digit form is 46800.",
   "sources": [
     {
       "id": "wiki-sizes",

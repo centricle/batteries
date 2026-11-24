@@ -23,18 +23,18 @@ export const KIND_WORD: Record<string, string> = {
   specialty: '',
 };
 
-/** Size in plain words from search index fields: "20 mm across and 3.2 mm thick". */
+/** Size in plain words from search index fields: "20mm across and 3.2mm thick". */
 function indexSize(e: Entry) {
   if (e.d != null && (e.f === 'cylinder' || e.f === 'disc' || e.w == null)) {
-    return `${num(e.d)} mm across and ${num(e.h)} mm ${e.f === 'disc' ? 'thick' : 'long'}`;
+    return `${num(e.d)}mm across and ${num(e.h)}mm ${e.f === 'disc' ? 'thick' : 'long'}`;
   }
-  const parts = [e.w != null ? `${num(e.w)} mm wide` : '', e.p != null ? `${num(e.p)} mm thick` : '', `${num(e.h)} mm tall`].filter(Boolean);
+  const parts = [e.w != null ? `${num(e.w)}mm wide` : '', e.p != null ? `${num(e.p)}mm thick` : '', `${num(e.h)}mm tall`].filter(Boolean);
   return parts.length > 1 ? `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}` : parts[0];
 }
 
 /**
  * One plain line for a battery in the search results:
- * "A 3-volt coin battery, 20 mm across and 3.2 mm thick." The first voltage in
+ * "A 3-volt coin battery, 20mm across and 3.2mm thick." The first voltage in
  * the index is the main kind's, so a size sold in several kinds shows the one
  * most people mean. `kinds` maps the index's category label to KIND_WORD.
  */
@@ -82,9 +82,9 @@ export function usesLine(list: string[], picks: number[] = [0, 1]) {
   return items.map((s, i) => (i === 0 ? s : lowerFirst(s))).join(', ');
 }
 
-/** "20 mm across, 3.2 mm thick" for a flat round battery. */
+/** "20mm across, 3.2mm thick" for a flat round battery. */
 export function acrossThick(b: Battery) {
-  return `${num(b.dimensions.diameter!.nominal)} mm across, ${num(b.dimensions.height.nominal)} mm thick`;
+  return `${num(b.dimensions.diameter!.nominal)}mm across, ${num(b.dimensions.height.nominal)}mm thick`;
 }
 
 // Brands most often on US store shelves first, so the names a shopper sees

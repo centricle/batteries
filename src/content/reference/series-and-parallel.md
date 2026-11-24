@@ -1,6 +1,6 @@
 ---
 title: "Batteries in series and parallel"
-description: "In series, voltages add and capacity stays the same; in parallel, capacity adds and voltage stays the same. Four 1.5 V AA batteries in series make 6 V."
+description: "In series, voltages add and capacity stays the same; in parallel, capacity adds and voltage stays the same. Four 1.5V AA batteries in series make 6V."
 updated: 2026-11-22
 order: 110
 related: [aa, aaa, 9v, 18650, 21700, 26650, cr123a]
@@ -47,7 +47,7 @@ sources:
     accessed: 2026-11-22
 ---
 
-Use batteries of the same type, capacity and age together, and replace them all at the same time, because a weaker one limits the whole set and is stressed by the others. Connecting batteries in series (end to end, positive to negative) adds their voltages while the capacity in amp-hours stays the same; connecting them in parallel (side by side, positive to positive) adds their capacities while the voltage stays the same. Four 1.5 V alkaline AA batteries in series give 6 V, and four 3.6 V lithium-ion cells in series give 14.4 V nominal (the rated voltage), according to Battery University.
+Use batteries of the same type, capacity and age together, and replace them all at the same time, because a weaker one limits the whole set and is stressed by the others. Connecting batteries in series (end to end, positive to negative) adds their voltages while the capacity in amp-hours stays the same; connecting them in parallel (side by side, positive to positive) adds their capacities while the voltage stays the same. Four 1.5V alkaline AA batteries in series give 6V, and four 3.6V lithium-ion cells in series give 14.4V nominal (the rated voltage), according to Battery University.
 
 On this page, a cell is one single unit that makes electricity. An AA battery is one cell; a 9-volt battery is six cells joined together in one case. A pack is one or more cells wired together, which is why the rules below count cells.
 
@@ -59,28 +59,28 @@ Battery University's BU-302 states the rules this way: in a series string, "each
 - **Parallel:** pack voltage = cell voltage; pack capacity (Ah) = number of cells x cell capacity.
 - **Energy, either way:** watt-hours = pack voltage x pack capacity (Ah), which equals the number of cells x the energy of one cell.
 
-Battery University's worked example: one 3.6 V cell rated 3,400 mAh holds 3.6 x 3.4 = 12.24 Wh. Four of them arranged two in series and two in parallel give 7.2 V nominal and 48.96 Wh, and eight give 97.92 Wh.
+Battery University's worked example: one 3.6V cell rated 3,400mAh holds 3.6 x 3.4 = 12.24Wh. Four of them arranged two in series and two in parallel give 7.2V nominal and 48.96Wh, and eight give 97.92Wh.
 
 ## How a pack layout is written
 
-Pack layouts are written with the series count first and the parallel count second. Battery University gives the example of a laptop pack with four 3.6 V Li-ion cells in series and two in parallel: 4s2p, producing 14.4 V nominal and doubling capacity from 2,400 mAh to 4,800 mAh. It notes that for lithium-ion, the parallel groups are usually built first and then connected in series.
+Pack layouts are written with the series count first and the parallel count second. Battery University gives the example of a laptop pack with four 3.6V Li-ion cells in series and two in parallel: 4s2p, producing 14.4V nominal and doubling capacity from 2,400mAh to 4,800mAh. It notes that for lithium-ion, the parallel groups are usually built first and then connected in series.
 
 ## Common layouts
 
-Per-cell voltages used below: lithium-ion 3.6 V nominal and 4.20 V at full charge (Panasonic NCR18650B and Samsung INR18650-30Q datasheets); lithium iron phosphate 3.2 V nominal and 3.65 V at full charge (Battery University BU-205); NiMH 1.2 V and alkaline 1.5 V nominal (Battery University BU-302). Pack values are the per-cell values multiplied by the number of cells in series.
+Per-cell voltages used below: lithium-ion 3.6V nominal and 4.20V at full charge (Panasonic NCR18650B and Samsung INR18650-30Q datasheets); lithium iron phosphate 3.2V nominal and 3.65V at full charge (Battery University BU-205); NiMH 1.2V and alkaline 1.5V nominal (Battery University BU-302). Pack values are the per-cell values multiplied by the number of cells in series.
 
 | Layout | Cells in series | Voltage (nominal) | Full-charge voltage |
 |---|---|---|---|
-| 1S lithium-ion | 1 | 3.6 V | 4.2 V |
-| 2S lithium-ion | 2 | 7.2 V | 8.4 V |
-| 3S lithium-ion | 3 | 10.8 V | 12.6 V |
-| 4S lithium-ion | 4 | 14.4 V | 16.8 V |
-| 4S lithium iron phosphate | 4 | 12.8 V | 14.6 V |
-| 2 x AA alkaline | 2 | 3.0 V | Not rechargeable |
-| 4 x AA alkaline | 4 | 6.0 V | Not rechargeable |
-| 4 x AA NiMH | 4 | 4.8 V | Not specified here |
+| 1S lithium-ion | 1 | 3.6V | 4.2V |
+| 2S lithium-ion | 2 | 7.2V | 8.4V |
+| 3S lithium-ion | 3 | 10.8V | 12.6V |
+| 4S lithium-ion | 4 | 14.4V | 16.8V |
+| 4S lithium iron phosphate | 4 | 12.8V | 14.6V |
+| 2 x AA alkaline | 2 | 3.0V | Not rechargeable |
+| 4 x AA alkaline | 4 | 6.0V | Not rechargeable |
+| 4 x AA NiMH | 4 | 4.8V | Not specified here |
 
-The datasheets above set the lithium-ion discharge cutoff at 2.5 V per cell, which scales the same way: 5.0 V for 2S, 7.5 V for 3S and 10.0 V for 4S.
+The datasheets above set the lithium-ion discharge cutoff at 2.5V per cell, which scales the same way: 5.0V for 2S, 7.5V for 3S and 10.0V for 4S.
 
 Some single batteries are series packs inside. In a standard (IEC) battery name, a leading number gives the count of cells in series (Wikipedia, Battery nomenclature), so the alkaline [9-volt](/9v) battery, 6LR61, holds six cells and the 4.5-volt [3LR12](/3lr12) holds three, as listed in Wikipedia's list of battery sizes.
 

@@ -41,13 +41,13 @@ const SAYS_CELL = /\bcells?\b/i;
 const CELL_OK = new Set(
   [
     // A maker's capacity rating condition, the end voltage of each cell inside.
-    ['9v.json', '200 mAh rated at 0.2 C to 7.0 V, 20 °C (Varta 56722); 175 mAh at 35 mA to 1.0 V per cell (Energizer NH22-175); 210 mAh typical (GP20R8H)'],
-    ['lantern-6v.json', '25 mA continuous to 0.8 V per cell'],
+    ['9v.json', '200mAh rated at 0.2C to 7.0V, 20°C (Varta 56722); 175mAh at 35mA to 1.0V per cell (Energizer NH22-175); 210mAh typical (GP20R8H)'],
+    ['lantern-6v.json', '25mA continuous to 0.8V per cell'],
     // A cutoff or charge voltage stated per cell. "Per battery" would be wrong
     // for a battery with several inside, such as a 9V.
-    ['alkaline.json', 'Energizer recommends 0.8 V per cell as the minimum cutoff, because deeper discharge raises the chance of excessive internal gassing; by 0.8 V about 95% of the usable capacity has been removed.'],
-    ['nimh.json', 'The usual discharge cutoff is 0.9 V per cell, 75% of the 1.2 V midpoint, though at high drain rates (1 to 4 C) that cutoff can leave capacity unused.'],
-    ['nickel-zinc.json', "Battery University and PKCELL both specify charging to 1.9 V per cell (constant current, then constant voltage in PKCELL's case), and both Battery University and Wikipedia state that trickle charging is not recommended."],
+    ['alkaline.json', 'Energizer recommends 0.8V per cell as the minimum cutoff, because deeper discharge raises the chance of excessive internal gassing; by 0.8V about 95% of the usable capacity has been removed.'],
+    ['nimh.json', 'The usual discharge cutoff is 0.9V per cell, 75% of the 1.2V midpoint, though at high drain rates (1 to 4 C) that cutoff can leave capacity unused.'],
+    ['nickel-zinc.json', "Battery University and PKCELL both specify charging to 1.9V per cell (constant current, then constant voltage in PKCELL's case), and both Battery University and Wikipedia state that trickle charging is not recommended."],
     // A fuel cell is a different device, not a battery.
     ['zinc-air.json', 'Thin electrodes developed from fuel-cell research in the 1970s made small button and prismatic batteries practical for hearing aids.'],
   ].map(([file, s]) => `${file}\n${s}`),

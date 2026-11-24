@@ -19,6 +19,6 @@ const ceiling = sellable(b) ? null : capacityCeiling(b);
   </p>
 ) : ceiling ? (
   <p class={`callout ${cls}`}>
-    <strong class="text-ink">Before you buy {withArt(b.name)}:</strong> the highest capacity any source on this page gives for it is {fmt(ceiling, 0)} mAh. One sold as larger claims more than any maker listed here publishes. <a class="link" href="/reference/lithium-ion-safety">Lithium-ion battery safety</a>
+    <strong class="text-ink">Before you buy {withArt(b.name)}:</strong> the highest capacity any source on this page gives for it is {fmt(ceiling, 0)}mAh. One sold as larger claims more than any maker listed here publishes. <a class="link" href="/reference/lithium-ion-safety">Lithium-ion battery safety</a>
   </p>
 ) : null}

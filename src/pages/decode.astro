@@ -78,7 +78,7 @@ const jsonld = {
   <section class="wrap pt-8">
     <h1 class="text-2xl sm:text-3xl font-semibold">What the letters and numbers mean</h1>
     <p class="lede measure mt-3">Type the name printed on your battery to see what each part of it means.</p>
-    <p class="mt-2 text-base text-ink-2 measure">Most names are built from parts. In CR2032, C means lithium, R means round, 20 is how wide it is in millimeters, and 32 is how thick it is in tenths of a millimeter (3.2 mm). Some names, like 377, are a maker's own number and say nothing about the size. For those, the page looks the name up among the {s.codes.toLocaleString('en-US')} other names on this site.</p>
+    <p class="mt-2 text-base text-ink-2 measure">Most names are built from parts. In CR2032, C means lithium, R means round, 20 is how wide it is in millimeters, and 32 is how thick it is in tenths of a millimeter (3.2mm). Some names, like 377, are a maker's own number and say nothing about the size. For those, the page looks the name up among the {s.codes.toLocaleString('en-US')} other names on this site.</p>
   </section>
 
   <section class="wrap mt-6">
@@ -127,17 +127,17 @@ const jsonld = {
   <section class="wrap mt-6 grid gap-8 lg:grid-cols-2 [&>*]:min-w-0">
     <div>
       <h2 class="section-title" id="iec-60086">Single-use batteries (IEC 60086)</h2>
-      <p class="text-base text-ink-2">The pattern is <span class="mono">[how many inside] [kind] [shape] [size] [ending] [-rows side by side]</span>. For example, a 9V battery named <span class="mono">6LR61</span> has six small cells inside (6), is alkaline (L) and round (R), size 61, so 6 × 1.5 V = 9 V.</p>
+      <p class="text-base text-ink-2">The pattern is <span class="mono">[how many inside] [kind] [shape] [size] [ending] [-rows side by side]</span>. For example, a 9V battery named <span class="mono">6LR61</span> has six small cells inside (6), is alkaline (L) and round (R), size 61, so 6 × 1.5V = 9V.</p>
       <h3 class="text-lg font-semibold mt-5 mb-2">Kind letters</h3>
       <div class="card table-scroll">
         <table class="table">
           <thead><tr><th>Letter</th><th>Kind (chemistry)</th><th class="n">Volts</th></tr></thead>
           <tbody>
             {chemRows.map((r) => (
-              <tr><td class="mono font-semibold">{r.k || '(none)'}</td><td>{r.name}{r.withdrawn ? ' (withdrawn)' : ''}</td><td class="n">{r.v ? `${r.v} V` : ''}</td></tr>
+              <tr><td class="mono font-semibold">{r.k || '(none)'}</td><td>{r.name}{r.withdrawn ? ' (withdrawn)' : ''}</td><td class="n">{r.v ? `${r.v}V` : ''}</td></tr>
             ))}
             {Object.entries(tables.recharge).map(([k, r]) => (
-              <tr><td class="mono font-semibold">{k}</td><td>{r.name}, IEC 61951</td><td class="n">{r.v ? `${r.v} V` : ''}</td></tr>
+              <tr><td class="mono font-semibold">{k}</td><td>{r.name}, IEC 61951</td><td class="n">{r.v ? `${r.v}V` : ''}</td></tr>
             ))}
           </tbody>
         </table>
@@ -149,13 +149,13 @@ const jsonld = {
     </div>
     <div>
       <h2 class="section-title" id="sizes">Size numbers</h2>
-      <p class="text-base text-ink-2">One or two digits are an older size number kept from earlier editions of the standard: R6 is AA, R03 is AAA. Three or more digits are a measurement: how wide in millimeters, then how tall in tenths of a millimeter. <span class="mono">2032</span> is 20 mm by 3.2 mm. <span class="mono">17345</span> is 17 mm by 34.5 mm. Three digits use a one-digit width number: <span class="mono">626</span> is 6.8 mm by 2.6 mm.</p>
+      <p class="text-base text-ink-2">One or two digits are an older size number kept from earlier editions of the standard: R6 is AA, R03 is AAA. Three or more digits are a measurement: how wide in millimeters, then how tall in tenths of a millimeter. <span class="mono">2032</span> is 20mm by 3.2mm. <span class="mono">17345</span> is 17mm by 34.5mm. Three digits use a one-digit width number: <span class="mono">626</span> is 6.8mm by 2.6mm.</p>
       <h3 class="text-lg font-semibold mt-5 mb-2">Older size numbers, round batteries</h3>
       <div class="card table-scroll">
         <table class="table">
           <thead><tr><th>Number</th><th>Name</th><th class="n">Across × long</th></tr></thead>
           <tbody>
-            {legacyRound.map((r) => <tr><td class="mono font-semibold">{r.k}</td><td>{r.name}</td><td class="n">{r.d && r.h ? `${r.d} × ${r.h} mm` : ''}</td></tr>)}
+            {legacyRound.map((r) => <tr><td class="mono font-semibold">{r.k}</td><td>{r.name}</td><td class="n">{r.d && r.h ? `${r.d} × ${r.h}mm` : ''}</td></tr>)}
           </tbody>
         </table>
       </div>
@@ -165,7 +165,7 @@ const jsonld = {
           <table class="table">
             <thead><tr><th>Number</th><th class="n">Across × thick</th><th>Example</th></tr></thead>
             <tbody>
-              {legacyButton.map((r) => <tr><td class="mono font-semibold">{r.k}</td><td class="n">{r.d} × {r.h} mm</td><td class="mono">LR{r.k.slice(1)}, SR{r.k.slice(1)}</td></tr>)}
+              {legacyButton.map((r) => <tr><td class="mono font-semibold">{r.k}</td><td class="n">{r.d} × {r.h}mm</td><td class="mono">LR{r.k.slice(1)}, SR{r.k.slice(1)}</td></tr>)}
             </tbody>
           </table>
         </div>
@@ -173,7 +173,7 @@ const jsonld = {
       <h3 class="text-lg font-semibold mt-6 mb-2">Width numbers</h3>
       <p class="text-base text-ink-2">Where a name uses one of these width numbers, the digits stand for the largest allowed width rather than the width cut to whole millimeters.</p>
       <div class="mt-2 flex flex-wrap gap-2">
-        {diam.map(([k, v]) => <span class="chip">{k} is {v} mm</span>)}
+        {diam.map(([k, v]) => <span class="chip">{k} is {v}mm</span>)}
       </div>
       <h3 class="text-lg font-semibold mt-6 mb-2">Endings</h3>
       <ul class="text-base text-ink-2 space-y-1">
@@ -188,7 +188,7 @@ const jsonld = {
   <section class="wrap mt-10 grid gap-8 lg:grid-cols-2 [&>*]:min-w-0">
     <div>
       <h2 class="section-title" id="iec-61960">Rechargeable lithium-ion (IEC 61960)</h2>
-      <p class="text-base text-ink-2">The pattern is <span class="mono">[how many inside] [negative side] [positive side] [shape] [size]</span>. In <span class="mono">INR18650</span>, I means lithium-ion, N means a nickel-based positive side, R means round, 18 is how wide in millimeters and 650 is how long in tenths of a millimeter (65.0 mm). The standard itself writes the largest sizes with a slash (ICR19/66); the five-digit form is the one makers print. A bare <span class="mono">18650</span> names only the size.</p>
+      <p class="text-base text-ink-2">The pattern is <span class="mono">[how many inside] [negative side] [positive side] [shape] [size]</span>. In <span class="mono">INR18650</span>, I means lithium-ion, N means a nickel-based positive side, R means round, 18 is how wide in millimeters and 650 is how long in tenths of a millimeter (65.0mm). The standard itself writes the largest sizes with a slash (ICR19/66); the five-digit form is the one makers print. A bare <span class="mono">18650</span> names only the size.</p>
       <div class="card table-scroll mt-3">
         <table class="table">
           <thead><tr><th>Letter</th><th>Positive side</th><th>What it usually means</th></tr></thead>
@@ -350,11 +350,11 @@ const jsonld = {
     tiles.innerHTML = tilesHTML(d);
 
     const bits: string[] = [];
-    if (d.voltage && d.voltage.cells > 1) bits.push(`<p class="text-base"><span class="font-semibold">Voltage:</span> <span class="mono">${d.voltage.cells} × ${fmt(d.voltage.per)} V = ${fmt(d.voltage.total)} V</span></p>`);
+    if (d.voltage && d.voltage.cells > 1) bits.push(`<p class="text-base"><span class="font-semibold">Voltage:</span> <span class="mono">${d.voltage.cells} × ${fmt(d.voltage.per)}V = ${fmt(d.voltage.total)}V</span></p>`);
     if (d.dims?.d && d.dims?.h) {
       const disc = d.dims.h < d.dims.d;
       const q = new URLSearchParams({ shape: disc ? 'disc' : 'cylinder', d: String(d.dims.d), h: String(d.dims.h) });
-      bits.push(`<p class="text-base"><span class="font-semibold">Size from the name:</span> <span class="mono">${fmt(d.dims.d)} × ${fmt(d.dims.h)} mm</span> (about ${inFrac(d.dims.d)} by ${inFrac(d.dims.h)})${d.dims.approx ? ', roughly' : ''}. <a class="link" href="/identify?${q}">Find batteries of this size</a></p>`);
+      bits.push(`<p class="text-base"><span class="font-semibold">Size from the name:</span> <span class="mono">${fmt(d.dims.d)} × ${fmt(d.dims.h)}mm</span> (about ${inFrac(d.dims.d)} by ${inFrac(d.dims.h)})${d.dims.approx ? ', roughly' : ''}. <a class="link" href="/identify?${q}">Find batteries of this size</a></p>`);
     }
     for (const n of d.notes) bits.push(`<p class="text-sm text-ink-2">${esc(n)}</p>`);
     const std = d.system.startsWith('IEC') ? 'IEC' : d.system.startsWith('ANSI') ? 'ANSI' : null;
@@ -384,7 +384,7 @@ const jsonld = {
           const others = e.k.filter((k) => norm(k) !== norm(code)).slice(0, 6);
           return `<li><a href="/${e.id}" class="tile card block p-4 h-full">
             <span class="flex items-center gap-2"><span class="dot" style="background:${esc(e.col)}"></span><span class="font-mono font-semibold text-lg">${esc(e.n)}</span></span>
-            <span class="block mt-1 text-sm text-ink-2">${esc(e.c)}, ${esc(e.s)}, ${esc(orList(vList(e.v)))} V</span>
+            <span class="block mt-1 text-sm text-ink-2">${esc(e.c)}, ${esc(e.s)}, ${esc(orList(vList(e.v)))}V</span>
             <span class="block mt-1 text-base text-ink">${listed}</span>
             ${others.length ? `<span class="block mt-1 text-sm text-ink-2">Also sold as ${esc(others.join(', '))}</span>` : ''}
           </a></li>`;

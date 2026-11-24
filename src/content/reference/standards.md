@@ -144,7 +144,7 @@ Scope wording for IEC standards is taken from the abstracts on the IEC webstore.
 
 IEC 60086 is the international series for single-use batteries. The IEC's catalog lists eight documents in the current set: parts 1, 2-1, 2-2, 3, 4, 5 and 6, and technical report 7.
 
-**Part 1** is the base standard. The IEC says its purpose is to ensure that batteries from different makers "are interchangeable according to standard form, fit and function." It defines the system letters, electrodes, electrolytes and voltages used in battery names (see [how battery names work](/reference/battery-naming)). The 2026 edition added a new system letter, "T," raised the maximum open-circuit voltage for letter F (lithium iron disulfide) from 1.83 V to 1.90 V, and added an annex identifying batteries of general use and the tests used to compare their performance "in support of Regulation (EU) 2023/1542."
+**Part 1** is the base standard. The IEC says its purpose is to ensure that batteries from different makers "are interchangeable according to standard form, fit and function." It defines the system letters, electrodes, electrolytes and voltages used in battery names (see [how battery names work](/reference/battery-naming)). The 2026 edition added a new system letter, "T," raised the maximum open-circuit voltage for letter F (lithium iron disulfide) from 1.83V to 1.90V, and added an annex identifying batteries of general use and the tests used to compare their performance "in support of Regulation (EU) 2023/1542."
 
 **Part 2** was split in 2026. The commented versions of IEC 60086-2-1 and IEC 60086-2-2 both describe the changes they make to IEC 60086-2:2021, with aqueous-electrolyte batteries in part 2-1 and lithium batteries in part 2-2.
 
@@ -168,7 +168,7 @@ ANSI C18 is the American national series. Wikipedia's battery nomenclature artic
 
 ## UL 1642 and UL 2054
 
-UL 1642 covers "primary (nonrechargeable) and secondary (rechargeable) lithium batteries for use as power sources in products," whether a single cell or several cells in series or parallel. Its stated purpose is to reduce the risk of fire or explosion when lithium batteries are used in a product, and the risk of injury when user-replaceable batteries are removed and discarded. It covers technician-replaceable batteries containing 5.0 g or less of metallic lithium.
+UL 1642 covers "primary (nonrechargeable) and secondary (rechargeable) lithium batteries for use as power sources in products," whether a single cell or several cells in series or parallel. Its stated purpose is to reduce the risk of fire or explosion when lithium batteries are used in a product, and the risk of injury when user-replaceable batteries are removed and discarded. It covers technician-replaceable batteries containing 5.0g or less of metallic lithium.
 
 UL 2054 is the standard for household and commercial batteries. Intertek's notice for its third edition (2021) lists new construction requirements for wiring and terminals and revised requirements for adhesive labels, with an effective date of November 17, 2024. UL reports that the U.S. Food and Drug Administration has recognized both UL 2054 and UL 1642 as consensus standards for medical devices that use lithium or nickel-based batteries.
 

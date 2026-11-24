@@ -54,7 +54,7 @@
       "min": 33.5,
       "max": 34.5
     },
-    "note": "Height includes the positive terminal. Datasheet drawing gives the positive terminal diameter as 9.6 mm maximum and height as 1.0 mm minimum.",
+    "note": "Height includes the positive terminal. Datasheet drawing gives the positive terminal diameter as 9.6mm maximum and height as 1.0mm minimum.",
     "sources": [
       "energizer-123",
       "panasonic-cr123a"
@@ -69,7 +69,7 @@
     "negative": {
       "style": "recessed",
       "diameter": 11,
-      "note": "Flat contact area 11.0 mm minimum diameter, recessed 0.5 to 0.9 mm in the can end."
+      "note": "Flat contact area 11.0mm minimum diameter, recessed 0.5 to 0.9mm in the can end."
     },
     "note": "Contact dimensions from the Energizer 123 datasheet drawing."
   },
@@ -87,7 +87,7 @@
           1500,
           1550
         ],
-        "conditions": "Energizer 123: 100 ohm continuous to 2.0 V, 21 °C. Panasonic CR123A lists 1,550 mAh nominal at a 20 mA continuous drain."
+        "conditions": "Energizer 123: 100 ohm continuous to 2.0V, 21°C. Panasonic CR123A lists 1,550mAh nominal at a 20mA continuous drain."
       },
       "weight_g": 16.5,
       "max_continuous_ma": 1500,
@@ -103,7 +103,7 @@
           60
         ]
       },
-      "notes": "Panasonic rates its CR123A for -40 to 70 °C operation, with a note to consult Panasonic outside -20 to 60 °C. Energizer weight 16.5 g, Panasonic about 16.0 g.",
+      "notes": "Panasonic rates its CR123A for -40 to 70°C operation, with a note to consult Panasonic outside -20 to 60°C. Energizer weight 16.5g, Panasonic about 16.0g.",
       "sources": [
         "energizer-123",
         "panasonic-cr123a"
@@ -124,16 +124,16 @@
     {
       "id": "16340",
       "relation": "fits-with-caveat",
-      "note": "A 16340 (RCR123A) lithium-ion battery has nearly the same size but charges to 4.2 V and runs at 3.6 to 3.7 V, so some devices designed for a 3.0 V single-use battery can be damaged or give wrong readings."
+      "note": "A 16340 (RCR123A) lithium-ion battery has nearly the same size but charges to 4.2V and runs at 3.6 to 3.7V, so some devices designed for a 3.0V single-use battery can be damaged or give wrong readings."
     }
   ],
   "safety": [
     "Lithium photo batteries are single-use and are not designed to be recharged; charging can cause venting, fire or rupture.",
     "Do not short-circuit, crush, heat or disassemble. The battery contains a positive temperature coefficient (PTC) device to limit short-circuit current, but it does not make the battery safe to abuse.",
     "Replace all batteries in a device at the same time and do not mix them with used batteries or other types.",
-    "A rechargeable 3.7 V lithium-ion battery sold in this size is a different product (see 16340) and must not be used where a 3.0 V single-use battery is specified unless the device maker allows it."
+    "A rechargeable 3.7V lithium-ion battery sold in this size is a different product (see 16340) and must not be used where a 3.0V single-use battery is specified unless the device maker allows it."
   ],
-  "notes": "The IEC code CR17345 encodes a diameter of 17 mm and a height of 34.5 mm. The name 123A is a consumer name that has no relation to the A (17 mm by 50 mm) battery size.",
+  "notes": "The IEC code CR17345 encodes a diameter of 17mm and a height of 34.5mm. The name 123A is a consumer name that has no relation to the A (17mm by 50mm) battery size.",
   "sources": [
     {
       "id": "energizer-123",

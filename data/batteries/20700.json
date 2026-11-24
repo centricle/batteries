@@ -29,7 +29,7 @@
       "nominal": 70.3,
       "max": 70.3
     },
-    "note": "Maximum dimensions with tube from the Panasonic NCR20700B data sheet. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Maximum dimensions with tube from the Panasonic NCR20700B data sheet. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "panasonic-ncr20700b"
     ]
@@ -60,7 +60,7 @@
         ],
         "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
       },
-      "notes": "Nominal voltage 3.6 to 3.7 V by maker.",
+      "notes": "Nominal voltage 3.6 to 3.7V by maker.",
       "sources": [
         "wiki-sizes"
       ]
@@ -75,7 +75,7 @@
       },
       "capacity_mah": {
         "typical": 4250,
-        "conditions": "Rated 4000 mAh at 20 °C; minimum 4050 mAh and typical 4250 mAh at 25 °C; 2 A CC/CV charge to 4.20 V"
+        "conditions": "Rated 4000mAh at 20°C; minimum 4050mAh and typical 4250mAh at 25°C; 2A CC/CV charge to 4.20V"
       },
       "weight_g": 63,
       "temperature_c": {
@@ -92,7 +92,7 @@
           50
         ]
       },
-      "notes": "Weight is the maximum. Tentative data sheet: it publishes discharge curves to 15 A but no stated maximum continuous current.",
+      "notes": "Weight is the maximum. Tentative data sheet: it publishes discharge curves to 15A but no stated maximum continuous current.",
       "sources": [
         "panasonic-ncr20700b"
       ]
@@ -106,13 +106,13 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2V for cobalt, nickel and manganese chemistries, 3.65V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
     "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100Wh each (FAA PackSafe)."
   ],
-  "notes": "Size code: 20 mm diameter, 70 mm length, 0 for cylindrical. Largely superseded by the 21700 in new designs.",
+  "notes": "Size code: 20mm diameter, 70mm length, 0 for cylindrical. Largely superseded by the 21700 in new designs.",
   "sources": [
     {
       "id": "wiki-sizes",
@@ -134,7 +134,7 @@
       "url": "https://files.batteryjunction.com/frontend/files/sanyo-ncr20700b.pdf",
       "accessed": "2026-11-22",
       "kind": "datasheet",
-      "note": "Third-party copy of a tentative data sheet. Lists no maximum discharge current; discharge curves run to 15 A."
+      "note": "Third-party copy of a tentative data sheet. Lists no maximum discharge current; discharge curves run to 15A."
     },
     {
       "id": "faa-packsafe",

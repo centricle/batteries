@@ -61,7 +61,7 @@
       },
       "capacity_mah": {
         "typical": 140,
-        "conditions": "Panasonic nominal capacity at 0.1 mA continuous standard drain; cutoff voltage not stated"
+        "conditions": "Panasonic nominal capacity at 0.1mA continuous standard drain; cutoff voltage not stated"
       },
       "weight_g": 1.9,
       "shelf_life_years": 10,
@@ -71,7 +71,7 @@
           85
         ]
       },
-      "notes": "GP lists 140 mAh and 1.8 g.",
+      "notes": "GP lists 140mAh and 1.8g.",
       "sources": [
         "panasonic-cr1632",
         "gp-cr1632"
@@ -86,7 +86,7 @@
       },
       "capacity_mah": {
         "typical": 120,
-        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+        "conditions": "Panasonic nominal capacity at 0.03mA continuous standard drain; cutoff not stated"
       },
       "weight_g": 1.5,
       "temperature_c": {
@@ -111,15 +111,15 @@
     {
       "id": "cr1616",
       "relation": "fits-with-caveat",
-      "note": "Same 16 mm width and 1.6 mm thinner; much lower capacity and usually loose in a CR1632 holder."
+      "note": "Same 16mm width and 1.6mm thinner; much lower capacity and usually loose in a CR1632 holder."
     },
     {
       "id": "cr1620",
       "relation": "fits-with-caveat",
-      "note": "Same 16 mm width and 1.2 mm thinner; lower capacity and may make poor contact in a CR1632 holder."
+      "note": "Same 16mm width and 1.2mm thinner; lower capacity and may make poor contact in a CR1632 holder."
     }
   ],
-  "notes": "Panasonic also lists BR1632A, a carbon-monofluoride battery of the same size rated -40 to +125 °C operating.",
+  "notes": "Panasonic also lists BR1632A, a carbon-monofluoride battery of the same size rated -40 to +125°C operating.",
   "sources": [
     {
       "id": "panasonic-cr1632",

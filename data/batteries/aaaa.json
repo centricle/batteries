@@ -49,7 +49,7 @@
       "nominal": 42.5,
       "max": 42.5
     },
-    "note": "Energizer prints 42.5 mm as a reference dimension for height; Duracell also gives 42.5 mm as the maximum.",
+    "note": "Energizer prints 42.5mm as a reference dimension for height; Duracell also gives 42.5mm as the maximum.",
     "sources": [
       "energizer-e96",
       "duracell-summary",
@@ -82,7 +82,7 @@
           55
         ]
       },
-      "notes": "Energizer publishes capacity only as a discharge chart. Duracell lists the MX2500 at 6.0 g. Wikipedia lists a typical alkaline capacity of about 625 mAh without test conditions.",
+      "notes": "Energizer publishes capacity only as a discharge chart. Duracell lists the MX2500 at 6.0g. Wikipedia lists a typical alkaline capacity of about 625mAh without test conditions.",
       "sources": [
         "energizer-e96",
         "duracell-summary",
@@ -119,7 +119,7 @@
     {
       "id": "aaa",
       "relation": "does-not-fit",
-      "note": "AAA batteries are also 1.5 V but wider (10.5 mm across against 8.3 mm) and do not fit AAAA holders."
+      "note": "AAA batteries are also 1.5V but wider (10.5mm across against 8.3mm) and do not fit AAAA holders."
     }
   ],
   "safety": [

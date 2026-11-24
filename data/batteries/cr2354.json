@@ -36,7 +36,7 @@
       },
       "capacity_mah": {
         "typical": 560,
-        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated"
+        "conditions": "Panasonic nominal capacity at 0.2mA continuous standard drain; cutoff voltage not stated"
       },
       "weight_g": 5.7,
       "temperature_c": {
@@ -60,7 +60,7 @@
     {
       "id": "cr2330",
       "relation": "fits-with-caveat",
-      "note": "Same 23 mm width and 2.4 mm thinner; much lower capacity and loose in a CR2354 holder."
+      "note": "Same 23mm width and 2.4mm thinner; much lower capacity and loose in a CR2354 holder."
     }
   ],
   "sources": [

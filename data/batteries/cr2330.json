@@ -48,7 +48,7 @@
       },
       "capacity_mah": {
         "typical": 265,
-        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated"
+        "conditions": "Panasonic nominal capacity at 0.2mA continuous standard drain; cutoff voltage not stated"
       },
       "weight_g": 3.7,
       "temperature_c": {
@@ -70,7 +70,7 @@
       },
       "capacity_mah": {
         "typical": 255,
-        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+        "conditions": "Panasonic nominal capacity at 0.03mA continuous standard drain; cutoff not stated"
       },
       "weight_g": 3.2,
       "temperature_c": {
@@ -95,7 +95,7 @@
       },
       "capacity_mah": {
         "typical": 50.0,
-        "conditions": "Panasonic nominal capacity at 0.1 mA standard drain to 2.5 V, 20 °C"
+        "conditions": "Panasonic nominal capacity at 0.1mA standard drain to 2.5V, 20°C"
       },
       "weight_g": 3.5,
       "cycle_life": 1000,
@@ -122,15 +122,15 @@
     {
       "id": "cr2320",
       "relation": "fits-with-caveat",
-      "note": "Same 23 mm width and 1.0 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
+      "note": "Same 23mm width and 1.0mm thinner; lower capacity and may make poor contact in a CR2330 holder."
     },
     {
       "id": "cr2325",
       "relation": "fits-with-caveat",
-      "note": "Same 23 mm width and 0.5 mm thinner; lower capacity and may make poor contact in a CR2330 holder."
+      "note": "Same 23mm width and 0.5mm thinner; lower capacity and may make poor contact in a CR2330 holder."
     }
   ],
-  "notes": "BR2330 is rated -40 to +85 °C operating per Panasonic, a wider range than the CR type. VL2330 is a rechargeable battery for devices designed to charge it.",
+  "notes": "BR2330 is rated -40 to +85°C operating per Panasonic, a wider range than the CR type. VL2330 is a rechargeable battery for devices designed to charge it.",
   "sources": [
     {
       "id": "panasonic-cr2330",

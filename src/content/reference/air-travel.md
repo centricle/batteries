@@ -1,6 +1,6 @@
 ---
 title: "Flying with batteries"
-description: "Spare lithium batteries and power banks go in carry-on only. Lithium-ion is capped at 100 Wh per battery, or 160 Wh with airline approval."
+description: "Spare lithium batteries and power banks go in carry-on only. Lithium-ion is capped at 100Wh per battery, or 160Wh with airline approval."
 updated: 2026-11-22
 order: 30
 related: [18650, 21700, cr123a, cr2032, aa, 9v]
@@ -31,16 +31,16 @@ sources:
     accessed: 2026-11-22
 ---
 
-Spare lithium batteries, including power banks, must travel in carry-on baggage, never in checked bags, with their terminals (the metal contacts) protected from short circuit. Ordinary alkaline, NiMH and NiCd batteries may go in carry-on or checked bags if they are protected from damage and short circuit. In the United States, the FAA limits lithium-ion batteries to 100 watt-hours (Wh) each, allows up to two spare batteries of 101 to 160 Wh with airline approval, and limits lithium metal (single-use) batteries to 2 grams of lithium each.
+Spare lithium batteries, including power banks, must travel in carry-on baggage, never in checked bags, with their terminals (the metal contacts) protected from short circuit. Ordinary alkaline, NiMH and NiCd batteries may go in carry-on or checked bags if they are protected from damage and short circuit. In the United States, the FAA limits lithium-ion batteries to 100 watt-hours (Wh) each, allows up to two spare batteries of 101 to 160Wh with airline approval, and limits lithium metal (single-use) batteries to 2 grams of lithium each.
 
 ## Limits at a glance (United States, FAA)
 
 | Battery | Carry-on | Checked | Limit |
 |---|---|---|---|
-| Lithium-ion, spare, up to 100 Wh | Yes | No | Terminals protected |
-| Lithium-ion, spare, 101 to 160 Wh | Yes, with airline approval | No | Two spares per person |
-| Lithium-ion, over 160 Wh | No | No | Forbidden on passenger aircraft |
-| Lithium metal, spare, up to 2 g lithium | Yes | No | Terminals protected |
+| Lithium-ion, spare, up to 100Wh | Yes | No | Terminals protected |
+| Lithium-ion, spare, 101 to 160Wh | Yes, with airline approval | No | Two spares per person |
+| Lithium-ion, over 160Wh | No | No | Forbidden on passenger aircraft |
+| Lithium metal, spare, up to 2g lithium | Yes | No | Terminals protected |
 | Power bank or charging case | Yes | No | Same Wh limits as spare lithium-ion |
 | Device with installed lithium battery | Yes | Yes, if powered off and protected | Same Wh limits |
 | Alkaline, NiMH, NiCd (AA, AAA, C, D, 9-volt, button) | Yes | Yes | Protected from damage and short circuit |
@@ -53,14 +53,14 @@ The FAA sets no quantity limit for most batteries carried for personal use; batt
 
 Lithium-ion limits are set in watt-hours, not milliamp-hours. The FAA says to multiply the battery voltage by the amp-hour rating; IATA defines the rating as rated capacity in ampere-hours multiplied by the rated (nominal) voltage (Wh = Ah x V). To convert mAh to Ah, divide by 1,000.
 
-The FAA's own example is a 12-volt battery rated at 8 Ah: 12 x 8 = 96 Wh.
+The FAA's own example is a 12-volt battery rated at 8Ah: 12 x 8 = 96Wh.
 
-A single round battery works the same way. An [18650](/18650) battery rated 3.6 V and 3000 mAh:
+A single round battery works the same way. An [18650](/18650) battery rated 3.6V and 3000mAh:
 
-- 3000 mAh / 1000 = 3.0 Ah
-- 3.6 V x 3.0 Ah = **10.8 Wh**
+- 3000mAh / 1000 = 3.0Ah
+- 3.6V x 3.0Ah = **10.8Wh**
 
-That battery is well under the 100 Wh limit. IATA notes that lithium-ion batteries are required to carry a Wh rating on the case, and that an airline may refuse a battery or device if staff cannot verify the rating from the battery or its documentation.
+That battery is well under the 100Wh limit. IATA notes that lithium-ion batteries are required to carry a Wh rating on the case, and that an airline may refuse a battery or device if staff cannot verify the rating from the battery or its documentation.
 
 ## Spare batteries and covering the terminals
 
@@ -70,7 +70,7 @@ Battery terminals must not touch other metal. The FAA lists acceptable methods: 
 
 ## Power banks
 
-Under FAA rules, power banks, portable chargers and phone charging cases are treated as spare lithium-ion batteries: carry-on only, 100 Wh per battery, or up to two of 101 to 160 Wh with airline approval. The FAA notes that many airlines set stricter limits on how many power banks a passenger may carry, regardless of Wh rating.
+Under FAA rules, power banks, portable chargers and phone charging cases are treated as spare lithium-ion batteries: carry-on only, 100Wh per battery, or up to two of 101 to 160Wh with airline approval. The FAA notes that many airlines set stricter limits on how many power banks a passenger may carry, regardless of Wh rating.
 
 International rules changed in 2026. On 27 March 2026, ICAO adopted an addendum to its Technical Instructions that, according to IATA's operator guidance:
 
@@ -79,7 +79,7 @@ International rules changed in 2026. On 27 March 2026, ICAO adopted an addendum 
 - prohibits recharging a power bank on board; and
 - recommends that power banks not be used to recharge devices on board.
 
-IATA's 2026 passenger guidance lists power banks over 100 Wh as forbidden and asks passengers not to store power banks in overhead lockers. The ICAO addendum itself still allows 100 to 160 Wh power banks with operator approval, but IATA states that provision will not be carried into the 68th edition of its Dangerous Goods Regulations, which takes effect on 1 January 2027.
+IATA's 2026 passenger guidance lists power banks over 100Wh as forbidden and asks passengers not to store power banks in overhead lockers. The ICAO addendum itself still allows 100 to 160Wh power banks with operator approval, but IATA states that provision will not be carried into the 68th edition of its Dangerous Goods Regulations, which takes effect on 1 January 2027.
 
 IATA also notes that airlines prefer spare batteries and power banks to be at less than 25% charge, and that an operator approving multiple spare batteries may require extra separation between them or a state of charge below 25%.
 
@@ -87,7 +87,7 @@ IATA also notes that airlines prefer spare batteries and power banks to be at le
 
 The FAA says devices containing lithium batteries "should be carried in carry-on baggage." When they are checked, they must be completely powered off and protected against unintentional activation or damage. IATA specifies that "off" means not in sleep or hibernation mode. Electronic cigarettes and vaping devices are carry-on only under both the FAA and IATA, and IATA prohibits recharging them on board.
 
-For baggage trackers, the FAA chart allows checked carriage when the lithium content does not exceed 0.3 grams or the lithium-ion rating does not exceed 2.7 Wh. Baggage equipped with lithium batteries (smart luggage) must be carried on unless the batteries can be removed; removed batteries follow the same restrictions as spare batteries.
+For baggage trackers, the FAA chart allows checked carriage when the lithium content does not exceed 0.3 grams or the lithium-ion rating does not exceed 2.7Wh. Baggage equipped with lithium batteries (smart luggage) must be carried on unless the batteries can be removed; removed batteries follow the same restrictions as spare batteries.
 
 ## Alkaline, NiMH and NiCd batteries
 

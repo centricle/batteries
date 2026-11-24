@@ -54,7 +54,7 @@
       },
       "capacity_mah": {
         "typical": 48,
-        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+        "conditions": "Panasonic nominal capacity at 0.03mA continuous standard drain; cutoff not stated"
       },
       "weight_g": 0.8,
       "temperature_c": {
@@ -80,12 +80,12 @@
     {
       "id": "cr1220",
       "relation": "fits-with-caveat",
-      "note": "Same width and 0.5 mm thinner; lower capacity and may make poor contact in a CR1225 holder."
+      "note": "Same width and 0.5mm thinner; lower capacity and may make poor contact in a CR1225 holder."
     },
     {
       "id": "cr1216",
       "relation": "fits-with-caveat",
-      "note": "Same width and 0.9 mm thinner; lower capacity and may make poor contact in a CR1225 holder."
+      "note": "Same width and 0.9mm thinner; lower capacity and may make poor contact in a CR1225 holder."
     }
   ],
   "sources": [

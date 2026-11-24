@@ -34,9 +34,9 @@ const facts = Object.fromEntries(
         name: b.name,
         cat: categoryById[b.category].short,
         size: sizeBoth(b),
-        volts: `${orList(voltages(b).map((v) => fmt(v, 2)))} V`,
+        volts: `${orList(voltages(b).map((v) => fmt(v, 2)))}V`,
         cap: capacityLabel(pv),
-        weight: pv.weight_g ? `${fmt(pv.weight_g)} g` : '',
+        weight: pv.weight_g ? `${fmt(pv.weight_g)}g` : '',
         kinds: chemistryGroups(b).map((g) => kindName(g.chem.id)).join(', '),
         names: [...new Set(b.codes.map((c) => c.code))].filter((c) => c !== b.name).slice(0, 5).join(', '),
         d: b.dimensions.diameter?.nominal ?? null,
@@ -53,7 +53,7 @@ const presets = [
   { label: 'Rechargeable lithium-ion', ids: '32650,26650,21700,20700,18650,18350,14500,10440' },
   { label: 'AA and 14500', ids: 'aa,14500,er14505' },
   { label: 'CR123A and 16340', ids: 'cr123a,16340,cr2' },
-  { label: '20 mm coin batteries', ids: 'cr2032,cr2025,cr2016,cr2012' },
+  { label: '20mm coin batteries', ids: 'cr2032,cr2025,cr2016,cr2012' },
   { label: 'Watch batteries', ids: 'lr44,sr1130sw,sr927sw,lr41,sr626sw,sr621sw' },
   { label: 'Hearing aid sizes', ids: '675,13,312,10,5' },
   { label: 'Camera batteries', ids: 'cr-v3,2cr5,cr-p2,cr123a,cr2' },
@@ -194,8 +194,8 @@ const pairGroups = CATEGORY_META.map((c) => ({
     const a = base.d ?? base.w, b = f.d ?? f.w;
     const dd = b - a, dh = f.h - base.h;
     const discs = f.form === 'disc' && base.form === 'disc';
-    const across = Math.abs(dd) < 0.05 ? 'same width' : `${n2(dd)} mm ${dd > 0 ? 'wider' : 'narrower'}`;
-    const long = Math.abs(dh) < 0.05 ? (discs ? 'same thickness' : 'same length') : `${n2(dh)} mm ${dh > 0 ? (discs ? 'thicker' : 'longer') : discs ? 'thinner' : 'shorter'}`;
+    const across = Math.abs(dd) < 0.05 ? 'same width' : `${n2(dd)}mm ${dd > 0 ? 'wider' : 'narrower'}`;
+    const long = Math.abs(dh) < 0.05 ? (discs ? 'same thickness' : 'same length') : `${n2(dh)}mm ${dh > 0 ? (discs ? 'thicker' : 'longer') : discs ? 'thinner' : 'shorter'}`;
     return `${across}, ${long}`;
   }
 

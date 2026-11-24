@@ -178,7 +178,7 @@ export const CHEM_FALLBACK: Record<string, { name: string; short: string; color:
   'nickel-zinc': { name: 'Nickel-zinc', short: 'NiZn', color: '#AB9075' },
   'lithium-ion': { name: 'Lithium-ion', short: 'Li-ion', color: '#C08F93' },
   'lithium-iron-phosphate': { name: 'Lithium iron phosphate', short: 'LiFePO₄', color: '#9A8AB1' },
-  'lithium-ion-regulated': { name: 'Lithium-ion, 1.5 V regulated', short: '1.5 V Li-ion', color: '#CB9BA9' },
+  'lithium-ion-regulated': { name: 'Lithium-ion, 1.5V regulated', short: '1.5V Li-ion', color: '#CB9BA9' },
   'lithium-manganese-rechargeable': { name: 'Rechargeable lithium manganese', short: 'ML', color: '#8FAF8D' },
   'lithium-vanadium-rechargeable': { name: 'Rechargeable lithium vanadium', short: 'VL', color: '#90A57F' },
   'lithium-titanate': { name: 'Lithium titanate', short: 'LTO', color: '#8A80A4' },
@@ -195,12 +195,12 @@ export function chem(id: string) {
 export const fmt = (n: number | undefined, max = 2) =>
   n === undefined ? '' : Number(n.toFixed(max)).toLocaleString('en-US', { maximumFractionDigits: max });
 export const inch = (mm: number) => (mm / 25.4).toFixed(mm < 25.4 ? 3 : 2);
-export const volts = (v: number) => `${fmt(v, 2)} V`;
+export const volts = (v: number) => `${fmt(v, 2)}V`;
 
-/** "14.5 × 50.5 mm" in the order a person reads the size. */
+/** "14.5 × 50.5mm" in the order a person reads the size. */
 export function sizeLabel(b: Battery, unit = true) {
   const d = b.dimensions;
-  const u = unit ? ' mm' : '';
+  const u = unit ? 'mm' : '';
   if (b.form === 'cylinder' || b.form === 'disc' || (b.form === 'twin' && d.diameter && !d.width)) return `${fmt(d.diameter!.nominal)} × ${fmt(d.height.nominal)}${u}`;
   return `${fmt(d.width!.nominal)} × ${fmt(d.depth!.nominal)} × ${fmt(d.height.nominal)}${u}`;
 }
@@ -222,8 +222,8 @@ export function voltages(b: Battery) {
 export function capacityLabel(v: Variant) {
   const c = v.capacity_mah;
   if (!c) return '';
-  if (c.typical) return `${fmt(c.typical, 0)} mAh`;
-  if (c.range) return `${fmt(c.range[0], 0)}–${fmt(c.range[1], 0)} mAh`;
+  if (c.typical) return `${fmt(c.typical, 0)}mAh`;
+  if (c.range) return `${fmt(c.range[0], 0)}–${fmt(c.range[1], 0)}mAh`;
   return '';
 }
 
@@ -248,10 +248,10 @@ export function summary(b: Battery) {
   const groups = chemistryGroups(b);
   const size =
     b.form === 'disc'
-      ? `${fmt(d.diameter!.nominal)} mm in diameter and ${fmt(d.height.nominal)} mm thick`
+      ? `${fmt(d.diameter!.nominal)}mm in diameter and ${fmt(d.height.nominal)}mm thick`
       : b.form === 'cylinder'
-        ? `${fmt(d.diameter!.nominal)} mm in diameter and ${fmt(d.height.nominal)} mm long`
-        : `${fmt(d.width!.nominal)} × ${fmt(d.depth!.nominal)} × ${fmt(d.height.nominal)} mm`;
+        ? `${fmt(d.diameter!.nominal)}mm in diameter and ${fmt(d.height.nominal)}mm long`
+        : `${fmt(d.width!.nominal)} × ${fmt(d.depth!.nominal)} × ${fmt(d.height.nominal)}mm`;
   if (groups.length === 1) {
     const v = primaryVariant(b);
     const cap = capacityLabel(v);
@@ -358,7 +358,7 @@ export function interchangeFor(b: Battery) {
 /** The kind as printed on the generic label of the 3D model. A chemical
  *  formula (Li-MnO₂, Li-FeS₂, HgO) means nothing to most readers, so those
  *  print the plain kind word up to its first "(" or ",": "Lithium" from
- *  "Lithium (3 V)". Abbreviations (Li-ion, NiMH, LTO) stay. */
+ *  "Lithium (3V)". Abbreviations (Li-ion, NiMH, LTO) stay. */
 const FORMULA = /[₀-₉]|MnO|FeS|SOCl|CFx|HgO/;
 export const labelKind = (c: { short: string; plainName: string }) =>
   FORMULA.test(c.short) ? c.plainName.split(/[(,]/)[0].trim() : c.short;

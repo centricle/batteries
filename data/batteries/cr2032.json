@@ -62,7 +62,7 @@
       "code": "LIR2032",
       "system": "IEC",
       "chemistry": "lithium-ion",
-      "note": "Rechargeable lithium-ion battery in the same case; 3.6 V, and does not work in place of a CR2032 in devices built for 3 V"
+      "note": "Rechargeable lithium-ion battery in the same case; 3.6V, and does not work in place of a CR2032 in devices built for 3V"
     }
   ],
   "dimensions": {
@@ -76,7 +76,7 @@
       "min": 2.9,
       "max": 3.2
     },
-    "note": "Minimum and maximum limits from the Energizer engineering datasheet; Panasonic publishes the same maximums. Negative contact is at least 8.0 mm in diameter.",
+    "note": "Minimum and maximum limits from the Energizer engineering datasheet; Panasonic publishes the same maximums. Negative contact is at least 8.0mm in diameter.",
     "sources": [
       "panasonic-cr2032",
       "energizer-cr2032",
@@ -103,7 +103,7 @@
       },
       "capacity_mah": {
         "typical": 225,
-        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated",
+        "conditions": "Panasonic nominal capacity at 0.2mA continuous standard drain; cutoff voltage not stated",
         "range": [
           220,
           230
@@ -118,7 +118,7 @@
           85
         ]
       },
-      "notes": "Energizer lists 225 mAh at 10 kΩ to 2.0 V, Varta 230 mAh, GP 220 mAh. Lithium content per Energizer. Weights run 2.8 g (Panasonic) to 3.3 g (Energizer).",
+      "notes": "Energizer lists 225mAh at 10kΩ to 2.0V, Varta 230mAh, GP 220mAh. Lithium content per Energizer. Weights run 2.8g (Panasonic) to 3.3g (Energizer).",
       "sources": [
         "panasonic-cr2032",
         "energizer-cr2032",
@@ -135,7 +135,7 @@
       },
       "capacity_mah": {
         "typical": 200,
-        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+        "conditions": "Panasonic nominal capacity at 0.03mA continuous standard drain; cutoff not stated"
       },
       "weight_g": 2.6,
       "temperature_c": {
@@ -169,7 +169,7 @@
           60
         ]
       },
-      "notes": "The LIR2032 is a lithium-ion battery at 3.6 V nominal that charges to a higher voltage than a CR2032 supplies. It is not a drop-in replacement for a CR2032 in a device built for 3 V, and a CR2032 must not be placed in a holder designed to charge a LIR2032.",
+      "notes": "The LIR2032 is a lithium-ion battery at 3.6V nominal that charges to a higher voltage than a CR2032 supplies. It is not a drop-in replacement for a CR2032 in a device built for 3V, and a CR2032 must not be placed in a holder designed to charge a LIR2032.",
       "sources": [
         "powerstream-lir",
         "wikipedia-button-cell"
@@ -192,20 +192,20 @@
     {
       "id": "cr2025",
       "relation": "fits-with-caveat",
-      "note": "Same 20 mm width and 0.7 mm thinner; lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
+      "note": "Same 20mm width and 0.7mm thinner; lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
     },
     {
       "id": "cr2016",
       "relation": "fits-with-caveat",
-      "note": "Same 20 mm width and 1.6 mm thinner; much lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
+      "note": "Same 20mm width and 1.6mm thinner; much lower capacity, and thinner batteries can make poor contact in a CR2032 holder."
     },
     {
       "id": "cr3032",
       "relation": "does-not-fit",
-      "note": "Same 3.2 mm thickness, but 30 mm across instead of 20 mm; does not fit a CR2032 holder."
+      "note": "Same 3.2mm thickness, but 30mm across instead of 20mm; does not fit a CR2032 holder."
     }
   ],
-  "notes": "The most widely used lithium coin battery. BR2032 has the same dimensions and a nominal 3 V but lower rated drain and a wider temperature range; ML2032 and VL2032 are rechargeable batteries in the same case per Wikipedia, and fit the same holder only where the device is designed to charge them.",
+  "notes": "The most widely used lithium coin battery. BR2032 has the same dimensions and a nominal 3V but lower rated drain and a wider temperature range; ML2032 and VL2032 are rechargeable batteries in the same case per Wikipedia, and fit the same holder only where the device is designed to charge them.",
   "sources": [
     {
       "id": "panasonic-cr2032",

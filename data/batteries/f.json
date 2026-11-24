@@ -45,7 +45,7 @@
       "min": 88.5,
       "max": 91.0
     },
-    "note": "Limits from the Panasonic BK1100FHU datasheet (33.0 +0/-1.0 mm, 91.0 +0/-2.5 mm).",
+    "note": "Limits from the Panasonic BK1100FHU datasheet (33.0 +0/-1.0mm, 91.0 +0/-2.5mm).",
     "sources": [
       "panasonic-bk1100fhu",
       "wikipedia-battery-sizes"
@@ -68,7 +68,7 @@
       },
       "capacity_mah": {
         "typical": 12000,
-        "conditions": "Charge 0.1 It for 16 h, discharge 0.2 It"
+        "conditions": "Charge 0.1 It for 16h, discharge 0.2 It"
       },
       "weight_g": 245,
       "internal_resistance_mohm": 5,
@@ -86,7 +86,7 @@
           35
         ]
       },
-      "notes": "BK1100FHU is a backup and long-life type rated 11,000 mAh minimum. Storage range is for periods under one year.",
+      "notes": "BK1100FHU is a backup and long-life type rated 11,000mAh minimum. Storage range is for periods under one year.",
       "sources": [
         "panasonic-bk1100fhu"
       ]
@@ -108,7 +108,7 @@
       "voltage": {
         "nominal": 1.5
       },
-      "notes": "Listed as R25; four F batteries make up many 6 V lantern batteries.",
+      "notes": "Listed as R25; four F batteries make up many 6V lantern batteries.",
       "sources": [
         "wikipedia-battery-sizes",
         "energizer-ev90"
@@ -125,7 +125,7 @@
     {
       "id": "d",
       "relation": "does-not-fit",
-      "note": "An F battery is 33 mm by 91 mm and is much longer than a D battery, so the two do not swap."
+      "note": "An F battery is 33mm by 91mm and is much longer than a D battery, so the two do not swap."
     }
   ],
   "safety": [
@@ -133,7 +133,7 @@
     "Batteries meant for pack assembly are not sold with protection circuits; do not short circuit or heat above the rated temperature.",
     "Do not mix batteries of different capacity, age or charge state in one pack."
   ],
-  "notes": "Four F batteries are often found inside 6 V rectangular lantern batteries.",
+  "notes": "Four F batteries are often found inside 6V rectangular lantern batteries.",
   "sources": [
     {
       "id": "panasonic-bk1100fhu",

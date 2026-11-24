@@ -5,10 +5,10 @@
   "form": "cylinder",
   "status": "current",
   "aliases": [
-    "6 V alkaline",
+    "6V alkaline",
     "Dog collar battery",
-    "Camera battery 6 V",
-    "6 V silver oxide"
+    "Camera battery 6V",
+    "6V silver oxide"
   ],
   "legacy_paths": [
     "/camera/4lr44",
@@ -119,7 +119,7 @@
       },
       "capacity_mah": {
         "typical": 178,
-        "conditions": "30 kohm (0.16 mA) continuous to 3.6 V, 21 °C"
+        "conditions": "30 kohm (0.16mA) continuous to 3.6V, 21°C"
       },
       "weight_g": 9.8,
       "notes": "Energizer describes the A544 as designed specifically for photo use.",
@@ -136,10 +136,10 @@
       },
       "capacity_mah": {
         "typical": 162,
-        "conditions": "30 kohm (0.167 mA) continuous to 3.6 V, 21 °C"
+        "conditions": "30 kohm (0.167mA) continuous to 3.6V, 21°C"
       },
       "weight_g": 10,
-      "notes": "Energizer lists a closed circuit voltage of at least 5.1 V on 120 ohm for 0.1 to 2.0 seconds.",
+      "notes": "Energizer lists a closed circuit voltage of at least 5.1V on 120 ohm for 0.1 to 2.0 seconds.",
       "sources": [
         "energizer-544"
       ]
@@ -158,7 +158,7 @@
     {
       "id": "2cr1-3n",
       "relation": "fits-with-caveat",
-      "note": "The 6 V lithium 2CR1/3N is a similar size but has a different voltage profile and a different shape, so check the device before using one in place of the other."
+      "note": "The 6V lithium 2CR1/3N is a similar size but has a different voltage profile and a different shape, so check the device before using one in place of the other."
     }
   ],
   "safety": [

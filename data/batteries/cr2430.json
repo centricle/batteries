@@ -56,7 +56,7 @@
       },
       "capacity_mah": {
         "typical": 275,
-        "conditions": "GP nominal capacity, discharged at 20 ± 2 °C to 2.0 V; load not stated",
+        "conditions": "GP nominal capacity, discharged at 20 ± 2°C to 2.0V; load not stated",
         "range": [
           275,
           300
@@ -70,7 +70,7 @@
           60
         ]
       },
-      "notes": "Varta lists 300 mAh and 4.0 g for type 6430 and 280 mAh for the CR 2430-P variant; GP lists 275 mAh and 4.4 g.",
+      "notes": "Varta lists 300mAh and 4.0g for type 6430 and 280mAh for the CR 2430-P variant; GP lists 275mAh and 4.4g.",
       "sources": [
         "gp-cr2430",
         "varta-primary-lithium"
@@ -88,12 +88,12 @@
     {
       "id": "cr2450",
       "relation": "does-not-fit",
-      "note": "Same 24.5 mm width and 2.0 mm thicker; usually does not fit a CR2430 holder."
+      "note": "Same 24.5mm width and 2.0mm thicker; usually does not fit a CR2430 holder."
     },
     {
       "id": "cr2412",
       "relation": "fits-with-caveat",
-      "note": "Same 24.5 mm width and 1.8 mm thinner; much lower capacity and loose in a CR2430 holder."
+      "note": "Same 24.5mm width and 1.8mm thinner; much lower capacity and loose in a CR2430 holder."
     }
   ],
   "sources": [

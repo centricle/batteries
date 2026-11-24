@@ -63,7 +63,7 @@
       },
       "capacity_mah": {
         "typical": 35,
-        "conditions": "Panasonic nominal capacity at 0.1 mA continuous standard drain; cutoff voltage not stated",
+        "conditions": "Panasonic nominal capacity at 0.1mA continuous standard drain; cutoff voltage not stated",
         "range": [
           35,
           42
@@ -77,7 +77,7 @@
           85
         ]
       },
-      "notes": "Varta lists 35 mAh; GP lists 42 mAh. GP states a 10 year shelf life at room temperature.",
+      "notes": "Varta lists 35mAh; GP lists 42mAh. GP states a 10 year shelf life at room temperature.",
       "sources": [
         "panasonic-cr1220",
         "varta-primary-lithium",
@@ -93,7 +93,7 @@
       },
       "capacity_mah": {
         "typical": 35,
-        "conditions": "Panasonic nominal capacity at 0.03 mA continuous standard drain; cutoff not stated"
+        "conditions": "Panasonic nominal capacity at 0.03mA continuous standard drain; cutoff not stated"
       },
       "weight_g": 0.7,
       "temperature_c": {
@@ -118,7 +118,7 @@
       },
       "capacity_mah": {
         "typical": 7.0,
-        "conditions": "Panasonic nominal capacity at 0.02 mA standard drain to 2.5 V, 20 °C"
+        "conditions": "Panasonic nominal capacity at 0.02mA standard drain to 2.5V, 20°C"
       },
       "weight_g": 0.8,
       "cycle_life": 1000,
@@ -146,15 +146,15 @@
     {
       "id": "cr1216",
       "relation": "fits-with-caveat",
-      "note": "Same width and 0.4 mm thinner; lower capacity and may make poor contact in a CR1220 holder."
+      "note": "Same width and 0.4mm thinner; lower capacity and may make poor contact in a CR1220 holder."
     },
     {
       "id": "cr1225",
       "relation": "fits-with-caveat",
-      "note": "Same width and 0.5 mm thicker; fits only where the holder has the clearance."
+      "note": "Same width and 0.5mm thicker; fits only where the holder has the clearance."
     }
   ],
-  "notes": "Wikipedia also lists an ML1220 manganese rechargeable battery in this size. Panasonic's VL1220 uses constant-voltage charging at 3.25 to 3.55 V.",
+  "notes": "Wikipedia also lists an ML1220 manganese rechargeable battery in this size. Panasonic's VL1220 uses constant-voltage charging at 3.25 to 3.55V.",
   "sources": [
     {
       "id": "panasonic-cr1220",

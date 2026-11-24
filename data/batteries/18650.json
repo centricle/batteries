@@ -68,7 +68,7 @@
       "min": 64.8,
       "max": 65.2
     },
-    "note": "Limits from the LG INR18650HG2 specification (18.3 +0.2/-0.3 mm by 65.0 ± 0.2 mm). Other datasheets give 18.33 ± 0.07 by 64.85 ± 0.15 (Samsung), 18.29 ± 0.11 by 65.20 max (LG MH1), and 18.5 by 65.3 max (Panasonic NCR18650B, with tube). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Limits from the LG INR18650HG2 specification (18.3 +0.2/-0.3mm by 65.0 ± 0.2mm). Other datasheets give 18.33 ± 0.07 by 64.85 ± 0.15 (Samsung), 18.29 ± 0.11 by 65.20 max (LG MH1), and 18.5 by 65.3 max (Panasonic NCR18650B, with tube). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "lg-hg2",
       "samsung-30q",
@@ -102,7 +102,7 @@
         ],
         "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
       },
-      "notes": "Nominal voltage 3.6 to 3.7 V by maker. Also built in lithium iron phosphate and, since the early 2020s, sodium-ion; those are not listed here.",
+      "notes": "Nominal voltage 3.6 to 3.7V by maker. Also built in lithium iron phosphate and, since the early 2020s, sodium-ion; those are not listed here.",
       "sources": [
         "wiki-sizes",
         "wiki-18650"
@@ -122,7 +122,7 @@
       },
       "capacity_mah": {
         "typical": 3000,
-        "conditions": "Nominal capacity: 0.2C discharge to 2.5 V at 25 °C after 1.5 A CC/CV charge to 4.2 V, 150 mA cut-off"
+        "conditions": "Nominal capacity: 0.2C discharge to 2.5V at 25°C after 1.5A CC/CV charge to 4.2V, 150mA cut-off"
       },
       "weight_g": 48,
       "max_continuous_ma": 15000,
@@ -140,7 +140,7 @@
           60
         ]
       },
-      "notes": "Weight is the maximum. Maximum continuous discharge is 15 A at 25 °C, with 60% capacity remaining at 250 cycles. Temperatures are battery surface; storage is one month. Specification version 0.0."
+      "notes": "Weight is the maximum. Maximum continuous discharge is 15A at 25°C, with 60% capacity remaining at 250 cycles. Temperatures are battery surface; storage is one month. Specification version 0.0."
     },
     {
       "chemistry": "lithium-ion",
@@ -156,7 +156,7 @@
       },
       "capacity_mah": {
         "typical": 2500,
-        "conditions": "Nominal capacity: 0.2C (500 mA) discharge to 2.5 V at 25 °C after 1.25 A CC/CV charge to 4.2 V, 125 mA cut-off"
+        "conditions": "Nominal capacity: 0.2C (500mA) discharge to 2.5V at 25°C after 1.25A CC/CV charge to 4.2V, 125mA cut-off"
       },
       "weight_g": 45,
       "max_continuous_ma": 20000,
@@ -174,7 +174,7 @@
           60
         ]
       },
-      "notes": "Weight is the maximum. Maximum continuous discharge is 20 A at 25 °C, with 60% capacity remaining at 250 cycles. Temperatures are battery surface; storage is one month."
+      "notes": "Weight is the maximum. Maximum continuous discharge is 20A at 25°C, with 60% capacity remaining at 250 cycles. Temperatures are battery surface; storage is one month."
     },
     {
       "chemistry": "lithium-ion",
@@ -190,7 +190,7 @@
       },
       "capacity_mah": {
         "typical": 3000,
-        "conditions": "Nominal capacity: 0.2C (600 mA) discharge to 2.5 V after 1.5 A CC/CV charge to 4.2 V, 50 mA cut-off"
+        "conditions": "Nominal capacity: 0.2C (600mA) discharge to 2.5V after 1.5A CC/CV charge to 4.2V, 50mA cut-off"
       },
       "weight_g": 47,
       "max_continuous_ma": 20000,
@@ -224,7 +224,7 @@
       },
       "capacity_mah": {
         "typical": 3200,
-        "conditions": "Nominal capacity: 0.2C (620 mA) discharge to 2.5 V after 0.5C CC/CV charge to 4.2 V, 50 mA cut-off"
+        "conditions": "Nominal capacity: 0.2C (620mA) discharge to 2.5V after 0.5C CC/CV charge to 4.2V, 50mA cut-off"
       },
       "weight_g": 47,
       "max_continuous_ma": 10000,
@@ -258,7 +258,7 @@
       },
       "capacity_mah": {
         "typical": 3350,
-        "conditions": "Rated minimum 3200 mAh at 20 °C; typical 3350 mAh at 25 °C; CC/CV charge 4.20 V, 2.5 V discharge cut-off"
+        "conditions": "Rated minimum 3200mAh at 20°C; typical 3350mAh at 25°C; CC/CV charge 4.20V, 2.5V discharge cut-off"
       },
       "weight_g": 48.5,
       "temperature_c": {
@@ -275,7 +275,7 @@
           50
         ]
       },
-      "notes": "Weight is the maximum. The data sheet publishes no maximum discharge current. Standard charge is 1625 mA CC/CV to 4.20 V in about 4 hours."
+      "notes": "Weight is the maximum. The data sheet publishes no maximum discharge current. Standard charge is 1625mA CC/CV to 4.20V in about 4 hours."
     },
     {
       "chemistry": "lithium-ion",
@@ -291,7 +291,7 @@
       },
       "capacity_mah": {
         "typical": 2800,
-        "conditions": "Typical 2800 mAh, minimum 2700 mAh; CC/CV charge to 4.2 V, 50 mA cut-off; 2.5 V cut-off at 23 °C"
+        "conditions": "Typical 2800mAh, minimum 2700mAh; CC/CV charge to 4.2V, 50mA cut-off; 2.5V cut-off at 23°C"
       },
       "weight_g": 46,
       "max_continuous_ma": 35000,
@@ -321,15 +321,15 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2V for cobalt, nickel and manganese chemistries, 3.65V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
     "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe).",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100Wh each (FAA PackSafe).",
     "Do not mix batteries of different brands, capacities or charge states in one pack."
   ],
   "history": "Sony developed the 18650 in 1991; Panasonic states it did so in 1994 (Wikipedia, 18650 battery).",
-  "notes": "Size code: 18 mm diameter, 65 mm length, 0 for cylindrical. The code describes only the physical size, not the chemistry or the rating.",
+  "notes": "Size code: 18mm diameter, 65mm length, 0 for cylindrical. The code describes only the physical size, not the chemistry or the rating.",
   "sources": [
     {
       "id": "wiki-sizes",

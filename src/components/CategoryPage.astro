@@ -17,7 +17,7 @@ const scale = Math.max(...list.map(ref));
 // A lineup for the top of the page: up to 9 sizes spread from smallest to largest.
 const step = Math.max(1, Math.ceil(bySize.length / 9));
 const lineup = bySize.filter((_, i) => i % step === 0).slice(0, 9);
-const voltsCell = (b: (typeof list)[number]) => `${listWords([...new Set(voltages(b))].sort((x, y) => x - y).map((v) => fmt(v, 2)))} V`;
+const voltsCell = (b: (typeof list)[number]) => `${listWords([...new Set(voltages(b))].sort((x, y) => x - y).map((v) => fmt(v, 2)))}V`;
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',

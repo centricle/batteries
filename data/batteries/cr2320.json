@@ -24,7 +24,7 @@
       "min": 1.75,
       "max": 2.0
     },
-    "note": "Limits from the Energizer CR2320 datasheet. Negative contact is at least 8.0 mm in diameter.",
+    "note": "Limits from the Energizer CR2320 datasheet. Negative contact is at least 8.0mm in diameter.",
     "sources": [
       "energizer-cr2320"
     ]
@@ -49,7 +49,7 @@
       },
       "capacity_mah": {
         "typical": 135,
-        "conditions": "Energizer typical capacity at 10 kΩ to 2.0 V, 21 °C"
+        "conditions": "Energizer typical capacity at 10kΩ to 2.0V, 21°C"
       },
       "weight_g": 3.0,
       "lithium_content_g": 0.042,
@@ -68,12 +68,12 @@
     {
       "id": "cr2325",
       "relation": "fits-with-caveat",
-      "note": "Same 23 mm width and 0.5 mm thicker; fits only where the holder has the clearance."
+      "note": "Same 23mm width and 0.5mm thicker; fits only where the holder has the clearance."
     },
     {
       "id": "cr2330",
       "relation": "does-not-fit",
-      "note": "Same 23 mm width and 1.0 mm thicker; usually does not fit a CR2320 holder."
+      "note": "Same 23mm width and 1.0mm thicker; usually does not fit a CR2320 holder."
     }
   ],
   "sources": [

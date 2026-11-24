@@ -71,7 +71,7 @@
       "min": 5.05,
       "max": 5.4
     },
-    "note": "Datasheet gives a 3.0 mm minimum for the flat negative contact.",
+    "note": "Datasheet gives a 3.0mm minimum for the flat negative contact.",
     "sources": [
       "energizer-13"
     ]
@@ -100,7 +100,7 @@
           300,
           315
         ],
-        "conditions": "Power One p13: IEC hearing aid standard test to 1.05 V (3 mA base load, 12 mA 100 ms pulse every 2 h), 20 °C, 55% RH; 300 mAh under the IEC wireless streaming test to 1.1 V"
+        "conditions": "Power One p13: IEC hearing aid standard test to 1.05V (3mA base load, 12mA 100ms pulse every 2h), 20°C, 55% RH; 300mAh under the IEC wireless streaming test to 1.1V"
       },
       "weight_g": 0.8,
       "shelf_life_years": 4,
@@ -114,7 +114,7 @@
           30
         ]
       },
-      "notes": "Rayovac rates 149 h in a hearing aid test (2 mA background, 6 mA pulse) and 89 h in the IEC standard test to 1.05 V at 21 °C.",
+      "notes": "Rayovac rates 149h in a hearing aid test (2mA background, 6mA pulse) and 89h in the IEC standard test to 1.05V at 21°C.",
       "sources": [
         "energizer-13",
         "rayovac-13",
@@ -129,7 +129,7 @@
     {
       "id": "312",
       "relation": "same-size",
-      "note": "A 312 is the same 7.9 mm across but 3.6 mm tall instead of 5.4 mm, and it holds less. A 13 does not fit a 312 compartment. Phonak makes the same hearing aid in a 312 model and a 13 model, and tells owners to find the right size from the marking inside the battery door."
+      "note": "A 312 is the same 7.9mm across but 3.6mm tall instead of 5.4mm, and it holds less. A 13 does not fit a 312 compartment. Phonak makes the same hearing aid in a 312 model and a 13 model, and tells owners to find the right size from the marking inside the battery door."
     }
   ],
   "safety": [

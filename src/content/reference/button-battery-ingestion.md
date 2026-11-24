@@ -67,9 +67,9 @@ NCPC's guideline recommends honey at home and on the way to the emergency room w
 - the child is able to swallow; and
 - honey is immediately available.
 
-The dose NCPC gives is 10 mL (2 teaspoons) of honey by mouth every 10 minutes, for up to 6 doses. NCPC advises commercial honey rather than specialized or artisanal honey, and states that honey "is NOT a substitute for immediate removal" of a lodged battery: it slows injury but does not stop it. NCPC also says: "Do not delay going to an ER."
+The dose NCPC gives is 10mL (2 teaspoons) of honey by mouth every 10 minutes, for up to 6 doses. NCPC advises commercial honey rather than specialized or artisanal honey, and states that honey "is NOT a substitute for immediate removal" of a lodged battery: it slows injury but does not stop it. NCPC also says: "Do not delay going to an ER."
 
-Sucralfate (Carafate) appears in the same guideline as a hospital treatment. NCPC directs clinicians to give sucralfate suspension (1 g/10 mL), 10 mL every 10 minutes for up to 3 doses, after an x-ray shows the battery is lodged in the esophagus and before sedation for removal, if the child can swallow. Honey may be used instead in children 12 months or older. NCPC says not to give either if the battery may have been in the esophagus for more than 12 hours. NCPC bases both recommendations on a 2018 animal study (Anfang et al.) in which honey and sucralfate reduced the pH rise and the depth of esophageal injury.
+Sucralfate (Carafate) appears in the same guideline as a hospital treatment. NCPC directs clinicians to give sucralfate suspension (1g/10 mL), 10mL every 10 minutes for up to 3 doses, after an x-ray shows the battery is lodged in the esophagus and before sedation for removal, if the child can swallow. Honey may be used instead in children 12 months or older. NCPC says not to give either if the battery may have been in the esophagus for more than 12 hours. NCPC bases both recommendations on a 2018 animal study (Anfang et al.) in which honey and sucralfate reduced the pH rise and the depth of esophageal injury.
 
 ## Signs to watch for
 
@@ -90,7 +90,7 @@ A person with a battery in the esophagus may have no symptoms at first. NCPC sta
 
 NCPC explains that most swallowed button batteries pass through the body, but a battery that gets "hung up," especially in the esophagus, can cause tissue damage. An electrical current forms around the outside of the battery and generates hydroxide, an alkaline chemical, which burns the surrounding tissue. It is not possible to tell from outside the body whether a swallowed battery will pass or lodge.
 
-NCPC's clinical guideline identifies the 20 mm lithium coin battery, such as the [CR2032](/cr2032), as the size most often involved in injuries to the esophagus. It measures between a U.S. penny (19 mm) and a nickel (21 mm) across. Smaller batteries lodge less often but can still cause serious injury or death, especially in children younger than 1 year.
+NCPC's clinical guideline identifies the 20mm lithium coin battery, such as the [CR2032](/cr2032), as the size most often involved in injuries to the esophagus. It measures between a U.S. penny (19mm) and a nickel (21mm) across. Smaller batteries lodge less often but can still cause serious injury or death, especially in children younger than 1 year.
 
 NCPC reports that more than 3,500 people of all ages swallow button batteries each year in the United States.
 
@@ -102,7 +102,7 @@ Reese's Law (Public Law 117-171) was signed on August 16, 2022. It addresses the
 
 Section 3 of Reese's Law took effect by statute on February 12, 2023. According to the Consumer Product Safety Commission (CPSC), it requires button and coin batteries sold in the United States, including those packaged separately with a product, to be in child-resistant special packaging that meets 16 CFR 1700.15. The law exempts batteries that comply with the marking and packaging provisions of ANSI C18.3M, the American safety standard for single-use lithium batteries; those batteries are still subject to the labeling rules.
 
-CPSC's packaging label rule (16 CFR 1263.4) applies to battery packages manufactured or imported after September 21, 2024. It requires a warning label with an icon at least 8 mm across on the principal display panel (if space does not allow the full label, a 20 mm icon on the principal panel and the warning text on a secondary panel), and these statements on the principal or secondary display panel:
+CPSC's packaging label rule (16 CFR 1263.4) applies to battery packages manufactured or imported after September 21, 2024. It requires a warning label with an icon at least 8mm across on the principal display panel (if space does not allow the full label, a 20mm icon on the principal panel and the warning text on a secondary panel), and these statements on the principal or secondary display panel:
 
 - "Keep in original package until ready to use."
 - "Immediately dispose of used batteries and keep away from children. Do NOT dispose of batteries in household trash."
@@ -120,4 +120,4 @@ Two categories are outside 16 CFR part 1263: zinc-air batteries, which CPSC has 
 
 On November 18, 2026, CPSC published a direct final rule to adopt a revision, ANSI/UL 4200A-2026. The rule takes effect on February 13, 2027, unless CPSC receives a significant adverse comment by December 18, 2026. CPSC describes the changes as making the safety alert symbol at least as tall as the word "WARNING" and allowing the alternative product marking to be molded or stamped in a single color.
 
-Hearing aid batteries ([13](/13), [312](/312)) are zinc-air batteries, a kind Energizer's zinc-air handbook describes for hearing aid use. The exemption above concerns the federal product rule, not the medical guidance. NCPC's guideline handles a swallowed hearing aid battery as a small battery (12 mm or less) and still directs callers to the hotline.
+Hearing aid batteries ([13](/13), [312](/312)) are zinc-air batteries, a kind Energizer's zinc-air handbook describes for hearing aid use. The exemption above concerns the federal product rule, not the medical guidance. NCPC's guideline handles a swallowed hearing aid battery as a small battery (12mm or less) and still directs callers to the hotline.

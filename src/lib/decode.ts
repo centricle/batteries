@@ -92,7 +92,7 @@ export const BUILTIN: Tables = {
     R23: { name: 'A', d: 17, h: 50 },
     R25: { name: 'F', d: 32, h: 91 },
     R40: { name: 'No. 6', d: 67, h: 172 },
-    R61: { name: 'One of the six inside a 9 V battery', note: 'Six of them stack into a 6LR61. Similar in size to AAAA.' },
+    R61: { name: 'One of the six inside a 9V battery', note: 'Six of them stack into a 6LR61. Similar in size to AAAA.' },
     R41: { name: 'Button', d: 7.9, h: 3.6 },
     R42: { name: 'Button', d: 11.6, h: 3.6 },
     R43: { name: 'Button', d: 11.6, h: 4.2 },
@@ -116,7 +116,7 @@ export const BUILTIN: Tables = {
     R68: { name: 'Button', d: 9.5, h: 1.6 },
     R69: { name: 'Button', d: 9.5, h: 2.1 },
     R70: { name: 'Button', d: 5.8, h: 3.6 },
-    F22: { name: 'One of the six flat layers inside a 9 V battery', note: 'Six of them stack into a 6F22 (9 V) battery.' },
+    F22: { name: 'One of the six flat layers inside a 9V battery', note: 'Six of them stack into a 6F22 (9V) battery.' },
   },
   // IEC recommended diameter codes: code -> the most it measures across, in mm.
   diameter: { '4': 4.8, '5': 5.8, '6': 6.8, '7': 7.9, '9': 9.5, '10': 10, '11': 11.6, '12': 12.5, '16': 16, '20': 20, '23': 23, '24': 24.5 },
@@ -179,12 +179,12 @@ const MOD = 'ABCDEGHJKL';
 
 // Maker and industry prefixes that look like IEC letters but are not.
 const PREFIXES: Record<string, { title: string; meaning: string; rest: 'size' | 'number' | 'name' }> = {
-  LIR: { title: 'Lithium-ion, round', meaning: 'Industry prefix for rechargeable lithium-ion coin and small round batteries, 3.6 to 3.7 V. Not an IEC 60086 name.', rest: 'size' },
-  ML: { title: 'Panasonic: manganese lithium, rechargeable', meaning: 'Panasonic prefix for rechargeable lithium manganese coin batteries, 3 V.', rest: 'size' },
-  VL: { title: 'Panasonic: vanadium lithium, rechargeable', meaning: 'Panasonic prefix for rechargeable vanadium pentoxide lithium coin batteries, 3 V.', rest: 'size' },
-  MS: { title: 'Seiko: manganese silicon lithium, rechargeable', meaning: 'Seiko Instruments prefix for rechargeable manganese silicon lithium batteries, 3 V. Not the IEC letters M (mercury) and S (square).', rest: 'size' },
-  LSH: { title: 'Saft: lithium thionyl chloride, high power', meaning: 'Saft prefix for high-power lithium thionyl chloride batteries, 3.6 V.', rest: 'size' },
-  LS: { title: 'Saft: lithium thionyl chloride', meaning: 'Saft prefix for lithium thionyl chloride batteries, 3.6 V. The IEC equivalent letters are ER.', rest: 'size' },
+  LIR: { title: 'Lithium-ion, round', meaning: 'Industry prefix for rechargeable lithium-ion coin and small round batteries, 3.6 to 3.7V. Not an IEC 60086 name.', rest: 'size' },
+  ML: { title: 'Panasonic: manganese lithium, rechargeable', meaning: 'Panasonic prefix for rechargeable lithium manganese coin batteries, 3V.', rest: 'size' },
+  VL: { title: 'Panasonic: vanadium lithium, rechargeable', meaning: 'Panasonic prefix for rechargeable vanadium pentoxide lithium coin batteries, 3V.', rest: 'size' },
+  MS: { title: 'Seiko: manganese silicon lithium, rechargeable', meaning: 'Seiko Instruments prefix for rechargeable manganese silicon lithium batteries, 3V. Not the IEC letters M (mercury) and S (square).', rest: 'size' },
+  LSH: { title: 'Saft: lithium thionyl chloride, high power', meaning: 'Saft prefix for high-power lithium thionyl chloride batteries, 3.6V.', rest: 'size' },
+  LS: { title: 'Saft: lithium thionyl chloride', meaning: 'Saft prefix for lithium thionyl chloride batteries, 3.6V. The IEC equivalent letters are ER.', rest: 'size' },
   NCR: { title: 'Panasonic lithium-ion', meaning: "Panasonic's prefix for its nickel-based lithium-ion batteries. Not an IEC 61960 name.", rest: 'size' },
   UR: { title: 'Panasonic (Sanyo) lithium-ion', meaning: 'Panasonic and former Sanyo prefix for lithium-ion batteries.', rest: 'size' },
   US: { title: 'Sony and Murata lithium-ion', meaning: 'Sony, now Murata, prefix for lithium-ion batteries.', rest: 'size' },
@@ -210,7 +210,7 @@ const COMMON: Record<string, { iec: string; note: string }> = {
   N: { iec: 'LR1', note: 'Common name. IEC size R1.' },
   F: { iec: 'LR25', note: 'Common name. IEC size R25.' },
   '9V': { iec: '6LR61', note: 'Common name. IEC: 6LR61 (alkaline), 6F22 (zinc-carbon), 6HR61 (NiMH). ANSI: 1604.' },
-  PP3: { iec: '6LR61', note: 'Older British name for the 9 V battery.' },
+  PP3: { iec: '6LR61', note: 'Older British name for the 9V battery.' },
   SUBC: { iec: 'HR22C429', note: 'Common name for a rechargeable size. IEC: HR22C429 (NiMH), KR22C429 (NiCd).' },
 };
 
@@ -221,18 +221,18 @@ const EXCEPTIONS: Record<string, { segments: Omit<Segment, 'text'>[]; split: str
     segments: [
       { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3 volts.' },
       { role: 'shape', title: 'Round', meaning: 'A cylinder.' },
-      { role: 'name', title: 'Size name, not a size number', meaning: "A maker's name that became standard. The systematic IEC name is CR17345: 17 mm across and 34.5 mm long." },
+      { role: 'name', title: 'Size name, not a size number', meaning: "A maker's name that became standard. The systematic IEC name is CR17345: 17mm across and 34.5mm long." },
     ],
-    summary: 'A 3-volt lithium manganese dioxide camera battery. The systematic IEC name is CR17345 (17 mm across, 34.5 mm long).',
+    summary: 'A 3-volt lithium manganese dioxide camera battery. The systematic IEC name is CR17345 (17mm across, 34.5mm long).',
   },
   CR2: {
     split: ['C', 'R', '2'],
     segments: [
       { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3 volts.' },
       { role: 'shape', title: 'Round', meaning: 'A cylinder.' },
-      { role: 'name', title: 'Size name, not a size number', meaning: 'The systematic IEC name is CR15H270: 15 mm plus modifier H (0.6 mm), so 15.6 mm across, and 27.0 mm long.' },
+      { role: 'name', title: 'Size name, not a size number', meaning: 'The systematic IEC name is CR15H270: 15mm plus modifier H (0.6mm), so 15.6mm across, and 27.0mm long.' },
     ],
-    summary: 'A 3-volt lithium manganese dioxide camera battery. The systematic IEC name is CR15H270 (15.6 mm across, 27.0 mm long).',
+    summary: 'A 3-volt lithium manganese dioxide camera battery. The systematic IEC name is CR15H270 (15.6mm across, 27.0mm long).',
   },
   CRP2: {
     split: ['C', 'R', '-P2'],
@@ -255,7 +255,7 @@ const EXCEPTIONS: Record<string, { segments: Omit<Segment, 'text'>[]; split: str
   '2CR5': {
     split: ['2', 'C', 'R', '5'],
     segments: [
-      { role: 'series', title: '2 inside, in series', meaning: '2 × 3.0 V = 6 V.' },
+      { role: 'series', title: '2 inside, in series', meaning: '2 × 3.0V = 6V.' },
       { role: 'chem', title: 'Lithium manganese dioxide', meaning: '3 volts for each battery inside.' },
       { role: 'shape', title: 'Round, inside', meaning: 'The pack holds round batteries.' },
       { role: 'size', title: 'Size number 5', meaning: 'The standard size number for this pack, not a measurement.' },
@@ -269,7 +269,7 @@ const EXCEPTIONS: Record<string, { segments: Omit<Segment, 'text'>[]; split: str
 /** Lowercase a leading capital for mid-sentence use, leaving acronyms and formulas alone. */
 const lc = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
 const f = (n: number, max = 2) => Number(n.toFixed(max)).toLocaleString('en-US', { maximumFractionDigits: max });
-const mm = (n: number) => `${f(n)} mm`;
+const mm = (n: number) => `${f(n)}mm`;
 
 function chemSeg(t: Tables, letter: string): Segment | null {
   const c = t.chem[letter] ?? t.recharge[letter];
@@ -289,7 +289,7 @@ const hNoun = (d: number, h: number) => (h < d ? 'Thickness' : 'Length');
 
 /** Size digits after the shape letter: legacy number, or width across + length. */
 function sizeSegs(t: Tables, shape: string, size: string): { segs: Segment[]; dims?: Decoded['dims']; ok: boolean; name?: string } {
-  // Width with a modifier letter: 8D425 = 8.3 mm across, 42.5 mm long.
+  // Width with a modifier letter: 8D425 = 8.3mm across, 42.5mm long.
   const mod = size.match(/^(\d{1,2})([A-HJ-L])(\d{2,3})$/);
   if (mod) {
     const d = parseInt(mod[1], 10) + MOD.indexOf(mod[2]) / 10;
@@ -298,16 +298,16 @@ function sizeSegs(t: Tables, shape: string, size: string): { segs: Segment[]; di
       ok: true,
       dims: { d, h },
       segs: [
-        { text: mod[1] + mod[2], role: 'size', title: `${mm(d)} across`, meaning: `${mod[1]} mm plus modifier ${mod[2]} (${MOD.indexOf(mod[2])} tenths): at most ${mm(d)} across.` },
+        { text: mod[1] + mod[2], role: 'size', title: `${mm(d)} across`, meaning: `${mod[1]}mm plus modifier ${mod[2]} (${MOD.indexOf(mod[2])} tenths): at most ${mm(d)} across.` },
         { text: mod[3], role: 'size', title: `${mm(h)} ${hWord(d, h)}`, meaning: `${hNoun(d, h)} in tenths of a millimeter: ${mod[3]} = ${mm(h)}.` },
       ],
     };
   }
-  // Slash form for batteries 100 mm or larger: across/long in mm.
+  // Slash form for batteries 100mm or larger: across/long in mm.
   const ob = size.match(/^(\d+)\/(\d+)$/);
   if (ob) {
     const d = parseInt(ob[1], 10), h = parseInt(ob[2], 10);
-    return { ok: true, dims: { d, h }, segs: [{ text: size, role: 'size', title: `${d} mm across, ${h} mm ${hWord(d, h)}`, meaning: `A size of 100 mm or more is written as the width across, a slash, then the ${hNoun(d, h).toLowerCase()}, in whole millimeters.` }] };
+    return { ok: true, dims: { d, h }, segs: [{ text: size, role: 'size', title: `${d}mm across, ${h}mm ${hWord(d, h)}`, meaning: `A size of 100mm or more is written as the width across, a slash, then the ${hNoun(d, h).toLowerCase()}, in whole millimeters.` }] };
   }
   if (/^\d{1,2}$/.test(size)) {
     const key = shape + size;
@@ -412,7 +412,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
     if (li) {
       const d = parseInt(li[5], 10);
       if (li[7]) {
-        segs.push({ text: `${li[5]}/${li[6]}/${li[7]}`, role: 'size', title: `${li[5]} × ${li[6]} × ${li[7]} mm`, meaning: 'At most this thick, this wide and this tall, in that order, in millimeters (prismatic).' });
+        segs.push({ text: `${li[5]}/${li[6]}/${li[7]}`, role: 'size', title: `${li[5]} × ${li[6]} × ${li[7]}mm`, meaning: 'At most this thick, this wide and this tall, in that order, in millimeters (prismatic).' });
       } else {
         const h = parseInt(li[6], 10);
         dims = { d, h };
@@ -425,7 +425,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       const h = s.length === 5 ? parseInt(s.slice(2), 10) / 10 : parseInt(s.slice(2), 10);
       dims = { d, h };
       segs.push({ text: s.slice(0, 2), role: 'size', title: `${mm(d)} across`, meaning: 'Width across, in whole millimeters.' });
-      segs.push({ text: s.slice(2), role: 'size', title: `${mm(h)} long`, meaning: s.length === 5 ? `Length in tenths of a millimeter: ${s.slice(2)} = ${mm(h)}.` : `Length in whole millimeters: ${s.slice(2)} mm.` });
+      segs.push({ text: s.slice(2), role: 'size', title: `${mm(h)} long`, meaning: s.length === 5 ? `Length in tenths of a millimeter: ${s.slice(2)} = ${mm(h)}.` : `Length in whole millimeters: ${s.slice(2)}mm.` });
       if (li5![6]) segs.push({ text: li5![6], role: 'model', title: "Maker's model", meaning: "The maker's model number for this battery. It sets capacity and current ratings, not size." });
       notes.push('The five-digit size (18650) is the form makers print, following the IEC 60086 pattern for round batteries: width across, then length. IEC 61960 itself writes the largest allowed sizes with slashes, for example ICR19/66.');
     }
@@ -469,7 +469,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
     const segs: Segment[] = [];
     const c = letter ? t.chem[letter] ?? t.recharge[letter] : undefined;
     const cells = series ? parseInt(series, 10) : 1;
-    if (series) segs.push({ text: series, role: 'series', title: `${series} inside, in series`, meaning: c?.v ? `${series} × ${f(c.v)} V = ${f(cells * c.v)} V.` : 'How many are joined in series inside.' });
+    if (series) segs.push({ text: series, role: 'series', title: `${series} inside, in series`, meaning: c?.v ? `${series} × ${f(c.v)}V = ${f(cells * c.v)}V.` : 'How many are joined in series inside.' });
     if (letter) segs.push(chemSeg(t, letter)!);
     if (shape) segs.push({ text: 'R', role: 'shape', title: 'Round', meaning: 'A cylinder.' });
     const words: Record<string, string> = { '1/2': 'Half', '1/3': 'One third', '2/3': 'Two thirds', '4/5': 'Four fifths', '1/4': 'One quarter', '3/4': 'Three quarters' };
@@ -497,7 +497,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       const segs: Segment[] = [];
       const c = t.chem[letter] ?? t.recharge[letter];
       const cells = series ? parseInt(series, 10) : 1;
-      if (series) segs.push({ text: series, role: 'series', title: `${series} inside, in series`, meaning: c.v ? `${series} × ${f(c.v)} V = ${f(cells * c.v)} V.` : 'How many are joined in series inside.' });
+      if (series) segs.push({ text: series, role: 'series', title: `${series} inside, in series`, meaning: c.v ? `${series} × ${f(c.v)}V = ${f(cells * c.v)}V.` : 'How many are joined in series inside.' });
       segs.push(cs);
       const sh = t.shape[shape];
       segs.push({ text: shape, role: 'shape', title: sh.name, meaning: sh.note ?? '' });
@@ -540,7 +540,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       input: raw,
       system: 'ANSI C18 (rechargeable)',
       segments: [
-        { text: ar[1], role: 'voltage', title: `${ar[1]} V`, meaning: 'The rated voltage of the battery.' },
+        { text: ar[1], role: 'voltage', title: `${ar[1]}V`, meaning: 'The rated voltage of the battery.' },
         { text: ar[2], role: 'chem', title: s.name, meaning: `ANSI system letter; IEC letter ${s.iec}.` },
         { text: ar[3], role: 'size', title: `Size number ${ar[3]}`, meaning: 'An ANSI size number in the rechargeable series. It does not encode dimensions.' },
       ],
@@ -586,7 +586,7 @@ export function decode(input: string, t: Tables = BUILTIN, opts: { liIon?: boole
       ],
       summary: `A cylindrical battery ${mm(d)} across and ${mm(h)} long. The digits give only the size, not the kind.`,
       dims: { d, h },
-      notes: ['Most batteries named this way are lithium-ion (3.6 to 3.7 V) or lithium iron phosphate (3.2 V). The size alone does not say which.'],
+      notes: ['Most batteries named this way are lithium-ion (3.6 to 3.7V) or lithium iron phosphate (3.2V). The size alone does not say which.'],
     };
   }
   if (/^\d{4}$/.test(key) && opts.liIon) {

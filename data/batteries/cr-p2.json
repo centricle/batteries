@@ -47,7 +47,7 @@
       "min": 34.5,
       "max": 36
     },
-    "note": "Width is the long side of the two-lobed top view; the datasheet gives a 16.8 mm reference spacing between the centers of the two batteries inside.",
+    "note": "Width is the long side of the two-lobed top view; the datasheet gives a 16.8mm reference spacing between the centers of the two batteries inside.",
     "sources": [
       "energizer-223"
     ]
@@ -55,7 +55,7 @@
   "geometry": {
     "cells": 2,
     "variant": "cr-p2",
-    "note": "Two cylindrical batteries side by side in one keyed wrap, each lobe about 16.8 mm apart center to center. Both terminals sit on one end face as two round contacts, one at the center of each lobe, marked + and -, per the datasheet drawing."
+    "note": "Two cylindrical batteries side by side in one keyed wrap, each lobe about 16.8mm apart center to center. Both terminals sit on one end face as two round contacts, one at the center of each lobe, marked + and -, per the datasheet drawing."
   },
   "variants": [
     {
@@ -67,7 +67,7 @@
       },
       "capacity_mah": {
         "typical": 1500,
-        "conditions": "200 ohm continuous to 4.0 V, 21 °C"
+        "conditions": "200 ohm continuous to 4.0V, 21°C"
       },
       "weight_g": 37,
       "max_continuous_ma": 1500,
@@ -99,7 +99,7 @@
     {
       "id": "2cr5",
       "relation": "does-not-fit",
-      "note": "The 2CR5 is a similar 6 V pack with a different footprint and contact layout, and the keyed shapes do not fit each other."
+      "note": "The 2CR5 is a similar 6V pack with a different footprint and contact layout, and the keyed shapes do not fit each other."
     }
   ],
   "safety": [

@@ -208,7 +208,7 @@
       "min": 2.4,
       "max": 2.6
     },
-    "note": "Maxell SR626W drawing: diameter 6.80 mm, tolerance -0.15 mm; height 2.60 mm, tolerance -0.2 mm. Tolerances come from the high-drain or standard datasheet drawing; the case size is shared with the other types of this size.",
+    "note": "Maxell SR626W drawing: diameter 6.80mm, tolerance -0.15mm; height 2.60mm, tolerance -0.2mm. Tolerances come from the high-drain or standard datasheet drawing; the case size is shared with the other types of this size.",
     "sources": [
       "murata-xref",
       "maxell-xref",
@@ -238,7 +238,7 @@
       },
       "capacity_mah": {
         "typical": 28.0,
-        "conditions": "Discharge over 34.8 kΩ at 20 °C to 1.2 V (Renata OEM)",
+        "conditions": "Discharge over 34.8kΩ at 20°C to 1.2V (Renata OEM)",
         "range": [
           24.0,
           28.0
@@ -251,7 +251,7 @@
           60
         ]
       },
-      "self_discharge": "Less than 5% per year at 20 °C",
+      "self_discharge": "Less than 5% per year at 20°C",
       "notes": "The capacity range spans the manufacturers listed in the sources, which rate at different loads and cutoff voltages; compare only within one source. Sodium hydroxide electrolyte; intended for continuous low drain such as analog quartz watches.",
       "sources": [
         "renata-377",
@@ -268,7 +268,7 @@
       },
       "capacity_mah": {
         "typical": 27.0,
-        "conditions": "Discharge over 34.8 kΩ at 20 °C to 1.2 V (Renata OEM)",
+        "conditions": "Discharge over 34.8kΩ at 20°C to 1.2V (Renata OEM)",
         "range": [
           26.0,
           30
@@ -281,7 +281,7 @@
           60
         ]
       },
-      "self_discharge": "Less than 10% per year at 20 °C",
+      "self_discharge": "Less than 10% per year at 20°C",
       "notes": "The capacity range spans the manufacturers listed in the sources, which rate at different loads and cutoff voltages; compare only within one source. Potassium hydroxide electrolyte; intended for higher drain such as backlights, alarms and medical devices.",
       "sources": [
         "renata-376",
@@ -298,7 +298,7 @@
       },
       "capacity_mah": {
         "typical": 17,
-        "conditions": "22 kΩ load to 0.9 V at 25 °C (everActive)"
+        "conditions": "22kΩ load to 0.9V at 25°C (everActive)"
       },
       "weight_g": 0.32,
       "notes": "Manganese dioxide cathode; voltage falls steadily through discharge rather than holding flat.",
@@ -321,7 +321,7 @@
     "Remove exhausted batteries from the device promptly, because leaking batteries can damage it.",
     "Do not recharge, short-circuit, dismantle, heat or burn the battery; do not mix types, brands or charge states."
   ],
-  "notes": "6.8 mm by 2.6 mm. The same case is sold as alkaline (LR66/LR626) and as silver oxide (SR66); both hold the same size, but silver oxide holds a nearly flat voltage near 1.55 V until late in discharge while alkaline voltage declines gradually, which matters for watches, calipers and light meters. Low drain (SW) and high drain (W) silver oxide batteries share the case but differ in electrolyte; the manufacturer numbers differ.",
+  "notes": "6.8mm by 2.6mm. The same case is sold as alkaline (LR66/LR626) and as silver oxide (SR66); both hold the same size, but silver oxide holds a nearly flat voltage near 1.55V until late in discharge while alkaline voltage declines gradually, which matters for watches, calipers and light meters. Low drain (SW) and high drain (W) silver oxide batteries share the case but differ in electrolyte; the manufacturer numbers differ.",
   "sources": [
     {
       "id": "energizer-376",

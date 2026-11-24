@@ -85,7 +85,7 @@ const jsonld = {
         <div class="spec"><span class="v text-base!" id="r-hm"></span><span class="s" id="r-days">hours and minutes</span></div>
       </div>
       <p class="mt-3 mono text-sm text-ink-2" id="r-f"></p>
-      <p class="mt-3 callout warn">A rated capacity holds only at the load it was rated at. Single-use batteries deliver less at higher currents. The alkaline AA rating of 2,850 mAh is measured on a 43 ohm load, a light drain; lithium AA batteries (lithium iron disulfide) change less, 3,500 mAh at 100 mA against 3,400 mAh at 1,000 mA. Each battery's page lists its test conditions. More in the guide <a class="link" href="/reference/capacity-explained">What mAh and Wh mean</a>.</p>
+      <p class="mt-3 callout warn">A rated capacity holds only at the load it was rated at. Single-use batteries deliver less at higher currents. The alkaline AA rating of 2,850mAh is measured on a 43 ohm load, a light drain; lithium AA batteries (lithium iron disulfide) change less, 3,500mAh at 100mA against 3,400mAh at 1,000mA. Each battery's page lists its test conditions. More in the guide <a class="link" href="/reference/capacity-explained">What mAh and Wh mean</a>.</p>
     </section>
 
     <section id="pack" class="card p-4 sm:p-5 scroll-mt-20 lg:col-span-2" aria-labelledby="pack-h">
@@ -135,7 +135,7 @@ const jsonld = {
         </div>
         <label class="flex items-center gap-3 min-h-11 text-base">
           <input type="checkbox" id="a-src" class="w-5 h-5 accent-[var(--accent-ink)]" />
-          <span>Use the result from the series and parallel calculator (<span id="a-pack-wh" class="tabular"></span> Wh)</span>
+          <span>Use the result from the series and parallel calculator (<span id="a-pack-wh" class="tabular"></span>Wh)</span>
         </label>
       </div>
       <div class="mt-4" aria-live="polite">
@@ -145,16 +145,16 @@ const jsonld = {
         <table class="table min-w-[32rem]" id="a-table">
           <thead><tr><th>Rating</th><th>Carry-on</th><th>Checked</th><th>Spares</th></tr></thead>
           <tbody>
-            <tr data-band="1"><td class="font-semibold">Up to 100 Wh</td><td>Allowed</td><td>Installed in a device that is completely off and protected from being switched on</td><td>Carry-on only; no FAA limit on how many for personal use</td></tr>
-            <tr data-band="2"><td class="font-semibold">More than 100, up to 160 Wh</td><td>With airline approval</td><td>Installed in a device that is completely off, with airline approval</td><td>Carry-on only; at most two per person, with airline approval</td></tr>
-            <tr data-band="3"><td class="font-semibold">More than 160 Wh</td><td>Not allowed</td><td>Not allowed</td><td>Not allowed</td></tr>
+            <tr data-band="1"><td class="font-semibold">Up to 100Wh</td><td>Allowed</td><td>Installed in a device that is completely off and protected from being switched on</td><td>Carry-on only; no FAA limit on how many for personal use</td></tr>
+            <tr data-band="2"><td class="font-semibold">More than 100, up to 160Wh</td><td>With airline approval</td><td>Installed in a device that is completely off, with airline approval</td><td>Carry-on only; at most two per person, with airline approval</td></tr>
+            <tr data-band="3"><td class="font-semibold">More than 160Wh</td><td>Not allowed</td><td>Not allowed</td><td>Not allowed</td></tr>
           </tbody>
         </table>
       </div>
       <ul class="mt-3 text-sm text-ink-2 space-y-1 list-disc pl-5">
-        <li>The FAA writes the bands as 0 to 100 Wh and 101 to 160 Wh. This page treats any rating above 100 Wh as the second band.</li>
+        <li>The FAA writes the bands as 0 to 100Wh and 101 to 160Wh. This page treats any rating above 100Wh as the second band.</li>
         <li>Spare batteries and power banks go in carry-on bags only, with the ends protected from touching metal (original packaging, tape over the ends, or a case). If a carry-on bag is checked at the gate, take the spares out first.</li>
-        <li>Single-use lithium batteries (lithium metal) are limited by how much lithium they hold instead: 2 g per battery, or 2 to 8 g with airline approval for up to two spares.</li>
+        <li>Single-use lithium batteries (lithium metal) are limited by how much lithium they hold instead: 2g per battery, or 2 to 8g with airline approval for up to two spares.</li>
         <li>Airlines may set stricter limits than the FAA. Other countries' rules can differ.</li>
       </ul>
       <p class="mt-3 text-sm text-ink-2">Source: FAA, <a class="link" href="https://www.faa.gov/hazmat/packsafe/lithium-batteries">PackSafe: Lithium Batteries</a> (page last updated August 11, 2026) and <a class="link" href="https://www.faa.gov/hazmat/packsafe/airline-passengers-and-batteries">Airline Passengers and Batteries</a>, accessed {faaAccessed}; regulation 49 CFR 175.10(a)(18). More in the guide <a class="link" href="/reference/air-travel">Flying with batteries</a>.</p>
@@ -198,7 +198,7 @@ const jsonld = {
     const wh = (v * mah) / 1000;
     $('e-wh').textContent = fmt(wh, wh < 10 ? 3 : 2);
     $('e-mwh').textContent = fmt(v * mah, 0);
-    $('e-f').textContent = `${fmt(v)} V × ${fmt(mah)} mAh ÷ 1,000 = ${fmt(wh, 3)} Wh`;
+    $('e-f').textContent = `${fmt(v)}V × ${fmt(mah)}mAh ÷ 1,000 = ${fmt(wh, 3)}Wh`;
   }
 
   // ------------------------------------------------------------ runtime
@@ -214,7 +214,7 @@ const jsonld = {
     $('r-h').textContent = fmt(h, h < 10 ? 2 : 1);
     $('r-hm').textContent = `${H.toLocaleString('en-US')} h ${M === 60 ? 59 : M} min`;
     $('r-days').textContent = h >= 48 ? `${fmt(h / 24, 1)} days` : 'hours and minutes';
-    $('r-f').textContent = `${fmt(mah)} mAh ÷ ${fmt(ma)} mA = ${fmt(h, 2)} h`;
+    $('r-f').textContent = `${fmt(mah)}mAh ÷ ${fmt(ma)}mA = ${fmt(h, 2)} h`;
   }
 
   // ------------------------------------------------- series and parallel
@@ -226,7 +226,7 @@ const jsonld = {
 
   function fillVariants(prefer?: number) {
     const p = byId.get(selB.value)!;
-    selV.innerHTML = p.vars.map((v, i) => `<option value="${i}">${esc(v.l)} (${fmt(v.v)} V)</option>`).join('');
+    selV.innerHTML = p.vars.map((v, i) => `<option value="${i}">${esc(v.l)} (${fmt(v.v)}V)</option>`).join('');
     // Default: the first kind with a published typical capacity.
     const first = p.vars.findIndex((v) => v.cap);
     selV.value = String(prefer !== undefined && p.vars[prefer] ? prefer : first >= 0 ? first : 0);
@@ -251,25 +251,25 @@ const jsonld = {
     const count = S * P;
     const V = S * v.v;
     const hint = [
-      v.cap ? `Published typical: ${fmt(v.cap, 0)} mAh.` : v.rg ? `Published range: ${fmt(v.rg[0], 0)} to ${fmt(v.rg[1], 0)} mAh across products. Enter your battery's rating.` : 'No capacity is published for this kind. Enter your battery\'s rating.',
+      v.cap ? `Published typical: ${fmt(v.cap, 0)}mAh.` : v.rg ? `Published range: ${fmt(v.rg[0], 0)} to ${fmt(v.rg[1], 0)}mAh across products. Enter your battery's rating.` : 'No capacity is published for this kind. Enter your battery\'s rating.',
       customCap ? 'Using your number.' : '',
     ].filter(Boolean).join(' ');
     $('p-cap-hint').textContent = hint;
     const out: string[] = [];
     const f: string[] = [];
     out.push(spec(fmt(V), 'V', 'voltage'));
-    f.push(`V = ${S} × ${fmt(v.v)} V = ${fmt(V)} V`);
+    f.push(`V = ${S} × ${fmt(v.v)}V = ${fmt(V)}V`);
     if (v.mx) {
       out.push(spec(fmt(S * v.mx), 'V', 'full charge'));
-      f.push(`full charge = ${S} × ${fmt(v.mx)} V = ${fmt(S * v.mx)} V`);
+      f.push(`full charge = ${S} × ${fmt(v.mx)}V = ${fmt(S * v.mx)}V`);
     } else out.push(spec(dash, '', v.r ? 'full charge: not published' : 'full charge: single-use'));
     if (cap) {
       const C = P * cap;
       packWh = (V * C) / 1000;
       out.push(spec(fmt(C, 0), 'mAh', 'capacity'));
       out.push(spec(fmt(packWh, packWh < 10 ? 2 : 1), 'Wh', 'energy'));
-      f.push(`capacity = ${P} × ${fmt(cap)} mAh = ${fmt(C, 0)} mAh`);
-      f.push(`Wh = ${fmt(V)} V × ${fmt(C, 0)} mAh ÷ 1,000 = ${fmt(packWh, 2)} Wh`);
+      f.push(`capacity = ${P} × ${fmt(cap)}mAh = ${fmt(C, 0)}mAh`);
+      f.push(`Wh = ${fmt(V)}V × ${fmt(C, 0)}mAh ÷ 1,000 = ${fmt(packWh, 2)}Wh`);
     } else {
       packWh = null;
       out.push(spec(dash, '', 'capacity: enter mAh'));
@@ -280,9 +280,9 @@ const jsonld = {
     if (v.w) {
       const g = count * v.w;
       out.push(spec(g >= 1000 ? fmt(g / 1000, 2) : fmt(g, 1), g >= 1000 ? 'kg' : 'g', 'weight of the batteries'));
-      f.push(`weight = ${count} × ${fmt(v.w)} g = ${fmt(g, 1)} g`);
+      f.push(`weight = ${count} × ${fmt(v.w)}g = ${fmt(g, 1)}g`);
     } else out.push(spec(dash, '', 'weight: not published'));
-    if (v.co) f.push(`cutoff = ${S} × ${fmt(v.co)} V = ${fmt(S * v.co)} V (fully discharged)`);
+    if (v.co) f.push(`cutoff = ${S} × ${fmt(v.co)}V = ${fmt(S * v.co)}V (fully discharged)`);
     $('p-out').innerHTML = out.join('');
     $('p-f').innerHTML = f.map((x) => `<li>${esc(x)}</li>`).join('');
     $('a-pack-wh').textContent = packWh === null ? dash : fmt(packWh, 1);
@@ -304,11 +304,11 @@ const jsonld = {
     }
     const band = wh <= 100 ? 1 : wh <= 160 ? 2 : 3;
     document.querySelector(`#a-table tr[data-band="${band}"]`)?.classList.add('bg-accent-soft');
-    const tag = `${fmt(wh, 2)} Wh`;
+    const tag = `${fmt(wh, 2)}Wh`;
     const rules = {
-      1: ['ok', `${tag}: allowed in carry-on bags.`, 'Up to 100 Wh. Spares go in carry-on bags only, with the ends protected. Installed in a device, it may also go in a checked bag if the device is completely off and protected from being switched on.'],
-      2: ['warn', `${tag}: needs the airline's approval.`, 'More than 100 Wh and up to 160 Wh. Carry-on with the airline\'s approval; at most two spare batteries of this size per person, carry-on only.'],
-      3: ['danger', `${tag}: not allowed in passenger bags.`, 'More than 160 Wh. Not allowed in carry-on or checked bags on passenger planes.'],
+      1: ['ok', `${tag}: allowed in carry-on bags.`, 'Up to 100Wh. Spares go in carry-on bags only, with the ends protected. Installed in a device, it may also go in a checked bag if the device is completely off and protected from being switched on.'],
+      2: ['warn', `${tag}: needs the airline's approval.`, 'More than 100Wh and up to 160Wh. Carry-on with the airline\'s approval; at most two spare batteries of this size per person, carry-on only.'],
+      3: ['danger', `${tag}: not allowed in passenger bags.`, 'More than 160Wh. Not allowed in carry-on or checked bags on passenger planes.'],
     } as const;
     const [cls, head, body] = rules[band];
     box.className = `callout ${cls}`;

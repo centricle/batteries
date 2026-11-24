@@ -57,7 +57,7 @@
       },
       "capacity_mah": {
         "typical": 45.0,
-        "conditions": "Panasonic nominal capacity at 0.12 mA standard drain to 2.0 V, 20 °C"
+        "conditions": "Panasonic nominal capacity at 0.12mA standard drain to 2.0V, 20°C"
       },
       "weight_g": 2.2,
       "cycle_life": 1000,
@@ -67,7 +67,7 @@
           60
         ]
       },
-      "notes": "ML2020 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it. Charging voltage 2.8 to 3.2 V.",
+      "notes": "ML2020 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it. Charging voltage 2.8 to 3.2V.",
       "sources": [
         "panasonic-ml2020"
       ]
@@ -83,7 +83,7 @@
       },
       "capacity_mah": {
         "typical": 20.0,
-        "conditions": "Panasonic nominal capacity at 0.07 mA standard drain to 2.5 V, 20 °C"
+        "conditions": "Panasonic nominal capacity at 0.07mA standard drain to 2.5V, 20°C"
       },
       "weight_g": 2.1,
       "cycle_life": 1000,
@@ -93,7 +93,7 @@
           60
         ]
       },
-      "notes": "VL2020 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it. Charging voltage 3.25 to 3.55 V.",
+      "notes": "VL2020 is a rechargeable battery in the same case. About 1,000 charge-discharge cycles at 10% discharge depth, constant-voltage charging only. Not a drop-in replacement for the single-use CR battery unless the device is designed for it. Charging voltage 3.25 to 3.55V.",
       "sources": [
         "panasonic-vl2020"
       ]
@@ -109,12 +109,12 @@
     {
       "id": "cr2016",
       "relation": "fits-with-caveat",
-      "note": "Same 20 mm width and 0.4 mm thinner; lower capacity and may make poor contact in a CR2020 holder."
+      "note": "Same 20mm width and 0.4mm thinner; lower capacity and may make poor contact in a CR2020 holder."
     },
     {
       "id": "cr2025",
       "relation": "fits-with-caveat",
-      "note": "Same 20 mm width and 0.5 mm thicker; fits only where the holder has the clearance."
+      "note": "Same 20mm width and 0.5mm thicker; fits only where the holder has the clearance."
     }
   ],
   "notes": "The ML2020 and VL2020 are the commonly sold rechargeable batteries in this size.",

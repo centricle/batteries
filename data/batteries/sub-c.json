@@ -18,7 +18,7 @@
       "code": "HR22C429",
       "system": "IEC",
       "chemistry": "nimh",
-      "note": "As listed by Wikipedia; 22.2 by 42.9 mm."
+      "note": "As listed by Wikipedia; 22.2 by 42.9mm."
     },
     {
       "code": "KR22C429",
@@ -43,7 +43,7 @@
       "min": 41.5,
       "max": 43.0
     },
-    "note": "Limits from the Panasonic BK300SCP datasheet (23.0 +0/-1.0 mm, 43.0 +0/-1.5 mm). Wikipedia lists a nominal 22.2 by 42.9 mm.",
+    "note": "Limits from the Panasonic BK300SCP datasheet (23.0 +0/-1.0mm, 43.0 +0/-1.5mm). Wikipedia lists a nominal 22.2 by 42.9mm.",
     "sources": [
       "panasonic-bk300scp",
       "wikipedia-battery-sizes"
@@ -66,7 +66,7 @@
       },
       "capacity_mah": {
         "typical": 3050,
-        "conditions": "Charge 0.1 It for 16 h, discharge 0.2 It (Panasonic BK300SCP average); range is the published span for the size",
+        "conditions": "Charge 0.1 It for 16h, discharge 0.2 It (Panasonic BK300SCP average); range is the published span for the size",
         "range": [
           1800,
           5000
@@ -88,7 +88,7 @@
           35
         ]
       },
-      "notes": "Panasonic BK300SCP is a high-rate type rated 2,800 mAh minimum. Storage range is for periods under one year.",
+      "notes": "Panasonic BK300SCP is a high-rate type rated 2,800mAh minimum. Storage range is for periods under one year.",
       "sources": [
         "panasonic-bk300scp",
         "wikipedia-battery-sizes"

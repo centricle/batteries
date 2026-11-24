@@ -53,7 +53,7 @@
       "min": 69.85,
       "max": 70.15
     },
-    "note": "Limits from the Molicel INR-21700-P45B specification (21.40 ± 0.15 mm by 70.00 ± 0.15 mm). Other datasheets give maximums of 21.25 mm by 70.80 mm (Samsung 50E), 21.22 by 70.30 (Samsung 40T) and 21.44 by 70.65 (LG M50LT). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Limits from the Molicel INR-21700-P45B specification (21.40 ± 0.15mm by 70.00 ± 0.15mm). Other datasheets give maximums of 21.25mm by 70.80mm (Samsung 50E), 21.22 by 70.30 (Samsung 40T) and 21.44 by 70.65 (LG M50LT). Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "molicel-p45b",
       "samsung-50e",
@@ -87,7 +87,7 @@
         ],
         "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
       },
-      "notes": "Nominal voltage 3.6 to 3.7 V by maker.",
+      "notes": "Nominal voltage 3.6 to 3.7V by maker.",
       "sources": [
         "wiki-sizes"
       ]
@@ -103,7 +103,7 @@
       },
       "capacity_mah": {
         "typical": 4900,
-        "conditions": "Standard discharge capacity, minimum 4900 mAh: 0.2C (980 mA) to 2.5 V at room temperature after 0.5C CC/CV charge to 4.2 V, 98 mA cut-off"
+        "conditions": "Standard discharge capacity, minimum 4900mAh: 0.2C (980mA) to 2.5V at room temperature after 0.5C CC/CV charge to 4.2V, 98mA cut-off"
       },
       "weight_g": 69.5,
       "max_continuous_ma": 9800,
@@ -122,7 +122,7 @@
           60
         ]
       },
-      "notes": "Weight is the maximum. 14.7 A is allowed only for non-continuous discharge. Storage is one month. Specification version V1.0.",
+      "notes": "Weight is the maximum. 14.7A is allowed only for non-continuous discharge. Storage is one month. Specification version V1.0.",
       "sources": [
         "samsung-50e"
       ]
@@ -138,7 +138,7 @@
       },
       "capacity_mah": {
         "typical": 4000,
-        "conditions": "Standard discharge capacity, minimum 4000 mAh: 0.2C (800 mA) to 2.5 V at room temperature after 0.5C (2 A) CC/CV charge to 4.2 V, 200 mA cut-off"
+        "conditions": "Standard discharge capacity, minimum 4000mAh: 0.2C (800mA) to 2.5V at room temperature after 0.5C (2A) CC/CV charge to 4.2V, 200mA cut-off"
       },
       "weight_g": 70,
       "max_continuous_ma": 35000,
@@ -152,7 +152,7 @@
           60
         ]
       },
-      "notes": "Weight is the maximum. 35 A continuous is stated without a temperature cut-off. Temperatures are ambient. Specification version 0.0.",
+      "notes": "Weight is the maximum. 35A continuous is stated without a temperature cut-off. Temperatures are ambient. Specification version 0.0.",
       "sources": [
         "samsung-40t"
       ]
@@ -178,7 +178,7 @@
           55
         ]
       },
-      "notes": "The tentative specification publishes energy (18.2 Wh nominal, 17.6 Wh minimum) and no capacity in mAh. Maximum discharge current is temperature dependent: 3.0C (14.4 A) at 10 to 25 °C, 1.5C (7.2 A) at 25 to 55 °C and 0.5C below 10 °C. Weight includes tube and washer and is marked to be determined. Temperatures are ambient.",
+      "notes": "The tentative specification publishes energy (18.2Wh nominal, 17.6Wh minimum) and no capacity in mAh. Maximum discharge current is temperature dependent: 3.0C (14.4A) at 10 to 25°C, 1.5C (7.2A) at 25 to 55°C and 0.5C below 10°C. Weight includes tube and washer and is marked to be determined. Temperatures are ambient.",
       "sources": [
         "lg-m50lt"
       ]
@@ -194,7 +194,7 @@
       },
       "capacity_mah": {
         "typical": 4500,
-        "conditions": "Typical 4.5 Ah: 0.9 A discharge to 2.5 V at 23 °C after 4.5 A CC/CV charge to 4.2 V, 90 mA taper"
+        "conditions": "Typical 4.5Ah: 0.9A discharge to 2.5V at 23°C after 4.5A CC/CV charge to 4.2V, 90mA taper"
       },
       "weight_g": 70,
       "max_continuous_ma": 45000,
@@ -224,14 +224,14 @@
   ],
   "interchange": [],
   "safety": [
-    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2V for cobalt, nickel and manganese chemistries, 3.65V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
     "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe).",
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100Wh each (FAA PackSafe).",
     "Do not mix batteries of different brands, capacities or charge states in one pack."
   ],
-  "notes": "Size code: 21 mm diameter, 70 mm length, 0 for cylindrical. Tesla uses the short form 2170.",
+  "notes": "Size code: 21mm diameter, 70mm length, 0 for cylindrical. Tesla uses the short form 2170.",
   "sources": [
     {
       "id": "wiki-sizes",

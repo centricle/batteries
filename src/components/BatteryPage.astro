@@ -36,7 +36,7 @@ const sourced = devicesFor(b.id);
 const headToHead = pairsFor(b).map((p) => ({ slug: p.slug, other: p.a.id === b.id ? p.b : p.a }));
 const isSmallRound = b.category === 'coin' || b.category === 'button' || b.category === 'hearing-aid';
 const capFirst = (s: string) => s[0].toUpperCase() + s.slice(1);
-/** "It is 50.5 mm long and 14.5 mm across; most are 1.5 volts." */
+/** "It is 50.5mm long and 14.5mm across; most are 1.5 volts." */
 const sizeAndVolts = (o: Battery) => {
   const vs = voltages(o);
   const main = fmt(o.variants[0].voltage.nominal);
@@ -121,7 +121,7 @@ const STACK_TD = 'max-sm:block max-sm:p-0 max-sm:pt-2 max-sm:border-0';
 const kindRows = groups.map((g) => ({
   id: g.chem.id,
   name: g.chem.plainName,
-  volts: `${voltPhrase([...new Set(g.variants.map((v) => v.voltage.nominal))])} V`,
+  volts: `${voltPhrase([...new Set(g.variants.map((v) => v.voltage.nominal))])}V`,
   use: g.variants[0].rechargeable ? 'rechargeable' : 'single-use',
   soldAs: [...new Set(g.variants.filter((v) => soldAsOther(b, v)).map((v) => v.label!))],
   plain: g.chem.plain,
@@ -133,7 +133,7 @@ const delta = (mm: number, label: string) => {
   if (Math.abs(mm) < 0.05) return `same ${label === 'diameter' ? 'width' : label}`;
   const words: Record<string, [string, string]> = { diameter: ['wider', 'narrower'], length: ['longer', 'shorter'], thickness: ['thicker', 'thinner'], height: ['taller', 'shorter'], width: ['wider', 'narrower'], depth: ['thicker', 'thinner'] };
   const [up, down] = words[label] ?? ['larger', 'smaller'];
-  return `${fmt(Math.abs(mm), 2)} mm ${mm > 0 ? up : down}`;
+  return `${fmt(Math.abs(mm), 2)}mm ${mm > 0 ? up : down}`;
 };
 
 // Full specifications: plain label first, the technical term after.
@@ -145,27 +145,27 @@ const dimRows = ([
   ['Wide (width)', d.width],
   [depthLabel, d.depth],
 ] as const).filter(([, v]) => v);
-const current = (ma: number) => (ma >= 1000 ? `${fmt(ma / 1000, 1)} A` : `${fmt(ma, 0)} mA`);
+const current = (ma: number) => (ma >= 1000 ? `${fmt(ma / 1000, 1)}A` : `${fmt(ma, 0)}mA`);
 const props: { key: string; label: string; get: (v: Battery['variants'][number]) => string }[] = [
   { key: 'type', label: 'Type (chemistry)', get: (v) => `${chem(v.chemistry).name}${v.subtype ? `, ${v.subtype}` : ''}` },
   { key: 'nominal', label: 'Voltage (nominal)', get: (v) => volts(v.voltage.nominal) },
   { key: 'oc', label: 'Voltage when new (open circuit)', get: (v) => (v.voltage.open_circuit ? volts(v.voltage.open_circuit) : '') },
   { key: 'cutoff', label: 'Voltage when spent (cutoff)', get: (v) => (v.voltage.cutoff ? volts(v.voltage.cutoff) : '') },
   { key: 'charge', label: 'Charging voltage (maximum)', get: (v) => (v.voltage.charge_max ? volts(v.voltage.charge_max) : '') },
-  { key: 'cap', label: 'Capacity (mAh)', get: (v) => { const c = v.capacity_mah; if (!c) return ''; const t = c.typical ? `${fmt(c.typical, 0)} mAh` : ''; const r = c.range ? `${fmt(c.range[0], 0)} to ${fmt(c.range[1], 0)} mAh` : ''; return [t, r && t ? `(${r})` : r].filter(Boolean).join(' '); } },
+  { key: 'cap', label: 'Capacity (mAh)', get: (v) => { const c = v.capacity_mah; if (!c) return ''; const t = c.typical ? `${fmt(c.typical, 0)}mAh` : ''; const r = c.range ? `${fmt(c.range[0], 0)} to ${fmt(c.range[1], 0)}mAh` : ''; return [t, r && t ? `(${r})` : r].filter(Boolean).join(' '); } },
   { key: 'cond', label: 'Capacity measured at (rating conditions)', get: (v) => v.capacity_mah?.conditions ?? '' },
-  { key: 'wh', label: 'Energy (Wh, typical)', get: (v) => (v.capacity_mah?.typical ? `${fmt((v.capacity_mah.typical / 1000) * v.voltage.nominal, 2)} Wh` : '') },
-  { key: 'weight', label: 'Weight (g)', get: (v) => (v.weight_g ? `${fmt(v.weight_g)} g` : '') },
+  { key: 'wh', label: 'Energy (Wh, typical)', get: (v) => (v.capacity_mah?.typical ? `${fmt((v.capacity_mah.typical / 1000) * v.voltage.nominal, 2)}Wh` : '') },
+  { key: 'weight', label: 'Weight (g)', get: (v) => (v.weight_g ? `${fmt(v.weight_g)}g` : '') },
   { key: 'cont', label: 'Steady current (maximum continuous)', get: (v) => (v.max_continuous_ma ? current(v.max_continuous_ma) : '') },
   { key: 'pulse', label: 'Short bursts (maximum pulse current)', get: (v) => (v.max_pulse_ma ? current(v.max_pulse_ma) : '') },
-  { key: 'ir', label: 'Internal resistance (mΩ)', get: (v) => (v.internal_resistance_mohm ? `${fmt(v.internal_resistance_mohm)} mΩ` : '') },
+  { key: 'ir', label: 'Internal resistance (mΩ)', get: (v) => (v.internal_resistance_mohm ? `${fmt(v.internal_resistance_mohm)}mΩ` : '') },
   { key: 'cycles', label: 'Recharges (cycle life)', get: (v) => (v.cycle_life ? `${fmt(v.cycle_life, 0)} cycles` : '') },
   { key: 'shelf', label: 'Shelf life', get: (v) => (v.shelf_life_years ? `${fmt(v.shelf_life_years)} years` : '') },
   { key: 'sd', label: 'Charge lost in storage (self-discharge)', get: (v) => v.self_discharge ?? '' },
-  { key: 'li', label: 'Lithium content (g)', get: (v) => (v.lithium_content_g ? `${fmt(v.lithium_content_g, 3)} g` : '') },
-  { key: 'op', label: 'Use between (operating temperature)', get: (v) => { const t = v.temperature_c?.operating ?? v.temperature_c?.discharge; return t ? `${t[0]} to ${t[1]} °C` : ''; } },
-  { key: 'ch', label: 'Charge between (charge temperature)', get: (v) => (v.temperature_c?.charge ? `${v.temperature_c.charge[0]} to ${v.temperature_c.charge[1]} °C` : '') },
-  { key: 'st', label: 'Store between (storage temperature)', get: (v) => (v.temperature_c?.storage ? `${v.temperature_c.storage[0]} to ${v.temperature_c.storage[1]} °C` : '') },
+  { key: 'li', label: 'Lithium content (g)', get: (v) => (v.lithium_content_g ? `${fmt(v.lithium_content_g, 3)}g` : '') },
+  { key: 'op', label: 'Use between (operating temperature)', get: (v) => { const t = v.temperature_c?.operating ?? v.temperature_c?.discharge; return t ? `${t[0]} to ${t[1]}°C` : ''; } },
+  { key: 'ch', label: 'Charge between (charge temperature)', get: (v) => (v.temperature_c?.charge ? `${v.temperature_c.charge[0]} to ${v.temperature_c.charge[1]}°C` : '') },
+  { key: 'st', label: 'Store between (storage temperature)', get: (v) => (v.temperature_c?.storage ? `${v.temperature_c.storage[0]} to ${v.temperature_c.storage[1]}°C` : '') },
   { key: 'rech', label: 'Rechargeable', get: (v) => (v.rechargeable ? 'Yes' : 'No') },
 ];
 const shownProps = props.filter((p) => b.variants.some((v) => p.get(v)));
@@ -547,14 +547,14 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
                   {dimRows.map(([label, v]) => (
                     <tr>
                       <td class="font-sans font-semibold text-ink-2">{label}</td>
-                      <td class="n font-semibold">{fmt(v!.nominal)} mm</td>
+                      <td class="n font-semibold">{fmt(v!.nominal)}mm</td>
                       <td class="n">{v!.min ? fmt(v!.min) : '—'}</td>
                       <td class="n">{v!.max ? fmt(v!.max) : '—'}</td>
                       <td class="n">{inch(v!.nominal)}</td>
                     </tr>
                   ))}
-                  {b.geometry?.positive?.diameter && <tr><td class="font-sans font-semibold text-ink-2">Positive end, across</td><td class="n">{fmt(b.geometry.positive.diameter)} mm</td><td class="n">—</td><td class="n">—</td><td class="n">{inch(b.geometry.positive.diameter)}</td></tr>}
-                  {b.geometry?.positive?.height && <tr><td class="font-sans font-semibold text-ink-2">Positive end, raised (height)</td><td class="n">{fmt(b.geometry.positive.height)} mm</td><td class="n">—</td><td class="n">—</td><td class="n">{inch(b.geometry.positive.height)}</td></tr>}
+                  {b.geometry?.positive?.diameter && <tr><td class="font-sans font-semibold text-ink-2">Positive end, across</td><td class="n">{fmt(b.geometry.positive.diameter)}mm</td><td class="n">—</td><td class="n">—</td><td class="n">{inch(b.geometry.positive.diameter)}</td></tr>}
+                  {b.geometry?.positive?.height && <tr><td class="font-sans font-semibold text-ink-2">Positive end, raised (height)</td><td class="n">{fmt(b.geometry.positive.height)}mm</td><td class="n">—</td><td class="n">—</td><td class="n">{inch(b.geometry.positive.height)}</td></tr>}
                 </tbody>
               </table>
             </div>

@@ -37,7 +37,7 @@
       "nominal": 50.3,
       "max": 50.3
     },
-    "note": "Maximum dimensions of a bare battery, from one lithium iron phosphate battery specification; lithium-ion 14500 batteries are listed at 14 by 50 mm nominal. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5 mm; check the maker's listed length before relying on a fit.",
+    "note": "Maximum dimensions of a bare battery, from one lithium iron phosphate battery specification; lithium-ion 14500 batteries are listed at 14 by 50mm nominal. Unprotected battery. Protected batteries (with a circuit board) and button-top batteries are longer than the bare flat-top battery, commonly by 2 to 5mm; check the maker's listed length before relying on a fit.",
     "sources": [
       "oew-ifr14500",
       "wiki-sizes"
@@ -69,7 +69,7 @@
         ],
         "conditions": "Range of capacities listed across products in the reference table; each maker rates at its own current and cutoff."
       },
-      "notes": "Nominal voltage 3.7 V.",
+      "notes": "Nominal voltage 3.7V.",
       "sources": [
         "wiki-sizes"
       ]
@@ -85,7 +85,7 @@
       },
       "capacity_mah": {
         "typical": 800,
-        "conditions": "Typical 800 mAh, minimum 760 mAh, 0.2C discharge to 3.0 V after 0.5C CC/CV charge to 4.2 V"
+        "conditions": "Typical 800mAh, minimum 760mAh, 0.2C discharge to 3.0V after 0.5C CC/CV charge to 4.2V"
       },
       "max_continuous_ma": 1200,
       "temperature_c": {
@@ -118,7 +118,7 @@
       },
       "capacity_mah": {
         "typical": 600,
-        "conditions": "Typical 600 mAh, minimum 580 mAh, 0.5C discharge to 2.0 V"
+        "conditions": "Typical 600mAh, minimum 580mAh, 0.5C discharge to 2.0V"
       },
       "weight_g": 17,
       "max_continuous_ma": 600,
@@ -139,7 +139,7 @@
           45
         ]
       },
-      "notes": "Weight is 17 g plus or minus 2 g; max continuous is 1C and 10-second pulse is 3C; internal resistance is the maximum at 1 kHz; cycle life is \"over 2000\" cycles at 0.5C and 100% depth.",
+      "notes": "Weight is 17g plus or minus 2g; max continuous is 1C and 10-second pulse is 3C; internal resistance is the maximum at 1 kHz; cycle life is \"over 2000\" cycles at 0.5C and 100% depth.",
       "sources": [
         "oew-ifr14500"
       ]
@@ -159,13 +159,13 @@
     }
   ],
   "safety": [
-    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2 V for cobalt, nickel and manganese chemistries, 3.65 V for lithium iron phosphate).",
-    "Do not discharge below the datasheet cutoff voltage (2.5 V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
+    "Charge only with a charger made for lithium-ion batteries, using constant current then constant voltage (CC/CV) up to the charge voltage in the battery datasheet (4.2V for cobalt, nickel and manganese chemistries, 3.65V for lithium iron phosphate).",
+    "Do not discharge below the datasheet cutoff voltage (2.5V for most batteries listed here); deep discharge damages the battery and a damaged battery should be discarded.",
     "The metal can is the negative terminal. A torn or missing wrap exposes the can and can short the battery against a metal object or an adjacent battery.",
     "Unprotected batteries have no overcharge, over-discharge or short-circuit protection of their own and need protection in the charger or the device; protected batteries carry a circuit board but should still be charged with a matching charger.",
-    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100 Wh each (FAA PackSafe)."
+    "Transport limits apply: the U.S. FAA requires spare lithium-ion batteries to travel in carry-on baggage with the terminals protected against short circuit, and limits rechargeable lithium-ion batteries to 100Wh each (FAA PackSafe)."
   ],
-  "notes": "Size code: 14 mm diameter, 50 mm length, 0 for cylindrical. Same size as an AA battery; device compartments and chargers for AA batteries do not make a 14500 safe to use.",
+  "notes": "Size code: 14mm diameter, 50mm length, 0 for cylindrical. Same size as an AA battery; device compartments and chargers for AA batteries do not make a 14500 safe to use.",
   "sources": [
     {
       "id": "wiki-sizes",

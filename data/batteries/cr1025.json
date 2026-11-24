@@ -41,7 +41,7 @@
       },
       "capacity_mah": {
         "typical": 30,
-        "conditions": "Panasonic nominal capacity at 0.1 mA continuous standard drain; cutoff voltage not stated"
+        "conditions": "Panasonic nominal capacity at 0.1mA continuous standard drain; cutoff voltage not stated"
       },
       "weight_g": 0.6,
       "temperature_c": {

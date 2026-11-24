@@ -73,7 +73,7 @@
       },
       "capacity_mah": {
         "typical": 620,
-        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated",
+        "conditions": "Panasonic nominal capacity at 0.2mA continuous standard drain; cutoff voltage not stated",
         "range": [
           540,
           620
@@ -87,7 +87,7 @@
           85
         ]
       },
-      "notes": "Varta lists 620 mAh (590 mAh for CR 2450-P) and 6.2 g; GP lists 540 mAh and 6.6 g.",
+      "notes": "Varta lists 620mAh (590mAh for CR 2450-P) and 6.2g; GP lists 540mAh and 6.6g.",
       "sources": [
         "panasonic-cr2450",
         "varta-primary-lithium",
@@ -108,12 +108,12 @@
     {
       "id": "cr2430",
       "relation": "fits-with-caveat",
-      "note": "Same 24.5 mm width and 2.0 mm thinner; lower capacity and loose in a CR2450 holder."
+      "note": "Same 24.5mm width and 2.0mm thinner; lower capacity and loose in a CR2450 holder."
     },
     {
       "id": "cr2477",
       "relation": "does-not-fit",
-      "note": "Same 24.5 mm width and 2.7 mm thicker; does not fit a CR2450 holder."
+      "note": "Same 24.5mm width and 2.7mm thicker; does not fit a CR2450 holder."
     }
   ],
   "sources": [

@@ -110,7 +110,7 @@
       },
       "capacity_mah": {
         "typical": 8.0,
-        "conditions": "Discharge over 56.2 kΩ at 20 °C to 1.2 V (Renata OEM)",
+        "conditions": "Discharge over 56.2kΩ at 20°C to 1.2V (Renata OEM)",
         "range": [
           8.0,
           8.3
@@ -145,7 +145,7 @@
     "Remove exhausted batteries from the device promptly, because leaking batteries can damage it.",
     "Do not recharge, short-circuit, dismantle, heat or burn the battery; do not mix types, brands or charge states."
   ],
-  "notes": "4.8 mm by 1.65 mm. Sold as a low drain (SW) silver oxide battery.",
+  "notes": "4.8mm by 1.65mm. Sold as a low drain (SW) silver oxide battery.",
   "sources": [
     {
       "id": "energizer-337",

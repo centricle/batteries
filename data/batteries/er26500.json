@@ -6,7 +6,7 @@
   "status": "current",
   "aliases": [
     "C lithium thionyl chloride",
-    "3.6 V C",
+    "3.6V C",
     "LS26500"
   ],
   "codes": [
@@ -54,7 +54,7 @@
       },
       "capacity_mah": {
         "typical": 8500,
-        "conditions": "4 mA, 20 °C, 2.0 V cut-off"
+        "conditions": "4mA, 20°C, 2.0V cut-off"
       },
       "weight_g": 47,
       "max_continuous_ma": 150,
@@ -66,7 +66,7 @@
           85
         ]
       },
-      "self_discharge": "Under 1 percent after one year at 20 °C (Saft)",
+      "self_discharge": "Under 1 percent after one year at 20°C (Saft)",
       "notes": "Data are for the Saft LS 26500plus.",
       "sources": [
         "saft-ls26500plus"
@@ -83,9 +83,9 @@
   ],
   "interchange": [],
   "safety": [
-    "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100 °C can cause fire, explosion or venting.",
+    "Single-use lithium batteries are not rechargeable; charging, short circuit, crushing, disassembly or heating above 100°C can cause fire, explosion or venting.",
     "Do not solder directly to the battery; use tabbed or pinned versions.",
-    "Lithium thionyl chloride batteries run at 3.6 V; most 1.5 V devices are not designed for that voltage."
+    "Lithium thionyl chloride batteries run at 3.6V; most 1.5V devices are not designed for that voltage."
   ],
   "notes": "Industrial C-size bobbin battery for long-life, low-drain devices with periodic pulses.",
   "sources": [

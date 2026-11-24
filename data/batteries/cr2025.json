@@ -73,7 +73,7 @@
       },
       "capacity_mah": {
         "typical": 165,
-        "conditions": "Panasonic nominal capacity at 0.2 mA continuous standard drain; cutoff voltage not stated",
+        "conditions": "Panasonic nominal capacity at 0.2mA continuous standard drain; cutoff voltage not stated",
         "range": [
           145,
           165
@@ -87,7 +87,7 @@
           85
         ]
       },
-      "notes": "Varta lists 165 mAh and 2.5 g; GP lists 145 mAh and 2.5 g.",
+      "notes": "Varta lists 165mAh and 2.5g; GP lists 145mAh and 2.5g.",
       "sources": [
         "panasonic-cr2025",
         "varta-primary-lithium",
@@ -107,12 +107,12 @@
     {
       "id": "cr2032",
       "relation": "does-not-fit",
-      "note": "Same 20 mm width and 0.7 mm thicker; usually does not fit a CR2025 holder."
+      "note": "Same 20mm width and 0.7mm thicker; usually does not fit a CR2025 holder."
     },
     {
       "id": "cr2016",
       "relation": "fits-with-caveat",
-      "note": "Same 20 mm width and 0.9 mm thinner; lower capacity and may make poor contact in a CR2025 holder."
+      "note": "Same 20mm width and 0.9mm thinner; lower capacity and may make poor contact in a CR2025 holder."
     }
   ],
   "sources": [
