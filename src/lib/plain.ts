@@ -52,10 +52,10 @@ export const withArt = (name: string) => `${art(name)} ${name}`;
 
 // ------------------------------------------------------------------ inches
 
-/** Millimeters to the nearest 1/16 inch: "2 in", "9/16 in", "1 3/8 in". */
+/** Millimeters to the nearest 1/16 inch: "2″", "9/16″", "1 3/8″". */
 export function inFrac(mm: number): string {
   const n = Math.round((mm / 25.4) * 16);
-  if (n === 0) return 'less than 1/16 in';
+  if (n === 0) return 'less than 1/16″';
   const whole = Math.floor(n / 16);
   let rem = n % 16;
   let den = 16;
@@ -63,8 +63,8 @@ export function inFrac(mm: number): string {
     rem /= 2;
     den /= 2;
   }
-  if (!rem) return `${whole} in`;
-  return whole ? `${whole} ${rem}/${den} in` : `${rem}/${den} in`;
+  if (!rem) return `${whole}″`;
+  return whole ? `${whole} ${rem}/${den}″` : `${rem}/${den}″`;
 }
 
 // ------------------------------------------------------------------ coins
@@ -107,7 +107,7 @@ function sizeParts(b: B): Part[] {
   return [[d.height.nominal, 'tall'], [w, 'wide'], [p, p / w < 0.75 ? 'thick' : 'deep']];
 }
 
-/** "50.5mm long and 14.5mm across (about 2 in by 9/16 in)". */
+/** "50.5mm long and 14.5mm across (about 2″ by 9/16″)". */
 export function plainSize(b: B, opts: { inches?: boolean } = {}): string {
   const parts = sizeParts(b);
   const mm = list(parts.map(([n, w]) => `${num(n)}mm ${w}`));

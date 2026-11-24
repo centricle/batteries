@@ -20,7 +20,7 @@ const frac = (mm: number) => {
 const sizeBoth = (b: ReturnType<typeof batteries>[number]) => {
   const d = b.dimensions;
   const sides = d.diameter && !d.width ? [d.diameter.nominal, d.height.nominal] : [d.width!.nominal, d.depth!.nominal, d.height.nominal];
-  return `${sizeLabel(b)} (about ${sides.map(frac).join(' × ')} in)`;
+  return `${sizeLabel(b)} (about ${sides.map((x) => `${frac(x)}″`).join(' × ')})`;
 };
 
 const all = batteries();

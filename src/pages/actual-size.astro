@@ -27,7 +27,7 @@ const specs = Object.fromEntries(
         form: b.form,
         category: b.category,
         size: sizeLabel(b, false),
-        sizeIn: sides.map(frac).join(' × '),
+        sizeIn: sides.map((x) => `${frac(x)}″`).join(' × '),
         dimensions: { diameter: nom(d.diameter), height: nom(d.height)!, width: nom(d.width), depth: nom(d.depth) },
         geometry: b.geometry ?? {},
         col: chem(primaryVariant(b).chemistry).color,
@@ -110,15 +110,15 @@ const jsonld = {
       <h2 class="section-title" id="how">How it works</h2>
       <div class="prose">
         <p>A pixel on a screen has no fixed physical size; it depends on the screen. Setting the size finds the number of pixels per millimeter, <span class="mono">k</span>, from the card: <span class="mono">k = outline width in pixels ÷ 85.60mm</span>. Every shape is then drawn with <span class="mono">pixels = millimeters × k</span>. Before you set it, the page assumes the standard 96 pixels per inch, <span class="mono">96 ÷ 25.4 = 3.78</span> pixels per millimeter, which is right on few screens. Zooming the browser changes the drawing, so set it again at the zoom you use.</p>
-        <p>Printing uses real millimeters instead, which printers follow exactly at 100% scale. Turn off "Fit to page" or "Shrink to fit" in the print dialog, then check the 50mm and 2 in bars on the sheet with a ruler.</p>
-        <p>The card size, 85.60 × 53.98mm (3 3/8 in × 2 1/8 in), is the ID-1 format of ISO/IEC 7810, used by bank cards and most driver's licenses. The outlines come from the same model as the site's 3D views, built from each battery's published size; the shape of the terminals, which datasheets do not give, is drawn with typical values. Each battery's page has its exact size, the allowed range and the sources.</p>
+        <p>Printing uses real millimeters instead, which printers follow exactly at 100% scale. Turn off "Fit to page" or "Shrink to fit" in the print dialog, then check the 50mm and 2″ bars on the sheet with a ruler.</p>
+        <p>The card size, 85.60 × 53.98mm (3 3/8″ × 2 1/8″), is the ID-1 format of ISO/IEC 7810, used by bank cards and most driver's licenses. The outlines come from the same model as the site's 3D views, built from each battery's published size; the shape of the terminals, which datasheets do not give, is drawn with typical values. Each battery's page has its exact size, the allowed range and the sources.</p>
       </div>
     </section>
   </div>
 
   <div id="print-sheet" class="hidden print:block">
     <p style="font: 600 13pt system-ui, sans-serif; margin: 0 0 2mm">batteries.fyi: batteries at actual size</p>
-    <p style="font: 11pt system-ui, sans-serif; margin: 0 0 4mm">Printed at 100% scale, the bars below measure exactly 50mm and 2 in. If they do not, turn off "Fit to page" and print again.</p>
+    <p style="font: 11pt system-ui, sans-serif; margin: 0 0 4mm">Printed at 100% scale, the bars below measure exactly 50mm and 2″. If they do not, turn off "Fit to page" and print again.</p>
     <div id="print-rows"></div>
   </div>
 
@@ -290,7 +290,7 @@ const jsonld = {
     }
     views.push(front);
     const w = views.reduce((a, v) => a + v.w, 0) + VIEW_GAP * (views.length - 1);
-    const g = { id, name: s.name, size: `${s.size}mm`, sizeIn: `about ${s.sizeIn} in`, views, w, h: Math.max(...views.map((v) => v.h)) };
+    const g = { id, name: s.name, size: `${s.size}mm`, sizeIn: `about ${s.sizeIn}`, views, w, h: Math.max(...views.map((v) => v.h)) };
     cache.set(id, g);
     return g;
   }
@@ -364,7 +364,7 @@ const jsonld = {
       lines += `<line x1="${x}" y1="0" x2="${x}" y2="${t}" class="as-tick" stroke-width="${thin}" />`;
       if (i % every === 0) {
         const n = u === 'mm' ? i : i / 16;
-        labels += label(S, x + 0.6, base + numFS * 0.85, numFS, 'as-muted', `${n}${i === last ? (u === 'mm' ? 'mm' : ' in') : ''}`);
+        labels += label(S, x + 0.6, base + numFS * 0.85, numFS, 'as-muted', `${n}${i === last ? (u === 'mm' ? 'mm' : '″') : ''}`);
       }
     }
     return { lines, labels, len, h: base + numFS * 1.1 };
@@ -442,7 +442,7 @@ const jsonld = {
     // Print sheet: CSS millimeters, about 180mm of usable width on A4 and Letter.
     const bar = (len: number, label: string, y: number) => `<rect x="0" y="${y}" width="${len}" height="3" fill="#000" /><text x="${len + 1.5}" y="${y + 3}" font-size="3.5" font-family="system-ui, sans-serif">${label}</text>`;
     $('print-rows').innerHTML =
-      `<svg width="80mm" height="13mm" viewBox="0 0 80 13" style="display:block;margin-bottom:6mm">${bar(50, '50mm', 1)}${bar(INCH * 2, '2 in', 8)}</svg>` +
+      `<svg width="80mm" height="13mm" viewBox="0 0 80 13" style="display:block;margin-bottom:6mm">${bar(50, '50mm', 1)}${bar(INCH * 2, '2″', 8)}</svg>` +
       (groups.length ? pack(groups, 160, 8, 0.2).map((r, i) => rowSVG(r, 8, 'mm', 0.2, i)).join('') : '');
   }
 

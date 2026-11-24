@@ -47,13 +47,13 @@ const ARTICLES = {
 };
 for (const [name, want] of Object.entries(ARTICLES)) eq(`art(${name})`, art(String(name)), want);
 
-eq('inFrac 50.5', inFrac(50.5), '2 in');
-eq('inFrac 14.5', inFrac(14.5), '9/16 in');
-eq('inFrac 35', inFrac(35), '1 3/8 in');
-eq('inFrac 20', inFrac(20), '13/16 in');
-eq('inFrac 3.2', inFrac(3.2), '1/8 in');
-eq('inFrac 25.4', inFrac(25.4), '1 in');
-eq('inFrac 0.4', inFrac(0.4), 'less than 1/16 in');
+eq('inFrac 50.5', inFrac(50.5), '2″');
+eq('inFrac 14.5', inFrac(14.5), '9/16″');
+eq('inFrac 35', inFrac(35), '1 3/8″');
+eq('inFrac 20', inFrac(20), '13/16″');
+eq('inFrac 3.2', inFrac(3.2), '1/8″');
+eq('inFrac 25.4', inFrac(25.4), '1″');
+eq('inFrac 0.4', inFrac(0.4), 'less than 1/16″');
 
 eq('coin 20', coinCompare(20), 'a little smaller than a US nickel');
 eq('coin 24.5', coinCompare(24.5), 'about the size of a US quarter');
@@ -106,9 +106,9 @@ for (const b of all) {
   ok(`${t} is too long (${s.length}): ${s}`, s.length <= 420);
 }
 
-eq('summary aa', generatedSummary(byId.aa), 'A round battery 50.5mm long and 14.5mm across (about 2 in by 9/16 in). Most are 1.5 volts; rechargeable ones are 1.2 volts. Common in remote controls, flashlights, wireless mice and keyboards.');
-eq('summary cr2032', generatedSummary(byId.cr2032), 'A flat, round 3-volt lithium battery, 20mm across and 3.2mm thick (about 13/16 in by 1/8 in), a little smaller than a US nickel. Common in vehicle key fobs, item trackers and computer motherboards.');
-eq('size 9v', plainSize(byId['9v']), '48.5mm tall, 26.5mm wide and 17.5mm thick (about 1 15/16 in by 1 1/16 in by 11/16 in)');
+eq('summary aa', generatedSummary(byId.aa), 'A round battery 50.5mm long and 14.5mm across (about 2″ by 9/16″). Most are 1.5 volts; rechargeable ones are 1.2 volts. Common in remote controls, flashlights, wireless mice and keyboards.');
+eq('summary cr2032', generatedSummary(byId.cr2032), 'A flat, round 3-volt lithium battery, 20mm across and 3.2mm thick (about 13/16″ by 1/8″), a little smaller than a US nickel. Common in vehicle key fobs, item trackers and computer motherboards.');
+eq('size 9v', plainSize(byId['9v']), '48.5mm tall, 26.5mm wide and 17.5mm thick (about 1 15/16″ by 1 1/16″ by 11/16″)');
 eq('size 9v, mm only', plainSize(byId['9v'], { inches: false }), '48.5mm tall, 26.5mm wide and 17.5mm thick');
 eq('rechargeable cr2032', plainRechargeable(byId.cr2032), 'No. The rechargeable version is sold as LIR2032.');
 eq('rechargeable aa', plainRechargeable(byId.aa), 'Sold both ways');
@@ -116,7 +116,7 @@ eq('rechargeable 18650', plainRechargeable(byId['18650']), 'Yes');
 
 // A battery with no devices listed, and one with a hand-written summary.
 const bare = { ...byId.cr2032, devices: [] };
-eq('summary with no devices', generatedSummary(bare), 'A flat, round 3-volt lithium battery, 20mm across and 3.2mm thick (about 13/16 in by 1/8 in), a little smaller than a US nickel.');
+eq('summary with no devices', generatedSummary(bare), 'A flat, round 3-volt lithium battery, 20mm across and 3.2mm thick (about 13/16″ by 1/8″), a little smaller than a US nickel.');
 eq('hand-written plain wins', plainSummary({ ...byId.aa, plain: ' Written by hand. ' }), 'Written by hand.');
 
 // At a glance and the tiles. Kinds no longer made drop out of the voltage list,

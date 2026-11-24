@@ -24,7 +24,7 @@ const items = batteries().map((b) => {
     n: b.name,
     c: categoryById[b.category].short,
     cls,
-    s: `${sizeLabel(b)} (about ${sides.map(frac).join(' × ')} in)`,
+    s: `${sizeLabel(b)} (about ${sides.map((x) => `${frac(x)}″`).join(' × ')})`,
     d: d.diameter?.nominal ?? null,
     h: d.height.nominal,
     w: d.width?.nominal ?? null,
@@ -205,7 +205,7 @@ const examples = [
   };
   const toMM = (x: number | null) => (x === null ? null : unit === 'in' ? x * 25.4 : x);
   /** A difference in both units, millimeters first. */
-  const show = (mm: number) => `${Number(mm.toFixed(2))}mm (${(mm / 25.4).toFixed(mm < 2.54 ? 3 : 2)} in)`;
+  const show = (mm: number) => `${Number(mm.toFixed(2))}mm (${(mm / 25.4).toFixed(mm < 2.54 ? 3 : 2)}″)`;
 
   const LABELS: Record<Shape, { d: string; h: string; dh: string; hh: string }> = {
     cylinder: { d: 'How wide', h: 'How long', dh: 'Across the widest part', hh: 'End to end, including the bump on the + end' },
