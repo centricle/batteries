@@ -396,7 +396,9 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
         : <h2 id="similar-title" class="section-title">Close in size</h2>}
       <p class="text-base text-ink-2 mb-4 measure">The nearest sizes, drawn to the same scale.</p>
       <div class="card p-4 overflow-x-auto">
-        <ul class="flex items-end gap-6 min-w-max">
+        {/* Tops aligned: each drawing sits on the floor of a box of one height,
+            so every name lands on one line however its description wraps. */}
+        <ul class="flex items-start gap-6 min-w-max">
           {[{ battery: b, deltas: [] as { label: string; mm: number }[] }, ...sims].map((s, i) => (
             <li class="w-28">
               <a href={`/${s.battery.id}`} class="group flex flex-col items-center gap-2 min-h-[2rem]" aria-current={i === 0 ? 'page' : undefined}>
