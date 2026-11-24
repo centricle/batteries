@@ -123,6 +123,8 @@ const arBadge = `<svg xmlns="http://www.w3.org/2000/svg" width="290" height="44"
     text-decoration-color: color-mix(in oklch, currentColor 40%, transparent);
   }
   :global(.viewer-label:hover) { border-color: var(--ink); text-decoration-color: currentColor; }
+  /* Longhands only: the shared select rule in global.css draws the chevron in
+     the end padding and the background image. */
   .viewer-kind {
     min-height: 2rem; padding: 0.2rem 0.5rem;
     border: 1px solid var(--ink-2); border-radius: 0;

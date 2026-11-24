@@ -313,6 +313,24 @@ html {
   .input::placeholder { color: var(--muted); }
   .input:focus { border-color: var(--ink); }
 
+  /* A select draws its own chevron. Left to the browser, the chevron is
+     painted inside the end padding at a fixed inset from the border: padding
+     written for a text field moves the words but not the chevron, and it ends
+     up on the border. So: no native appearance, an end padding the chevron
+     lives in, and the chevron as two currentColor gradients, which theme with
+     the text. Every select gets it, classed or not. A component style that
+     sets the padding or background shorthand on a select undoes it; set
+     padding-block, padding-inline-start and background-color instead. */
+  select:not([multiple], [size]) {
+    appearance: none;
+    padding-inline-end: 2.25rem;
+    text-overflow: ellipsis;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: right 1.05rem center, right 0.75rem center;
+    background-size: 0.3rem 0.3rem;
+    background-repeat: no-repeat;
+  }
+
   /* Each .spec is a ruled box. Inside a .specs grid their 1px rings overlap
      across the 1px gap, so neighbors share one rule, and an empty grid slot
      stays blank. Stack two grids with -mt-px to share the seam. */
