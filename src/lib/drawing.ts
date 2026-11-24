@@ -12,7 +12,7 @@ export function drawingSVG(b: Battery) {
   const d = b.dimensions;
   const H = d.height.nominal;
 
-  // Layout spans to size text and strokes consistently across 9 mm and 115 mm batteries.
+  // Layout spans to size text and strokes consistently across 9mm and 115mm batteries.
   const isDisc = b.form === 'disc';
   const isCyl = b.form === 'cylinder' || (b.form === 'twin' && !!d.diameter && !d.width);
   const D = d.diameter?.nominal ?? 0;
@@ -41,7 +41,7 @@ export function drawingSVG(b: Battery) {
   function layout(ts: number) {
     const els: string[] = [];
     const ah = ts * 0.55; // arrowhead
-    const gap = ts * 2.2;
+    const gap = ts * 1.8;
 
     const path = (pts: Pt[], cls = 'o', close = true) =>
       `<path class="${cls}" d="M${pts.map(([x, y]) => `${x.toFixed(3)} ${y.toFixed(3)}`).join('L')}${close ? 'Z' : ''}"/>`;
@@ -53,11 +53,17 @@ export function drawingSVG(b: Battery) {
       ink.x0 = Math.min(ink.x0, x0); ink.x1 = Math.max(ink.x1, x1);
       ink.y0 = Math.min(ink.y0, y0); ink.y1 = Math.max(ink.y1, y1);
     };
+    // A figure's width: IBM Plex Mono advances 0.6 em, plus a little room.
+    const tw = (s: string) => s.length * ts * 0.62;
+    // Figures sit on an alphabetic baseline at (x, y). Digits and Ø rise
+    // about 0.7 em, so CAP is where the top of a figure lands.
+    const CAP = 0.7;
     const text = (x: number, y: number, s: string, anchor = 'middle', rot = 0) => {
-      const w = s.length * ts * 0.62; // monospace advance, with a little room
-      if (rot) reach(x - ts * 0.6, x + ts * 0.6, y - w / 2, y + w / 2);
-      else reach(anchor === 'start' ? x : x - w / 2, anchor === 'start' ? x + w : x + w / 2, y - ts * 0.6, y + ts * 0.6);
-      return `<text x="${x.toFixed(3)}" y="${y.toFixed(3)}" font-size="${ts.toFixed(3)}" text-anchor="${anchor}" dominant-baseline="middle"${rot ? ` transform="rotate(${rot} ${x.toFixed(3)} ${y.toFixed(3)})"` : ''}>${s}</text>`;
+      const w = tw(s);
+      const a0 = anchor === 'start' ? 0 : anchor === 'end' ? -w : -w / 2;
+      if (rot) reach(x - ts * (CAP + 0.1), x + ts * 0.1, y - a0 - w, y - a0);
+      else reach(x + a0, x + a0 + w, y - ts * (CAP + 0.1), y + ts * 0.1);
+      return `<text class="fig" x="${x.toFixed(3)}" y="${y.toFixed(3)}" font-size="${ts.toFixed(3)}" text-anchor="${anchor}"${rot ? ` transform="rotate(${rot} ${x.toFixed(3)} ${y.toFixed(3)})"` : ''}>${s}</text>`;
     };
     const arrow = (x: number, y: number, dx: number, dy: number) => {
       const l = Math.hypot(dx, dy);
@@ -66,34 +72,31 @@ export function drawingSVG(b: Battery) {
       return `<path class="ah" d="M${x} ${y}L${x - ux * ah + px * ah * 0.32} ${y - uy * ah + py * ah * 0.32}L${x - ux * ah - px * ah * 0.32} ${y - uy * ah - py * ah * 0.32}Z"/>`;
     };
     /** Horizontal dimension between x1 and x2 at height y (SVG coords). */
+    // The figure sits beside an unbroken dimension line, on the side away
+    // from the part, centered on the span whether or not it fits between
+    // the extension lines; a span too short for its arrows gets them outside.
     const hdim = (x1: number, x2: number, y: number, yFrom: number, label: string) => {
-      els.push(line(x1, yFrom, x1, y + Math.sign(y - yFrom) * ts * 0.4, 'el'), line(x2, yFrom, x2, y + Math.sign(y - yFrom) * ts * 0.4, 'el'));
-      const inside = Math.abs(x2 - x1) > ah * 2.6 + label.length * ts * 0.55;
-      if (inside) {
-        els.push(line(x1, y, x2, y), arrow(x1, y, x1 - x2, 0), arrow(x2, y, x2 - x1, 0));
-        els.push(`<rect class="tb" x="${((x1 + x2) / 2 - label.length * ts * 0.32).toFixed(3)}" y="${(y - ts * 0.6).toFixed(3)}" width="${(label.length * ts * 0.64).toFixed(3)}" height="${(ts * 1.2).toFixed(3)}"/>`);
-        els.push(text((x1 + x2) / 2, y, label));
-      } else {
-        els.push(line(x1 - ah * 2.5, y, x2 + ah * 2.5, y), arrow(x1, y, x2 - x1, 0), arrow(x2, y, x1 - x2, 0));
-        els.push(text(x2 + ah * 3, y, label, 'start'));
-      }
+      const out = Math.sign(y - yFrom) || -1;
+      els.push(line(x1, yFrom, x1, y + out * ts * 0.4, 'el'), line(x2, yFrom, x2, y + out * ts * 0.4, 'el'));
+      if (Math.abs(x2 - x1) > ah * 2.6) els.push(line(x1, y, x2, y), arrow(x1, y, x1 - x2, 0), arrow(x2, y, x2 - x1, 0));
+      else els.push(line(x1 - ah * 2.5, y, x2 + ah * 2.5, y), arrow(x1, y, x2 - x1, 0), arrow(x2, y, x1 - x2, 0));
+      els.push(text((x1 + x2) / 2, out > 0 ? y + ts * (CAP + 0.55) : y - ts * 0.45, label));
     };
     /** Vertical dimension between y1 and y2 at x. */
+    // Vertical: the figure reads from below (turned a quarter left) beside
+    // the line, away from the part. On a span shorter than the figure it
+    // stays level, beside the line at mid-height.
     const vdim = (y1: number, y2: number, x: number, xFrom: number, label: string) => {
-      els.push(line(xFrom, y1, x + Math.sign(x - xFrom) * ts * 0.4, y1, 'el'), line(xFrom, y2, x + Math.sign(x - xFrom) * ts * 0.4, y2, 'el'));
-      const inside = Math.abs(y2 - y1) > ah * 2.6 + label.length * ts * 0.55;
-      if (inside) {
-        els.push(line(x, y1, x, y2), arrow(x, y1, 0, y1 - y2), arrow(x, y2, 0, y2 - y1));
-        els.push(`<rect class="tb" x="${(x - ts * 0.6).toFixed(3)}" y="${((y1 + y2) / 2 - label.length * ts * 0.32).toFixed(3)}" width="${(ts * 1.2).toFixed(3)}" height="${(label.length * ts * 0.64).toFixed(3)}"/>`);
-        els.push(text(x, (y1 + y2) / 2, label, 'middle', -90));
-      } else {
-        els.push(line(x, y1 - ah * 2.5, x, y2 + ah * 2.5), arrow(x, y1, 0, y2 - y1), arrow(x, y2, 0, y1 - y2));
-        // Beside the arrows at mid-height: above them it can run into a
-        // dimension drawn over the top (the AA's positive end).
-        els.push(text(x + ts * 0.7, (y1 + y2) / 2, label, 'start'));
-      }
+      const out = Math.sign(x - xFrom) || -1;
+      const span = Math.abs(y2 - y1), mid = (y1 + y2) / 2;
+      els.push(line(xFrom, y1, x + out * ts * 0.4, y1, 'el'), line(xFrom, y2, x + out * ts * 0.4, y2, 'el'));
+      if (span > ah * 2.6) els.push(line(x, y1, x, y2), arrow(x, y1, 0, y1 - y2), arrow(x, y2, 0, y2 - y1));
+      else els.push(line(x, y1 - ah * 2.5, x, y2 + ah * 2.5), arrow(x, y1, 0, y2 - y1), arrow(x, y2, 0, y1 - y2));
+      if (span > tw(label) + ts) els.push(text(out < 0 ? x - ts * 0.45 : x + ts * (CAP + 0.45), mid, label, 'middle', -90));
+      else els.push(text(x + out * ts * 0.5, mid + ts * CAP / 2, label, out > 0 ? 'start' : 'end'));
     };
-    // Captions are as large as the numbers: they are read on a phone too.
+    // Captions are as large as the figures (they are read on a phone too),
+    // set apart by typeface and color instead.
     const caption = (x: number, y: number, s: string) => {
       reach(x - s.length * ts * 0.3, x + s.length * ts * 0.3, y - ts * 0.85, y + ts * 0.3);
       return `<text class="cap" x="${x.toFixed(3)}" y="${y.toFixed(3)}" font-size="${ts.toFixed(3)}" text-anchor="middle">${s}</text>`;
@@ -161,7 +164,7 @@ export function drawingSVG(b: Battery) {
       const sx = hw + gap * 2.2 + P / 2;
       front(sx, 0, 'side');
       hdim(sx - P / 2, sx + P / 2, gap, 0, fmt(P));
-      els.push(caption(0, gap * 2, 'Front'), caption(sx, gap * 2, 'Side'));
+      els.push(caption(0, gap + ts * 3.2, 'Front'), caption(sx, gap + ts * 3.2, 'Side'));
       vbx = -hw - gap * 1.8;
       vby = -H - gap * 1.1;
       vbw = sx + P / 2 + gap * 1.2 - vbx;
@@ -180,9 +183,8 @@ export function drawingSVG(b: Battery) {
     .el{stroke:var(--draw-dim,currentColor);stroke-width:${(dw * 0.7).toFixed(4)};opacity:0.6}
     .cl{stroke:var(--draw-dim,currentColor);stroke-width:${(dw * 0.6).toFixed(4)};stroke-dasharray:${(ts * 1.2).toFixed(3)} ${(ts * 0.35).toFixed(3)} ${(ts * 0.2).toFixed(3)} ${(ts * 0.35).toFixed(3)};opacity:0.55}
     .ah{fill:var(--draw-dim,currentColor)}
-    .tb{fill:var(--draw-bg,var(--surface,#fff))}
-    text{fill:currentColor;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-    .cap{font-family:system-ui,sans-serif}
+    .fig{fill:var(--draw-text,currentColor);font-family:var(--font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);font-weight:500}
+    .cap{fill:currentColor;font-family:var(--font-sans,system-ui,sans-serif)}
   </style>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vbx.toFixed(2)} ${vby.toFixed(2)} ${vbw.toFixed(2)} ${vbh.toFixed(2)}" role="img" aria-label="Dimensioned drawing of the ${b.name}, in millimeters">${style}${out.els.join('')}</svg>`;
 }
