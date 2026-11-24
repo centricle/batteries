@@ -51,7 +51,7 @@ const arBadge = `<svg xmlns="http://www.w3.org/2000/svg" width="290" height="44"
     <div class="viewer-labels absolute inset-0 pointer-events-none" aria-hidden="true"></div>
     <p class="sr-only">{srText}</p>
     <div class="absolute top-2 left-3 right-3 flex flex-col items-start gap-2 no-print pointer-events-none">
-      <p class="viewer-grid-note text-sm text-muted">Each square is 1 cm</p>
+      <p class="viewer-grid-note text-sm text-muted">Small squares are 1mm, large squares 10mm</p>
       {single && (
         <div class="pointer-events-auto" data-ar hidden>
           <a rel="ar" data-ar-ios hidden href={`/models/${single.id}.usdz#allowsContentScaling=0`} class="block">
