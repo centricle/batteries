@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Silhouette from '../../components/Silhouette.astro';
+import Sources from '../../components/Sources.astro';
 import { getCollection, render } from 'astro:content';
 import { batteryById } from '../../lib/data';
 
@@ -37,11 +38,7 @@ const jsonld = {
       <div class="prose text-base mt-6"><Content /></div>
       <section id="sources" class="mt-12 max-w-[40rem] scroll-mt-20" aria-labelledby="sources-title">
         <h2 id="sources-title" class="section-title">Sources</h2>
-        <ol class="space-y-2 text-sm font-sans">
-          {d.sources.map((s, i) => (
-            <li class="flex gap-3"><span class="text-muted tabular w-6 text-right shrink-0">{i + 1}.</span><span><span class="text-ink-2">{s.publisher}.</span> {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : s.title}{s.accessed && <span class="text-xs text-muted">. Accessed {long(s.accessed)}.</span>}</span></li>
-          ))}
-        </ol>
+        <Sources sources={d.sources} />
       </section>
     </article>
     <aside class="min-w-0">

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Silhouette from '../../components/Silhouette.astro';
+import Sources from '../../components/Sources.astro';
 import { marked } from 'marked';
 import { batteries, chemistries, chem, CHEM_FALLBACK, fmt, sizeLabel, type Battery } from '../../lib/data';
 
@@ -117,7 +118,7 @@ const jsonld = c && {
   {c && (
     <section class="wrap mt-12 max-w-4xl">
       <h2 class="section-title">Sources</h2>
-      <ol class="space-y-2 text-sm font-sans">{c.sources.map((s, i) => <li class="flex gap-3"><span class="text-muted w-6 text-right shrink-0">{i + 1}.</span><span><span class="text-ink-2">{s.publisher}.</span> {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : s.title}<span class="text-xs text-muted">. Accessed {longDate(s.accessed)}.</span></span></li>)}</ol>
+      <Sources sources={c.sources} />
     </section>
   )}
 </BaseLayout>

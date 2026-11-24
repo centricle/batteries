@@ -9,6 +9,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Viewer from './Viewer.astro';
 import Silhouette from './Silhouette.astro';
 import Buy from './Buy.astro';
+import Sources from './Sources.astro';
 import { drawingSVG } from '../lib/drawing';
 import { describe } from '../lib/geometry/model.js';
 import {
@@ -585,19 +586,7 @@ const statusText = b.status === 'legacy' ? 'Older size, still sold' : b.status =
 
     <section id="sources">
       <h2 class="section-title">Sources</h2>
-      <ol class="space-y-2 text-sm measure-wide">
-        {b.sources.map((s, i) => (
-          <li id={`src-${i + 1}`} class="flex gap-3 scroll-mt-28">
-            <span class="text-ink-2 tabular w-7 shrink-0 text-right">{i + 1}.</span>
-            <span class="font-sans">
-              <span class="text-ink-2">{s.publisher}.</span>{' '}
-              {s.url ? <a class="link tap" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span class="text-ink">{s.title}</span>}
-              <span class="text-ink-2">. {s.kind[0].toUpperCase() + s.kind.slice(1)}, read {longDate(s.accessed)}.</span>
-              {s.note && <span class="block text-xs text-ink-2 mt-0.5">{s.note}</span>}
-            </span>
-          </li>
-        ))}
-      </ol>
+      <Sources sources={b.sources} idPrefix="src-" class="measure-wide" />
       {b.form === 'disc' && (
         <p class="mt-3 text-sm text-ink-2 font-sans">Coin sizes in the summary are the diameters set in US law (<a class="link" href="https://www.law.cornell.edu/uscode/text/31/5112" rel="nofollow noopener" target="_blank">31 U.S.C. 5112</a>), converted from inches.</p>
       )}

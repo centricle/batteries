@@ -1,0 +1,44 @@
+---
+// A numbered source list, the same on battery, kind and guide pages.
+// Numbers sit on the entry's first baseline. The link is an ordinary inline
+// link, never .tap: an inline-flex box cannot break across lines, so a long
+// title jumps to a line of its own and strands the publisher and the period.
+// The title is a <cite>, which also keeps it out of the unit-spacing check
+// (a publisher's title is quoted as published).
+import { longDate } from '../lib/plain';
+
+interface Source {
+  publisher: string;
+  title: string;
+  url?: string;
+  kind?: string;
+  accessed?: string | Date;
+  note?: string;
+}
+interface Props {
+  sources: Source[];
+  /** Id prefix for each entry, so a citation can link to it ("src-" makes #src-3). */
+  idPrefix?: string;
+  class?: string;
+}
+const { sources, idPrefix, class: cls = '' } = Astro.props;
+
+const read = (s: Source) => {
+  const when = s.accessed instanceof Date ? s.accessed.toISOString().slice(0, 10) : s.accessed;
+  const kind = s.kind ? s.kind[0].toUpperCase() + s.kind.slice(1) : '';
+  if (kind && when) return `${kind}, read ${longDate(when)}.`;
+  if (when) return `Read ${longDate(when)}.`;
+  return kind ? `${kind}.` : '';
+};
+---
+<ol class:list={['space-y-3 text-sm font-sans', cls]}>
+  {sources.map((s, i) => (
+    <li id={idPrefix ? `${idPrefix}${i + 1}` : undefined} class="flex items-baseline gap-3 scroll-mt-28">
+      <span class="w-7 shrink-0 text-right text-ink-2 [font-variant-numeric:tabular-nums]">{i + 1}.</span>
+      <p class="min-w-0">
+        <span class="text-ink-2">{s.publisher}.</span> <cite class="not-italic">{s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span class="text-ink">{s.title}</span>}</cite><span class="text-ink-2">.{read(s) && ` ${read(s)}`}</span>
+        {s.note && <span class="block mt-1 text-ink-2">{s.note}</span>}
+      </p>
+    </li>
+  ))}
+</ol>

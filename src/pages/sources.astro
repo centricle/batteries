@@ -42,7 +42,7 @@ const usedName = (id: string) => {
         <ul class="card divide-y divide-[var(--line)]">
           {items.map((s) => (
             <li class="p-3 font-sans text-sm">
-              {s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span>{s.title}</span>}<span class="text-muted">. {cap(kindWord(s.kind, 1))}, accessed {longDate(s.accessed)}.</span>
+              <cite class="not-italic">{s.url ? <a class="link" href={s.url} rel="nofollow noopener" target="_blank">{s.title}</a> : <span>{s.title}</span>}</cite><span class="text-muted">. {cap(kindWord(s.kind, 1))}, accessed {longDate(s.accessed)}.</span>
               <span class="block mt-1 text-xs text-ink-2">
                 Used for:{' '}
                 {s.usedBy.slice(0, 24).map((id, i) => (
