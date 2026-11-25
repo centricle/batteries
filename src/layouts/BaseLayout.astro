@@ -3,6 +3,12 @@ import '../styles/global.css';
 import Search from '../components/Search.astro';
 import Mark from '../components/Mark.astro';
 import { paid } from '../lib/buy';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+
+// A new card is a new URL, so platforms that cache images by URL refetch it.
+const ogVersion = createHash('md5').update(readFileSync('public/og-image.webp')).digest('hex').slice(0, 8);
+const ogImage = `https://batteries.fyi/og-image.webp?v=${ogVersion}`;
 
 export interface Props {
   title?: string;
@@ -99,11 +105,11 @@ const canonical = new URL(path, Astro.site).href.replace(/\/$/, path === '/' ? '
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="batteries.fyi" />
-    <meta property="og:image" content="https://batteries.fyi/og-image.webp" />
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://batteries.fyi/og-image.webp" />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="alternate" type="application/json" href="/api/batteries.json" title="batteries.fyi open data" />
     <script is:inline>
       try {
