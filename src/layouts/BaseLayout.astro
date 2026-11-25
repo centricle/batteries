@@ -3,12 +3,7 @@ import '../styles/global.css';
 import Search from '../components/Search.astro';
 import Mark from '../components/Mark.astro';
 import { paid } from '../lib/buy';
-import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
-
-// A new card is a new URL, so platforms that cache images by URL refetch it.
-const ogVersion = createHash('md5').update(readFileSync('public/og-image.webp')).digest('hex').slice(0, 8);
-const ogImage = `https://batteries.fyi/og-image.webp?v=${ogVersion}`;
+import { ogImage } from '../lib/og';
 
 export interface Props {
   title?: string;
